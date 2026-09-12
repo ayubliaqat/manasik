@@ -2,8 +2,13 @@
 import { db } from "@/db"
 import { categories, tags, postTags } from "@/db/schema"
 import { eq } from "drizzle-orm"
-import { getPostById } from "@/app/admin/posts/actions"
-import { PostEditor } from "@/components/admin/post-editor/PostEditor"
+import { getPostById } from "@/app/admin/blog/actions"
+import { PostEditor, type PostStatus } from "@/components/admin/post-editor/PostEditor"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+}
 
 export default async function EditPostPage({
   params,
@@ -40,16 +45,20 @@ export default async function EditPostPage({
           excerpt: post.excerpt ?? "",
           content: post.content,
           featuredImage: post.featuredImage ?? "",
-          status: post.status,
+          isFeatured: post.isFeatured,
+          status: post.status as PostStatus,
           categoryId: post.categoryId ?? "",
           tagIds: existingPostTags.map((t) => t.tagId),
           seoTitle: post.seoTitle ?? "",
           metaDescription: post.metaDescription ?? "",
           focusKeyphrase: post.focusKeyphrase ?? "",
+          keyphraseDensity: post.keyphraseDensity ?? 0,
           canonicalUrl: post.canonicalUrl ?? "",
           robotsIndex: post.robotsIndex,
           robotsFollow: post.robotsFollow,
           breadcrumbTitle: post.breadcrumbTitle ?? "",
+          seoScore: post.seoScore ?? 0,
+          readabilityScore: post.readabilityScore ?? 0,
           ogTitle: post.ogTitle ?? "",
           ogDescription: post.ogDescription ?? "",
           ogImage: post.ogImage ?? "",

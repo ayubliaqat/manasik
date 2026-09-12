@@ -1,6 +1,11 @@
 ﻿import { db } from "@/db"
 import { categories, tags } from "@/db/schema"
 import { PostEditor } from "@/components/admin/post-editor/PostEditor"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+}
 
 export default async function NewPostPage() {
   const [allCategories, allTags] = await Promise.all([

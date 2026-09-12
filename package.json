@@ -3,18 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --webpack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint",
-    "db:seed": "tsx -r dotenv/config src/db/seed/seed.ts dotenv_config_path=.env.local"
-  },
+  "dev": "next dev --webpack",
+  "build": "next build --webpack",
+  "start": "next start",
+  "lint": "eslint",
+  "db:seed": "tsx -r dotenv/config src/db/seed/seed.ts dotenv_config_path=.env.local"
+},
   "dependencies": {
     "@auth/drizzle-adapter": "^1.11.3",
     "@auth/supabase-adapter": "^1.11.3",
     "@hookform/resolvers": "^5.9.1",
     "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.116.0",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@tailwindcss/typography": "^0.5.20",
     "@tiptap/extension-character-count": "^3.31.3",
     "@tiptap/extension-color": "^3.31.3",
     "@tiptap/extension-highlight": "^3.31.3",
@@ -48,11 +50,10 @@
     "react-dom": "19.2.8",
     "react-hook-form": "^7.87.0",
     "tailwind-merge": "^3.6.0",
+    "tailwindcss": "^4.3.3",
     "zod": "^4.6.2"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@tailwindcss/typography": "^0.5.20",
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -62,7 +63,6 @@
     "drizzle-kit": "^0.31.10",
     "eslint": "^9",
     "eslint-config-next": "16.3.4",
-    "tailwindcss": "^4",
     "tsx": "^4.23.13",
     "typescript": "^5"
   }

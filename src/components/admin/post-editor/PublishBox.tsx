@@ -1,6 +1,7 @@
 ﻿"use client"
 
 import { Loader2, Eye, Send } from "lucide-react"
+import type { PostStatus } from "./PostEditor"
 
 export function PublishBox({
   status,
@@ -9,10 +10,10 @@ export function PublishBox({
   onSave,
   onCancel,
 }: {
-  status: string
+  status: PostStatus
   isSaving: boolean
   isEditing: boolean
-  onSave: (status: string) => void
+  onSave: (status: PostStatus) => void
   onCancel: () => void
 }) {
   return (
