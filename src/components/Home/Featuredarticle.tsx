@@ -26,105 +26,232 @@ export default async function FeaturedBlog() {
   const featuredPosts = await getFeaturedPosts()
 
   return (
-    <section className="relative overflow-hidden bg-warm-white py-16 sm:py-20 lg:py-24">
-      {/* Elegant top wave */}
-      <div className="absolute inset-x-0 top-0 h-16 overflow-hidden sm:h-20">
-        <svg
-          viewBox="0 0 1440 100"
-          preserveAspectRatio="none"
-          className="h-full w-full"
-          aria-hidden="true"
-        >
-          <path
-            d="M0 42 C180 82 300 82 480 45 C650 10 790 10 960 45 C1140 82 1260 76 1440 35 L1440 0 L0 0 Z"
-            fill="var(--color-warm-white)"
-          />
-        </svg>
-      </div>
-
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section className="relative border-y border-emerald/20 bg-warm-white py-12 sm:py-14 lg:py-16">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Section heading */}
-        <div className="mx-auto mb-10 max-w-2xl text-center sm:mb-12">
-          <span className="inline-flex items-center rounded-full border border-gold/30 bg-gold/10 px-3 py-1 text-[10px] font-bold tracking-[0.2em] text-gold">
-            FEATURED READING
+        <div className="mx-auto mb-9 max-w-2xl text-center sm:mb-10">
+          <span
+            className="
+              inline-flex items-center rounded-full
+              border border-gold/30
+              bg-gold/10
+              px-3 py-1
+              text-[10px] font-semibold uppercase
+              tracking-[0.18em] text-gold
+            "
+          >
+            Featured Reading
           </span>
 
-          <h2 className="mt-4 font-heading text-2xl font-semibold leading-tight text-deep-teal sm:text-3xl lg:text-4xl">
+          <h2
+            className="
+              mt-3
+              font-serif
+              text-[28px] font-semibold
+              leading-[1.12]
+              tracking-[-0.02em]
+              text-deep-teal
+              drop-shadow-[0_2px_1px_rgba(6,63,58,0.12)]
+              sm:text-[34px]
+              lg:text-[40px]
+            "
+          >
             Guidance worth{" "}
-            <span className="text-emerald underline decoration-gold decoration-2 underline-offset-8">
+            <span
+              className="
+                text-emerald
+                drop-shadow-[0_2px_2px_rgba(6,63,58,0.14)]
+              "
+            >
               keeping close
             </span>
           </h2>
 
-          <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-muted-teal sm:text-base">
-            Thoughtful guides and practical insights to help you prepare with
-            confidence, worship with clarity, and make every part of your
-            journey more meaningful.
+          <p
+            className="
+              mx-auto mt-3 max-w-xl
+              text-sm font-normal
+              leading-6 text-muted-teal
+              sm:text-[15px]
+            "
+          >
+            Thoughtful guides and practical insights to help you prepare
+            with confidence and make your journey more meaningful.
           </p>
         </div>
 
-        {/* Cards */}
+        {/* Featured cards */}
         {featuredPosts.length === 0 ? (
-          <p className="text-center text-sm text-muted-teal">
-            No articles published yet. Check back soon.
-          </p>
+          <div
+            className="
+              rounded-2xl
+              border border-emerald/20
+              bg-card
+              px-5 py-9
+              text-center text-sm text-muted-teal
+              shadow-[0_3px_0_rgba(6,63,58,0.06),0_10px_24px_rgba(6,63,58,0.07)]
+            "
+          >
+            No articles published yet.
+          </div>
         ) : (
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {featuredPosts.map((post) => (
+            {featuredPosts.map((post, index) => (
               <article
                 key={post.id}
-                className="group flex flex-col overflow-hidden rounded-2xl border border-soft-beige bg-card shadow-[0_6px_18px_rgba(6,63,58,0.06)] transition-all duration-300 hover:-translate-y-1.5 hover:border-gold/30 hover:shadow-[0_14px_30px_rgba(6,63,58,0.12)]"
+                className="
+                  group relative flex h-full min-w-0 flex-col
+                  overflow-hidden rounded-2xl
+                  border border-emerald/20
+                  bg-card
+                  shadow-[0_2px_0_rgba(6,63,58,0.08),0_7px_18px_rgba(6,63,58,0.08)]
+                  transition-all duration-300 ease-out
+                  hover:-translate-y-1
+                  hover:border-emerald/35
+                  hover:shadow-[0_3px_0_rgba(6,63,58,0.10),0_14px_28px_rgba(6,63,58,0.14)]
+                "
               >
+                {/* Branded top edge */}
+                <div
+                  className={`
+                    absolute inset-x-0 top-0 z-10 h-[2px]
+                    ${index % 2 === 0 ? "bg-emerald" : "bg-gold"}
+                  `}
+                />
+
+                {/* Image */}
                 <Link
                   href={`/blog/${post.slug}`}
-                  className="relative block aspect-[16/10] overflow-hidden bg-soft-beige"
+                  className="
+                    relative block aspect-[16/10]
+                    overflow-hidden bg-soft-beige
+                  "
                 >
                   {post.featuredImage ? (
                     <Image
                       src={post.featuredImage}
                       alt={post.title}
                       fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      className="
+                        object-cover
+                        transition-transform duration-500 ease-out
+                        group-hover:scale-[1.04]
+                      "
+                      sizes="
+                        (max-width: 639px) 100vw,
+                        (max-width: 1023px) 50vw,
+                        25vw
+                      "
                     />
                   ) : (
-                    <div className="flex h-full w-full items-center justify-center text-xs text-muted-teal">
+                    <div className="flex h-full items-center justify-center text-xs text-muted-teal">
                       No image
                     </div>
                   )}
+
+                  <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-black/[0.04]" />
                 </Link>
 
+                {/* Card content */}
                 <div className="flex flex-1 flex-col p-4">
-                  <h3 className="font-heading text-base font-semibold leading-snug text-charcoal transition-colors duration-300 group-hover:text-emerald">
-                    <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                  <h3
+                    className="
+                      font-heading
+                      text-[15px]
+                      font-semibold
+                      leading-[1.4]
+                      text-charcoal
+                      transition-colors duration-200
+                      group-hover:text-emerald
+                    "
+                  >
+                    <Link href={`/blog/${post.slug}`}>
+                      {post.title}
+                    </Link>
                   </h3>
 
-                  <p className="mt-2 flex-1 text-xs leading-5 text-muted-teal line-clamp-3">
-                    {post.excerpt}
-                  </p>
+                  {post.excerpt && (
+                    <p
+                      className="
+                        mt-2
+                        line-clamp-3
+                        text-xs
+                        font-normal
+                        leading-[1.6]
+                        text-muted-teal
+                      "
+                    >
+                      {post.excerpt}
+                    </p>
+                  )}
 
-                  <Link
-                    href={`/blog/${post.slug}`}
-                    className="mt-4 inline-flex w-full items-center justify-center gap-1.5 rounded-full border border-emerald/20 bg-emerald/5 px-3 py-2 text-xs font-medium text-emerald transition-all duration-300 hover:border-emerald/40 hover:bg-emerald hover:text-white"
-                  >
-                    Read More
-                    <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-                  </Link>
+                  {/* Full-width card action */}
+                  <div className="mt-auto pt-4">
+                    <Link
+                      href={`/blog/${post.slug}`}
+                      className="
+                        group/read
+                        flex w-full items-center justify-center
+                        gap-2
+                        rounded-xl
+                        border border-emerald/25
+                        bg-emerald/[0.06]
+                        px-3 py-2.5
+                        text-xs font-medium
+                        text-emerald
+
+                        shadow-[0_2px_5px_rgba(6,63,58,0.05)]
+
+                        transition-all duration-300
+
+                        hover:border-emerald
+                        hover:bg-emerald
+                        hover:text-white
+                        hover:shadow-[0_4px_10px_rgba(6,63,58,0.14)]
+                      "
+                    >
+                      Read Guide
+
+                      <ArrowRight
+                        className="
+                          h-3.5 w-3.5
+                          transition-transform duration-200
+                          group-hover/read:translate-x-0.5
+                        "
+                      />
+                    </Link>
+                  </div>
                 </div>
               </article>
             ))}
           </div>
         )}
 
-        {/* Explore all button */}
+        {/* Explore all */}
         {featuredPosts.length > 0 && (
-          <div className="mt-10 flex justify-center sm:mt-12">
+          <div className="mt-8 flex justify-center sm:mt-9">
             <Link
               href="/blog"
-              className="inline-flex items-center gap-2 rounded-full border border-emerald/30 bg-card px-6 py-3 text-sm font-medium text-emerald shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-emerald hover:bg-emerald hover:text-white hover:shadow-md"
+              className="
+                inline-flex items-center justify-center
+                gap-2
+                rounded-full
+                border border-emerald/30
+                bg-card
+                px-5 py-2.5
+                text-xs font-medium
+                text-emerald
+                shadow-[0_2px_0_rgba(6,63,58,0.07),0_5px_12px_rgba(6,63,58,0.06)]
+                transition-all duration-300
+                hover:-translate-y-0.5
+                hover:border-emerald
+                hover:bg-emerald
+                hover:text-white
+                hover:shadow-[0_3px_0_rgba(6,63,58,0.10),0_8px_18px_rgba(6,63,58,0.12)]
+              "
             >
               Explore All Articles
-              <ArrowRight className="h-4 w-4" />
+              <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </div>
         )}

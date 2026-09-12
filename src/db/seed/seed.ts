@@ -15,7 +15,7 @@ async function seed() {
 
   console.log("Seed complete. Login with:")
   console.log("Email: mayub7540@gmail.com")
-  console.log("Password: Admin123!")
+  console.log("Password: Admin123")
 
   process.exit(0)
 }

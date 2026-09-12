@@ -8,6 +8,7 @@ export default function Home() {
   return (
     <main>
       <HomeHero />
+      {/* <AyahHighlightSection/> */}
       <TrustBadges/>
       <FeaturedBlog/>
       <ExploreJourney/>
