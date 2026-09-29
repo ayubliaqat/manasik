@@ -41,7 +41,7 @@ const audiences = [
 
 export default function WhoIsItFor() {
   return (
-    <section className="relative w-full overflow-hidden bg-warm-white py-10 sm:py-12 lg:py-14">
+    <section className="relative bg-warm-white px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
       {/* Scoped animations (no extra dependencies) */}
       <style>{`
         @keyframes wif-spin { to { transform: rotate(360deg); } }
@@ -67,9 +67,10 @@ export default function WhoIsItFor() {
       `}</style>
 
       {/* Inset rounded panel: gives spacing from the left and right edges */}
+      <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[1.75rem] border border-soft-beige bg-gradient-to-br from-white via-warm-white to-[#f3efe2] shadow-[0_20px_60px_rgba(6,63,58,0.08)] sm:rounded-[2.25rem]">
         {/* Dot-grid texture, fading toward the edges */}
         <div
-          className="pointer-events-none absolute inset-0 z-0 opacity-[0.10] [background-image:radial-gradient(circle,#2B6861_1px,transparent_1.2px)] [background-size:26px_26px] [mask-image:radial-gradient(ellipse_at_center,black_25%,transparent_78%)]"
+          className="pointer-events-none absolute inset-0 z-0 opacity-[0.16] [background-image:radial-gradient(circle,#2B6861_1px,transparent_1.2px)] [background-size:22px_22px] [mask-image:radial-gradient(ellipse_at_center,black_25%,transparent_78%)]"
           aria-hidden="true"
         />
 
@@ -85,8 +86,8 @@ export default function WhoIsItFor() {
         />
 
         {/* Main content */}
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8">
-          <div className="grid items-center gap-10 lg:grid-cols-[1fr_0.9fr] lg:gap-14">
+        <div className="relative z-10 px-5 py-12 sm:px-8 sm:py-14 lg:px-12 lg:py-16">
+          <div className="grid items-center gap-12 lg:grid-cols-[1fr_0.9fr] lg:gap-16">
             {/* LEFT */}
             <div className="max-w-xl">
               <div className="mb-4 inline-flex items-center gap-3 rounded-full border border-gold/30 bg-gold/[0.08] py-1.5 pl-2 pr-4">
@@ -180,7 +181,7 @@ export default function WhoIsItFor() {
               <div className="mt-8">
                 <Link
                   href="/guides"
-                  className="group relative inline-flex min-h-11 items-center gap-2.5 overflow-hidden rounded-full bg-deep-teal px-6 py-3 text-[12px] font-semibold text-white shadow-[0_4px_0_rgba(2,51,47,0.65),0_10px_22px_rgba(6,63,58,0.16)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-emerald focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-warm-white"
+                  className="group relative inline-flex min-h-11 items-center gap-2.5 overflow-hidden rounded-full bg-deep-teal px-6 py-3 text-[12px] font-semibold text-white shadow-[0_4px_0_rgba(2,51,47,0.65),0_10px_22px_rgba(6,63,58,0.16)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-emerald focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-white"
                 >
                   <span
                     className="pointer-events-none absolute inset-y-0 -left-full w-full skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-[220%]"
@@ -201,44 +202,122 @@ export default function WhoIsItFor() {
             </div>
 
             {/* RIGHT IMAGE */}
-            <div className="relative mx-auto w-full max-w-[500px] lg:ml-auto">
-              {/* Gold vertical accent */}
+            <div className="relative mx-auto aspect-square w-full max-w-[340px] sm:max-w-[420px] lg:ml-auto lg:max-w-[480px]">
+              {/* Soft glow behind the circle */}
               <div
-                className="absolute -left-3 top-8 h-28 w-[2px] rounded-full bg-gold sm:-left-5 sm:h-36"
+                className="absolute inset-[4%] z-0 rounded-full bg-gradient-to-br from-gold/30 via-emerald/15 to-transparent blur-2xl"
                 aria-hidden="true"
               />
 
-              {/* Gold corner accent */}
-              <div
-                className="absolute -bottom-4 -right-4 h-28 w-28 rounded-br-[3rem] border-b-2 border-r-2 border-gold/50 sm:-bottom-5 sm:-right-5 sm:h-36 sm:w-36"
+              {/* Slowly rotating dashed gold ring */}
+              <svg
+                viewBox="0 0 500 500"
+                className="wif-spin pointer-events-none absolute inset-0 z-0 h-full w-full"
+                fill="none"
                 aria-hidden="true"
-              />
+              >
+                <path
+                  d="M250 10 C386 8 492 114 490 252 C488 388 386 492 250 490 C114 488 10 386 12 250 C14 116 116 12 250 10Z"
+                  stroke="#C9A227"
+                  strokeWidth="1.6"
+                  strokeDasharray="5 6"
+                  strokeLinecap="round"
+                  opacity="0.75"
+                />
+              </svg>
 
-              {/* Framed image */}
-              <div className="relative overflow-hidden rounded-[2rem] border border-soft-beige bg-card p-2.5 shadow-[0_20px_55px_rgba(6,63,58,0.14)] sm:p-3">
-                <div className="group/img relative aspect-[4/4.3] overflow-hidden rounded-[1.5rem]">
-                  <Image
-                    src="/images/home-banner-image.png"
-                    alt="Pilgrims at Masjid al-Haram in Makkah"
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover/img:scale-[1.05]"
-                    sizes="(max-width: 1024px) 100vw, 45vw"
-                  />
+              {/* Counter-rotating sketch rings */}
+              <svg
+                viewBox="0 0 500 500"
+                className="wif-spin-rev pointer-events-none absolute inset-0 z-0 h-full w-full"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M264 20 C394 30 480 132 475 260 C470 392 372 478 240 476 C110 474 26 372 30 244 C34 120 132 28 264 20Z"
+                  stroke="#2B6861"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  opacity="0.35"
+                />
+                <path
+                  d="M236 26 C350 14 466 96 480 218"
+                  stroke="#073F3A"
+                  strokeWidth="1.2"
+                  strokeLinecap="round"
+                  opacity="0.3"
+                />
+                <path
+                  d="M120 470 C60 430 24 370 20 300"
+                  stroke="#073F3A"
+                  strokeWidth="1.2"
+                  strokeLinecap="round"
+                  opacity="0.25"
+                />
+              </svg>
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-deep-teal/45 via-transparent to-transparent" />
+              {/* Static gold scribble accent */}
+              <svg
+                viewBox="0 0 500 500"
+                className="pointer-events-none absolute inset-0 z-0 h-full w-full"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M402 56 C436 82 460 118 472 162"
+                  stroke="#C9A227"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M382 70 C416 94 440 128 452 170"
+                  stroke="#C9A227"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  opacity="0.55"
+                />
+              </svg>
 
-                  <div className="absolute bottom-5 left-5">
-                    <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-deep-teal/75 px-3.5 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-white shadow-lg backdrop-blur-md">
-                      <span className="wif-pulse h-1.5 w-1.5 rounded-full bg-gold" />
-                      Your Journey Starts Here
-                    </span>
-                  </div>
-                </div>
+              {/* Orbiting gold dot */}
+              <div
+                className="wif-orbit pointer-events-none absolute inset-0 z-20"
+                aria-hidden="true"
+              >
+                <span className="absolute left-1/2 top-[1%] h-3.5 w-3.5 -translate-x-1/2 rounded-full bg-gold shadow-[0_0_0_6px_rgba(201,162,39,0.15),0_0_18px_rgba(201,162,39,0.6)]" />
               </div>
 
-              {/* Floating glass chip: top-right */}
-              <div className="absolute -right-2 top-[10%] z-30 sm:-right-4">
-                <div className="wif-float flex items-center gap-2 rounded-2xl border border-white/70 bg-white/85 px-3 py-2 shadow-[0_10px_28px_rgba(6,63,58,0.14)] backdrop-blur-md">
+              {/* Small decorative dots */}
+              <span
+                className="wif-pulse absolute bottom-[16%] left-[2%] z-20 h-2.5 w-2.5 rounded-full bg-emerald shadow-[0_0_0_4px_rgba(43,104,97,0.12)]"
+                aria-hidden="true"
+              />
+              <span
+                className="wif-pulse absolute right-[5%] top-[26%] z-20 h-2 w-2 rounded-full bg-gold"
+                aria-hidden="true"
+              />
+
+              {/* Circular image */}
+              <div className="group/img absolute inset-[7%] z-10 overflow-hidden rounded-full border-[5px] border-white bg-deep-teal shadow-[0_24px_60px_rgba(6,63,58,0.22)]">
+                <Image
+                  src="/images/home-banner-image.png"
+                  alt="Pilgrims at Masjid al-Haram in Makkah"
+                  fill
+                  className="object-cover transition-transform duration-[900ms] ease-out group-hover/img:scale-[1.07]"
+                  sizes="(max-width: 640px) 80vw, (max-width: 1024px) 420px, 480px"
+                />
+
+                <div className="absolute inset-0 bg-gradient-to-t from-deep-teal/50 via-transparent to-transparent" />
+
+                {/* Glossy highlight */}
+                <div
+                  className="absolute inset-0 rounded-full bg-gradient-to-br from-white/20 via-transparent to-transparent"
+                  aria-hidden="true"
+                />
+              </div>
+
+              {/* Floating glass chip: top-left */}
+              <div className="absolute left-[-1%] top-[14%] z-30 sm:left-[-4%]">
+                <div className="wif-float flex items-center gap-2 rounded-2xl border border-white/70 bg-white/80 px-3 py-2 shadow-[0_10px_28px_rgba(6,63,58,0.14)] backdrop-blur-md">
                   <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald/10 text-emerald">
                     <Compass size={15} strokeWidth={1.8} />
                   </span>
@@ -250,9 +329,9 @@ export default function WhoIsItFor() {
                 </div>
               </div>
 
-              {/* Floating glass chip: left */}
-              <div className="absolute -left-2 bottom-[24%] z-30 sm:-left-4">
-                <div className="wif-float-delay flex items-center gap-2 rounded-2xl border border-white/70 bg-white/85 px-3 py-2 shadow-[0_10px_28px_rgba(6,63,58,0.14)] backdrop-blur-md">
+              {/* Floating glass chip: right */}
+              <div className="absolute bottom-[24%] right-[-1%] z-30 sm:right-[-4%]">
+                <div className="wif-float-delay flex items-center gap-2 rounded-2xl border border-white/70 bg-white/80 px-3 py-2 shadow-[0_10px_28px_rgba(6,63,58,0.14)] backdrop-blur-md">
                   <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gold/15 text-gold">
                     <ShieldCheck size={15} strokeWidth={1.8} />
                   </span>
@@ -263,9 +342,18 @@ export default function WhoIsItFor() {
                   </span>
                 </div>
               </div>
+
+              {/* Badge overlapping the circle edge */}
+              <div className="absolute bottom-[4%] left-1/2 z-30 -translate-x-1/2">
+                <span className="inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-white/20 bg-deep-teal/90 px-4 py-2 text-[9px] font-bold uppercase tracking-[0.18em] text-white shadow-lg backdrop-blur-md">
+                  <span className="wif-pulse h-1.5 w-1.5 rounded-full bg-gold" />
+                  Your Journey Starts Here
+                </span>
+              </div>
             </div>
           </div>
         </div>
+      </div>
     </section>
   );
 }

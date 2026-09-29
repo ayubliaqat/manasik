@@ -17,7 +17,9 @@ function slugify(text: string) {
     .replace(/^-+|-+$/g, "")
 }
 
-function isPostgresError(error: unknown): error is { code: string; message: string } {
+function isPostgresError(
+  error: unknown
+): error is { code: string; message: string } {
   return (
     typeof error === "object" &&
     error !== null &&
@@ -36,6 +38,8 @@ const postInputSchema = z.object({
   status: z.enum(["draft", "published", "scheduled"]),
   categoryId: z.string().uuid().nullable(),
   tagIds: z.array(z.string().uuid()).default([]),
+
+  // SEO
   seoTitle: z.string().optional().default(""),
   metaDescription: z.string().optional().default(""),
   focusKeyphrase: z.string().optional().default(""),
@@ -46,12 +50,18 @@ const postInputSchema = z.object({
   breadcrumbTitle: z.string().optional().default(""),
   seoScore: z.number().min(0).max(100).default(0),
   readabilityScore: z.number().min(0).max(100).default(0),
+
+  // Open Graph
   ogTitle: z.string().optional().default(""),
   ogDescription: z.string().optional().default(""),
   ogImage: z.string().optional().default(""),
+
+  // Twitter
   twitterTitle: z.string().optional().default(""),
   twitterDescription: z.string().optional().default(""),
   twitterImage: z.string().optional().default(""),
+
+  // Schema
   schemaType: z.string().default("BlogPosting"),
 })
 
@@ -61,74 +71,159 @@ async function requireEditorOrAdmin() {
   const session = await auth()
   const role = session?.user?.role
 
-  if (!session?.user?.id || (role !== "admin" && role !== "Editor")) {
+  if (
+    !session?.user?.id ||
+    (role !== "admin" && role !== "Editor" && role !== "editor")
+  ) {
     throw new Error("Not authorized to manage posts")
   }
 
   return session
 }
 
+/**
+ * Create a new blog post.
+ *
+ * The post and its tags are created inside one transaction.
+ * If anything fails, the entire operation is rolled back.
+ */
 export async function createPost(rawData: PostInput) {
   const session = await requireEditorOrAdmin()
   const data = postInputSchema.parse(rawData)
 
-  let newPost
+  const slug = data.slug || slugify(data.title)
+
+  if (!slug) {
+    throw new Error("Unable to generate a valid slug from the title.")
+  }
+
   try {
-    ;[newPost] = await db
-      .insert(posts)
-      .values({
-        title: data.title,
-        slug: data.slug || slugify(data.title),
-        excerpt: data.excerpt || null,
-        content: data.content,
-        featuredImage: data.featuredImage || null,
-        isFeatured: data.isFeatured,
-        status: data.status,
-        categoryId: data.categoryId || null,
-        authorId: session.user.id,
-        seoTitle: data.seoTitle || null,
-        metaDescription: data.metaDescription || null,
-        focusKeyphrase: data.focusKeyphrase || null,
-        keyphraseDensity: data.keyphraseDensity,
-        canonicalUrl: data.canonicalUrl || null,
-        robotsIndex: data.robotsIndex,
-        robotsFollow: data.robotsFollow,
-        breadcrumbTitle: data.breadcrumbTitle || null,
-        seoScore: data.seoScore,
-        readabilityScore: data.readabilityScore,
-        ogTitle: data.ogTitle || null,
-        ogDescription: data.ogDescription || null,
-        ogImage: data.ogImage || null,
-        twitterTitle: data.twitterTitle || null,
-        twitterDescription: data.twitterDescription || null,
-        twitterImage: data.twitterImage || null,
-        schemaType: data.schemaType,
-        publishedAt: data.status === "published" ? new Date() : null,
-      })
-      .returning()
+    await db.transaction(async (tx) => {
+      const [newPost] = await tx
+        .insert(posts)
+        .values({
+          title: data.title,
+          slug,
+          excerpt: data.excerpt || null,
+          content: data.content,
+          featuredImage: data.featuredImage || null,
+          isFeatured: data.isFeatured,
+          status: data.status,
+
+          categoryId: data.categoryId || null,
+          authorId: session.user.id,
+
+          // SEO
+          seoTitle: data.seoTitle || null,
+          metaDescription: data.metaDescription || null,
+          focusKeyphrase: data.focusKeyphrase || null,
+          keyphraseDensity: data.keyphraseDensity,
+          canonicalUrl: data.canonicalUrl || null,
+          robotsIndex: data.robotsIndex,
+          robotsFollow: data.robotsFollow,
+          breadcrumbTitle: data.breadcrumbTitle || null,
+          seoScore: data.seoScore,
+          readabilityScore: data.readabilityScore,
+
+          // Open Graph
+          ogTitle: data.ogTitle || null,
+          ogDescription: data.ogDescription || null,
+          ogImage: data.ogImage || null,
+
+          // Twitter
+          twitterTitle: data.twitterTitle || null,
+          twitterDescription: data.twitterDescription || null,
+          twitterImage: data.twitterImage || null,
+
+          // Schema
+          schemaType: data.schemaType,
+
+          // Publishing
+          publishedAt:
+            data.status === "published"
+              ? new Date()
+              : null,
+        })
+        .returning()
+
+      if (!newPost) {
+        throw new Error("Post could not be created.")
+      }
+
+      if (data.tagIds.length > 0) {
+        await tx.insert(postTags).values(
+          data.tagIds.map((tagId) => ({
+            postId: newPost.id,
+            tagId,
+          }))
+        )
+      }
+    })
   } catch (error: unknown) {
-    if (isPostgresError(error) && error.code === "23505") {
-      throw new Error("A post with this slug already exists. Choose a different slug.")
+    if (isPostgresError(error)) {
+      console.error("Create post database error:", {
+        code: error.code,
+        message: error.message,
+      })
+
+      // Duplicate slug
+      if (error.code === "23505") {
+        throw new Error(
+          "A post with this slug already exists. Choose a different slug."
+        )
+      }
+
+      // Foreign-key violation
+      if (error.code === "23503") {
+        throw new Error(
+          "The selected category, author, or tag is no longer available. Please refresh the page and try again."
+        )
+      }
+
+      // Not-null violation
+      if (error.code === "23502") {
+        throw new Error(
+          "A required post field is missing. Please check the form and try again."
+        )
+      }
+
+      // Undefined column/table/schema problems
+      if (error.code === "42703" || error.code === "42P01") {
+        throw new Error(
+          "The database schema is out of date. Please run the latest Drizzle migration."
+        )
+      }
     }
+
+    console.error("Create post error:", error)
+
     throw new Error("Failed to create post. Please try again.")
   }
 
-  if (data.tagIds.length > 0) {
-    await db.insert(postTags).values(
-      data.tagIds.map((tagId) => ({ postId: newPost.id, tagId }))
-    )
-  }
-
+  revalidatePath("/")
+  revalidatePath("/blog")
   revalidatePath("/admin/posts")
+
   redirect("/admin/posts")
 }
 
-export async function updatePost(postId: string, rawData: PostInput) {
+/**
+ * Update an existing blog post.
+ */
+export async function updatePost(
+  postId: string,
+  rawData: PostInput
+) {
   await requireEditorOrAdmin()
+
   const data = postInputSchema.parse(rawData)
 
   const [existing] = await db
-    .select({ status: posts.status, publishedAt: posts.publishedAt, slug: posts.slug })
+    .select({
+      status: posts.status,
+      publishedAt: posts.publishedAt,
+      slug: posts.slug,
+    })
     .from(posts)
     .where(eq(posts.id, postId))
     .limit(1)
@@ -138,6 +233,11 @@ export async function updatePost(postId: string, rawData: PostInput) {
   }
 
   const nextSlug = data.slug || slugify(data.title)
+
+  if (!nextSlug) {
+    throw new Error("Unable to generate a valid slug from the title.")
+  }
+
   const slugChanged = nextSlug !== existing.slug
 
   const nextPublishedAt =
@@ -146,86 +246,172 @@ export async function updatePost(postId: string, rawData: PostInput) {
       : existing.publishedAt
 
   try {
-    await db
-      .update(posts)
-      .set({
-        title: data.title,
-        slug: nextSlug,
-        excerpt: data.excerpt || null,
-        content: data.content,
-        featuredImage: data.featuredImage || null,
-        isFeatured: data.isFeatured,
-        status: data.status,
-        categoryId: data.categoryId || null,
-        seoTitle: data.seoTitle || null,
-        metaDescription: data.metaDescription || null,
-        focusKeyphrase: data.focusKeyphrase || null,
-        keyphraseDensity: data.keyphraseDensity,
-        canonicalUrl: data.canonicalUrl || null,
-        robotsIndex: data.robotsIndex,
-        robotsFollow: data.robotsFollow,
-        breadcrumbTitle: data.breadcrumbTitle || null,
-        seoScore: data.seoScore,
-        readabilityScore: data.readabilityScore,
-        ogTitle: data.ogTitle || null,
-        ogDescription: data.ogDescription || null,
-        ogImage: data.ogImage || null,
-        twitterTitle: data.twitterTitle || null,
-        twitterDescription: data.twitterDescription || null,
-        twitterImage: data.twitterImage || null,
-        schemaType: data.schemaType,
-        publishedAt: nextPublishedAt,
-        updatedAt: new Date(),
-      })
-      .where(eq(posts.id, postId))
+    await db.transaction(async (tx) => {
+      await tx
+        .update(posts)
+        .set({
+          title: data.title,
+          slug: nextSlug,
+          excerpt: data.excerpt || null,
+          content: data.content,
+          featuredImage: data.featuredImage || null,
+          isFeatured: data.isFeatured,
+          status: data.status,
+
+          categoryId: data.categoryId || null,
+
+          // SEO
+          seoTitle: data.seoTitle || null,
+          metaDescription: data.metaDescription || null,
+          focusKeyphrase: data.focusKeyphrase || null,
+          keyphraseDensity: data.keyphraseDensity,
+          canonicalUrl: data.canonicalUrl || null,
+          robotsIndex: data.robotsIndex,
+          robotsFollow: data.robotsFollow,
+          breadcrumbTitle: data.breadcrumbTitle || null,
+          seoScore: data.seoScore,
+          readabilityScore: data.readabilityScore,
+
+          // Open Graph
+          ogTitle: data.ogTitle || null,
+          ogDescription: data.ogDescription || null,
+          ogImage: data.ogImage || null,
+
+          // Twitter
+          twitterTitle: data.twitterTitle || null,
+          twitterDescription: data.twitterDescription || null,
+          twitterImage: data.twitterImage || null,
+
+          // Schema
+          schemaType: data.schemaType,
+
+          // Publishing
+          publishedAt: nextPublishedAt,
+
+          updatedAt: new Date(),
+        })
+        .where(eq(posts.id, postId))
+
+      if (slugChanged) {
+        await tx.insert(postSlugHistory).values({
+          postId,
+          oldSlug: existing.slug,
+        })
+      }
+
+      // Replace existing tags
+      await tx
+        .delete(postTags)
+        .where(eq(postTags.postId, postId))
+
+      if (data.tagIds.length > 0) {
+        await tx.insert(postTags).values(
+          data.tagIds.map((tagId) => ({
+            postId,
+            tagId,
+          }))
+        )
+      }
+    })
   } catch (error: unknown) {
-    if (isPostgresError(error) && error.code === "23505") {
-      throw new Error("A post with this slug already exists. Choose a different slug.")
+    if (isPostgresError(error)) {
+      console.error("Update post database error:", {
+        code: error.code,
+        message: error.message,
+      })
+
+      if (error.code === "23505") {
+        throw new Error(
+          "A post with this slug already exists. Choose a different slug."
+        )
+      }
+
+      if (error.code === "23503") {
+        throw new Error(
+          "The selected category or tag is no longer available. Please refresh the page and try again."
+        )
+      }
+
+      if (error.code === "23502") {
+        throw new Error(
+          "A required post field is missing. Please check the form and try again."
+        )
+      }
+
+      if (error.code === "42703" || error.code === "42P01") {
+        throw new Error(
+          "The database schema is out of date. Please run the latest Drizzle migration."
+        )
+      }
     }
+
+    console.error("Update post error:", error)
+
     throw new Error("Failed to update post. Please try again.")
   }
 
-  if (slugChanged) {
-    await db.insert(postSlugHistory).values({
-      postId,
-      oldSlug: existing.slug,
-    })
-  }
-
-  await db.delete(postTags).where(eq(postTags.postId, postId))
-  if (data.tagIds.length > 0) {
-    await db.insert(postTags).values(
-      data.tagIds.map((tagId) => ({ postId, tagId }))
-    )
-  }
-
+  revalidatePath("/")
+  revalidatePath("/blog")
   revalidatePath("/admin/posts")
+  revalidatePath(`/blog/${nextSlug}`)
+
   redirect("/admin/posts")
 }
 
+/**
+ * Delete a blog post.
+ */
 export async function deletePost(postId: string) {
   await requireEditorOrAdmin()
-  await db.delete(posts).where(eq(posts.id, postId))
+
+  try {
+    await db.delete(posts).where(eq(posts.id, postId))
+  } catch (error: unknown) {
+    console.error("Delete post error:", error)
+
+    throw new Error("Failed to delete post. Please try again.")
+  }
+
+  revalidatePath("/")
+  revalidatePath("/blog")
   revalidatePath("/admin/posts")
 }
 
+/**
+ * Get a post by ID.
+ */
 export async function getPostById(postId: string) {
   await requireEditorOrAdmin()
-  const [post] = await db.select().from(posts).where(eq(posts.id, postId)).limit(1)
+
+  const [post] = await db
+    .select()
+    .from(posts)
+    .where(eq(posts.id, postId))
+    .limit(1)
+
   return post
 }
 
+/**
+ * Resolve an old slug to the current post slug.
+ */
 export async function resolveOldSlug(oldSlug: string) {
   const [record] = await db
-    .select({ postId: postSlugHistory.postId })
+    .select({
+      postId: postSlugHistory.postId,
+    })
     .from(postSlugHistory)
     .where(eq(postSlugHistory.oldSlug, oldSlug))
     .limit(1)
 
-  if (!record) return null
+  if (!record) {
+    return null
+  }
 
   const [post] = await db
-    .select({ slug: posts.slug })
+    .select({
+      slug: posts.slug,
+    })
     .from(posts)
     .where(eq(posts.id, record.postId))
     .limit(1)

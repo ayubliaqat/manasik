@@ -13,7 +13,7 @@ async function getFeaturedPosts() {
       id: posts.id,
       title: posts.title,
       slug: posts.slug,
-      excerpt: posts.excerpt,
+      metaDescription: posts.metaDescription,
       featuredImage: posts.featuredImage,
     })
     .from(posts)
@@ -26,8 +26,68 @@ export default async function FeaturedBlog() {
   const featuredPosts = await getFeaturedPosts()
 
   return (
-    <section className="relative border-y border-emerald/20 bg-warm-white py-12 sm:py-14 lg:py-16">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <section
+      className="
+        relative overflow-hidden
+        border-y border-emerald/20
+        bg-gradient-to-br
+        from-warm-white
+        via-[#f8f4ea]
+        to-[#e8f2ed]
+        py-12 sm:py-14 lg:py-16
+      "
+    >
+      {/* Large sweeping top curve */}
+      <div
+        className="
+          pointer-events-none absolute
+          left-1/2
+          top-[-190px]
+          h-[430px]
+          w-[145%]
+          -translate-x-1/2
+          rounded-[0_0_50%_50%]
+          bg-gradient-to-br
+          from-emerald/[0.12]
+          via-emerald/[0.055]
+          to-gold/[0.10]
+          blur-[1px]
+        "
+      />
+
+      {/* Soft inner curve */}
+      <div
+        className="
+          pointer-events-none absolute
+          left-1/2
+          top-[-125px]
+          h-[270px]
+          w-[115%]
+          -translate-x-1/2
+          rounded-[0_0_50%_50%]
+          border-b border-white/40
+          bg-white/[0.18]
+        "
+      />
+
+      {/* Large sweeping bottom curve */}
+      <div
+        className="
+          pointer-events-none absolute
+          bottom-[-230px]
+          left-1/2
+          h-[430px]
+          w-[135%]
+          -translate-x-1/2
+          rounded-[50%_50%_0_0]
+          bg-gradient-to-t
+          from-emerald/[0.08]
+          via-emerald/[0.035]
+          to-transparent
+        "
+      />
+
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Section heading */}
         <div className="mx-auto mb-9 max-w-2xl text-center sm:mb-10">
           <span
@@ -170,7 +230,8 @@ export default async function FeaturedBlog() {
                     </Link>
                   </h3>
 
-                  {post.excerpt && (
+                  {/* Meta description */}
+                  {post.metaDescription && (
                     <p
                       className="
                         mt-2
@@ -181,7 +242,7 @@ export default async function FeaturedBlog() {
                         text-muted-teal
                       "
                     >
-                      {post.excerpt}
+                      {post.metaDescription}
                     </p>
                   )}
 
@@ -199,11 +260,8 @@ export default async function FeaturedBlog() {
                         px-3 py-2.5
                         text-xs font-medium
                         text-emerald
-
                         shadow-[0_2px_5px_rgba(6,63,58,0.05)]
-
                         transition-all duration-300
-
                         hover:border-emerald
                         hover:bg-emerald
                         hover:text-white

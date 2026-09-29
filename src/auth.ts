@@ -1,10 +1,23 @@
-﻿import NextAuth from "next-auth"
+﻿import NextAuth, { type DefaultSession } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { DrizzleAdapter } from "@auth/drizzle-adapter"
 import { db } from "@/db"
 import { users } from "@/db/schema"
 import { eq } from "drizzle-orm"
 import bcrypt from "bcryptjs"
+
+// Tell TypeScript that our session and user objects include 'id' and an optional 'role'
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string
+      role?: string
+    } & DefaultSession["user"]
+  }
+  interface User {
+    role?: string
+  }
+}
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: DrizzleAdapter(db),
@@ -46,13 +59,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.role = (user as { role?: string }).role
+        token.id = user.id
+        token.role = user.role
       }
       return token
     },
     async session({ session, token }) {
-      if (session.user) {
-        (session.user as { role?: string }).role = token.role as string
+      if (session.user && token) {
+        session.user.id = token.id as string
+        session.user.role = token.role as string
       }
       return session
     },

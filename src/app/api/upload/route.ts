@@ -1,41 +1,78 @@
 ﻿import { NextRequest, NextResponse } from "next/server"
-import { v2 as cloudinary } from "cloudinary"
+import { createClient } from "@supabase/supabase-js"
 import { auth } from "@/auth"
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-})
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+)
 
 export async function POST(request: NextRequest) {
-  const session = await auth()
+  try {
+    const session = await auth()
 
-  if (!session?.user) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-  }
-
-  const formData = await request.formData()
-  const file = formData.get("file") as File
-
-  if (!file) {
-    return NextResponse.json({ error: "No file provided" }, { status: 400 })
-  }
-
-  const bytes = await file.arrayBuffer()
-  const buffer = Buffer.from(bytes)
-
-  const result = await new Promise<{ secure_url: string }>((resolve, reject) => {
-    cloudinary.uploader
-      .upload_stream(
-        { folder: "manasik/posts" },
-        (error, result) => {
-          if (error || !result) reject(error)
-          else resolve(result)
-        }
+    if (!session?.user) {
+      return NextResponse.json(
+        { error: "Unauthorized" },
+        { status: 401 }
       )
-      .end(buffer)
-  })
+    }
 
-  return NextResponse.json({ url: result.secure_url })
+    const formData = await request.formData()
+    const file = formData.get("file")
+
+    if (!(file instanceof File)) {
+      return NextResponse.json(
+        { error: "No file provided" },
+        { status: 400 }
+      )
+    }
+
+    if (!file.type.startsWith("image/")) {
+      return NextResponse.json(
+        { error: "Only image files are allowed" },
+        { status: 400 }
+      )
+    }
+
+    const bytes = await file.arrayBuffer()
+    const buffer = Buffer.from(bytes)
+
+    const extension = file.name.split(".").pop()?.toLowerCase() || "jpg"
+    const fileName = `${crypto.randomUUID()}.${extension}`
+    const filePath = `posts/${fileName}`
+
+    const { error } = await supabase.storage
+      .from("post-images")
+      .upload(filePath, buffer, {
+        contentType: file.type,
+        upsert: false,
+      })
+
+    if (error) {
+      console.error("Supabase upload error:", error)
+
+      return NextResponse.json(
+        { error: error.message },
+        { status: 500 }
+      )
+    }
+
+    const {
+      data: { publicUrl },
+    } = supabase.storage
+      .from("post-images")
+      .getPublicUrl(filePath)
+
+    return NextResponse.json({
+      url: publicUrl,
+    })
+  } catch (error) {
+    console.error("Upload error:", error)
+
+    return NextResponse.json(
+      { error: "Image upload failed" },
+      { status: 500 }
+    )
+  }
 }
