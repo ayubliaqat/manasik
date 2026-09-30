@@ -2,7 +2,6 @@ import {
   Backpack,
   BookOpenCheck,
   HeartHandshake,
-  MapPinned,
   Sparkles,
 } from "lucide-react";
 
@@ -22,7 +21,7 @@ const journeySteps = [
   {
     title: "Plan",
     description: "Organise the practical details.",
-    icon: MapPinned,
+    icon: Backpack,
     accent: "emerald",
   },
   {
@@ -41,82 +40,112 @@ const journeySteps = [
 
 export default function PilgrimagePath() {
   return (
-    <section className="relative overflow-hidden bg-gray-200 py-14 sm:py-16 lg:py-20">
+    <section className="relative overflow-hidden border-y border-emerald/15 bg-white py-10 sm:py-12 lg:py-14">
       {/* =========================================================
-          BACKGROUND DECORATION
+          BACKGROUND CURVES
          ========================================================= */}
 
+      {/* Top curved area */}
       <div
-        className="pointer-events-none absolute -left-40 top-10 h-80 w-80 rounded-full bg-emerald/[0.07] blur-[100px]"
         aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-[-185px] h-[350px] w-[125%] -translate-x-1/2 rounded-[0_0_50%_50%] bg-gradient-to-br from-emerald/[0.08] via-emerald/[0.035] to-gold/[0.07]"
+      />
+
+      {/* Bottom curved area */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute bottom-[-190px] left-1/2 h-[330px] w-[125%] -translate-x-1/2 rounded-[50%_50%_0_0] bg-gradient-to-t from-emerald/[0.06] via-emerald/[0.02] to-transparent"
+      />
+
+      {/* Subtle decorative circles */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-28 top-[38%] h-56 w-56 rounded-full border border-emerald/[0.06]"
       />
 
       <div
-        className="pointer-events-none absolute -right-40 bottom-0 h-96 w-96 rounded-full bg-gold/[0.08] blur-[110px]"
         aria-hidden="true"
+        className="pointer-events-none absolute -right-28 top-[25%] h-64 w-64 rounded-full border border-gold/[0.07]"
       />
 
-      {/* Organic corner curves */}
-      <div
-        className="pointer-events-none absolute -left-16 top-1/3 h-40 w-40 rounded-full border border-emerald/[0.08]"
-        aria-hidden="true"
-      />
+      {/* =========================================================
+          CONTENT
+         ========================================================= */}
 
-      <div
-        className="pointer-events-none absolute -right-20 top-1/4 h-52 w-52 rounded-full border border-gold/[0.10]"
-        aria-hidden="true"
-      />
-
-      <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
-        {/* =========================================================
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        {/* =======================================================
             HEADING
-           ========================================================= */}
+           ======================================================= */}
 
         <div className="mx-auto max-w-2xl text-center">
-          <div className="mb-4 flex items-center justify-center gap-3">
-            <span className="h-px w-9 bg-gold/70" />
 
-            <span className="flex h-8 w-8 items-center justify-center rounded-full border border-gold/35 bg-white/60 text-gold shadow-sm">
-              <MapPinned
-                className="h-[15px] w-[15px]"
-                strokeWidth={1.7}
-              />
+
+          <h2
+            className="
+              text-balance
+              font-serif
+              text-[26px] font-medium
+              leading-[1.15]
+              tracking-[-0.015em]
+              text-deep-teal
+              sm:text-[32px]
+              md:text-[36px]
+              lg:text-[42px]
+            "
+          >
+            Your journey,{" "}
+            <span className="relative inline-block whitespace-nowrap text-emerald">
+              step by step.
+
+              {/* Gold hand-drawn underline */}
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 120 10"
+                preserveAspectRatio="none"
+                fill="none"
+                className="
+                  pointer-events-none absolute
+                  left-1/2 top-full
+                  mt-[0.05em]
+                  h-[0.2em] w-[70%]
+                  -translate-x-1/2
+                  text-gold
+                "
+              >
+                <path
+                  d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  vectorEffect="non-scaling-stroke"
+                />
+              </svg>
             </span>
-
-            <span className="h-px w-9 bg-gold/70" />
-          </div>
-
-          <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.24em] text-gold">
-            The Pilgrimage Path
-          </p>
-
-          <h2 className="font-heading text-3xl font-bold leading-[1.12] tracking-tight text-deep-teal sm:text-4xl lg:text-[42px]">
-            Your journey,
-            <span className="ml-2 text-emerald">step by step.</span>
           </h2>
 
-          <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-muted-teal sm:text-[15px]">
+          <p className="mx-auto mt-5 max-w-xl text-sm leading-6 text-muted-teal sm:text-[15px]">
             From preparation to worship, follow a clear path designed to help
             you understand what comes next.
           </p>
         </div>
 
-        {/* =========================================================
+        {/* =======================================================
             DESKTOP JOURNEY
-         ========================================================= */}
+           ======================================================= */}
 
-        <div className="relative mx-auto mt-12 hidden max-w-6xl lg:block">
+        <div className="relative mx-auto mt-6 hidden max-w-6xl lg:block">
           {/* Rope */}
           <div
-            className="pointer-events-none absolute inset-x-[4%] top-1/2 h-[110px] -translate-y-1/2"
             aria-hidden="true"
+            className="pointer-events-none absolute inset-x-[4%] top-1/2 h-[88px] -translate-y-1/2"
           >
             <svg
               viewBox="0 0 1000 120"
               preserveAspectRatio="none"
               className="h-full w-full overflow-visible"
             >
-              {/* Soft rope shadow */}
+              {/* Rope shadow */}
               <path
                 d="
                   M0 60
@@ -131,10 +160,10 @@ export default function PilgrimagePath() {
                 stroke="#063F3A"
                 strokeWidth="8"
                 strokeLinecap="round"
-                opacity="0.08"
+                opacity="0.07"
               />
 
-              {/* Main rope */}
+              {/* Gold rope */}
               <path
                 d="
                   M0 60
@@ -182,13 +211,15 @@ export default function PilgrimagePath() {
               return (
                 <div
                   key={step.title}
-                  className="relative flex h-[300px] items-center justify-center"
+                  className="relative flex h-[245px] items-center justify-center"
                 >
-                  {/* Content */}
+                  {/* Step text */}
                   <div
                     className={[
                       "absolute left-1/2 w-[175px] -translate-x-1/2 text-center",
-                      isAbove ? "bottom-[calc(50%+48px)]" : "top-[calc(50%+48px)]",
+                      isAbove
+                        ? "bottom-[calc(50%+37px)]"
+                        : "top-[calc(50%+37px)]",
                     ].join(" ")}
                   >
                     <p
@@ -200,90 +231,34 @@ export default function PilgrimagePath() {
                       {isAbove ? "Begin" : "Continue"}
                     </p>
 
-                    <h3 className="font-heading text-[19px] font-bold leading-tight text-deep-teal">
+                    <h3 className="font-heading text-[18px] font-bold leading-tight text-deep-teal">
                       {step.title}
                     </h3>
 
-                    <p className="mt-1.5 text-[11px] leading-[1.5] text-muted-teal">
+                    <p className="mt-1.5 text-[11px] leading-[1.45] text-muted-teal">
                       {step.description}
                     </p>
                   </div>
 
                   {/* Connector */}
                   <span
+                    aria-hidden="true"
                     className={[
                       "absolute left-1/2 w-px -translate-x-1/2",
                       isAbove
-                        ? "bottom-1/2 h-[43px]"
-                        : "top-1/2 h-[43px]",
+                        ? "bottom-1/2 h-[32px]"
+                        : "top-1/2 h-[32px]",
                       isGold ? "bg-gold/45" : "bg-emerald/40",
                     ].join(" ")}
-                    aria-hidden="true"
                   />
 
-                  {/* Icon directly ON the rope */}
+                  {/* Icon */}
                   <div
                     className={[
-                      "relative z-20 flex h-[62px] w-[62px] items-center justify-center rounded-full",
+                      "relative z-20 flex h-[58px] w-[58px] items-center justify-center rounded-full",
                       "border-[3px] border-[#FAF8F3]",
-                      "shadow-[0_6px_20px_rgba(6,63,58,0.16)]",
-                      "transition-all duration-300 hover:scale-110",
-                      isGold
-                        ? "bg-gold text-white"
-                        : "bg-emerald text-white",
-                    ].join(" ")}
-                  >
-                    <Icon
-                      className="h-[24px] w-[24px]"
-                      strokeWidth={1.6}
-                    />
-
-                    {/* Small decorative dot */}
-                    <span
-                      className={[
-                        "absolute -right-1 -top-1 h-3 w-3 rounded-full border-2 border-[#FAF8F3]",
-                        isGold ? "bg-emerald" : "bg-gold",
-                      ].join(" ")}
-                      aria-hidden="true"
-                    />
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* =========================================================
-            MOBILE JOURNEY
-         ========================================================= */}
-
-        <div className="relative mt-10 lg:hidden">
-          {/* Vertical rope */}
-          <div
-            className="pointer-events-none absolute bottom-8 left-[31px] top-8 w-[2px]"
-            aria-hidden="true"
-          >
-            <div className="h-full rounded-full bg-gradient-to-b from-gold via-emerald to-gold" />
-
-            <div className="absolute inset-0 bg-gold/20 blur-sm" />
-          </div>
-
-          <div className="space-y-7">
-            {journeySteps.map((step) => {
-              const Icon = step.icon;
-              const isGold = step.accent === "gold";
-
-              return (
-                <div
-                  key={step.title}
-                  className="relative flex items-center gap-5"
-                >
-                  {/* Icon on rope */}
-                  <div
-                    className={[
-                      "relative z-10 flex h-[62px] w-[62px] shrink-0 items-center justify-center rounded-full",
-                      "border-[3px] border-[#FAF8F3]",
-                      "shadow-[0_5px_18px_rgba(6,63,58,0.15)]",
+                      "shadow-[0_6px_20px_rgba(6,63,58,0.15)]",
+                      "transition-transform duration-300 hover:scale-105",
                       isGold
                         ? "bg-gold text-white"
                         : "bg-emerald text-white",
@@ -294,17 +269,72 @@ export default function PilgrimagePath() {
                       strokeWidth={1.6}
                     />
 
+                    {/* Small accent dot */}
                     <span
+                      aria-hidden="true"
                       className={[
                         "absolute -right-1 -top-1 h-3 w-3 rounded-full border-2 border-[#FAF8F3]",
                         isGold ? "bg-emerald" : "bg-gold",
                       ].join(" ")}
+                    />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* =======================================================
+            MOBILE JOURNEY
+           ======================================================= */}
+
+        <div className="relative mt-7 lg:hidden">
+          {/* Vertical rope */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute bottom-7 left-[29px] top-7 w-[2px]"
+          >
+            <div className="h-full rounded-full bg-gradient-to-b from-gold via-emerald to-gold" />
+            <div className="absolute inset-0 bg-gold/20 blur-sm" />
+          </div>
+
+          <div className="space-y-5">
+            {journeySteps.map((step) => {
+              const Icon = step.icon;
+              const isGold = step.accent === "gold";
+
+              return (
+                <div
+                  key={step.title}
+                  className="relative flex items-center gap-4"
+                >
+                  {/* Icon */}
+                  <div
+                    className={[
+                      "relative z-10 flex h-[58px] w-[58px] shrink-0 items-center justify-center rounded-full",
+                      "border-[3px] border-[#FAF8F3]",
+                      "shadow-[0_5px_18px_rgba(6,63,58,0.15)]",
+                      isGold
+                        ? "bg-gold text-white"
+                        : "bg-emerald text-white",
+                    ].join(" ")}
+                  >
+                    <Icon
+                      className="h-[22px] w-[22px]"
+                      strokeWidth={1.6}
+                    />
+
+                    <span
                       aria-hidden="true"
+                      className={[
+                        "absolute -right-1 -top-1 h-3 w-3 rounded-full border-2 border-[#FAF8F3]",
+                        isGold ? "bg-emerald" : "bg-gold",
+                      ].join(" ")}
                     />
                   </div>
 
                   {/* Text */}
-                  <div className="rounded-xl border border-deep-teal/[0.07] bg-white/55 px-4 py-3 shadow-[0_4px_15px_rgba(6,63,58,0.04)] backdrop-blur-sm">
+                  <div className="min-w-0 flex-1 rounded-xl border border-deep-teal/[0.07] bg-white/65 px-4 py-2.5 shadow-[0_4px_15px_rgba(6,63,58,0.04)] backdrop-blur-sm">
                     <p
                       className={[
                         "text-[9px] font-bold uppercase tracking-[0.2em]",
@@ -314,7 +344,7 @@ export default function PilgrimagePath() {
                       The journey
                     </p>
 
-                    <h3 className="mt-0.5 font-heading text-lg font-bold text-deep-teal">
+                    <h3 className="mt-0.5 font-heading text-lg font-bold leading-tight text-deep-teal">
                       {step.title}
                     </h3>
 
@@ -328,15 +358,15 @@ export default function PilgrimagePath() {
           </div>
         </div>
 
-        {/* =========================================================
+        {/* =======================================================
             BOTTOM MESSAGE
-         ========================================================= */}
+           ======================================================= */}
 
-        <div className="mt-10 flex justify-center sm:mt-12">
+        <div className="mt-6 flex justify-center sm:mt-7">
           <div className="flex items-center gap-2 text-center text-[11px] font-medium text-muted-teal">
-            <span className="h-px w-6 bg-gold/50" />
+            <span className="h-px w-5 bg-gold/50" />
             <span>One journey. Five meaningful steps.</span>
-            <span className="h-px w-6 bg-gold/50" />
+            <span className="h-px w-5 bg-gold/50" />
           </div>
         </div>
       </div>
