@@ -66,7 +66,7 @@ const ACCENT_STYLES: Record<
 
 export function TrustBadges() {
   return (
-    <section className="bg-warm-white py-4 sm:py-4 lg:py-8">
+    <section className="bg-white py-4 sm:py-4 lg:py-8">
       <div className="mx-auto grid max-w-6xl grid-cols-2 gap-3 px-4 sm:grid-cols-3 lg:grid-cols-5 lg:gap-4">
         {badges.map(({ icon: Icon, title, description, accent }) => {
           const styles = ACCENT_STYLES[accent];
