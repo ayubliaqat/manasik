@@ -20,7 +20,7 @@ export default function Home() {
       <FeaturedBlog/>
       <VerseOfTheDay/>
       <PilgrimagePath/>
-      {/* <WhoIsManasikFor/> */}
+      <WhoIsManasikFor/>
       <ExploreJourney/>
       <WhyManasik/>
     </main>

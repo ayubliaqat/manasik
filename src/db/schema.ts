@@ -18,7 +18,7 @@ export const users = pgTable("users", {
   id: uuid("id").defaultRandom().primaryKey(),
   name: text("name"),
   email: text("email").unique().notNull(),
-  password: text("password").notNull(),
+  password: text("password"),
   role: userRoleEnum("role").default("user").notNull(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
@@ -96,7 +96,6 @@ export const posts = pgTable(
   {
     id: uuid("id").defaultRandom().primaryKey(),
 
-    // Content
     title: text("title").notNull(),
     slug: text("slug").unique().notNull(),
     excerpt: text("excerpt"),
@@ -104,10 +103,13 @@ export const posts = pgTable(
     featuredImage: text("featured_image"),
     isFeatured: boolean("is_featured").default(false).notNull(),
     status: text("status").default("draft").notNull(),
-    categoryId: uuid("category_id").references(() => categories.id, { onDelete: "set null" }),
-    authorId: uuid("author_id").references(() => users.id, { onDelete: "set null" }),
+    categoryId: uuid("category_id").references(() => categories.id, {
+      onDelete: "set null",
+    }),
+    authorId: uuid("author_id").references(() => users.id, {
+      onDelete: "set null",
+    }),
 
-    // SEO
     seoTitle: text("seo_title"),
     metaDescription: text("meta_description"),
     focusKeyphrase: text("focus_keyphrase"),
@@ -119,7 +121,6 @@ export const posts = pgTable(
     seoScore: integer("seo_score").default(0),
     readabilityScore: integer("readability_score").default(0),
 
-    // Social
     ogTitle: text("og_title"),
     ogDescription: text("og_description"),
     ogImage: text("og_image"),
@@ -127,10 +128,8 @@ export const posts = pgTable(
     twitterDescription: text("twitter_description"),
     twitterImage: text("twitter_image"),
 
-    // Schema
     schemaType: text("schema_type").default("BlogPosting").notNull(),
 
-    // Timestamps
     publishedAt: timestamp("published_at"),
     createdAt: timestamp("created_at").defaultNow(),
     updatedAt: timestamp("updated_at").defaultNow(),

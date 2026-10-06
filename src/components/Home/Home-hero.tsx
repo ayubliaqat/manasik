@@ -92,7 +92,7 @@ export default function Hero() {
              focus:ring-offset-2 focus:ring-offset-deep-teal
              sm:px-6 sm:text-sm"
               >
-                Explore Guides
+                Explore Blogs
                 <ArrowRight
                   size={16}
                   className="transition-transform duration-300 group-hover:translate-x-1"
@@ -100,9 +100,9 @@ export default function Hero() {
               </Link>
 
               {/* Secondary — Glass with Gold Accent */}
-            <Link
-  href="/hajj-guide"
-  className="group inline-flex min-h-11 items-center justify-center
+              <Link
+                href="/tools"
+                className="group inline-flex min-h-11 items-center justify-center
              gap-2 rounded-full
              border border-gold/70
              bg-white/10
@@ -122,14 +122,13 @@ export default function Hero() {
              focus:ring-2 focus:ring-gold
              focus:ring-offset-2 focus:ring-offset-deep-teal
              sm:px-6 sm:text-sm"
->
-  <Compass
-    size={16}
-    className="text-gold transition-transform duration-300 group-hover:rotate-6"
-  />
-  View Hajj Guide
-</Link>
-
+              >
+                <Compass
+                  size={16}
+                  className="text-gold transition-transform duration-300 group-hover:rotate-6"
+                />
+                Calculate Your Costs
+              </Link>
             </div>
           </div>
         </div>

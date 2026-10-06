@@ -6,72 +6,104 @@ import { users } from "@/db/schema"
 import { eq } from "drizzle-orm"
 import bcrypt from "bcryptjs"
 
-// Tell TypeScript that our session and user objects include 'id' and an optional 'role'
+type UserRole = "user" | "admin" | "Editor"
+
 declare module "next-auth" {
   interface Session {
     user: {
       id: string
-      role?: string
+      role: UserRole
     } & DefaultSession["user"]
   }
+
   interface User {
-    role?: string
+    role?: UserRole
   }
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: DrizzleAdapter(db),
-  session: { strategy: "jwt" },
+
+  session: {
+    strategy: "jwt",
+  },
+
   providers: [
     Credentials({
-      name: "credentials",
+      name: "Credentials",
+
       credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
+        email: {
+          label: "Email",
+          type: "email",
+        },
+        password: {
+          label: "Password",
+          type: "password",
+        },
       },
-      authorize: async (credentials) => {
-        if (!credentials?.email || !credentials?.password) return null
+
+      async authorize(credentials) {
+        if (
+          typeof credentials?.email !== "string" ||
+          typeof credentials?.password !== "string"
+        ) {
+          return null
+        }
+
+        const email = credentials.email.trim().toLowerCase()
+        const password = credentials.password
 
         const [user] = await db
           .select()
           .from(users)
-          .where(eq(users.email, credentials.email as string))
+          .where(eq(users.email, email))
           .limit(1)
 
-        if (!user) return null
+        if (!user || !user.password) {
+          return null
+        }
 
         const passwordMatch = await bcrypt.compare(
-          credentials.password as string,
+          password,
           user.password
         )
 
-        if (!passwordMatch) return null
+        if (!passwordMatch) {
+          return null
+        }
 
         return {
           id: user.id,
           email: user.email,
           name: user.name,
+          image: user.image,
           role: user.role,
         }
       },
     }),
   ],
+
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id
         token.role = user.role
       }
+
       return token
     },
+
     async session({ session, token }) {
-      if (session.user && token) {
-        session.user.id = token.id as string
-        session.user.role = token.role as string
+      if (session.user) {
+        session.user.id = String(token.id ?? "")
+        session.user.role = (token.role as UserRole | undefined) ?? "user"
       }
+
       return session
     },
   },
+
   pages: {
     signIn: "/login",
   },
