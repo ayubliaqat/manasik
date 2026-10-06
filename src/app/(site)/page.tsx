@@ -1,4 +1,5 @@
 import ExploreJourney from "@/components/Home/ExploreJourney";
+import FaqSection from "@/components/Home/Faqsection";
 import FeaturedBlog from "@/components/Home/Featuredarticle";
 import HomeHero from "@/components/Home/Home-hero";
 import PilgrimagePath from "@/components/Home/PilgrimagePath";
@@ -23,6 +24,7 @@ export default function Home() {
       <WhoIsManasikFor/>
       <ExploreJourney/>
       <WhyManasik/>
+      <FaqSection/>
     </main>
   );
 }

@@ -63,7 +63,9 @@ const TOOLS: Tool[] = [
 
 export default function ToolsTabs({ initialTool }: { initialTool?: string }) {
   const [active, setActive] = useState(
-    TOOLS.some((t) => t.id === initialTool) ? (initialTool as string) : TOOLS[0].id
+    TOOLS.some((t) => t.id === initialTool)
+      ? (initialTool as string)
+      : TOOLS[0].id
   )
 
   const select = (id: string) => {
@@ -74,17 +76,21 @@ export default function ToolsTabs({ initialTool }: { initialTool?: string }) {
   const current = TOOLS.find((t) => t.id === active) ?? TOOLS[0]
 
   return (
-    <section className="bg-warm-white py-8 sm:py-10 lg:py-12">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        {/* Tab bar */}
+    <section className="w-full overflow-hidden bg-warm-white py-8 sm:py-10 lg:py-12">
+      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+        {/* Tabs */}
         <div
           role="tablist"
           aria-label="Planning tools"
-          className="flex gap-2 overflow-x-auto pb-1 sm:justify-center [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="
+            grid w-full grid-cols-2 gap-2
+            sm:flex sm:flex-wrap sm:justify-center sm:gap-2
+          "
         >
           {TOOLS.map((tool) => {
             const Icon = tool.icon
             const isActive = tool.id === active
+
             return (
               <button
                 key={tool.id}
@@ -94,11 +100,22 @@ export default function ToolsTabs({ initialTool }: { initialTool?: string }) {
                 aria-controls={`tool-${tool.id}`}
                 onClick={() => select(tool.id)}
                 className={`
-                  flex shrink-0 items-center gap-2
-                  rounded-full border px-4 py-2
-                  text-[13px] font-semibold
+                  flex min-h-11 w-full min-w-0
+                  items-center justify-center gap-1.5
+                  rounded-full border
+                  px-2.5 py-2
+                  text-[11px] font-semibold
+                  leading-tight
                   transition-colors duration-200
-                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald/50 focus-visible:ring-offset-2
+                  focus-visible:outline-none
+                  focus-visible:ring-2
+                  focus-visible:ring-emerald/50
+                  focus-visible:ring-offset-2
+                  sm:w-auto sm:min-h-10
+                  sm:shrink-0
+                  sm:gap-2
+                  sm:px-4
+                  sm:text-[13px]
                   ${
                     isActive
                       ? "border-emerald bg-emerald text-white"
@@ -106,29 +123,41 @@ export default function ToolsTabs({ initialTool }: { initialTool?: string }) {
                   }
                 `}
               >
-                <Icon className="h-4 w-4" aria-hidden="true" />
-                {tool.label}
+                <Icon
+                  className="h-4 w-4 shrink-0"
+                  aria-hidden="true"
+                />
+                <span className="truncate">{tool.label}</span>
               </button>
             )
           })}
         </div>
 
         {/* Active tool header */}
-        <div className="mb-6 mt-7 text-center sm:mb-7">
-          <h2 className="font-serif text-[22px] font-medium leading-[1.15] tracking-[-0.015em] text-deep-teal sm:text-[26px]">
+        <div className="mx-auto mb-6 mt-6 max-w-2xl px-1 text-center sm:mb-7 sm:mt-7">
+          <h2 className="font-serif text-[21px] font-medium leading-[1.15] tracking-[-0.015em] text-deep-teal sm:text-[26px]">
             {current.title}
           </h2>
-          <p className="mx-auto mt-1.5 max-w-lg text-[13px] leading-6 text-muted-teal sm:text-sm">
+
+          <p className="mx-auto mt-2 max-w-lg text-[13px] leading-5 text-muted-teal sm:text-sm sm:leading-6">
             {current.description}
           </p>
         </div>
 
-        {/* Panels (all stay mounted so entered values are kept) */}
-        {TOOLS.map(({ id, Component }) => (
-          <div key={id} id={`tool-${id}`} role="tabpanel" hidden={id !== active}>
-            <Component />
-          </div>
-        ))}
+        {/* Panels */}
+        <div className="w-full min-w-0">
+          {TOOLS.map(({ id, Component }) => (
+            <div
+              key={id}
+              id={`tool-${id}`}
+              role="tabpanel"
+              hidden={id !== active}
+              className="w-full min-w-0"
+            >
+              <Component />
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   )

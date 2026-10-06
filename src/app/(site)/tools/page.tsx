@@ -15,20 +15,20 @@ export default async function ToolsPage({
   const { tool } = await searchParams
 
   return (
-    <main>
+    <main className="w-full overflow-x-hidden">
       {/* Hero */}
-            {/* Hero */}
       <section className="relative overflow-hidden bg-deep-teal py-9 text-center sm:py-11 lg:py-12">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute left-1/2 top-[-220px] h-[430px] w-[140%] -translate-x-1/2 rounded-[0_0_50%_50%] bg-white/[0.04]"
         />
+
         <div
           aria-hidden="true"
           className="pointer-events-none absolute bottom-[-240px] left-1/2 h-[400px] w-[130%] -translate-x-1/2 rounded-[50%_50%_0_0] bg-gold/[0.06]"
         />
 
-        <div className="relative z-10 mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
+        <div className="relative z-10 mx-auto w-full max-w-2xl px-4 sm:px-6 lg:px-8">
           <span className="inline-block rounded-full border border-gold/50 px-3 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-gold">
             Free tools
           </span>
@@ -40,11 +40,12 @@ export default async function ToolsPage({
               text-[24px] font-medium
               leading-[1.15] tracking-[-0.015em]
               text-white
-              sm:text-[30px] lg:text-[34px]
+              sm:text-[30px]
+              lg:text-[34px]
             "
           >
             Plan Your Journey with{" "}
-            <span className="relative inline-block whitespace-nowrap text-[#2BB589]">
+            <span className="relative inline-block text-[#2BB589]">
               Confidence
               <svg
                 aria-hidden="true"
@@ -72,7 +73,10 @@ export default async function ToolsPage({
         </div>
       </section>
 
-      <ToolsTabs initialTool={tool} />
+      {/* Planning Tools */}
+      <section className="w-full min-w-0 overflow-hidden">
+        <ToolsTabs initialTool={tool} />
+      </section>
     </main>
   )
 }
