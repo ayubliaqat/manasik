@@ -111,76 +111,124 @@ export default async function PostPage({
   }
 
   return (
-    <article className="mx-auto max-w-5xl px-16 py-10 sm:px-6 sm:py-14">
-      {/* eslint-disable-next-line react/no-danger */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+    <div>
+      {/* Compact header banner with breadcrumb */}
+      <section className="relative overflow-hidden bg-deep-teal pb-14 pt-8 sm:pb-16 sm:pt-10">
+        {/* Faint decorative circles */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -left-16 -top-20 h-44 w-44 rounded-full border border-white/10 sm:h-52 sm:w-52"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-14 -top-14 h-40 w-40 rounded-full border border-gold/20 sm:h-48 sm:w-48"
+        />
 
-      {/* Breadcrumb */}
-      <nav aria-label="Breadcrumb" className="mb-5 flex flex-wrap items-center gap-2 text-xs text-muted-teal sm:text-sm">
-        <Link href="/" className="transition-colors hover:text-emerald">
-          Home
-        </Link>
-        <ChevronRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-        <Link href="/blog" className="transition-colors hover:text-emerald">
-          Blog
-        </Link>
-        <ChevronRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-        <span className="line-clamp-1 text-charcoal">{post.breadcrumbTitle || post.title}</span>
-      </nav>
-
-      {post.categoryName && (
-        <p className="mb-3 text-xs font-medium uppercase tracking-wide text-emerald">
-          {post.categoryName}
-        </p>
-      )}
-
-      <h1 className="mb-4 text-2xl font-semibold leading-tight text-charcoal sm:text-3xl lg:text-4xl">
-        {post.title}
-      </h1>
-
-      <div className="mb-8 flex flex-wrap items-center gap-3 text-sm text-muted-teal">
-        {post.authorName && <span>By {post.authorName}</span>}
-        {post.publishedAt && (
-          <>
-            <span aria-hidden="true">&middot;</span>
-            <time dateTime={new Date(post.publishedAt).toISOString()}>
-              {new Date(post.publishedAt).toLocaleDateString("en-US", {
-                month: "long",
-                day: "numeric",
-                year: "numeric",
-              })}
-            </time>
-          </>
-        )}
-      </div>
-
-      {post.featuredImage && (
-        <div className="relative mb-8 aspect-[16/9] w-full overflow-hidden rounded-2xl bg-soft-beige">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={post.featuredImage}
-            alt={post.title}
-            className="h-full w-full object-cover"
-          />
+        <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <nav
+            aria-label="Breadcrumb"
+            className="flex items-center justify-center gap-2 text-xs text-white/70 sm:text-sm"
+          >
+            <Link href="/" className="shrink-0 transition-colors hover:text-gold">
+              Home
+            </Link>
+            <ChevronRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+            <Link href="/blog" className="shrink-0 transition-colors hover:text-gold">
+              Blog
+            </Link>
+            <ChevronRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+          </nav>
         </div>
-      )}
 
-      <div
-        className="prose prose-sm sm:prose-base lg:prose-lg max-w-none text-charcoal prose-headings:text-charcoal prose-a:text-emerald"
-        dangerouslySetInnerHTML={{ __html: post.content }}
-      />
+        {/* Wavy bottom edge that melts into the page background */}
+        <div className="absolute inset-x-0 bottom-0 z-0 overflow-hidden leading-[0]">
+          <svg
+            viewBox="0 0 1440 160"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+            className="block h-16 w-full sm:h-20"
+          >
+            <path
+              d="M0,70 C280,135 620,25 960,80 C1160,112 1320,90 1440,58 L1440,160 L0,160 Z"
+              fill="var(--color-warm-white)"
+              opacity="0.4"
+            />
+            <path
+              d="M0,96 C300,28 560,142 900,86 C1120,50 1300,38 1440,70 L1440,160 L0,160 Z"
+              fill="var(--color-warm-white)"
+            />
+            <path
+              d="M0,96 C300,28 560,142 900,86 C1120,50 1300,38 1440,70"
+              fill="none"
+              stroke="var(--color-gold)"
+              strokeWidth="2"
+              opacity="0.6"
+            />
+          </svg>
+        </div>
+      </section>
 
-      <div className="mt-12 border-t border-soft-beige pt-6">
-        <Link
-          href="/blog"
-          className="inline-flex items-center gap-1.5 text-sm font-semibold text-emerald transition-colors hover:text-rich-emerald"
-        >
-          ← Back to all articles
-        </Link>
+      {/* Blog view */}
+      <div className="bg-warm-white">
+        <article className="mx-auto max-w-3xl px-4 pb-14 pt-8 sm:px-6 sm:pb-16 sm:pt-10 lg:px-8">
+          {/* eslint-disable-next-line react/no-danger */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          />
+
+          {post.categoryName && (
+            <p className="mb-3 text-xs font-medium uppercase tracking-wide text-emerald">
+              {post.categoryName}
+            </p>
+          )}
+
+          <h1 className="mb-4 text-2xl font-semibold leading-tight text-charcoal sm:text-3xl">
+            {post.title}
+          </h1>
+
+          <div className="mb-8 flex flex-wrap items-center gap-3 text-sm text-muted-teal">
+            {post.authorName && <span>By {post.authorName}</span>}
+            {post.publishedAt && (
+              <>
+                <span aria-hidden="true">&middot;</span>
+                <time dateTime={new Date(post.publishedAt).toISOString()}>
+                  {new Date(post.publishedAt).toLocaleDateString("en-US", {
+                    month: "long",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                </time>
+              </>
+            )}
+          </div>
+
+          {post.featuredImage && (
+            <div className="relative mb-8 aspect-[16/9] w-full overflow-hidden rounded-2xl bg-soft-beige">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={post.featuredImage}
+                alt={post.title}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          )}
+
+          <div
+            className="prose prose-sm sm:prose-base max-w-none text-charcoal prose-headings:font-semibold prose-headings:text-charcoal prose-a:text-emerald prose-li:marker:text-emerald [&_ul]:list-disc [&_ol]:list-decimal [&_ul]:pl-6 [&_ol]:pl-6 [&_li]:pl-1 [&_h2]:text-xl sm:[&_h2]:text-2xl [&_h3]:text-lg sm:[&_h3]:text-xl"
+            dangerouslySetInnerHTML={{ __html: post.content }}
+          />
+
+          <div className="mt-12 border-t border-soft-beige pt-6">
+            <Link
+              href="/blog"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-emerald transition-colors hover:text-rich-emerald"
+            >
+              ← Back to all articles
+            </Link>
+          </div>
+        </article>
       </div>
-    </article>
+    </div>
   )
 }

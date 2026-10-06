@@ -35,7 +35,7 @@ export default function BlogList({
 
   return (
     <section className="bg-warm-white pb-20 pt-8 sm:pb-24 sm:pt-10">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Category filter */}
         <nav
           aria-label="Filter articles by category"

@@ -1,11 +1,77 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { RotateCcw } from "lucide-react"
 import ToolField from "./ToolField"
 
-const CURRENCIES = ["GBP", "USD", "EUR", "SAR", "AED", "PKR"] as const
+const CURRENCIES = [
+  "GBP",
+  "USD",
+  "EUR",
+  "SAR",
+  "AED",
+  "PKR",
+  "CAD",
+  "AUD",
+  "INR",
+  "BDT",
+  "MYR",
+  "IDR",
+  "TRY",
+  "EGP",
+  "QAR",
+  "KWD",
+  "BHD",
+  "OMR",
+  "SGD",
+  "ZAR",
+] as const
 type Currency = (typeof CURRENCIES)[number]
+
+// Exchange rates (free, no API key, CORS enabled), cached because they update daily
+const FX_URL = "https://open.er-api.com/v6/latest/USD"
+const FX_CACHE_KEY = "manasik-fx-v1"
+const FX_CACHE_MS = 6 * 60 * 60 * 1000
+
+type Rates = Record<string, number>
+type FxStatus = "loading" | "live" | "error"
+
+async function fetchRates(signal: AbortSignal): Promise<Rates> {
+  try {
+    const raw = window.localStorage.getItem(FX_CACHE_KEY)
+    if (raw) {
+      const cached = JSON.parse(raw) as { rates: Rates; fetchedAt: number }
+      if (cached && Date.now() - cached.fetchedAt < FX_CACHE_MS) return cached.rates
+    }
+  } catch {
+    // ignore unreadable cache
+  }
+
+  const res = await fetch(FX_URL, { signal })
+  if (!res.ok) throw new Error("Exchange rate request failed")
+
+  const data = await res.json()
+  if (data?.result !== "success" || !data?.rates) {
+    throw new Error("Unexpected exchange rate response")
+  }
+
+  const rates: Rates = {}
+  for (const code of CURRENCIES) {
+    const rate = Number(data.rates[code])
+    if (rate > 0) rates[code] = rate
+  }
+
+  try {
+    window.localStorage.setItem(
+      FX_CACHE_KEY,
+      JSON.stringify({ rates, fetchedAt: Date.now() })
+    )
+  } catch {
+    // storage unavailable: ignore
+  }
+
+  return rates
+}
 
 const DEFAULTS = {
   travellers: "1",
@@ -26,6 +92,19 @@ const DEFAULTS = {
 type Values = typeof DEFAULTS
 type Key = keyof Values
 
+// Fields that hold money, so they are converted when the currency changes
+const MONEY_KEYS: Key[] = [
+  "flight",
+  "visa",
+  "rateMakkah",
+  "rateMadinah",
+  "food",
+  "transport",
+  "ziyarah",
+  "gifts",
+  "other",
+]
+
 const toNumber = (value: string) => {
   const n = parseFloat(value)
   return Number.isFinite(n) && n > 0 ? n : 0
@@ -45,15 +124,57 @@ function Heading({ children }: { children: React.ReactNode }) {
 export default function CostEstimator() {
   const [currency, setCurrency] = useState<Currency>("GBP")
   const [values, setValues] = useState<Values>(DEFAULTS)
+  const [rates, setRates] = useState<Rates | null>(null)
+  const [fxStatus, setFxStatus] = useState<FxStatus>("loading")
 
   const set = (key: Key) => (value: string) =>
     setValues((prev) => ({ ...prev, [key]: value }))
+
+  // Load exchange rates once
+  useEffect(() => {
+    const controller = new AbortController()
+
+    fetchRates(controller.signal)
+      .then((data) => {
+        setRates(data)
+        setFxStatus("live")
+      })
+      .catch(() => {
+        if (!controller.signal.aborted) setFxStatus("error")
+      })
+
+    return () => controller.abort()
+  }, [])
+
+  // Switching currency converts the amounts already entered, so 1,000 GBP
+  // becomes its USD equivalent instead of staying "1,000" in the new currency
+  const handleCurrency = (next: Currency) => {
+    const from = rates?.[currency]
+    const to = rates?.[next]
+
+    setCurrency(next)
+
+    if (!from || !to) return
+
+    const factor = to / from
+    setValues((prev) => {
+      const converted = { ...prev }
+      for (const key of MONEY_KEYS) {
+        const n = parseFloat(prev[key])
+        if (Number.isFinite(n) && n > 0) {
+          converted[key] = String(Math.round(n * factor * 100) / 100)
+        }
+      }
+      return converted
+    })
+  }
 
   const money = useMemo(
     () =>
       new Intl.NumberFormat("en-GB", {
         style: "currency",
         currency,
+        minimumFractionDigits: 0,
         maximumFractionDigits: 0,
       }),
     [currency]
@@ -100,7 +221,7 @@ export default function CostEstimator() {
             <select
               id="c-currency"
               value={currency}
-              onChange={(e) => setCurrency(e.target.value as Currency)}
+              onChange={(e) => handleCurrency(e.target.value as Currency)}
               className="mt-1.5 w-full rounded-xl border border-deep-teal/30 bg-white px-3 py-2.5 text-sm text-charcoal focus:border-emerald focus:outline-none focus:ring-2 focus:ring-emerald/30"
             >
               {CURRENCIES.map((c) => (
@@ -109,6 +230,12 @@ export default function CostEstimator() {
                 </option>
               ))}
             </select>
+            {fxStatus === "error" && (
+              <p className="mt-1.5 text-[11px] leading-relaxed text-muted-teal">
+                Live rates are unavailable, so amounts are not converted when you
+                change currency.
+              </p>
+            )}
           </div>
           <ToolField id="c-travellers" label="Travellers" unit="people" value={values.travellers} onChange={set("travellers")} />
           <ToolField id="c-nm" label="Nights in Makkah" unit="nights" value={values.nightsMakkah} onChange={set("nightsMakkah")} />
@@ -124,7 +251,7 @@ export default function CostEstimator() {
         <Heading>Hotels</Heading>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <ToolField id="c-rooms" label="Rooms needed" unit="rooms" value={values.rooms} onChange={set("rooms")} />
-          <span className="hidden sm:block" />
+          <span className="hidden sm:block" aria-hidden="true" />
           <ToolField id="c-rm" label="Makkah per room" hint="Price per night" unit={currency} value={values.rateMakkah} onChange={set("rateMakkah")} />
           <ToolField id="c-rd" label="Madinah per room" hint="Price per night" unit={currency} value={values.rateMadinah} onChange={set("rateMadinah")} />
         </div>
@@ -161,7 +288,8 @@ export default function CostEstimator() {
         </p>
         <p className="mt-1 text-xs text-white/80">
           {money.format(result.perPerson)} per person
-          {result.days > 0 && ` for ${result.days} nights`}
+          {result.days > 0 &&
+            ` for ${result.days} ${result.days === 1 ? "night" : "nights"}`}
         </p>
 
         <ul className="mt-5 space-y-3 border-t border-white/15 pt-4">
@@ -206,6 +334,21 @@ export default function CostEstimator() {
         <p className="mt-4 text-[11px] leading-relaxed text-white/60">
           This is an estimate only. Prices change by season and package, so
           check current rates before you book.
+          {fxStatus === "live" && (
+            <>
+              {" "}
+              Currency conversion by{" "}
+              <a
+                href="https://www.exchangerate-api.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline underline-offset-2 hover:text-gold"
+              >
+                Exchange Rate API
+              </a>
+              .
+            </>
+          )}
         </p>
       </aside>
     </div>

@@ -160,7 +160,7 @@ export default async function FeaturedBlog() {
             No articles published yet.
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
             {featuredPosts.map((post) => (
               <article
                 key={post.id}
@@ -200,10 +200,10 @@ export default async function FeaturedBlog() {
                 </Link>
 
                 {/* Content */}
-                <div className="flex flex-1 flex-col px-1 pb-0.5 pt-3">
+                <div className="flex flex-1 flex-col pt-3">
                   <h3
                     className="
-                      line-clamp-2
+                      line-clamp-2 min-h-[2.7em]
                       font-heading text-[15px] font-semibold
                       leading-[1.35] text-charcoal
                       transition-colors duration-200

@@ -73,22 +73,22 @@ export default async function BlogPage() {
         {/* Layered wavy bottom edge */}
         <div className="absolute inset-x-0 bottom-0 z-0 overflow-hidden leading-[0]">
           <svg
-            viewBox="0 0 1440 120"
+            viewBox="0 0 1440 160"
             preserveAspectRatio="none"
             aria-hidden="true"
-            className="block h-10 w-full sm:h-14"
+            className="block h-16 w-full sm:h-20"
           >
             <path
-              d="M0,60 C240,110 480,30 720,65 C960,100 1200,35 1440,70 L1440,120 L0,120 Z"
-              fill="var(--color-deep-teal)"
-              opacity="0.5"
+              d="M0,70 C280,135 620,25 960,80 C1160,112 1320,90 1440,58 L1440,160 L0,160 Z"
+              fill="var(--color-warm-white)"
+              opacity="0.4"
             />
             <path
-              d="M0,75 C240,25 480,105 720,65 C960,25 1200,95 1440,55 L1440,120 L0,120 Z"
-              fill="var(--color-deep-teal)"
+              d="M0,96 C300,28 560,142 900,86 C1120,50 1300,38 1440,70 L1440,160 L0,160 Z"
+              fill="var(--color-warm-white)"
             />
             <path
-              d="M0,75 C240,25 480,105 720,65 C960,25 1200,95 1440,55"
+              d="M0,96 C300,28 560,142 900,86 C1120,50 1300,38 1440,70"
               fill="none"
               stroke="var(--color-gold)"
               strokeWidth="2"
