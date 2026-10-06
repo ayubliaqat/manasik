@@ -1,4 +1,3 @@
-
 const VERSES = [
   { ref: "2:127", context: "Ibrahim and Ismail raising the Kaaba" },
   { ref: "2:201", context: "A dua made during Tawaf" },
@@ -110,92 +109,96 @@ export default async function VerseOfTheDay() {
 
   return (
     <section className="relative overflow-hidden bg-dark-teal py-10 sm:py-12 lg:py-14">
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none absolute
-          left-1/2 top-[-180px]
-          h-[300px] w-[120%]
-          -translate-x-1/2
-          rounded-[0_0_50%_50%]
-          bg-gradient-to-br
-          from-emerald/[0.14]
-          via-emerald/[0.05]
-          to-gold/[0.08]
-        "
-      />
-
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <p
-            className="
-              text-[10px]
-              font-bold
-              uppercase
-              tracking-[0.24em]
-              text-gold
-              sm:text-xs
-            "
-          >
-            {day} · {date}
-          </p>
+          {/* Heading: the top curve is anchored to this block so the
+              date and h2 always sit inside it */}
+          <div className="relative pb-5 sm:pb-6">
+            <div
+              aria-hidden="true"
+              className="
+                pointer-events-none absolute
+                bottom-0 left-1/2 -z-10
+                h-[300px] w-[220vw] sm:w-[160vw] lg:w-[120vw]
+                -translate-x-1/2
+                rounded-[0_0_50%_50%]
+                bg-gradient-to-br
+                from-emerald/[0.14]
+                via-emerald/[0.05]
+                to-gold/[0.08]
+              "
+            />
 
-     <h2
-  className="
-    mt-3
-    font-serif
-    text-[25px]
-    font-medium
-    leading-[1.2]
-    tracking-[-0.015em]
-    text-white
-    sm:text-[30px]
-    md:text-[34px]
-    lg:text-[38px]
-  "
->
-  Verse{" "}
-  <span className="relative inline-block whitespace-nowrap text-emerald">
-    of the Day
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 120 10"
-      preserveAspectRatio="none"
-      fill="none"
-      className="
-        pointer-events-none absolute
-        left-1/2 top-full
-        mt-[0.05em]
-        h-[0.2em] w-[75%]
-        -translate-x-1/2
-        text-gold
-      "
-    >
-      <path
-        d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
-        stroke="currentColor"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        vectorEffect="non-scaling-stroke"
-      />
-    </svg>
-  </span>
-</h2>
+            <p
+              className="
+                text-[10px]
+                font-bold
+                uppercase
+                tracking-[0.24em]
+                text-gold
+                sm:text-xs
+              "
+            >
+              {day} · {date}
+            </p>
+
+            <h2
+              className="
+                mt-3
+                font-serif
+                text-[24px]
+                font-medium
+                leading-[1.2]
+                tracking-[-0.015em]
+                text-white
+                sm:text-[28px]
+                md:text-[32px]
+                lg:text-[36px]
+              "
+            >
+              Verse{" "}
+              <span className="relative inline-block whitespace-nowrap text-emerald">
+                of the Day
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 120 10"
+                  preserveAspectRatio="none"
+                  fill="none"
+                  className="
+                    pointer-events-none absolute
+                    left-1/2 top-full
+                    mt-[0.05em]
+                    h-[0.2em] w-[75%]
+                    -translate-x-1/2
+                    text-gold
+                  "
+                >
+                  <path
+                    d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    vectorEffect="non-scaling-stroke"
+                  />
+                </svg>
+              </span>
+            </h2>
+          </div>
 
           <p
             dir="rtl"
             lang="ar"
             className="
-              mt-7
+              mt-5
               font-serif
-              text-[24px]
-              leading-[2]
+              text-[22px]
+              leading-[1.9]
               text-white
-              sm:mt-8
-              sm:text-[28px]
-              md:text-[32px]
-              lg:text-[36px]
+              sm:mt-6
+              sm:text-[26px]
+              md:text-[30px]
+              lg:text-[34px]
             "
           >
             {verse.arabic}
@@ -204,12 +207,12 @@ export default async function VerseOfTheDay() {
           <p
             className="
               mx-auto
-              mt-5
+              mt-4
               max-w-2xl
               text-sm
               leading-7
               text-white/75
-              sm:mt-6
+              sm:mt-5
               sm:text-[15px]
               lg:text-base
             "
@@ -217,7 +220,7 @@ export default async function VerseOfTheDay() {
             “{verse.translation}”
           </p>
 
-          <p className="mt-4 text-xs font-medium text-gold sm:text-[13px]">
+          <p className="mt-3 text-xs font-medium text-gold sm:text-[13px]">
             {verse.reference}
           </p>
         </div>

@@ -1,6 +1,7 @@
 import {
   Backpack,
   BookOpenCheck,
+  ClipboardList,
   HeartHandshake,
   Sparkles,
 } from "lucide-react";
@@ -21,7 +22,7 @@ const journeySteps = [
   {
     title: "Plan",
     description: "Organise the practical details.",
-    icon: Backpack,
+    icon: ClipboardList,
     accent: "emerald",
   },
   {
@@ -42,14 +43,8 @@ export default function PilgrimagePath() {
   return (
     <section className="relative overflow-hidden border-y border-emerald/15 bg-white py-10 sm:py-12 lg:py-14">
       {/* =========================================================
-          BACKGROUND CURVES
+          BACKGROUND
          ========================================================= */}
-
-      {/* Top curved area */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-[-185px] h-[350px] w-[125%] -translate-x-1/2 rounded-[0_0_50%_50%] bg-gradient-to-br from-emerald/[0.08] via-emerald/[0.035] to-gold/[0.07]"
-      />
 
       {/* Bottom curved area */}
       <div
@@ -75,28 +70,33 @@ export default function PilgrimagePath() {
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* =======================================================
             HEADING
+            The top curve is anchored to this block so the h2 and
+            description always sit inside it.
            ======================================================= */}
 
-        <div className="mx-auto max-w-2xl text-center">
-
+        <div className="relative mx-auto max-w-2xl pb-6 text-center sm:pb-8">
+          {/* Top curved area */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute bottom-0 left-1/2 -z-10 h-[350px] w-[220vw] -translate-x-1/2 rounded-[0_0_50%_50%] bg-gradient-to-br from-emerald/[0.08] via-emerald/[0.035] to-gold/[0.07] sm:w-[160vw] lg:w-[125vw]"
+          />
 
           <h2
             className="
               text-balance
               font-serif
-              text-[26px] font-medium
+              text-[24px] font-medium
               leading-[1.15]
               tracking-[-0.015em]
               text-deep-teal
-              sm:text-[32px]
-              md:text-[36px]
-              lg:text-[42px]
+              sm:text-[28px]
+              md:text-[32px]
+              lg:text-[38px]
             "
           >
             Your journey,{" "}
             <span className="relative inline-block whitespace-nowrap text-emerald">
               step by step.
-
               {/* Gold hand-drawn underline */}
               <svg
                 aria-hidden="true"
@@ -124,7 +124,7 @@ export default function PilgrimagePath() {
             </span>
           </h2>
 
-          <p className="mx-auto mt-5 max-w-xl text-sm leading-6 text-muted-teal sm:text-[15px]">
+          <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-muted-teal sm:text-[15px]">
             From preparation to worship, follow a clear path designed to help
             you understand what comes next.
           </p>
@@ -134,7 +134,7 @@ export default function PilgrimagePath() {
             DESKTOP JOURNEY
            ======================================================= */}
 
-        <div className="relative mx-auto mt-6 hidden max-w-6xl lg:block">
+        <div className="relative mx-auto mt-4 hidden max-w-6xl lg:block">
           {/* Rope */}
           <div
             aria-hidden="true"
@@ -228,10 +228,10 @@ export default function PilgrimagePath() {
                         isGold ? "text-gold" : "text-emerald",
                       ].join(" ")}
                     >
-                      {isAbove ? "Begin" : "Continue"}
+                      Step {index + 1}
                     </p>
 
-                    <h3 className="font-heading text-[18px] font-bold leading-tight text-deep-teal">
+                    <h3 className="font-heading text-[17px] font-semibold leading-tight text-deep-teal">
                       {step.title}
                     </h3>
 
@@ -288,18 +288,18 @@ export default function PilgrimagePath() {
             MOBILE JOURNEY
            ======================================================= */}
 
-        <div className="relative mt-7 lg:hidden">
+        <div className="relative mt-5 lg:hidden">
           {/* Vertical rope */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute bottom-7 left-[29px] top-7 w-[2px]"
+            className="pointer-events-none absolute bottom-7 left-[28px] top-7 w-[2px]"
           >
             <div className="h-full rounded-full bg-gradient-to-b from-gold via-emerald to-gold" />
             <div className="absolute inset-0 bg-gold/20 blur-sm" />
           </div>
 
-          <div className="space-y-5">
-            {journeySteps.map((step) => {
+          <div className="space-y-4">
+            {journeySteps.map((step, index) => {
               const Icon = step.icon;
               const isGold = step.accent === "gold";
 
@@ -341,10 +341,10 @@ export default function PilgrimagePath() {
                         isGold ? "text-gold" : "text-emerald",
                       ].join(" ")}
                     >
-                      The journey
+                      Step {index + 1}
                     </p>
 
-                    <h3 className="mt-0.5 font-heading text-lg font-bold leading-tight text-deep-teal">
+                    <h3 className="mt-0.5 font-heading text-base font-semibold leading-tight text-deep-teal">
                       {step.title}
                     </h3>
 
@@ -362,11 +362,9 @@ export default function PilgrimagePath() {
             BOTTOM MESSAGE
            ======================================================= */}
 
-        <div className="mt-6 flex justify-center sm:mt-7">
+        <div className="mt-5 flex justify-center sm:mt-6">
           <div className="flex items-center gap-2 text-center text-[11px] font-medium text-muted-teal">
-            <span className="h-px w-5 bg-gold/50" />
-            <span>One journey. Five meaningful steps.</span>
-            <span className="h-px w-5 bg-gold/50" />
+          
           </div>
         </div>
       </div>
