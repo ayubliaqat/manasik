@@ -67,18 +67,23 @@ const postInputSchema = z.object({
 
 export type PostInput = z.infer<typeof postInputSchema>
 
+/**
+ * Ensures the current user is an admin or editor.
+ *
+ * The role is normalized to a lowercase string before comparing, so this
+ * compiles regardless of how the session role type is declared and handles
+ * "Editor" / "editor" / "Admin" / "admin" consistently.
+ */
 async function requireEditorOrAdmin() {
   const session = await auth()
-  const role = session?.user?.role
+  const userId = session?.user?.id
+  const role = String(session?.user?.role ?? "").toLowerCase()
 
-  if (
-    !session?.user?.id ||
-    (role !== "admin" && role !== "Editor" && role !== "editor")
-  ) {
+  if (!userId || (role !== "admin" && role !== "editor")) {
     throw new Error("Not authorized to manage posts")
   }
 
-  return session
+  return { session, userId }
 }
 
 /**
@@ -88,7 +93,7 @@ async function requireEditorOrAdmin() {
  * If anything fails, the entire operation is rolled back.
  */
 export async function createPost(rawData: PostInput) {
-  const session = await requireEditorOrAdmin()
+  const { userId } = await requireEditorOrAdmin()
   const data = postInputSchema.parse(rawData)
 
   const slug = data.slug || slugify(data.title)
@@ -111,7 +116,7 @@ export async function createPost(rawData: PostInput) {
           status: data.status,
 
           categoryId: data.categoryId || null,
-          authorId: session.user.id,
+          authorId: userId,
 
           // SEO
           seoTitle: data.seoTitle || null,
@@ -139,10 +144,7 @@ export async function createPost(rawData: PostInput) {
           schemaType: data.schemaType,
 
           // Publishing
-          publishedAt:
-            data.status === "published"
-              ? new Date()
-              : null,
+          publishedAt: data.status === "published" ? new Date() : null,
         })
         .returning()
 
@@ -210,10 +212,7 @@ export async function createPost(rawData: PostInput) {
 /**
  * Update an existing blog post.
  */
-export async function updatePost(
-  postId: string,
-  rawData: PostInput
-) {
+export async function updatePost(postId: string, rawData: PostInput) {
   await requireEditorOrAdmin()
 
   const data = postInputSchema.parse(rawData)
@@ -300,9 +299,7 @@ export async function updatePost(
       }
 
       // Replace existing tags
-      await tx
-        .delete(postTags)
-        .where(eq(postTags.postId, postId))
+      await tx.delete(postTags).where(eq(postTags.postId, postId))
 
       if (data.tagIds.length > 0) {
         await tx.insert(postTags).values(
