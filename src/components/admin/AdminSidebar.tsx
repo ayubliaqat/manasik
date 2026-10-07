@@ -10,13 +10,18 @@ import {
   Users,
   FolderTree,
   Tag,
-  MessageSquare,
   Moon,
   PanelLeftClose,
   PanelLeftOpen,
 } from "lucide-react"
+import { can, type Permission, type Role } from "@/lib//supabase/permissions"
 
-const navItems = [
+const navItems: {
+  label: string
+  href: string
+  icon: typeof LayoutDashboard
+  permission?: Permission
+}[] = [
   {
     label: "Dashboard",
     href: "/admin/dashboard",
@@ -31,32 +36,35 @@ const navItems = [
     label: "Add Post",
     href: "/admin/blog/new",
     icon: PlusCircle,
+    permission: "posts:create",
   },
   {
     label: "All Users",
     href: "/admin/users",
     icon: Users,
+    permission: "users:manage",
   },
   {
     label: "Categories",
     href: "/admin/categories",
     icon: FolderTree,
+    permission: "taxonomy:manage",
   },
   {
     label: "Tags",
     href: "/admin/tags",
     icon: Tag,
-  },
-  {
-    label: "Messages",
-    href: "/admin/messages",
-    icon: MessageSquare,
+    permission: "taxonomy:manage",
   },
 ]
 
-export function AdminSidebar() {
+export function AdminSidebar({ role }: { role: Role }) {
   const pathname = usePathname()
   const [collapsed, setCollapsed] = useState(false)
+
+  const visibleItems = navItems.filter(
+    (item) => !item.permission || can(role, item.permission)
+  )
 
   return (
     <aside
@@ -98,7 +106,7 @@ export function AdminSidebar() {
           </p>
         )}
 
-        {navItems.map((item) => {
+        {visibleItems.map((item) => {
           const Icon = item.icon
 
           const isActive =

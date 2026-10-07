@@ -1,5 +1,6 @@
 ﻿import { redirect } from "next/navigation"
 import { auth } from "@/auth"
+import { isRole } from "@/lib/supabase/permissions"
 import { AdminSidebar } from "@/components/admin/AdminSidebar"
 import { AdminTopbar } from "@/components/admin/AdminTopbar"
 
@@ -14,15 +15,17 @@ export default async function AdminLayout({
     redirect("/login")
   }
 
-  if (session.user.role !== "admin") {
-    redirect("/")
+  const role = session.user.role
+
+  if (!isRole(role)) {
+    redirect("/login")
   }
 
   return (
     <div className="min-h-screen flex bg-soft-beige">
-      <AdminSidebar />
+      <AdminSidebar role={role} />
       <div className="flex-1 flex flex-col min-w-0">
-        <AdminTopbar userName={session.user.name ?? "Admin"} />
+        <AdminTopbar userName={session.user.name ?? "User"} />
         <main className="flex-1 p-6">{children}</main>
       </div>
     </div>

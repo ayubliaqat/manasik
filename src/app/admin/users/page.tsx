@@ -1,13 +1,51 @@
 ﻿import Link from "next/link"
+import { redirect } from "next/navigation"
 import { db } from "@/db"
 import { users } from "@/db/schema"
-import { desc } from "drizzle-orm"
+import { desc, eq } from "drizzle-orm"
 import { Search } from "lucide-react"
+import { auth } from "@/auth"
+import { can } from "@/lib/supabase/permissions"
 import { UserRowActions } from "@/components/admin/UserRowActions"
 
+const ROLE_STYLES: Record<string, string> = {
+  admin: "bg-gold/15 text-gold",
+  editor: "bg-emerald/10 text-emerald",
+  author: "bg-muted-teal/10 text-muted-teal",
+}
+
+const ROLE_LABELS: Record<string, string> = {
+  admin: "Admin",
+  editor: "Editor",
+  author: "Author",
+}
+
 export default async function AdminUsersPage() {
+  const session = await auth()
+  const callerId = session?.user?.id
+
+  if (!callerId) {
+    redirect("/login")
+  }
+
+  const [caller] = await db
+    .select({ role: users.role })
+    .from(users)
+    .where(eq(users.id, callerId))
+    .limit(1)
+
+  if (!caller || !can(caller.role, "users:manage")) {
+    redirect("/admin/dashboard")
+  }
+
   const allUsers = await db
-    .select()
+    .select({
+      id: users.id,
+      name: users.name,
+      email: users.email,
+      role: users.role,
+      createdAt: users.createdAt,
+    })
     .from(users)
     .orderBy(desc(users.createdAt))
 
@@ -62,6 +100,10 @@ export default async function AdminUsersPage() {
                 </th>
 
                 <th className="text-left font-medium text-muted-teal px-6 py-3.5">
+                  Role
+                </th>
+
+                <th className="text-left font-medium text-muted-teal px-6 py-3.5">
                   Joined
                 </th>
 
@@ -75,7 +117,7 @@ export default async function AdminUsersPage() {
               {allUsers.length === 0 && (
                 <tr>
                   <td
-                    colSpan={4}
+                    colSpan={5}
                     className="px-6 py-10 text-center text-muted-teal"
                   >
                     No users found.
@@ -104,6 +146,16 @@ export default async function AdminUsersPage() {
 
                   <td className="px-6 py-4 text-muted-teal">
                     {user.email}
+                  </td>
+
+                  <td className="px-6 py-4">
+                    <span
+                      className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${
+                        ROLE_STYLES[user.role] ?? "bg-muted-teal/10 text-muted-teal"
+                      }`}
+                    >
+                      {ROLE_LABELS[user.role] ?? user.role}
+                    </span>
                   </td>
 
                   <td className="px-6 py-4 text-muted-teal">

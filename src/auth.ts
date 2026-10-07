@@ -6,13 +6,13 @@ import { users } from "@/db/schema"
 import { eq } from "drizzle-orm"
 import bcrypt from "bcryptjs"
 
-type UserRole = "user" | "admin" | "Editor"
+type UserRole = "author" | "editor" | "admin"
 
 declare module "next-auth" {
   interface Session {
     user: {
       id: string
-      role: UserRole
+      role?: UserRole
     } & DefaultSession["user"]
   }
 
@@ -97,7 +97,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async session({ session, token }) {
       if (session.user) {
         session.user.id = String(token.id ?? "")
-        session.user.role = (token.role as UserRole | undefined) ?? "user"
+        session.user.role = token.role as UserRole | undefined
       }
 
       return session

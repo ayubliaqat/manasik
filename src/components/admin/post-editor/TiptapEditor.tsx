@@ -40,8 +40,9 @@ import {
   Code,
   TableIcon,
   Trash2,
+  Loader2,
 } from "lucide-react"
-import { useState } from "react"
+import { useRef, useState } from "react"
 
 const headingOptions = [
   { label: "Paragraph", value: "paragraph" },
@@ -63,18 +64,21 @@ function ToolbarButton({
   active,
   children,
   title,
+  disabled,
 }: {
   onClick: () => void
   active?: boolean
   children: React.ReactNode
   title: string
+  disabled?: boolean
 }) {
   return (
     <button
       type="button"
       onClick={onClick}
       title={title}
-      className={`h-8 w-8 flex items-center justify-center rounded-lg transition ${
+      disabled={disabled}
+      className={`h-8 w-8 flex items-center justify-center rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed ${
         active
           ? "bg-emerald/15 text-emerald"
           : "text-muted-teal hover:bg-soft-beige/60 hover:text-charcoal"
@@ -93,6 +97,8 @@ export function TiptapEditor({
   onChange: (html: string) => void
 }) {
   const [tableMenuOpen, setTableMenuOpen] = useState(false)
+  const [isUploadingImage, setIsUploadingImage] = useState(false)
+  const imageInputRef = useRef<HTMLInputElement>(null)
 
   const editor = useEditor({
     immediatelyRender: false,
@@ -182,8 +188,67 @@ export function TiptapEditor({
     tiptapEditor.chain().focus().toggleHeading({ level }).run()
   }
 
+  async function handleImageUpload(file: File) {
+    if (!file.type.startsWith("image/")) {
+      alert("Please select an image file.")
+      return
+    }
+
+    setIsUploadingImage(true)
+
+    try {
+      const formData = new FormData()
+      formData.append("file", file)
+
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        throw new Error(data.error || "Image upload failed")
+      }
+
+      if (!data.url) {
+        throw new Error("Upload succeeded but no image URL was returned")
+      }
+
+      tiptapEditor
+        .chain()
+        .focus()
+        .setImage({ src: data.url })
+        .run()
+    } catch (err) {
+      console.error("Image upload failed:", err)
+      alert(err instanceof Error ? err.message : "Image upload failed")
+    } finally {
+      setIsUploadingImage(false)
+
+      if (imageInputRef.current) {
+        imageInputRef.current.value = ""
+      }
+    }
+  }
+
   return (
     <div className="rounded-xl border border-soft-beige overflow-hidden">
+      {/* Hidden image input */}
+      <input
+        ref={imageInputRef}
+        type="file"
+        accept="image/jpeg,image/png,image/webp,image/gif"
+        className="hidden"
+        onChange={(e) => {
+          const file = e.target.files?.[0]
+
+          if (file) {
+            handleImageUpload(file)
+          }
+        }}
+      />
+
       {/* Toolbar */}
       <div className="flex items-center gap-0.5 flex-wrap border-b border-soft-beige bg-soft-beige/30 px-2 py-1.5">
         {/* Heading */}
@@ -398,20 +463,17 @@ export function TiptapEditor({
 
         {/* Image */}
         <ToolbarButton
-          title="Insert Image"
+          title={isUploadingImage ? "Uploading image..." : "Insert Image"}
+          disabled={isUploadingImage}
           onClick={() => {
-            const url = window.prompt("Enter image URL")
-
-            if (url) {
-              tiptapEditor
-                .chain()
-                .focus()
-                .setImage({ src: url })
-                .run()
-            }
+            imageInputRef.current?.click()
           }}
         >
-          <ImageIcon className="h-3.5 w-3.5" />
+          {isUploadingImage ? (
+            <Loader2 className="h-3.5 w-3.5 animate-spin" />
+          ) : (
+            <ImageIcon className="h-3.5 w-3.5" />
+          )}
         </ToolbarButton>
 
         {/* Table */}

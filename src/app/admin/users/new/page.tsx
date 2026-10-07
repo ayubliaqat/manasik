@@ -107,10 +107,11 @@ export default function NewUserPage() {
                 <select
                   id="role"
                   name="role"
-                  defaultValue="user"
+                  defaultValue="author"
                   className="h-11.5 w-full rounded-full border border-soft-beige bg-warm-white px-4 text-xs text-charcoal outline-none transition-all hover:border-muted-teal/30 focus:border-emerald/60 focus:bg-card focus:ring-4 focus:ring-emerald/10"
                 >
-                  <option value="user">User</option>
+                  <option value="author">Author</option>
+                  <option value="editor">Editor</option>
                   <option value="admin">Admin</option>
                 </select>
               </div>

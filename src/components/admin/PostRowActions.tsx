@@ -8,9 +8,13 @@ import { deletePost } from "@/app/admin/blog/actions"
 export function PostRowActions({
   postId,
   slug,
+  canEdit,
+  canDelete,
 }: {
   postId: string
   slug: string
+  canEdit: boolean
+  canDelete: boolean
 }) {
   const [isPending, startTransition] = useTransition()
   const [confirmDelete, setConfirmDelete] = useState(false)
@@ -31,45 +35,53 @@ export function PostRowActions({
     })
   }
 
+  const iconBtn =
+    "inline-flex items-center justify-center h-7 w-7 shrink-0 rounded-full border border-emerald/25 text-muted-teal transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald/40"
+
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-1">
       <Link
         href={`/blog/${slug}`}
         target="_blank"
         rel="noopener noreferrer"
         title="View post"
-        className="flex items-center justify-center h-8 w-8 rounded-full bg-soft-beige/60 text-charcoal hover:bg-soft-beige transition"
+        aria-label="View post"
+        className={`${iconBtn} hover:bg-soft-beige/70 hover:text-charcoal`}
       >
-        <Eye className="h-3.5 w-3.5" />
+        <Eye className="h-3.5 w-3.5" aria-hidden="true" />
       </Link>
 
-      <Link
-        href={`/admin/posts/${postId}/edit`}
-        title="Edit post"
-        className="flex items-center gap-1.5 rounded-full bg-soft-beige/60 text-charcoal hover:bg-soft-beige px-3 py-1.5 text-xs font-medium transition"
-      >
-        <Pencil className="h-3 w-3" />
-        Edit
-      </Link>
+      {canEdit && (
+        <Link
+          href={`/admin/posts/${postId}/edit`}
+          title="Edit post"
+          aria-label="Edit post"
+          className={`${iconBtn} hover:bg-soft-beige/70 hover:text-charcoal`}
+        >
+          <Pencil className="h-3.5 w-3.5" aria-hidden="true" />
+        </Link>
+      )}
 
-      <button
-        type="button"
-        onClick={handleDelete}
-        disabled={isPending}
-        className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition disabled:opacity-60 ${
-          confirmDelete
-            ? "bg-red-600 text-white"
-            : "bg-red-50 text-red-600 hover:bg-red-100"
-        }`}
-      >
-        {isPending ? (
-          <Loader2 className="h-3 w-3 animate-spin" />
-        ) : (
-          <Trash2 className="h-3 w-3" />
-        )}
-
-        {confirmDelete ? "Confirm?" : "Delete"}
-      </button>
+      {canDelete && (
+        <button
+          type="button"
+          onClick={handleDelete}
+          disabled={isPending}
+          title={confirmDelete ? "Click again to confirm delete" : "Delete post"}
+          aria-label={confirmDelete ? "Confirm delete post" : "Delete post"}
+          className={`${iconBtn} disabled:opacity-60 ${
+            confirmDelete
+              ? "bg-red-600 text-white hover:bg-red-600"
+              : "text-red-600 hover:bg-red-50 hover:text-red-600"
+          }`}
+        >
+          {isPending ? (
+            <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden="true" />
+          ) : (
+            <Trash2 className="h-3.5 w-3.5" aria-hidden="true" />
+          )}
+        </button>
+      )}
     </div>
   )
 }

@@ -7,12 +7,14 @@ export function PublishBox({
   status,
   isSaving,
   isEditing,
+  canPublish,
   onSave,
   onCancel,
 }: {
   status: PostStatus
   isSaving: boolean
   isEditing: boolean
+  canPublish: boolean
   onSave: (status: PostStatus) => void
   onCancel: () => void
 }) {
@@ -21,31 +23,44 @@ export function PublishBox({
       <h3 className="text-sm font-semibold text-charcoal mb-4">Publish</h3>
 
       <div className="mb-4">
-        <label className="block text-xs font-medium text-charcoal mb-1.5">Status</label>
+        <label className="block text-xs font-medium text-charcoal mb-1.5">
+          Status
+        </label>
+
         <div className="flex items-center gap-2">
           <span
             className={`h-2 w-2 rounded-full ${
               status === "published"
                 ? "bg-emerald"
                 : status === "scheduled"
-                ? "bg-gold"
-                : "bg-muted-teal"
+                  ? "bg-gold"
+                  : "bg-muted-teal"
             }`}
           />
-          <span className="text-sm text-charcoal capitalize">{status}</span>
+
+          <span className="text-sm text-charcoal capitalize">
+            {status}
+          </span>
         </div>
       </div>
 
       <div className="space-y-2">
-        <button
-          type="button"
-          disabled={isSaving}
-          onClick={() => onSave("published")}
-          className="w-full flex items-center justify-center gap-2 rounded-full bg-emerald hover:opacity-90 text-warm-white font-medium py-2.5 text-sm transition disabled:opacity-60"
-        >
-          {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
-          {isEditing ? "Update & Publish" : "Publish"}
-        </button>
+        {canPublish && (
+          <button
+            type="button"
+            disabled={isSaving}
+            onClick={() => onSave("published")}
+            className="w-full flex items-center justify-center gap-2 rounded-full bg-emerald hover:opacity-90 text-warm-white font-medium py-2.5 text-sm transition disabled:opacity-60"
+          >
+            {isSaving ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Send className="h-4 w-4" />
+            )}
+
+            {isEditing ? "Update & Publish" : "Publish"}
+          </button>
+        )}
 
         <button
           type="button"

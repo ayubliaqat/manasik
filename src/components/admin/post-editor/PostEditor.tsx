@@ -11,8 +11,16 @@ import { PublishBox } from "./PublishBox"
 import { SeoAnalysisBox } from "./SeoAnalysisBox"
 import { createPost, updatePost } from "@/app/admin/blog/actions"
 
-export type Category = { id: string; name: string }
-export type TagOption = { id: string; name: string }
+export type Category = {
+  id: string
+  name: string
+}
+
+export type TagOption = {
+  id: string
+  name: string
+}
+
 export type PostStatus = "draft" | "published" | "scheduled"
 
 export type PostFormData = {
@@ -25,6 +33,8 @@ export type PostFormData = {
   status: PostStatus
   categoryId: string
   tagIds: string[]
+
+  // SEO
   seoTitle: string
   metaDescription: string
   focusKeyphrase: string
@@ -35,12 +45,18 @@ export type PostFormData = {
   breadcrumbTitle: string
   seoScore: number
   readabilityScore: number
+
+  // Open Graph
   ogTitle: string
   ogDescription: string
   ogImage: string
+
+  // Twitter
   twitterTitle: string
   twitterDescription: string
   twitterImage: string
+
+  // Schema
   schemaType: string
 }
 
@@ -54,6 +70,7 @@ const emptyPost: PostFormData = {
   status: "draft",
   categoryId: "",
   tagIds: [],
+
   seoTitle: "",
   metaDescription: "",
   focusKeyphrase: "",
@@ -64,12 +81,15 @@ const emptyPost: PostFormData = {
   breadcrumbTitle: "",
   seoScore: 0,
   readabilityScore: 0,
+
   ogTitle: "",
   ogDescription: "",
   ogImage: "",
+
   twitterTitle: "",
   twitterDescription: "",
   twitterImage: "",
+
   schemaType: "BlogPosting",
 }
 
@@ -88,23 +108,33 @@ export function PostEditor({
   initialData,
   categories,
   tags,
+  canPublish = false,
 }: {
   postId?: string
   initialData?: Partial<PostFormData>
   categories: Category[]
   tags: TagOption[]
+  canPublish?: boolean
 }) {
   const router = useRouter()
+
   const [activeTab, setActiveTab] = useState<TabId>("content")
   const [isSaving, setIsSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
   const [data, setData] = useState<PostFormData>({
     ...emptyPost,
     ...initialData,
   })
 
-  function update<K extends keyof PostFormData>(key: K, value: PostFormData[K]) {
-    setData((prev) => ({ ...prev, [key]: value }))
+  function update<K extends keyof PostFormData>(
+    key: K,
+    value: PostFormData[K]
+  ) {
+    setData((prev) => ({
+      ...prev,
+      [key]: value,
+    }))
   }
 
   async function handleSave(status: PostStatus) {
@@ -124,19 +154,34 @@ export function PostEditor({
         await createPost(payload)
       }
     } catch (err) {
+      // Next.js redirect() throws internally.
+      // Let that redirect continue normally.
       if (isRedirectError(err)) {
         throw err
       }
-      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.")
+
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Something went wrong. Please try again."
+      )
+
       setIsSaving(false)
     }
+  }
+
+  function handleCancel() {
+    router.push("/admin/blog")
   }
 
   return (
     <div className="grid grid-cols-1 xl:grid-cols-[1fr_320px] gap-5 items-start">
       {/* Main editor column */}
       <div className="rounded-2xl bg-card border border-soft-beige shadow-sm overflow-hidden">
-        <EditorTabs activeTab={activeTab} onChange={setActiveTab} />
+        <EditorTabs
+          activeTab={activeTab}
+          onChange={setActiveTab}
+        />
 
         <div className="p-6">
           {error && (
@@ -146,11 +191,34 @@ export function PostEditor({
           )}
 
           {activeTab === "content" && (
-            <ContentPanel data={data} update={update} categories={categories} tags={tags} />
+            <ContentPanel
+              data={data}
+              update={update}
+              categories={categories}
+              tags={tags}
+            />
           )}
-          {activeTab === "seo" && <SeoPanel data={data} update={update} />}
-          {activeTab === "social" && <SocialPanel data={data} update={update} />}
-          {activeTab === "schema" && <SchemaPanel data={data} update={update} />}
+
+          {activeTab === "seo" && (
+            <SeoPanel
+              data={data}
+              update={update}
+            />
+          )}
+
+          {activeTab === "social" && (
+            <SocialPanel
+              data={data}
+              update={update}
+            />
+          )}
+
+          {activeTab === "schema" && (
+            <SchemaPanel
+              data={data}
+              update={update}
+            />
+          )}
         </div>
       </div>
 
@@ -160,9 +228,11 @@ export function PostEditor({
           status={data.status}
           isSaving={isSaving}
           isEditing={!!postId}
+          canPublish={canPublish}
           onSave={handleSave}
-          onCancel={() => router.push("/admin/posts")}
+          onCancel={handleCancel}
         />
+
         <SeoAnalysisBox data={data} />
       </div>
     </div>

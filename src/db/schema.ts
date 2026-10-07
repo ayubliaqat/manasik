@@ -12,14 +12,14 @@ import {
 } from "drizzle-orm/pg-core"
 import type { AdapterAccountType } from "next-auth/adapters"
 
-export const userRoleEnum = pgEnum("user_role", ["user", "admin", "Editor"])
+export const userRoleEnum = pgEnum("user_role", ["author", "admin", "editor"])
 
 export const users = pgTable("users", {
   id: uuid("id").defaultRandom().primaryKey(),
   name: text("name"),
   email: text("email").unique().notNull(),
   password: text("password"),
-  role: userRoleEnum("role").default("user").notNull(),
+    role: userRoleEnum("role").default("author").notNull(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
   createdAt: timestamp("created_at").defaultNow(),

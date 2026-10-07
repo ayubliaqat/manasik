@@ -76,7 +76,8 @@ export default async function EditUserPage({
               defaultValue={user.role}
               className="w-full rounded-lg border border-soft-beige bg-warm-white px-3.5 py-2.5 text-sm text-charcoal focus:outline-none focus:ring-2 focus:ring-emerald focus:border-emerald transition"
             >
-              <option value="user">User</option>
+              <option value="author">Author</option>
+              <option value="editor">Editor</option>
               <option value="admin">Admin</option>
             </select>
           </div>

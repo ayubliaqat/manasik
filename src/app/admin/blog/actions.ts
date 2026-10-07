@@ -1,11 +1,12 @@
 ﻿"use server"
 
 import { db } from "@/db"
-import { posts, postTags, postSlugHistory } from "@/db/schema"
+import { posts, postTags, postSlugHistory, users } from "@/db/schema"
 import { eq } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import { auth } from "@/auth"
+import { can, type Role } from "@/lib/supabase/permissions"
 import { z } from "zod"
 
 function slugify(text: string) {
@@ -67,23 +68,68 @@ const postInputSchema = z.object({
 
 export type PostInput = z.infer<typeof postInputSchema>
 
-/**
- * Ensures the current user is an admin or editor.
- *
- * The role is normalized to a lowercase string before comparing, so this
- * compiles regardless of how the session role type is declared and handles
- * "Editor" / "editor" / "Admin" / "admin" consistently.
- */
-async function requireEditorOrAdmin() {
-  const session = await auth()
-  const userId = session?.user?.id
-  const role = String(session?.user?.role ?? "").toLowerCase()
+type Caller = { id: string; role: Role }
 
-  if (!userId || (role !== "admin" && role !== "editor")) {
-    throw new Error("Not authorized to manage posts")
+type PostAccessInfo = {
+  authorId: string | null
+  status: string
+}
+
+/**
+ * Returns the logged-in user with their CURRENT role from the database,
+ * so a demoted or deleted user loses access immediately.
+ */
+async function getCaller(): Promise<Caller> {
+  const session = await auth()
+  const callerId = session?.user?.id
+
+  if (!callerId) {
+    throw new Error("Unauthorized")
   }
 
-  return { session, userId }
+  const [caller] = await db
+    .select({ id: users.id, role: users.role })
+    .from(users)
+    .where(eq(users.id, callerId))
+    .limit(1)
+
+  if (!caller) {
+    throw new Error("Unauthorized")
+  }
+
+  return caller
+}
+
+/**
+ * Editors and admins can edit any post.
+ * Authors can edit only their own posts, and only while they are drafts.
+ */
+function canEditPost(caller: Caller, post: PostAccessInfo) {
+  if (can(caller.role, "posts:edit:any")) {
+    return true
+  }
+
+  return (
+    can(caller.role, "posts:edit:own") &&
+    post.authorId === caller.id &&
+    post.status === "draft"
+  )
+}
+
+/**
+ * Editors and admins can delete any post.
+ * Authors can delete only their own drafts.
+ */
+function canDeletePost(caller: Caller, post: PostAccessInfo) {
+  if (can(caller.role, "posts:delete:any")) {
+    return true
+  }
+
+  return (
+    can(caller.role, "posts:delete:own") &&
+    post.authorId === caller.id &&
+    post.status === "draft"
+  )
 }
 
 /**
@@ -93,8 +139,18 @@ async function requireEditorOrAdmin() {
  * If anything fails, the entire operation is rolled back.
  */
 export async function createPost(rawData: PostInput) {
-  const { userId } = await requireEditorOrAdmin()
+  const caller = await getCaller()
+
+  if (!can(caller.role, "posts:create")) {
+    throw new Error("Forbidden")
+  }
+
   const data = postInputSchema.parse(rawData)
+
+  // Only roles with the publish permission may publish, schedule or feature.
+  const canPublish = can(caller.role, "posts:publish")
+  const status = canPublish ? data.status : "draft"
+  const isFeatured = canPublish ? data.isFeatured : false
 
   const slug = data.slug || slugify(data.title)
 
@@ -112,11 +168,11 @@ export async function createPost(rawData: PostInput) {
           excerpt: data.excerpt || null,
           content: data.content,
           featuredImage: data.featuredImage || null,
-          isFeatured: data.isFeatured,
-          status: data.status,
+          isFeatured,
+          status,
 
           categoryId: data.categoryId || null,
-          authorId: userId,
+          authorId: caller.id,
 
           // SEO
           seoTitle: data.seoTitle || null,
@@ -144,7 +200,7 @@ export async function createPost(rawData: PostInput) {
           schemaType: data.schemaType,
 
           // Publishing
-          publishedAt: data.status === "published" ? new Date() : null,
+          publishedAt: status === "published" ? new Date() : null,
         })
         .returning()
 
@@ -204,17 +260,16 @@ export async function createPost(rawData: PostInput) {
 
   revalidatePath("/")
   revalidatePath("/blog")
-  revalidatePath("/admin/posts")
+  revalidatePath("/admin/blog")
 
-  redirect("/admin/posts")
+  redirect("/admin/blog")
 }
 
 /**
  * Update an existing blog post.
  */
 export async function updatePost(postId: string, rawData: PostInput) {
-  await requireEditorOrAdmin()
-
+  const caller = await getCaller()
   const data = postInputSchema.parse(rawData)
 
   const [existing] = await db
@@ -222,6 +277,8 @@ export async function updatePost(postId: string, rawData: PostInput) {
       status: posts.status,
       publishedAt: posts.publishedAt,
       slug: posts.slug,
+      authorId: posts.authorId,
+      isFeatured: posts.isFeatured,
     })
     .from(posts)
     .where(eq(posts.id, postId))
@@ -230,6 +287,15 @@ export async function updatePost(postId: string, rawData: PostInput) {
   if (!existing) {
     throw new Error("Post not found")
   }
+
+  if (!canEditPost(caller, existing)) {
+    throw new Error("Forbidden")
+  }
+
+  // Only roles with the publish permission may publish, schedule or feature.
+  const canPublish = can(caller.role, "posts:publish")
+  const status = canPublish ? data.status : "draft"
+  const isFeatured = canPublish ? data.isFeatured : existing.isFeatured
 
   const nextSlug = data.slug || slugify(data.title)
 
@@ -240,7 +306,7 @@ export async function updatePost(postId: string, rawData: PostInput) {
   const slugChanged = nextSlug !== existing.slug
 
   const nextPublishedAt =
-    data.status === "published"
+    status === "published"
       ? existing.publishedAt ?? new Date()
       : existing.publishedAt
 
@@ -254,8 +320,8 @@ export async function updatePost(postId: string, rawData: PostInput) {
           excerpt: data.excerpt || null,
           content: data.content,
           featuredImage: data.featuredImage || null,
-          isFeatured: data.isFeatured,
-          status: data.status,
+          isFeatured,
+          status,
 
           categoryId: data.categoryId || null,
 
@@ -349,42 +415,66 @@ export async function updatePost(postId: string, rawData: PostInput) {
 
   revalidatePath("/")
   revalidatePath("/blog")
-  revalidatePath("/admin/posts")
+  revalidatePath("/admin/blog")
   revalidatePath(`/blog/${nextSlug}`)
 
-  redirect("/admin/posts")
+  redirect("/admin/blog")
 }
 
 /**
  * Delete a blog post.
  */
-export async function deletePost(postId: string) {
-  await requireEditorOrAdmin()
+export async function deletePost(postId: string): Promise<{ error?: string }> {
+  const caller = await getCaller()
+
+  const [existing] = await db
+    .select({
+      authorId: posts.authorId,
+      status: posts.status,
+    })
+    .from(posts)
+    .where(eq(posts.id, postId))
+    .limit(1)
+
+  if (!existing) {
+    return { error: "Post not found" }
+  }
+
+  if (!canDeletePost(caller, existing)) {
+    return { error: "You don't have permission to delete this post" }
+  }
 
   try {
     await db.delete(posts).where(eq(posts.id, postId))
   } catch (error: unknown) {
     console.error("Delete post error:", error)
 
-    throw new Error("Failed to delete post. Please try again.")
+    return { error: "Failed to delete post. Please try again." }
   }
 
   revalidatePath("/")
   revalidatePath("/blog")
-  revalidatePath("/admin/posts")
+  revalidatePath("/admin/blog")
+
+  return {}
 }
 
 /**
- * Get a post by ID.
+ * Get a post by ID for editing.
+ * Returns null if the post doesn't exist or the caller may not edit it.
  */
 export async function getPostById(postId: string) {
-  await requireEditorOrAdmin()
+  const caller = await getCaller()
 
   const [post] = await db
     .select()
     .from(posts)
     .where(eq(posts.id, postId))
     .limit(1)
+
+  if (!post || !canEditPost(caller, post)) {
+    return null
+  }
 
   return post
 }

@@ -229,17 +229,17 @@ export default async function FeaturedBlog() {
                     <Link
                       href={`/blog/${post.slug}`}
                       aria-label={`Read guide: ${post.title}`}
-                      className="
-                        block
-                        rounded-xl border border-emerald bg-emerald
-                        px-4 py-2
-                        text-center text-xs font-semibold tracking-wide text-white
-                        shadow-[0_3px_0_rgba(6,63,58,0.85)]
-                        transition-all duration-200
-                        hover:border-dark-teal hover:bg-dark-teal
-                        active:translate-y-[2px] active:shadow-[0_1px_0_rgba(6,63,58,0.85)]
-                        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald/50 focus-visible:ring-offset-2
-                      "
+                     className="
+  block
+  rounded-xl border border-emerald/20 bg-emerald/10
+  px-4 py-2
+  text-center text-xs font-semibold tracking-wide text-emerald
+  shadow-[0_2px_6px_rgba(6,63,58,0.08)]
+  transition-all duration-200
+  hover:border-emerald/30 hover:bg-emerald/20
+  active:translate-y-[1px]
+  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald/30 focus-visible:ring-offset-2
+"
                     >
                       Read Guide
                     </Link>
@@ -258,14 +258,14 @@ export default async function FeaturedBlog() {
               className="
                 inline-flex items-center justify-center
                 rounded-xl
-                border border-emerald
-                bg-emerald
+                border border-deep-teal
+                bg-deep-teal
                 px-6 py-2.5
                 text-sm font-semibold tracking-wide
                 text-white
                 shadow-[0_3px_0_rgba(6,63,58,0.85)]
                 transition-all duration-200
-                hover:border-dark-teal hover:bg-dark-teal
+                hover:border-emerald hover:bg-emerald
                 active:translate-y-[2px] active:shadow-[0_1px_0_rgba(6,63,58,0.85)]
                 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald/50 focus-visible:ring-offset-2
               "

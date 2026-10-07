@@ -1,8 +1,8 @@
 ﻿"use client"
 
-import { useState, useRef } from "react"
+import { useRef, useState } from "react"
 import imageCompression from "browser-image-compression"
-import { Upload, X, Loader2, ImageIcon } from "lucide-react"
+import { ImageIcon, Loader2, X } from "lucide-react"
 
 export function ImageUploader({
   value,
@@ -23,7 +23,7 @@ export function ImageUploader({
     setIsUploading(true)
 
     try {
-      // Compress image before uploading
+      // Compress before sending to Cloudinary.
       const compressedFile = await imageCompression(file, {
         maxSizeMB: 1,
         maxWidthOrHeight: 1920,
@@ -33,27 +33,44 @@ export function ImageUploader({
       })
 
       const formData = new FormData()
-      formData.append("file", compressedFile, "image.webp")
+      formData.append("file", compressedFile, "featured-image.webp")
 
-      const res = await fetch("/api/upload", {
+      const response = await fetch("/api/upload", {
         method: "POST",
         body: formData,
       })
 
-      const data = await res.json()
-
-      if (!res.ok) {
-        throw new Error(data.error || "Image upload failed")
+      let result: {
+        url?: string
+        publicId?: string
+        error?: string
       }
 
-      if (!data.url) {
-        throw new Error("Upload succeeded but no image URL was returned")
+      try {
+        result = await response.json()
+      } catch {
+        throw new Error("Invalid response from upload server")
       }
 
-      onChange(data.url)
-    } catch (err) {
-      console.error("Upload failed:", err)
-      alert(err instanceof Error ? err.message : "Image upload failed")
+      if (!response.ok) {
+        throw new Error(result.error || "Image upload failed")
+      }
+
+      if (!result.url) {
+        throw new Error(
+          "Upload succeeded but Cloudinary did not return an image URL"
+        )
+      }
+
+      onChange(result.url)
+    } catch (error) {
+      console.error("Cloudinary image upload failed:", error)
+
+      alert(
+        error instanceof Error
+          ? error.message
+          : "Image upload failed. Please try again."
+      )
     } finally {
       setIsUploading(false)
 
@@ -63,20 +80,26 @@ export function ImageUploader({
     }
   }
 
+  function removeImage() {
+    onChange("")
+  }
+
   if (value) {
     return (
-      <div className="relative rounded-xl overflow-hidden border border-soft-beige group">
+      <div className="relative overflow-hidden rounded-xl border border-soft-beige group">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={value}
-          alt="Featured"
+          alt="Featured image"
           className="w-full h-48 object-cover"
         />
 
         <button
           type="button"
-          onClick={() => onChange("")}
-          className="absolute top-2 right-2 h-8 w-8 rounded-full bg-charcoal/70 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition"
+          onClick={removeImage}
+          disabled={isUploading}
+          aria-label="Remove featured image"
+          className="absolute top-2 right-2 h-8 w-8 rounded-full bg-charcoal/70 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition disabled:cursor-not-allowed"
         >
           <X className="h-4 w-4" />
         </button>
@@ -86,26 +109,45 @@ export function ImageUploader({
 
   return (
     <div
-      onClick={() => fileInputRef.current?.click()}
-      onDragOver={(e) => e.preventDefault()}
-      onDrop={(e) => {
-        e.preventDefault()
+      onClick={() => {
+        if (!isUploading) {
+          fileInputRef.current?.click()
+        }
+      }}
+      onDragOver={(event) => {
+        event.preventDefault()
 
-        const file = e.dataTransfer.files?.[0]
+        if (!isUploading) {
+          event.dataTransfer.dropEffect = "copy"
+        }
+      }}
+      onDrop={(event) => {
+        event.preventDefault()
+
+        if (isUploading) {
+          return
+        }
+
+        const file = event.dataTransfer.files?.[0]
 
         if (file) {
           handleFile(file)
         }
       }}
-      className="rounded-xl border-2 border-dashed border-soft-beige hover:border-emerald bg-warm-white h-48 flex flex-col items-center justify-center gap-2 cursor-pointer transition"
+      className={`rounded-xl border-2 border-dashed border-soft-beige bg-warm-white h-48 flex flex-col items-center justify-center gap-2 transition ${
+        isUploading
+          ? "cursor-wait opacity-80"
+          : "cursor-pointer hover:border-emerald"
+      }`}
     >
       <input
         ref={fileInputRef}
         type="file"
         accept="image/jpeg,image/png,image/webp,image/gif"
         className="hidden"
-        onChange={(e) => {
-          const file = e.target.files?.[0]
+        disabled={isUploading}
+        onChange={(event) => {
+          const file = event.target.files?.[0]
 
           if (file) {
             handleFile(file)
@@ -116,8 +158,13 @@ export function ImageUploader({
       {isUploading ? (
         <>
           <Loader2 className="h-6 w-6 text-emerald animate-spin" />
-          <p className="text-xs text-muted-teal">
+
+          <p className="text-xs text-charcoal font-medium">
             Compressing & uploading...
+          </p>
+
+          <p className="text-[11px] text-muted-teal">
+            Uploading to Cloudinary
           </p>
         </>
       ) : (
@@ -131,7 +178,7 @@ export function ImageUploader({
           </p>
 
           <p className="text-[11px] text-muted-teal">
-            JPG, PNG, WebP up to 5MB
+            JPG, PNG, WebP or GIF
           </p>
         </>
       )}

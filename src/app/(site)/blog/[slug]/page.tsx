@@ -66,7 +66,11 @@ export async function generateMetadata({
     },
     openGraph: {
       title: post.ogTitle || post.seoTitle || post.title,
-      description: post.ogDescription || post.metaDescription || post.excerpt || undefined,
+      description:
+        post.ogDescription ||
+        post.metaDescription ||
+        post.excerpt ||
+        undefined,
       url: canonicalUrl,
       images: post.ogImage
         ? [{ url: post.ogImage }]
@@ -77,9 +81,17 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: post.twitterTitle || post.ogTitle || post.seoTitle || post.title,
+      title:
+        post.twitterTitle ||
+        post.ogTitle ||
+        post.seoTitle ||
+        post.title,
       description:
-        post.twitterDescription || post.ogDescription || post.metaDescription || post.excerpt || undefined,
+        post.twitterDescription ||
+        post.ogDescription ||
+        post.metaDescription ||
+        post.excerpt ||
+        undefined,
       images:
         post.twitterImage || post.ogImage || post.featuredImage
           ? [post.twitterImage || post.ogImage || post.featuredImage!]
@@ -106,8 +118,12 @@ export default async function PostPage({
     headline: post.title,
     description: post.metaDescription || post.excerpt || undefined,
     image: post.featuredImage || undefined,
-    datePublished: post.publishedAt ? new Date(post.publishedAt).toISOString() : undefined,
-    author: post.authorName ? { "@type": "Person", name: post.authorName } : undefined,
+    datePublished: post.publishedAt
+      ? new Date(post.publishedAt).toISOString()
+      : undefined,
+    author: post.authorName
+      ? { "@type": "Person", name: post.authorName }
+      : undefined,
   }
 
   return (
@@ -124,19 +140,34 @@ export default async function PostPage({
           className="pointer-events-none absolute -right-14 -top-14 h-40 w-40 rounded-full border border-gold/20 sm:h-48 sm:w-48"
         />
 
-        <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <nav
             aria-label="Breadcrumb"
             className="flex items-center justify-center gap-2 text-xs text-white/70 sm:text-sm"
           >
-            <Link href="/" className="shrink-0 transition-colors hover:text-gold">
+            <Link
+              href="/"
+              className="shrink-0 transition-colors hover:text-gold"
+            >
               Home
             </Link>
-            <ChevronRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-            <Link href="/blog" className="shrink-0 transition-colors hover:text-gold">
+
+            <ChevronRight
+              className="h-3.5 w-3.5 shrink-0"
+              aria-hidden="true"
+            />
+
+            <Link
+              href="/blog"
+              className="shrink-0 transition-colors hover:text-gold"
+            >
               Blog
             </Link>
-            <ChevronRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+
+            <ChevronRight
+              className="h-3.5 w-3.5 shrink-0"
+              aria-hidden="true"
+            />
           </nav>
         </div>
 
@@ -153,10 +184,12 @@ export default async function PostPage({
               fill="var(--color-warm-white)"
               opacity="0.4"
             />
+
             <path
               d="M0,96 C300,28 560,142 900,86 C1120,50 1300,38 1440,70 L1440,160 L0,160 Z"
               fill="var(--color-warm-white)"
             />
+
             <path
               d="M0,96 C300,28 560,142 900,86 C1120,50 1300,38 1440,70"
               fill="none"
@@ -170,62 +203,179 @@ export default async function PostPage({
 
       {/* Blog view */}
       <div className="bg-warm-white">
-        <article className="mx-auto max-w-3xl px-4 pb-14 pt-8 sm:px-6 sm:pb-16 sm:pt-10 lg:px-8">
+        <article className="mx-auto max-w-5xl px-4 pb-16 pt-8 sm:px-6 sm:pb-20 sm:pt-10 lg:px-8">
+          {/* JSON-LD */}
           {/* eslint-disable-next-line react/no-danger */}
           <script
             type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(jsonLd),
+            }}
           />
 
-          {post.categoryName && (
-            <p className="mb-3 text-xs font-medium uppercase tracking-wide text-emerald">
-              {post.categoryName}
-            </p>
-          )}
+          <div className="mx-auto max-w-4xl">
 
-          <h1 className="mb-4 text-2xl font-semibold leading-tight text-charcoal sm:text-3xl">
-            {post.title}
-          </h1>
+            <h1 className="mb-4 max-w-4xl text-2xl font-semibold leading-[1.2] tracking-tight text-charcoal sm:text-3xl lg:text-4xl">
+              {post.title}
+            </h1>
 
-          <div className="mb-8 flex flex-wrap items-center gap-3 text-sm text-muted-teal">
-            {post.authorName && <span>By {post.authorName}</span>}
-            {post.publishedAt && (
-              <>
-                <span aria-hidden="true">&middot;</span>
-                <time dateTime={new Date(post.publishedAt).toISOString()}>
-                  {new Date(post.publishedAt).toLocaleDateString("en-US", {
-                    month: "long",
-                    day: "numeric",
-                    year: "numeric",
-                  })}
-                </time>
-              </>
-            )}
-          </div>
+            <div className="mb-8 flex flex-wrap items-center gap-3 text-sm text-muted-teal">
+              {post.authorName && <span>By {post.authorName}</span>}
 
-          {post.featuredImage && (
-            <div className="relative mb-8 aspect-[16/9] w-full overflow-hidden rounded-2xl bg-soft-beige">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={post.featuredImage}
-                alt={post.title}
-                className="h-full w-full object-cover"
-              />
+              {post.publishedAt && (
+                <>
+                  <span aria-hidden="true">&middot;</span>
+
+                  <time dateTime={new Date(post.publishedAt).toISOString()}>
+                    {new Date(post.publishedAt).toLocaleDateString("en-US", {
+                      month: "long",
+                      day: "numeric",
+                      year: "numeric",
+                    })}
+                  </time>
+                </>
+              )}
             </div>
-          )}
 
-          <div
-            className="prose prose-sm sm:prose-base max-w-none text-charcoal prose-headings:font-semibold prose-headings:text-charcoal prose-a:text-emerald prose-li:marker:text-emerald [&_ul]:list-disc [&_ol]:list-decimal [&_ul]:pl-6 [&_ol]:pl-6 [&_li]:pl-1 [&_h2]:text-xl sm:[&_h2]:text-2xl [&_h3]:text-lg sm:[&_h3]:text-xl"
-            dangerouslySetInnerHTML={{ __html: post.content }}
-          />
+            {post.featuredImage && (
+              <div className="relative mb-10 aspect-[16/9] w-full overflow-hidden rounded-2xl bg-soft-beige">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={post.featuredImage}
+                  alt={post.title}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            )}
 
-          <div className="mt-12 border-t border-soft-beige pt-6">
-            <Link
-              href="/blog"
-              className="inline-flex items-center gap-1.5 text-sm font-semibold text-emerald transition-colors hover:text-rich-emerald"
-            >
-              ← Back to all articles
-            </Link>
+            <div
+              className="
+                prose prose-sm sm:prose-base
+                max-w-none
+                text-charcoal
+
+                prose-p:my-4
+                prose-p:leading-7
+                sm:prose-p:leading-7
+
+                prose-headings:font-semibold
+                prose-headings:tracking-tight
+                prose-headings:text-charcoal
+
+                prose-h2:mb-4
+                prose-h2:mt-9
+                prose-h2:text-xl
+                sm:prose-h2:text-2xl
+
+                prose-h3:mb-3
+                prose-h3:mt-7
+                prose-h3:text-lg
+                sm:prose-h3:text-xl
+
+                prose-h4:mb-2
+                prose-h4:mt-6
+
+                prose-a:font-medium
+                prose-a:text-emerald
+                prose-a:no-underline
+                hover:prose-a:text-rich-emerald
+                hover:prose-a:prose-a:underline
+
+                prose-strong:text-charcoal
+
+                prose-li:my-1
+                prose-li:leading-7
+                prose-li:marker:text-emerald
+
+                [&_ul]:my-5
+                [&_ul]:list-disc
+                [&_ul]:pl-6
+
+                [&_ol]:my-5
+                [&_ol]:list-decimal
+                [&_ol]:pl-6
+
+                [&_li>ul]:my-2
+                [&_li>ol]:my-2
+
+                [&_blockquote]:my-6
+                [&_blockquote]:border-l-4
+                [&_blockquote]:border-emerald
+                [&_blockquote]:bg-soft-beige/40
+                [&_blockquote]:px-5
+                [&_blockquote]:py-3
+                [&_blockquote]:text-muted-teal
+
+                [&_hr]:my-8
+                [&_hr]:border-soft-beige
+
+                [&_table]:my-7
+                [&_table]:w-full
+                [&_table]:border-collapse
+                [&_table]:overflow-hidden
+                [&_table]:rounded-lg
+                [&_table]:border
+                [&_table]:border-soft-beige
+
+                [&_thead]:bg-soft-beige/70
+
+                [&_th]:border
+                [&_th]:border-soft-beige
+                [&_th]:px-3
+                [&_th]:py-2.5
+                [&_th]:text-left
+                [&_th]:text-sm
+                [&_th]:font-semibold
+                [&_th]:text-charcoal
+
+                [&_td]:border
+                [&_td]:border-soft-beige
+                [&_td]:px-3
+                [&_td]:py-2.5
+                [&_td]:text-sm
+                [&_td]:leading-6
+
+                [&_tbody_tr:nth-child(even)]:bg-soft-beige/25
+
+                [&_code]:rounded
+                [&_code]:bg-soft-beige
+                [&_code]:px-1.5
+                [&_code]:py-0.5
+                [&_code]:text-[0.9em]
+                [&_code]:text-charcoal
+
+                [&_pre]:my-6
+                [&_pre]:overflow-x-auto
+                [&_pre]:rounded-xl
+                [&_pre]:bg-deep-teal
+                [&_pre]:p-4
+
+                [&_img]:my-7
+                [&_img]:rounded-xl
+
+                [&_figure]:my-7
+
+                [&_figcaption]:mt-2
+                [&_figcaption]:text-center
+                [&_figcaption]:text-xs
+                [&_figcaption]:text-muted-teal
+
+                [&_table]:block
+                [&_table]:overflow-x-auto
+                [&_table]:whitespace-normal
+                sm:[&_table]:table
+              "
+              dangerouslySetInnerHTML={{ __html: post.content }}
+            />
+
+            <div className="mt-12 border-t border-soft-beige pt-6">
+              <Link
+                href="/blog"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-emerald transition-colors hover:text-rich-emerald"
+              >
+                ← Back to all articles
+              </Link>
+            </div>
           </div>
         </article>
       </div>

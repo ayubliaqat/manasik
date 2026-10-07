@@ -1,9 +1,12 @@
 ﻿import Link from "next/link"
 import Image from "next/image"
+import { redirect } from "next/navigation"
 import { db } from "@/db"
-import { posts, categories } from "@/db/schema"
+import { posts, categories, users } from "@/db/schema"
 import { desc, eq } from "drizzle-orm"
 import { Plus, FileText, Star } from "lucide-react"
+import { auth } from "@/auth"
+import { can, canEditPost, canDeletePost } from "@/lib//supabase/permissions"
 import { PostRowActions } from "@/components/admin/PostRowActions"
 import type { Metadata } from "next"
 
@@ -12,6 +15,27 @@ export const metadata: Metadata = {
 }
 
 export default async function AdminPostsPage() {
+  const session = await auth()
+  const callerId = session?.user?.id
+
+  if (!callerId) {
+    redirect("/login")
+  }
+
+  const [caller] = await db
+    .select({ id: users.id, role: users.role })
+    .from(users)
+    .where(eq(users.id, callerId))
+    .limit(1)
+
+  if (!caller) {
+    redirect("/login")
+  }
+
+  // Editors and admins see every post. Authors see only their own.
+  const seeAll = can(caller.role, "posts:edit:any")
+  const canCreate = can(caller.role, "posts:create")
+
   const allPosts = await db
     .select({
       id: posts.id,
@@ -22,60 +46,75 @@ export default async function AdminPostsPage() {
       isFeatured: posts.isFeatured,
       createdAt: posts.createdAt,
       publishedAt: posts.publishedAt,
+      authorId: posts.authorId,
+      authorName: users.name,
       categoryName: categories.name,
     })
     .from(posts)
     .leftJoin(categories, eq(posts.categoryId, categories.id))
+    .leftJoin(users, eq(posts.authorId, users.id))
+    .where(seeAll ? undefined : eq(posts.authorId, caller.id))
     .orderBy(desc(posts.createdAt))
     .limit(100)
 
   return (
     <div className="relative">
-      <div className="pointer-events-none absolute -top-10 -left-10 h-72 w-72 rounded-full bg-emerald/10 blur-3xl" />
-      <div className="pointer-events-none absolute top-40 right-0 h-80 w-80 rounded-full bg-gold/10 blur-3xl" />
+      <div className="pointer-events-none absolute -top-10 -left-10 h-56 w-56 rounded-full bg-emerald/5 blur-3xl" />
+      <div className="pointer-events-none absolute top-32 right-0 h-64 w-64 rounded-full bg-gold/5 blur-3xl" />
 
       <div className="relative">
-        <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
+        <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
           <div>
-            <h1 className="text-2xl font-semibold text-charcoal">All Posts</h1>
-            <p className="text-sm text-muted-teal mt-1">
+            <h1 className="text-lg font-medium text-charcoal">All Posts</h1>
+            <p className="text-xs text-muted-teal mt-0.5">
               {allPosts.length} {allPosts.length === 1 ? "post" : "posts"}
             </p>
           </div>
 
-          <Link
-            href="/admin/posts/new"
-            className="flex items-center gap-2 rounded-full bg-emerald hover:opacity-90 text-warm-white text-sm font-medium px-5 py-2.5 transition shadow-sm"
-          >
-            <Plus className="h-4 w-4" />
-            Add Post
-          </Link>
+          {canCreate && (
+            <Link
+              href="/admin/blog/new"
+              className="inline-flex items-center gap-1.5 rounded-full bg-emerald hover:opacity-90 text-warm-white text-xs font-medium px-3.5 py-1.5 transition"
+            >
+              <Plus className="h-3.5 w-3.5" aria-hidden="true" />
+              Add Post
+            </Link>
+          )}
         </div>
 
         {allPosts.length === 0 ? (
-          <div className="rounded-2xl bg-card border border-soft-beige shadow-sm p-12 text-center">
-            <div className="h-12 w-12 rounded-xl bg-emerald/10 flex items-center justify-center mx-auto mb-3">
-              <FileText className="h-5 w-5 text-emerald" />
+          <div className="rounded-xl bg-card border border-soft-beige p-8 text-center">
+            <div className="h-10 w-10 rounded-lg bg-emerald/10 flex items-center justify-center mx-auto mb-2.5">
+              <FileText className="h-4 w-4 text-emerald" />
             </div>
-            <p className="text-sm font-medium text-charcoal">No posts yet</p>
-            <p className="text-sm text-muted-teal mt-1">
+            <p className="text-[13px] font-medium text-charcoal">No posts yet</p>
+            <p className="text-xs text-muted-teal mt-0.5">
               Create your first Hajj/Umrah guide.
             </p>
           </div>
         ) : (
-          <div className="rounded-2xl bg-card border border-soft-beige shadow-sm overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+          <div className="rounded-xl bg-card border border-soft-beige overflow-hidden">
+            <div>
+              <table className="w-full text-[13px]">
                 <caption className="sr-only">
-                  List of all blog posts with status, category, and date
+                  List of blog posts with status, category, and date
                 </caption>
                 <thead>
-                  <tr className="border-b border-soft-beige bg-soft-beige/40">
-                    <th className="text-left font-medium text-muted-teal px-6 py-2.5">Post</th>
-                    <th className="text-left font-medium text-muted-teal px-6 py-2.5">Category</th>
-                    <th className="text-left font-medium text-muted-teal px-6 py-2.5">Status</th>
-                    <th className="text-left font-medium text-muted-teal px-6 py-2.5">Date</th>
-                    <th className="text-right font-medium text-muted-teal px-6 py-2.5">Actions</th>
+                  <tr className="border-b border-soft-beige bg-soft-beige/30">
+                    <th className="text-left text-xs font-medium text-muted-teal pl-4 pr-3 py-2">Post</th>
+                    {seeAll && (
+                      <th className="hidden md:table-cell text-left text-xs font-medium text-muted-teal px-3 py-2">
+                        Author
+                      </th>
+                    )}
+                    <th className="hidden sm:table-cell text-left text-xs font-medium text-muted-teal px-3 py-2">
+                      Category
+                    </th>
+                    <th className="text-left text-xs font-medium text-muted-teal px-3 py-2">Status</th>
+                    <th className="hidden sm:table-cell text-left text-xs font-medium text-muted-teal px-3 py-2">
+                      Date
+                    </th>
+                    <th className="text-right text-xs font-medium text-muted-teal pl-3 pr-4 py-2">Actions</th>
                   </tr>
                 </thead>
 
@@ -83,43 +122,54 @@ export default async function AdminPostsPage() {
                   {allPosts.map((post) => (
                     <tr
                       key={post.id}
-                      className="border-b border-soft-beige last:border-0 hover:bg-soft-beige/30 transition-colors"
+                      className="border-b border-soft-beige/70 last:border-0 hover:bg-soft-beige/20 transition-colors"
                     >
-                      <td className="px-6 py-2.5">
-                        <div className="flex items-center gap-3">
-                          <div className="relative h-8 w-8 rounded-lg bg-soft-beige/60 overflow-hidden shrink-0 flex items-center justify-center">
+                      <td className="pl-4 pr-3 py-1.5">
+                        <div className="flex items-center gap-2 min-w-0">
+                          <div className="relative h-7 w-7 rounded-md bg-soft-beige/50 overflow-hidden shrink-0 flex items-center justify-center">
                             {post.featuredImage ? (
                               <Image
                                 src={post.featuredImage}
                                 alt=""
                                 fill
-                                sizes="32px"
+                                sizes="28px"
                                 className="object-cover"
                               />
                             ) : (
-                              <FileText className="h-3.5 w-3.5 text-muted-teal" aria-hidden="true" />
+                              <FileText className="h-3 w-3 text-muted-teal" aria-hidden="true" />
                             )}
                           </div>
 
-                          <span className="font-medium text-charcoal line-clamp-1 flex items-center gap-1.5">
-                            {post.title}
+                          <div className="flex items-center gap-1 min-w-0">
+                            <span
+                              title={post.title}
+                              className="block truncate max-w-[120px] min-[400px]:max-w-[150px] sm:max-w-[170px] lg:max-w-[220px] font-medium text-charcoal"
+                            >
+                              {post.title}
+                            </span>
                             {post.isFeatured && (
                               <Star
-                                className="h-3.5 w-3.5 shrink-0 fill-gold text-gold"
+                                className="h-3 w-3 shrink-0 fill-gold text-gold"
                                 aria-label="Featured post"
                               />
                             )}
-                          </span>
+                          </div>
                         </div>
                       </td>
 
-                      <td className="px-6 py-2.5 text-muted-teal">
+                      {seeAll && (
+                        <td className="hidden md:table-cell px-3 py-1.5 text-muted-teal whitespace-nowrap">
+                          {post.authorName ?? "—"}
+                        </td>
+                      )}
+
+                      <td className="hidden sm:table-cell px-3 py-1.5 text-muted-teal whitespace-nowrap">
                         {post.categoryName ?? "—"}
                       </td>
 
-                      <td className="px-6 py-2.5">
+                      <td className="px-3 py-1.5 whitespace-nowrap">
                         <span
-                          className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ${
+                          className={`inline-flex items-center rounded-full px-2 py-0.5 text-[11px] font-medium capitalize ${
                             post.status === "published"
                               ? "bg-emerald/10 text-emerald"
                               : post.status === "scheduled"
@@ -131,7 +181,7 @@ export default async function AdminPostsPage() {
                         </span>
                       </td>
 
-                      <td className="px-6 py-2.5 text-muted-teal">
+                      <td className="hidden sm:table-cell px-3 py-1.5 text-xs text-muted-teal whitespace-nowrap">
                         {(post.publishedAt ?? post.createdAt) ? (
                           <time
                             dateTime={new Date(post.publishedAt ?? post.createdAt!).toISOString()}
@@ -147,9 +197,14 @@ export default async function AdminPostsPage() {
                         )}
                       </td>
 
-                      <td className="px-6 py-2.5">
+                      <td className="pl-3 pr-4 py-1.5 whitespace-nowrap">
                         <div className="flex justify-end">
-                          <PostRowActions postId={post.id} slug={post.slug} />
+                          <PostRowActions
+                            postId={post.id}
+                            slug={post.slug}
+                            canEdit={canEditPost(caller.role, caller.id, post)}
+                            canDelete={canDeletePost(caller.role, caller.id, post)}
+                          />
                         </div>
                       </td>
                     </tr>

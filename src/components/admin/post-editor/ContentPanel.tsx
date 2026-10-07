@@ -74,6 +74,17 @@ export function ContentPanel({
         </div>
       </div>
 
+      {/* Editor */}
+      <div>
+        <label className="block text-xs font-medium text-charcoal mb-1.5">
+          Content
+        </label>
+        <TiptapEditor
+          content={data.content}
+          onChange={(html) => update("content", html)}
+        />
+      </div>
+
       {/* Featured image */}
       <div>
         <label className="block text-xs font-medium text-charcoal mb-1.5">
@@ -145,17 +156,6 @@ export function ContentPanel({
           rows={2}
           placeholder="A short summary shown in post listings..."
           className="w-full rounded-lg border border-soft-beige bg-warm-white px-3.5 py-2.5 text-sm text-charcoal placeholder:text-muted-teal focus:outline-none focus:ring-2 focus:ring-emerald focus:border-emerald transition resize-none"
-        />
-      </div>
-
-      {/* Editor */}
-      <div>
-        <label className="block text-xs font-medium text-charcoal mb-1.5">
-          Content
-        </label>
-        <TiptapEditor
-          content={data.content}
-          onChange={(html) => update("content", html)}
         />
       </div>
     </div>

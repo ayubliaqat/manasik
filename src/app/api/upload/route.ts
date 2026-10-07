@@ -1,14 +1,16 @@
 ﻿import { NextRequest, NextResponse } from "next/server"
-import { createClient } from "@supabase/supabase-js"
+import { v2 as cloudinary } from "cloudinary"
 import { auth } from "@/auth"
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-)
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+})
 
 export async function POST(request: NextRequest) {
   try {
+    // Require logged-in user
     const session = await auth()
 
     if (!session?.user) {
@@ -35,43 +37,63 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const bytes = await file.arrayBuffer()
-    const buffer = Buffer.from(bytes)
+    // Protect the server from unnecessarily large uploads.
+    // Your featured-image uploader already compresses images,
+    // while Tiptap uploads the original selected image.
+    const maxSize = 10 * 1024 * 1024
 
-    const extension = file.name.split(".").pop()?.toLowerCase() || "jpg"
-    const fileName = `${crypto.randomUUID()}.${extension}`
-    const filePath = `posts/${fileName}`
-
-    const { error } = await supabase.storage
-      .from("post-images")
-      .upload(filePath, buffer, {
-        contentType: file.type,
-        upsert: false,
-      })
-
-    if (error) {
-      console.error("Supabase upload error:", error)
-
+    if (file.size > maxSize) {
       return NextResponse.json(
-        { error: error.message },
-        { status: 500 }
+        { error: "Image must be smaller than 10MB" },
+        { status: 400 }
       )
     }
 
-    const {
-      data: { publicUrl },
-    } = supabase.storage
-      .from("post-images")
-      .getPublicUrl(filePath)
+    const bytes = await file.arrayBuffer()
+    const buffer = Buffer.from(bytes)
+
+    const result = await new Promise<{
+      secure_url: string
+      public_id: string
+    }>((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        {
+          folder: "baytullah/posts",
+          resource_type: "image",
+          use_filename: false,
+          unique_filename: true,
+          overwrite: false,
+        },
+        (error, result) => {
+          if (error) {
+            reject(error)
+            return
+          }
+
+          if (!result?.secure_url || !result.public_id) {
+            reject(new Error("Cloudinary did not return an image URL"))
+            return
+          }
+
+          resolve({
+            secure_url: result.secure_url,
+            public_id: result.public_id,
+          })
+        }
+      )
+
+      uploadStream.end(buffer)
+    })
 
     return NextResponse.json({
-      url: publicUrl,
+      url: result.secure_url,
+      publicId: result.public_id,
     })
   } catch (error) {
-    console.error("Upload error:", error)
+    console.error("Cloudinary upload error:", error)
 
     return NextResponse.json(
-      { error: "Image upload failed" },
+      { error: "Image upload failed. Please try again." },
       { status: 500 }
     )
   }
