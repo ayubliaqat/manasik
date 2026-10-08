@@ -309,33 +309,46 @@ export default async function PostPage({
                 [&_hr]:my-8
                 [&_hr]:border-soft-beige
 
-                [&_table]:my-7
+                [&_table]:my-8
                 [&_table]:w-full
-                [&_table]:border-collapse
-                [&_table]:overflow-hidden
-                [&_table]:rounded-lg
+                [&_table]:border-separate
+                [&_table]:border-spacing-0
+                [&_table]:rounded-xl
                 [&_table]:border
-                [&_table]:border-soft-beige
+                [&_table]:border-emerald/30
+                [&_table]:shadow-[0_10px_30px_rgba(8,127,91,0.10)]
 
-                [&_thead]:bg-soft-beige/70
-
-                [&_th]:border
-                [&_th]:border-soft-beige
-                [&_th]:px-3
-                [&_th]:py-2.5
+                [&_th]:border-b
+                [&_th]:border-emerald/40
+                [&_th]:bg-deep-teal
+                [&_th]:px-4
+                [&_th]:py-3.5
                 [&_th]:text-left
-                [&_th]:text-sm
+                [&_th]:text-xs
                 [&_th]:font-semibold
-                [&_th]:text-charcoal
+                [&_th]:uppercase
+                [&_th]:tracking-wider
+                [&_th]:text-warm-white
+                [&_th:not(:last-child)]:border-r
+                [&_th_p]:m-0
 
-                [&_td]:border
-                [&_td]:border-soft-beige
-                [&_td]:px-3
-                [&_td]:py-2.5
+                [&_td]:border-b
+                [&_td]:border-emerald/20
+                [&_td]:px-4
+                [&_td]:py-3
                 [&_td]:text-sm
                 [&_td]:leading-6
+                [&_td:not(:last-child)]:border-r
+                [&_td_p]:m-0
 
-                [&_tbody_tr:nth-child(even)]:bg-soft-beige/25
+                [&_tbody_tr:last-child_td]:border-b-0
+                [&_tbody_tr:nth-child(even)_td]:bg-emerald/5
+                [&_tbody_tr:hover_td]:bg-emerald/10
+
+                [&_tr:first-child>*:first-child]:rounded-tl-[11px]
+                [&_tr:first-child>*:last-child]:rounded-tr-[11px]
+                [&_tr:last-child>*:first-child]:rounded-bl-[11px]
+                [&_tr:last-child>*:last-child]:rounded-br-[11px]
 
                 [&_code]:rounded
                 [&_code]:bg-soft-beige
