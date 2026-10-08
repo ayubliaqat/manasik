@@ -10,12 +10,6 @@ import {
 } from "react"
 import { ExternalLink, Loader2, Pause, Play } from "lucide-react"
 
-/* ---------------------------------------------------------------
-   31 entries: day 1 of the month shows entry 1, day 2 shows entry 2...
-   Only today's Quran text is loaded (Uthmani + Sahih International).
-   Prophetic duas are stored here with their hadith reference.
----------------------------------------------------------------- */
-
 type Text = { arabic: string; translation: string }
 
 type Entry =
@@ -214,8 +208,6 @@ async function fetchAyah(surah: number, ayah: number): Promise<Text | null> {
 
 const keyOf = (d: Date) => `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`
 
-// Re-checks the date every minute and when the tab is revisited,
-// so the dua changes by itself when the day changes.
 function subscribeDate(onChange: () => void) {
   const id = window.setInterval(onChange, 60_000)
   document.addEventListener("visibilitychange", onChange)
@@ -234,8 +226,8 @@ type From = "left" | "right" | "up" | "down" | "zoom"
 const HIDDEN: Record<From, string> = {
   left: "-translate-x-10",
   right: "translate-x-10",
-  up: "translate-y-10",
-  down: "-translate-y-10",
+  up: "translate-y-8",
+  down: "-translate-y-8",
   zoom: "scale-90",
 }
 
@@ -332,7 +324,7 @@ const duaCss = `
 
 function DuaIcon() {
   return (
-    <span className="relative inline-flex h-11 w-11 shrink-0 items-center justify-center sm:h-12 sm:w-12">
+    <span className="relative inline-flex h-9 w-9 shrink-0 items-center justify-center">
       <span
         aria-hidden="true"
         className="dua-ring absolute inset-0 rounded-full border border-gold/40"
@@ -466,14 +458,14 @@ function PlayButton({ src, text }: { src?: string; text: string | null }) {
     }
   }
 
-  const caption = src
+  const label = src
     ? src.includes("everyayah")
-      ? "Recitation: Mishary Alafasy"
+      ? "Recitation by Mishary Alafasy"
       : "Recorded audio"
     : "Read aloud by your device's Arabic voice"
 
   return (
-    <div className="flex flex-col items-center gap-1.5 lg:items-start">
+    <div className="flex flex-col items-center gap-1">
       {src && (
         <audio
           ref={audioRef}
@@ -489,24 +481,24 @@ function PlayButton({ src, text }: { src?: string; text: string | null }) {
         onClick={toggle}
         aria-label={status === "playing" ? "Pause audio" : "Play audio"}
         className="
-          inline-flex items-center gap-2 rounded-full
+          inline-flex items-center gap-1.5 rounded-full
           border border-gold/50 bg-gold/10
-          px-5 py-2 text-xs font-semibold text-gold
+          px-4 py-1.5 text-[11px] font-medium text-gold
           transition-colors hover:bg-gold/20
           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60
         "
       >
         {status === "loading" ? (
-          <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+          <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden="true" />
         ) : status === "playing" ? (
-          <Pause className="h-4 w-4" aria-hidden="true" />
+          <Pause className="h-3.5 w-3.5" aria-hidden="true" />
         ) : (
-          <Play className="h-4 w-4" aria-hidden="true" />
+          <Play className="h-3.5 w-3.5" aria-hidden="true" />
         )}
         {status === "playing" ? "Pause" : "Listen"}
       </button>
-      <span className="text-[10px] text-white/50">
-        {status === "error" ? "Audio unavailable right now" : caption}
+      <span className="text-[10px] text-white/45">
+        {status === "error" ? "Audio unavailable right now" : label}
       </span>
     </div>
   )
@@ -518,14 +510,12 @@ export default function VerseOfTheDay() {
   const key = useSyncExternalStore(subscribeDate, getDateKey, getDateKeyServer)
   const [texts, setTexts] = useState<Record<string, Text>>({})
 
-  // Which entry is today's? (day of month, 1 to 31)
   const dayOfMonth = key ? Number(key.split("-")[2]) : 1
   const entry = ENTRIES[(dayOfMonth - 1) % ENTRIES.length]
 
   const surah = entry.kind === "quran" ? entry.surah : 0
   const ayah = entry.kind === "quran" ? entry.ayah : 0
 
-  // Loads only today's ayah from the browser.
   useEffect(() => {
     if (!surah) return
     let cancelled = false
@@ -538,9 +528,8 @@ export default function VerseOfTheDay() {
     }
   }, [surah, ayah])
 
-  // Before the browser knows today's date, keep an empty block of similar height.
   if (!key) {
-    return <section className="min-h-[360px] bg-dark-teal" aria-hidden="true" />
+    return <section className="min-h-[340px] bg-dark-teal" aria-hidden="true" />
   }
 
   const [y, m, d] = key.split("-").map(Number)
@@ -555,8 +544,8 @@ export default function VerseOfTheDay() {
 
   let arabic: string | null
   let translation: string | null
-  let sourceTitle: string
-  let sourceDetail: string
+  let reference: string
+  let detail: string | undefined
   let link: string | undefined
   let audio: string | undefined
 
@@ -564,48 +553,46 @@ export default function VerseOfTheDay() {
     const text = texts[`${entry.surah}:${entry.ayah}`] ?? entry.fallback ?? null
     arabic = text?.arabic ?? null
     translation = text?.translation ?? null
-    sourceTitle = `Surah ${SURAHS[entry.surah]} (${entry.surah}:${entry.ayah})`
-    sourceDetail = `Qur'an, chapter ${entry.surah}, verse ${entry.ayah}`
+    reference = `Surah ${SURAHS[entry.surah]} ${entry.surah}:${entry.ayah}`
+    detail = entry.note
     link = `https://quran.com/${entry.surah}/${entry.ayah}`
     audio = `https://everyayah.com/data/Alafasy_128kbps/${pad3(entry.surah)}${pad3(entry.ayah)}.mp3`
   } else {
     arabic = entry.arabic
     translation = entry.translation
-    sourceTitle = entry.sourceTitle
-    sourceDetail = entry.sourceDetail
+    reference = entry.sourceTitle
+    detail = `${entry.sourceDetail}${entry.note ? ` ${entry.note}` : ""}`
     audio = entry.audio
   }
 
   return (
-    <section className="relative overflow-hidden bg-dark-teal py-8 sm:py-10 lg:py-12">
+    <section className="relative overflow-hidden bg-dark-teal py-8 sm:py-10">
       <style>{duaCss}</style>
 
-      {/* Soft background glow */}
+      {/* Soft top curve */}
       <div
         aria-hidden="true"
         className="
-          pointer-events-none absolute left-1/2 top-[-200px]
-          h-[320px] w-[160%] -translate-x-1/2
+          pointer-events-none absolute left-1/2 top-[-190px]
+          h-[300px] w-[160%] -translate-x-1/2
           rounded-[0_0_50%_50%]
           bg-gradient-to-br from-emerald/[0.12] via-emerald/[0.04] to-gold/[0.07]
         "
       />
 
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="grid items-center gap-6 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-10">
-          {/* LEFT: heading, tag, audio */}
-          <Reveal from="left" className="text-center lg:text-left">
-            <div className="flex items-center justify-center gap-3 lg:justify-start">
+        <div className="mx-auto max-w-3xl text-center">
+          {/* Icon + date */}
+          <Reveal from="down">
+            <div className="flex flex-col items-center gap-2">
               <DuaIcon />
-              <p className="text-left text-[10px] font-bold uppercase leading-4 tracking-[0.2em] text-gold sm:text-[11px]">
-                {weekday}
-                <br />
-                {fullDate}
+              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gold sm:text-[11px]">
+                {weekday} · {fullDate}
               </p>
             </div>
 
-            <h2 className="mt-6 text-balance font-serif text-[22px] font-medium leading-[1.2] tracking-[-0.015em] text-white sm:text-[26px] lg:text-[30px]">
-              {/* Hajj &amp; Umrah{" "} */}
+            <h2 className="mt-2 text-balance font-serif text-[22px] font-medium leading-[1.2] tracking-[-0.015em] text-white sm:text-[26px] lg:text-[30px]">
+              Hajj &amp; Umrah{" "}
               <span className="relative inline-block whitespace-nowrap text-emerald">
                 Dua of the Day
                 <svg
@@ -626,79 +613,71 @@ export default function VerseOfTheDay() {
                 </svg>
               </span>
             </h2>
+          </Reveal>
 
-            <div className="mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 lg:justify-start">
+          {/* Context */}
+          <Reveal from="up" delay={60} className="mt-4">
+            <p className="text-[11px] leading-4 text-white/55 sm:text-xs">
               <span
-                className={`inline-block rounded-full border px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${
-                  entry.kind === "quran"
-                    ? "border-gold/50 text-gold"
-                    : "border-emerald/60 text-emerald"
+                className={`font-semibold uppercase tracking-wide ${
+                  entry.kind === "quran" ? "text-gold" : "text-emerald"
                 }`}
               >
                 {entry.tag}
               </span>
-              <span className="text-xs leading-5 text-white/65">{entry.context}</span>
-            </div>
-
-            <div className="mt-8 flex justify-center lg:justify-start">
-              <PlayButton key={dayOfMonth} src={audio} text={arabic} />
-            </div>
+              <span className="mx-1.5 text-white/30">·</span>
+              {entry.context}
+            </p>
           </Reveal>
 
-          {/* RIGHT: verse + source */}
-          <Reveal from="right" delay={120}>
-            <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-center sm:p-5">
-              {arabic ? (
-                <p
-                  dir="rtl"
-                  lang="ar"
-                  className="font-serif text-[20px] leading-[1.85] text-white sm:text-[23px] lg:text-[26px]"
+          {/* Arabic */}
+          <Reveal from="left" delay={120} className="mt-3">
+            {arabic ? (
+              <p
+                dir="rtl"
+                lang="ar"
+                className="font-serif text-[20px] font-normal leading-[1.8] text-white sm:text-[24px] lg:text-[28px]"
+              >
+                {arabic}
+              </p>
+            ) : (
+              <p className="text-sm text-white/60">Loading the verse…</p>
+            )}
+          </Reveal>
+
+          {/* Translation + reference */}
+          <Reveal from="right" delay={180} className="mt-2">
+            {translation && (
+              <p className="mx-auto max-w-2xl text-[13px] leading-6 text-white/75 sm:text-sm">
+                “{translation}”
+              </p>
+            )}
+
+            <p className="mt-1.5 text-xs font-medium text-gold">
+              {reference}
+              {link && (
+                <a
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Read this verse on Quran.com"
+                  className="ml-1.5 inline-flex translate-y-[2px] text-gold/70 transition-colors hover:text-gold"
                 >
-                  {arabic}
-                </p>
-              ) : (
-                <p className="text-sm text-white/60">
-                  Loading the verse… or open the source below.
-                </p>
+                  <ExternalLink className="h-3 w-3" aria-hidden="true" />
+                </a>
               )}
-
-              {translation && (
-                <p className="mx-auto mt-3 max-w-xl text-[13px] leading-6 text-white/75 sm:text-sm">
-                  “{translation}”
-                </p>
-              )}
-
-              <div className="mt-4 border-t border-white/10 pt-3 text-left">
-                <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-                  <p className="text-[12px] font-semibold text-white">
-                    <span className="mr-2 text-[10px] font-bold uppercase tracking-[0.16em] text-gold">
-                      Source
-                    </span>
-                    {sourceTitle}
-                  </p>
-                  {link && (
-                    <a
-                      href={link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald hover:underline"
-                    >
-                      Quran.com
-                      <ExternalLink className="h-3 w-3" aria-hidden="true" />
-                    </a>
-                  )}
-                </div>
-                <p className="mt-1 text-[11px] leading-[1.5] text-white/60">
-                  {sourceDetail}
-                  {entry.note ? ` ${entry.note}` : ""}
-                </p>
-              </div>
-            </div>
-
-            <p className="mt-2 text-center text-[10px] leading-4 text-white/40 lg:text-left">
-              Text: Al-Quran Cloud (Sahih International). Recitation: Mishary Alafasy, EveryAyah.
-              For rulings, consult a qualified scholar.
             </p>
+
+            {detail && (
+              <p className="mx-auto mt-1 max-w-xl text-[10.5px] leading-4 text-white/45">
+                {detail}
+              </p>
+            )}
+          </Reveal>
+
+          {/* Audio */}
+          <Reveal from="zoom" delay={240} className="mt-4 flex justify-center">
+            <PlayButton key={dayOfMonth} src={audio} text={arabic} />
           </Reveal>
         </div>
       </div>

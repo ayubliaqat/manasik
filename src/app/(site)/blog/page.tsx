@@ -52,50 +52,79 @@ export default async function BlogPage() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-deep-teal pb-16 pt-10 sm:pb-20 sm:pt-14">
         <div className="relative z-10 mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-          <nav aria-label="Breadcrumb" className="mb-3 flex items-center justify-center gap-2 text-sm text-white/70 sm:mb-4">
+          <nav
+            aria-label="Breadcrumb"
+            className="mb-3 flex items-center justify-center gap-2 text-sm text-white/70 sm:mb-4"
+          >
             <Link href="/" className="transition-colors hover:text-gold">
               Home
             </Link>
+
             <ChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
-            <span className="text-gold">Blog</span>
+
+            <span className="relative inline-block text-gold">
+              Blog
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 120 10"
+                preserveAspectRatio="none"
+                fill="none"
+                className="pointer-events-none absolute left-1/2 top-full mt-[0.1em] h-[0.18em] w-[90%] -translate-x-1/2 text-gold"
+              >
+                <path
+                  d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  vectorEffect="non-scaling-stroke"
+                />
+              </svg>
+            </span>
           </nav>
+<h1 className="font-heading text-3xl font-medium text-white sm:text-4xl lg:text-5xl">
+  Explore Our{" "}
+  <span className="relative inline-block text-[#2BB589]">
+    Blog
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 120 10"
+      preserveAspectRatio="none"
+      fill="none"
+      className="pointer-events-none absolute left-1/2 top-full mt-[0.05em] h-[0.18em] w-[70%] -translate-x-1/2 text-gold"
+    >
+      <path
+        d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        vectorEffect="non-scaling-stroke"
+      />
+    </svg>
+  </span>
+</h1>
 
-          <h1 className="font-heading text-3xl font-bold text-white sm:text-4xl lg:text-5xl">
-            Explore Our Blog
-          </h1>
 
-          <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-white/75 sm:mt-4 sm:text-base">
+
+          <p className="mx-auto mt-3 max-w-xl text-sm font-normal leading-6 text-white/70 sm:mt-4 sm:text-base">
             Practical guides, authentic reflections, and everything you need
             to prepare for Hajj and Umrah with confidence.
           </p>
         </div>
 
-        {/* Layered wavy bottom edge */}
-        <div className="absolute inset-x-0 bottom-0 z-0 overflow-hidden leading-[0]">
-          <svg
-            viewBox="0 0 1440 160"
-            preserveAspectRatio="none"
-            aria-hidden="true"
-            className="block h-16 w-full sm:h-20"
-          >
-            <path
-              d="M0,70 C280,135 620,25 960,80 C1160,112 1320,90 1440,58 L1440,160 L0,160 Z"
-              fill="var(--color-warm-white)"
-              opacity="0.4"
-            />
-            <path
-              d="M0,96 C300,28 560,142 900,86 C1120,50 1300,38 1440,70 L1440,160 L0,160 Z"
-              fill="var(--color-warm-white)"
-            />
-            <path
-              d="M0,96 C300,28 560,142 900,86 C1120,50 1300,38 1440,70"
-              fill="none"
-              stroke="var(--color-gold)"
-              strokeWidth="2"
-              opacity="0.6"
-            />
-          </svg>
-        </div>
+        {/* Wavy bottom */}
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 1440 80"
+          preserveAspectRatio="none"
+          className="pointer-events-none absolute bottom-[-1px] left-0 z-10 block h-[36px] w-full text-warm-white sm:h-[48px] lg:h-[64px]"
+        >
+          <path
+            fill="currentColor"
+            d="M0 40 C120 80 240 80 360 50 C480 20 600 20 720 45 C840 70 960 70 1080 45 C1200 20 1320 20 1440 50 L1440 80 L0 80 Z"
+          />
+        </svg>
       </section>
 
       {/* Category filter + posts grid */}

@@ -189,34 +189,18 @@ export default async function PostPage({
           </nav>
         </div>
 
-        {/* Wavy bottom edge that melts into the page background */}
-        <div className="absolute inset-x-0 bottom-0 z-0 overflow-hidden leading-[0]">
-          <svg
-            viewBox="0 0 1440 160"
-            preserveAspectRatio="none"
-            aria-hidden="true"
-            className="block h-14 w-full sm:h-20"
-          >
-            <path
-              d="M0,70 C280,135 620,25 960,80 C1160,112 1320,90 1440,58 L1440,160 L0,160 Z"
-              fill="var(--color-warm-white)"
-              opacity="0.4"
-            />
-
-            <path
-              d="M0,96 C300,28 560,142 900,86 C1120,50 1300,38 1440,70 L1440,160 L0,160 Z"
-              fill="var(--color-warm-white)"
-            />
-
-            <path
-              d="M0,96 C300,28 560,142 900,86 C1120,50 1300,38 1440,70"
-              fill="none"
-              stroke="var(--color-gold)"
-              strokeWidth="2"
-              opacity="0.6"
-            />
-          </svg>
-        </div>
+        {/* Wavy bottom */}
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 1440 80"
+          preserveAspectRatio="none"
+          className="pointer-events-none absolute bottom-[-1px] left-0 z-10 block h-[36px] w-full text-warm-white sm:h-[48px] lg:h-[64px]"
+        >
+          <path
+            fill="currentColor"
+            d="M0 40 C120 80 240 80 360 50 C480 20 600 20 720 45 C840 70 960 70 1080 45 C1200 20 1320 20 1440 50 L1440 80 L0 80 Z"
+          />
+        </svg>
       </section>
 
       {/* Blog view */}
@@ -232,7 +216,6 @@ export default async function PostPage({
           />
 
           <div className="mx-auto max-w-4xl">
-
             <h1 className="mb-4 max-w-4xl text-2xl font-semibold leading-[1.2] tracking-tight text-charcoal sm:text-3xl lg:text-4xl">
               {post.title}
             </h1>
