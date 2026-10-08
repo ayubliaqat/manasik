@@ -17,7 +17,7 @@ export default async function ToolsPage({
   return (
     <main className="w-full overflow-x-hidden">
       {/* Hero */}
-      <section className="relative overflow-hidden bg-deep-teal py-9 text-center sm:py-11 lg:py-12">
+      <section className="relative overflow-hidden bg-deep-teal pb-14 pt-9 text-center sm:pb-16 sm:pt-11 lg:pb-20 lg:pt-12">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute left-1/2 top-[-220px] h-[430px] w-[140%] -translate-x-1/2 rounded-[0_0_50%_50%] bg-white/[0.04]"
@@ -71,6 +71,19 @@ export default async function ToolsPage({
             calculate your zakat, all in one place.
           </p>
         </div>
+
+        {/* Wavy bottom */}
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 1440 80"
+          preserveAspectRatio="none"
+          className="pointer-events-none absolute bottom-[-1px] left-0 z-10 block h-[36px] w-full text-white sm:h-[48px] lg:h-[64px]"
+        >
+          <path
+            fill="currentColor"
+            d="M0 40 C120 80 240 80 360 50 C480 20 600 20 720 45 C840 70 960 70 1080 45 C1200 20 1320 20 1440 50 L1440 80 L0 80 Z"
+          />
+        </svg>
       </section>
 
       {/* Planning Tools */}

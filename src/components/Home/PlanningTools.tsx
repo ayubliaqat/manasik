@@ -430,7 +430,7 @@ export default function PlanningTools() {
                   href={tool.href}
                   className={`
                     group relative flex h-full min-w-0 flex-col overflow-hidden
-                    rounded-2xl border bg-white
+                    rounded-none rounded-tl-[32px] rounded-br-[32px] border bg-white
                     px-4 pb-4 pt-5 sm:px-5 sm:pb-5
                     shadow-[0_10px_28px_rgba(6,63,58,0.08)]
                     transition-all duration-300 ease-out

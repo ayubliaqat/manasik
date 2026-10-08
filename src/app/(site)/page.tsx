@@ -18,10 +18,11 @@ export default function Home() {
       {/* <AyahHighlightSection/> */}
       <TrustBadges/>
       <PlanningTools/>
+      <WhoIsManasikFor/>
       <FeaturedBlog/>
       <VerseOfTheDay/>
       <PilgrimagePath/>
-      <WhoIsManasikFor/>
+      
       <ExploreJourney/>
       <WhyManasik/>
       <FaqSection/>

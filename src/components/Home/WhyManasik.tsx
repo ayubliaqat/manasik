@@ -13,27 +13,27 @@ import {
 const audiences = [
   {
     icon: UserRound,
-    title: "First-Time Pilgrims",
+    title: "Beginner-Friendly, Step-by-Step Guides",
   },
   {
     icon: BookOpenCheck,
-    title: "Those Seeking Guidance",
+    title: "Sourced from the Qur'an & Sunnah",
   },
   {
     icon: Backpack,
-    title: "Preparing for Hajj or Umrah",
+    title: "Free Checklist & Packing Tools",
   },
   {
     icon: UsersRound,
-    title: "Families & Groups",
+    title: "Made for Families & Groups",
   },
   {
     icon: MapPinned,
-    title: "Planning Ahead",
+    title: "Clear Rituals, From Ihram to Return",
   },
   {
     icon: HeartHandshake,
-    title: "Seeking Clarity",
+    title: "Free, Honest & Easy to Use",
   },
 ]
 
@@ -121,7 +121,7 @@ export default function WhoIsItFor() {
           {/* Content (first on mobile, second on lg) */}
           <div className="order-1 flex w-full max-w-xl flex-col lg:order-2 lg:ml-auto lg:h-full lg:justify-center">
             <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.24em] text-gold sm:text-xs">
-              Who It&apos;s For
+              Why Choose Manasik
             </p>
 
             <h2
@@ -138,9 +138,9 @@ export default function WhoIsItFor() {
                 lg:text-[38px]
               "
             >
-              Who Is{" "}
+              Guidance You{" "}
               <span className="relative inline-block whitespace-nowrap text-emerald">
-                This For?
+                Can Trust
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 120 10"
@@ -168,9 +168,10 @@ export default function WhoIsItFor() {
             </h2>
 
             <p className="mt-5 max-w-xl text-sm leading-[26px] text-muted-teal sm:text-[15px]">
-              Manasik is for anyone preparing for Hajj or Umrah — whether
-              you&apos;re going for the first time, travelling with family, or
-              simply looking for clear and reliable guidance.
+              Manasik brings clear step-by-step guides, free planning tools and
+              a daily dua together in one place, with every ruling and dua
+              traced back to the Qur&apos;an and authentic Sunnah, so you can
+              prepare for Hajj and Umrah with confidence.
             </p>
 
             {/* Audience list: single column, each bullet keeps its own icon */}
