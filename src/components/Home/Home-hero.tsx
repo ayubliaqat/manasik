@@ -21,33 +21,6 @@ export default function Hero() {
       <div className="absolute inset-0 bg-gradient-to-t from-deep-teal/25 via-transparent to-transparent" />
 
       {/* Bismillah — centered at top */}
-      <div className="absolute left-0 right-0 top-5 z-20 flex flex-col items-center sm:top-6 lg:top-7">
-        <p
-          dir="rtl"
-          lang="ar"
-          className="font-serif text-[19px] font-medium leading-tight text-gold drop-shadow-[0_2px_2px_rgba(0,0,0,0.4)] sm:text-[22px]"
-        >
-          بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ
-        </p>
-
-        {/* Wavy line */}
-        <svg
-          aria-hidden="true"
-          viewBox="0 0 180 12"
-          preserveAspectRatio="none"
-          fill="none"
-          className="mt-1 h-1.5 w-28 text-gold sm:w-32"
-        >
-          <path
-            d="M2 6 Q12 1 22 6 T42 6 T62 6 T82 6 T102 6 T122 6 T142 6 T162 6 T178 6"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            vectorEffect="non-scaling-stroke"
-          />
-        </svg>
-      </div>
 
       {/* Content */}
       <div className="relative z-10 flex min-h-[450px] items-center sm:min-h-[480px] lg:min-h-[500px]">
