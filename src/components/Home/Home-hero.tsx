@@ -24,7 +24,7 @@ export default function Hero() {
 
       {/* Content */}
       <div className="relative z-10 flex min-h-[450px] items-center sm:min-h-[480px] lg:min-h-[500px]">
-        <div className="mx-auto w-full max-w-[1400px] px-5 py-20 sm:px-8 sm:py-24 lg:px-16 lg:py-20 xl:px-20">
+        <div className="mx-auto w-full max-w-[1400px] px-5 pb-32 pt-20 sm:px-8 sm:pb-36 sm:pt-24 lg:px-16 lg:pb-32 lg:pt-20 xl:px-20">
           <div className="max-w-[570px] text-center lg:text-left">
             {/* Heading */}
             <h1
@@ -129,7 +129,7 @@ export default function Hero() {
                   size={16}
                   className="text-gold transition-transform duration-300 group-hover:rotate-6"
                 />
-                Calculate Your Costs
+                Explore Planning Tools
               </Link>
             </div>
           </div>

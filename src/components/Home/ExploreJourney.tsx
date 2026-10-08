@@ -160,6 +160,7 @@ function DuaArt() {
 function TravelArt() {
   return (
     <svg viewBox="0 0 200 100" className={ART} aria-hidden="true">
+      {/* Route */}
       <path
         d="M14 67 A150 150 0 0 1 186 67"
         fill="none"
@@ -168,10 +169,44 @@ function TravelArt() {
         strokeLinecap="round"
         strokeDasharray="2 5"
       />
-      <g className="text-emerald">
-        <circle cx="14" cy="67" r="3" fill="currentColor" />
-        <circle cx="186" cy="67" r="3" fill="currentColor" />
-        <circle cx="186" cy="67" r="7" fill="none" stroke="currentColor" strokeWidth="0.8" opacity="0.4" />
+
+      {/* Departure: home (drawn over the start of the route) */}
+      <g>
+        <circle
+          cx="14"
+          cy="66"
+          r="12"
+          fill="#2B6861"
+          fillOpacity="0.1"
+          stroke="#2B6861"
+          strokeWidth="0.8"
+        />
+        <path
+          d="M5.5 65.5 L14 57.5 L22.5 65.5 Z"
+          fill="#2B6861"
+          stroke="#2B6861"
+          strokeWidth="1"
+          strokeLinejoin="round"
+        />
+        <rect x="7.5" y="65.5" width="13" height="9.5" rx="0.8" fill="#063F3A" />
+        <rect x="12" y="68.8" width="4" height="6.2" rx="0.6" fill="#C9A227" />
+      </g>
+
+      {/* Destination: the Kaaba (drawn before the plane, so the plane lands over it) */}
+      <g>
+        <circle
+          className="ej-arrive"
+          cx="186"
+          cy="65"
+          r="12"
+          fill="#2B6861"
+          fillOpacity="0.1"
+          stroke="#2B6861"
+          strokeWidth="0.8"
+        />
+        <rect x="178" y="57" width="16" height="16" rx="1" fill="#063F3A" />
+        <rect x="178" y="60.6" width="16" height="2.6" fill="#C9A227" />
+        <rect x="188.6" y="65.5" width="3.4" height="7.5" rx="0.6" fill="#C9A227" />
       </g>
 
       {/* The plane rides a long radius, so it follows the arc exactly */}
@@ -294,8 +329,13 @@ export default function ExploreJourney() {
         }
         @keyframes ej-fly {
           0% { transform: rotate(-35deg); opacity: 0; }
-          12%, 88% { opacity: 1; }
+          10%, 94% { opacity: 1; }
           100% { transform: rotate(35deg); opacity: 0; }
+        }
+        @keyframes ej-arrive {
+          0%, 78% { transform: scale(1); opacity: 0.45; }
+          92% { transform: scale(1.18); opacity: 1; }
+          100% { transform: scale(1); opacity: 0.45; }
         }
         .ej-spin { animation: ej-spin 90s linear infinite; }
         .ej-orbit-a { transform-origin: 100px 50px; animation: ej-spin 14s linear infinite reverse; }
@@ -304,6 +344,7 @@ export default function ExploreJourney() {
         .ej-draw { stroke-dasharray: 12; stroke-dashoffset: 0; animation: ej-draw 5s ease-in-out infinite; }
         .ej-up { animation: ej-up 4s ease-in infinite; }
         .ej-fly { transform-origin: 100px 190px; animation: ej-fly 6s linear infinite; }
+        .ej-arrive { transform-origin: 186px 65px; animation: ej-arrive 6s ease-in-out infinite; }
         @supports (animation-timeline: view()) {
           .ej-card {
             animation: ej-rise linear both;
@@ -313,7 +354,7 @@ export default function ExploreJourney() {
         }
         @media (prefers-reduced-motion: reduce) {
           .ej-card, .ej-spin, .ej-orbit-a, .ej-orbit-b, .ej-sai,
-          .ej-draw, .ej-up, .ej-fly { animation: none !important; }
+          .ej-draw, .ej-up, .ej-fly, .ej-arrive { animation: none !important; }
         }
       `}</style>
 

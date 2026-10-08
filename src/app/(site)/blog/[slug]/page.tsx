@@ -128,44 +128,62 @@ export default async function PostPage({
 
   return (
     <div>
-      {/* Compact header banner with breadcrumb */}
-      <section className="relative overflow-hidden bg-deep-teal pb-14 pt-8 sm:pb-16 sm:pt-10">
-        {/* Faint decorative circles */}
+      {/* Hero banner with breadcrumb */}
+      <section className="relative overflow-hidden bg-warm-white bg-gradient-to-br from-emerald/35 via-emerald/20 to-gold/20 pb-16 pt-12 sm:pb-24 sm:pt-16">
+        {/* Soft glow blobs */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -left-16 -top-20 h-44 w-44 rounded-full border border-white/10 sm:h-52 sm:w-52"
+          className="pointer-events-none absolute -top-24 left-1/4 h-64 w-64 rounded-full bg-emerald/30 blur-3xl sm:h-80 sm:w-80"
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-14 -top-14 h-40 w-40 rounded-full border border-gold/20 sm:h-48 sm:w-48"
+          className="pointer-events-none absolute -top-20 right-1/4 h-60 w-60 rounded-full bg-gold/30 blur-3xl sm:h-72 sm:w-72"
         />
 
-        <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        {/* Faint decorative circles, spread across the width */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -left-16 -top-20 h-44 w-44 rounded-full border border-emerald/35 sm:h-56 sm:w-56"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute left-1/4 -top-24 hidden h-40 w-40 rounded-full border border-gold/40 md:block"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute right-1/4 -top-20 hidden h-36 w-36 rounded-full border border-emerald/35 md:block"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-14 -top-14 h-40 w-40 rounded-full border border-gold/40 sm:h-52 sm:w-52"
+        />
+
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <nav
             aria-label="Breadcrumb"
-            className="flex items-center justify-center gap-2 text-xs text-white/70 sm:text-sm"
+            className="flex items-center justify-center gap-2 text-xs text-deep-teal/70 sm:text-sm"
           >
             <Link
               href="/"
-              className="shrink-0 transition-colors hover:text-gold"
+              className="shrink-0 transition-colors hover:text-emerald"
             >
               Home
             </Link>
 
             <ChevronRight
-              className="h-3.5 w-3.5 shrink-0"
+              className="h-3.5 w-3.5 shrink-0 text-deep-teal/50"
               aria-hidden="true"
             />
 
             <Link
               href="/blog"
-              className="shrink-0 transition-colors hover:text-gold"
+              className="shrink-0 transition-colors hover:text-emerald"
             >
               Blog
             </Link>
 
             <ChevronRight
-              className="h-3.5 w-3.5 shrink-0"
+              className="h-3.5 w-3.5 shrink-0 text-deep-teal/50"
               aria-hidden="true"
             />
           </nav>
@@ -177,7 +195,7 @@ export default async function PostPage({
             viewBox="0 0 1440 160"
             preserveAspectRatio="none"
             aria-hidden="true"
-            className="block h-16 w-full sm:h-20"
+            className="block h-14 w-full sm:h-20"
           >
             <path
               d="M0,70 C280,135 620,25 960,80 C1160,112 1320,90 1440,58 L1440,160 L0,160 Z"
@@ -203,7 +221,7 @@ export default async function PostPage({
 
       {/* Blog view */}
       <div className="bg-warm-white">
-        <article className="mx-auto max-w-5xl px-4 pb-16 pt-8 sm:px-6 sm:pb-20 sm:pt-10 lg:px-8">
+        <article className="mx-auto max-w-5xl px-4 pb-16 pt-5 sm:px-6 sm:pb-20 sm:pt-7 lg:px-8">
           {/* JSON-LD */}
           {/* eslint-disable-next-line react/no-danger */}
           <script
