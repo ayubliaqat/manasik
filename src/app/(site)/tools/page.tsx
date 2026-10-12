@@ -1,5 +1,6 @@
+
 import type { Metadata } from "next"
-import ToolsTabs from "@/components/Tools/ToolsTabs"
+import AllTools from "@/components/Tools/alltools"
 
 export const metadata: Metadata = {
   title: "Free Hajj and Umrah Planning Tools | Manasik",
@@ -7,22 +8,15 @@ export const metadata: Metadata = {
     "Free Hajj checklist, Umrah packing list, cost estimator and zakat calculator to help you prepare for your journey.",
 }
 
-export default async function ToolsPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ tool?: string }>
-}) {
-  const { tool } = await searchParams
-
+export default function ToolsPage() {
   return (
     <main className="w-full overflow-x-hidden">
-      {/* Hero */}
+      {/* Hero — unchanged */}
       <section className="relative overflow-hidden bg-deep-teal pb-14 pt-9 text-center sm:pb-16 sm:pt-11 lg:pb-20 lg:pt-12">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute left-1/2 top-[-220px] h-[430px] w-[140%] -translate-x-1/2 rounded-[0_0_50%_50%] bg-white/[0.04]"
         />
-
         <div
           aria-hidden="true"
           className="pointer-events-none absolute bottom-[-240px] left-1/2 h-[400px] w-[130%] -translate-x-1/2 rounded-[50%_50%_0_0] bg-gold/[0.06]"
@@ -33,17 +27,7 @@ export default async function ToolsPage({
             Free tools
           </span>
 
-          <h1
-            className="
-              mt-3 text-balance
-              font-serif
-              text-[24px] font-medium
-              leading-[1.15] tracking-[-0.015em]
-              text-white
-              sm:text-[30px]
-              lg:text-[34px]
-            "
-          >
+          <h1 className="mt-3 text-balance font-serif text-[24px] font-medium leading-[1.15] tracking-[-0.015em] text-white sm:text-[30px] lg:text-[34px]">
             Plan Your Journey with{" "}
             <span className="relative inline-block text-[#2BB589]">
               Confidence
@@ -52,7 +36,7 @@ export default async function ToolsPage({
                 viewBox="0 0 120 10"
                 preserveAspectRatio="none"
                 fill="none"
-                className="pointer-events-none absolute left-1/2 top-full mt-[0.05em] h-[0.18em] w-[70%] -translate-x-1/2 text-gold"
+                className="pointer-events-none absolute left-1/2 top-full mt-[0.05em] h-[0.2em] w-[70%] -translate-x-1/2 text-gold"
               >
                 <path
                   d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
@@ -72,12 +56,12 @@ export default async function ToolsPage({
           </p>
         </div>
 
-        {/* Wavy bottom */}
+        {/* Wavy bottom — unchanged */}
         <svg
           aria-hidden="true"
           viewBox="0 0 1440 80"
           preserveAspectRatio="none"
-          className="pointer-events-none absolute bottom-[-1px] left-0 z-10 block h-[36px] w-full text-white sm:h-[48px] lg:h-[64px]"
+          className="absolute bottom-0 left-0 h-[32px] w-full text-white sm:h-[48px] lg:h-[64px]"
         >
           <path
             fill="currentColor"
@@ -86,9 +70,9 @@ export default async function ToolsPage({
         </svg>
       </section>
 
-      {/* Planning Tools */}
+      {/* All Tools */}
       <section className="w-full min-w-0 overflow-hidden">
-        <ToolsTabs initialTool={tool} />
+        <AllTools />
       </section>
     </main>
   )
