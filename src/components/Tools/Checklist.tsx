@@ -1,7 +1,7 @@
 "use client"
 
 import { useCallback, useMemo, useSyncExternalStore } from "react"
-import { Check, RotateCcw } from "lucide-react"
+import { Check, PartyPopper, RotateCcw } from "lucide-react"
 
 export type ChecklistGroup = {
   title: string
@@ -69,16 +69,26 @@ export default function Checklist({
     0
   )
   const pct = total ? Math.round((done / total) * 100) : 0
+  const remaining = total - done
+  const isComplete = total > 0 && done === total
+
+  const message = isComplete
+    ? "All done. May your journey be easy and accepted."
+    : done === 0
+      ? "Tick items off as you go and your progress will show here."
+      : `${remaining} ${remaining === 1 ? "item" : "items"} left. Keep going, you're doing well.`
 
   return (
     <div>
-      {/* Progress */}
+      {/* Sticky progress bar */}
       <div
-        className="
-          mb-5 flex flex-col gap-4 rounded-2xl
-          border-[1.5px] border-deep-teal/60 bg-card p-4 sm:flex-row sm:items-center sm:p-5
+        className={`
+          sticky top-16 z-30 mb-5 flex items-center gap-3 rounded-2xl
+          border-[1.5px] bg-card p-3 sm:top-20 sm:gap-4 sm:p-4
           shadow-[inset_0_0_14px_rgba(6,63,58,0.2),0_2px_4px_rgba(6,63,58,0.1),0_12px_26px_rgba(6,63,58,0.18)]
-        "
+          transition-colors duration-500
+          ${isComplete ? "border-gold" : "border-deep-teal/60"}
+        `}
       >
         <div className="min-w-0 flex-1">
           <div className="flex items-baseline justify-between gap-3">
@@ -87,6 +97,7 @@ export default function Checklist({
             </p>
             <p className="text-sm font-semibold text-emerald">{pct}%</p>
           </div>
+
           <div
             className="mt-2 h-2.5 overflow-hidden rounded-full bg-emerald/15"
             role="progressbar"
@@ -97,16 +108,23 @@ export default function Checklist({
           >
             <div
               className={`h-full rounded-full transition-all duration-500 ease-out ${
-                pct === 100 ? "bg-gold" : "bg-emerald"
+                isComplete ? "bg-gold" : "bg-emerald"
               }`}
               style={{ width: `${pct}%` }}
             />
           </div>
-          {pct === 100 && (
-            <p className="mt-2 text-xs text-muted-teal">
-              All done. May your journey be easy and accepted.
-            </p>
-          )}
+
+          <p
+            aria-live="polite"
+            className={`mt-2 flex items-center gap-1.5 text-xs ${
+              isComplete ? "font-medium text-deep-teal" : "text-muted-teal"
+            }`}
+          >
+            {isComplete && (
+              <PartyPopper className="h-3.5 w-3.5 shrink-0 text-gold" aria-hidden="true" />
+            )}
+            {message}
+          </p>
         </div>
 
         <button
@@ -115,14 +133,15 @@ export default function Checklist({
           className="
             flex shrink-0 items-center justify-center gap-2
             rounded-xl border border-deep-teal/40
-            px-4 py-2.5 text-xs font-semibold text-deep-teal
+            px-3 py-2 text-xs font-semibold text-deep-teal
             transition-colors duration-300
             hover:border-emerald hover:bg-emerald hover:text-white
             focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald/50
           "
         >
           <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
-          Reset list
+          <span className="hidden sm:inline">Reset list</span>
+          <span className="sr-only sm:hidden">Reset list</span>
         </button>
       </div>
 
