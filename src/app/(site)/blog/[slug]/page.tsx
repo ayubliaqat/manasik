@@ -128,84 +128,140 @@ export default async function PostPage({
 
   return (
     <div>
-      {/* Hero banner with breadcrumb */}
-      <section className="relative overflow-hidden bg-warm-white bg-gradient-to-br from-emerald/35 via-emerald/20 to-gold/20 pb-16 pt-12 sm:pb-24 sm:pt-16">
-        {/* Soft glow blobs */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -top-24 left-1/4 h-64 w-64 rounded-full bg-emerald/30 blur-3xl sm:h-80 sm:w-80"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -top-20 right-1/4 h-60 w-60 rounded-full bg-gold/30 blur-3xl sm:h-72 sm:w-72"
-        />
+      {/* Hero banner with breadcrumb + title + meta */}
+  {/* Hero banner with breadcrumb + title + meta */}
+{/* Hero banner with breadcrumb + title + meta */}
+<section className="relative overflow-hidden bg-warm-white bg-gradient-to-br from-emerald/35 via-emerald/20 to-gold/20 pb-9 pt-4 sm:pb-11 sm:pt-5">
+  {/* Soft glows */}
+  <div
+    aria-hidden="true"
+    className="pointer-events-none absolute -top-24 left-1/4 h-56 w-56 rounded-full bg-emerald/25 blur-3xl sm:h-64 sm:w-64"
+  />
+  <div
+    aria-hidden="true"
+    className="pointer-events-none absolute -top-20 right-1/4 h-52 w-52 rounded-full bg-gold/25 blur-3xl sm:h-60 sm:w-60"
+  />
 
-        {/* Faint decorative circles, spread across the width */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -left-16 -top-20 h-44 w-44 rounded-full border border-emerald/35 sm:h-56 sm:w-56"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute left-1/4 -top-24 hidden h-40 w-40 rounded-full border border-gold/40 md:block"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute right-1/4 -top-20 hidden h-36 w-36 rounded-full border border-emerald/35 md:block"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-14 -top-14 h-40 w-40 rounded-full border border-gold/40 sm:h-52 sm:w-52"
-        />
-
-        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <nav
-            aria-label="Breadcrumb"
-            className="flex items-center justify-center gap-2 text-xs text-deep-teal/70 sm:text-sm"
-          >
-            <Link
-              href="/"
-              className="shrink-0 transition-colors hover:text-emerald"
-            >
-              Home
-            </Link>
-
-            <ChevronRight
-              className="h-3.5 w-3.5 shrink-0 text-deep-teal/50"
-              aria-hidden="true"
-            />
-
-            <Link
-              href="/blog"
-              className="shrink-0 transition-colors hover:text-emerald"
-            >
-              Blog
-            </Link>
-
-            <ChevronRight
-              className="h-3.5 w-3.5 shrink-0 text-deep-teal/50"
-              aria-hidden="true"
-            />
-          </nav>
-        </div>
-
-        {/* Wavy bottom */}
-        <svg
-          aria-hidden="true"
-          viewBox="0 0 1440 80"
-          preserveAspectRatio="none"
-          className="pointer-events-none absolute bottom-[-1px] left-0 z-10 block h-[36px] w-full text-warm-white sm:h-[48px] lg:h-[64px]"
-        >
+  {/* Faint crescent + star background */}
+  <svg
+    aria-hidden="true"
+    className="pointer-events-none absolute inset-0 h-full w-full text-deep-teal opacity-[0.12]"
+    style={{
+      maskImage: "linear-gradient(to bottom, black 0%, transparent 95%)",
+      WebkitMaskImage: "linear-gradient(to bottom, black 0%, transparent 95%)",
+    }}
+  >
+    <defs>
+      <pattern
+        id="hero-islamic-bg"
+        width="140"
+        height="140"
+        patternUnits="userSpaceOnUse"
+      >
+        {/* tiny crescent */}
+        <g transform="translate(18 16) scale(0.16)">
           <path
+            d="M60 10 A40 40 0 0 0 60 90 A50 50 0 0 1 60 10 Z"
             fill="currentColor"
-            d="M0 40 C120 80 240 80 360 50 C480 20 600 20 720 45 C840 70 960 70 1080 45 C1200 20 1320 20 1440 50 L1440 80 L0 80 Z"
           />
-        </svg>
-      </section>
+        </g>
+        {/* stars */}
+        <g transform="translate(98 40) scale(0.45)">
+          <path
+            d="M0 -11 Q0 0 11 0 Q0 0 0 11 Q0 0 -11 0 Q0 0 0 -11Z"
+            fill="currentColor"
+          />
+        </g>
+        <g transform="translate(62 96) scale(0.3)">
+          <path
+            d="M0 -11 Q0 0 11 0 Q0 0 0 11 Q0 0 -11 0 Q0 0 0 -11Z"
+            fill="currentColor"
+          />
+        </g>
+        <g transform="translate(120 120) scale(0.2)">
+          <path
+            d="M0 -11 Q0 0 11 0 Q0 0 0 11 Q0 0 -11 0 Q0 0 0 -11Z"
+            fill="currentColor"
+          />
+        </g>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#hero-islamic-bg)" />
+  </svg>
+
+  <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    {/* Breadcrumb: top left, above title */}
+    <nav
+      aria-label="Breadcrumb"
+      className="mb-3 flex items-center justify-start gap-1 text-[11px] text-deep-teal/70 sm:mb-4 sm:text-xs"
+    >
+      <Link
+        href="/"
+        className="shrink-0 transition-colors hover:text-emerald"
+      >
+        Home
+      </Link>
+
+      <ChevronRight
+        className="h-3 w-3 shrink-0 text-deep-teal/50"
+        aria-hidden="true"
+      />
+
+      <Link
+        href="/blog"
+        className="shrink-0 transition-colors hover:text-emerald"
+      >
+        Blog
+      </Link>
+
+      <ChevronRight
+        className="h-3 w-3 shrink-0 text-deep-teal/50"
+        aria-hidden="true"
+      />
+    </nav>
+
+    <div className="mx-auto max-w-3xl text-center">
+      <h1 className="text-xl font-medium leading-snug tracking-tight text-charcoal sm:text-2xl lg:text-3xl">
+        {post.title}
+      </h1>
+
+      <div className="mt-2 flex flex-wrap items-center justify-center gap-2 text-xs text-deep-teal/80">
+        <span>By {post.authorName || "Admin"}</span>
+
+        {post.publishedAt && (
+          <>
+            <span aria-hidden="true">&middot;</span>
+
+            <time dateTime={new Date(post.publishedAt).toISOString()}>
+              {new Date(post.publishedAt).toLocaleDateString("en-US", {
+                month: "long",
+                day: "numeric",
+                year: "numeric",
+              })}
+            </time>
+          </>
+        )}
+      </div>
+    </div>
+  </div>
+
+  {/* Wavy bottom */}
+  <svg
+    aria-hidden="true"
+    viewBox="0 0 1440 80"
+    preserveAspectRatio="none"
+    className="pointer-events-none absolute bottom-[-1px] left-0 z-10 block h-[20px] w-full text-warm-white sm:h-[28px] lg:h-[36px]"
+  >
+    <path
+      fill="currentColor"
+      d="M0 40 C120 80 240 80 360 50 C480 20 600 20 720 45 C840 70 960 70 1080 45 C1200 20 1320 20 1440 50 L1440 80 L0 80 Z"
+    />
+  </svg>
+</section>
 
       {/* Blog view */}
       <div className="bg-warm-white">
-        <article className="mx-auto max-w-5xl px-4 pb-16 pt-5 sm:px-6 sm:pb-20 sm:pt-7 lg:px-8">
+        <article className="mx-auto max-w-5xl px-4 pb-10 pt-5 sm:px-6 sm:pb-14 sm:pt-6 lg:px-8">
           {/* JSON-LD */}
           {/* eslint-disable-next-line react/no-danger */}
           <script
@@ -216,30 +272,8 @@ export default async function PostPage({
           />
 
           <div className="mx-auto max-w-4xl">
-            <h1 className="mb-4 max-w-4xl text-2xl font-semibold leading-[1.2] tracking-tight text-charcoal sm:text-3xl lg:text-4xl">
-              {post.title}
-            </h1>
-
-            <div className="mb-8 flex flex-wrap items-center gap-3 text-sm text-muted-teal">
-              {post.authorName && <span>By {post.authorName}</span>}
-
-              {post.publishedAt && (
-                <>
-                  <span aria-hidden="true">&middot;</span>
-
-                  <time dateTime={new Date(post.publishedAt).toISOString()}>
-                    {new Date(post.publishedAt).toLocaleDateString("en-US", {
-                      month: "long",
-                      day: "numeric",
-                      year: "numeric",
-                    })}
-                  </time>
-                </>
-              )}
-            </div>
-
             {post.featuredImage && (
-              <div className="relative mb-10 aspect-[16/9] w-full overflow-hidden rounded-2xl bg-soft-beige">
+              <div className="relative mb-6 aspect-[16/9] w-full overflow-hidden rounded-2xl bg-soft-beige">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={post.featuredImage}
@@ -255,62 +289,63 @@ export default async function PostPage({
                 max-w-none
                 text-charcoal
 
-                prose-p:my-4
+                prose-p:my-3
                 prose-p:leading-7
                 sm:prose-p:leading-7
 
-                prose-headings:font-semibold
+                prose-headings:font-medium
                 prose-headings:tracking-tight
                 prose-headings:text-charcoal
 
-                prose-h2:mb-4
-                prose-h2:mt-9
+                prose-h2:mb-3
+                prose-h2:mt-7
                 prose-h2:text-xl
                 sm:prose-h2:text-2xl
 
-                prose-h3:mb-3
-                prose-h3:mt-7
+                prose-h3:mb-2
+                prose-h3:mt-5
                 prose-h3:text-lg
                 sm:prose-h3:text-xl
 
                 prose-h4:mb-2
-                prose-h4:mt-6
+                prose-h4:mt-4
 
-                prose-a:font-medium
+                prose-a:font-normal
                 prose-a:text-emerald
                 prose-a:no-underline
                 hover:prose-a:text-rich-emerald
-                hover:prose-a:prose-a:underline
+                hover:prose-a:underline
 
+                prose-strong:font-medium
                 prose-strong:text-charcoal
 
-                prose-li:my-1
+                prose-li:my-0.5
                 prose-li:leading-7
                 prose-li:marker:text-emerald
 
-                [&_ul]:my-5
+                [&_ul]:my-3
                 [&_ul]:list-disc
                 [&_ul]:pl-6
 
-                [&_ol]:my-5
+                [&_ol]:my-3
                 [&_ol]:list-decimal
                 [&_ol]:pl-6
 
-                [&_li>ul]:my-2
-                [&_li>ol]:my-2
+                [&_li>ul]:my-1
+                [&_li>ol]:my-1
 
-                [&_blockquote]:my-6
+                [&_blockquote]:my-4
                 [&_blockquote]:border-l-4
                 [&_blockquote]:border-emerald
                 [&_blockquote]:bg-soft-beige/40
-                [&_blockquote]:px-5
-                [&_blockquote]:py-3
+                [&_blockquote]:px-4
+                [&_blockquote]:py-2
                 [&_blockquote]:text-muted-teal
 
-                [&_hr]:my-8
+                [&_hr]:my-6
                 [&_hr]:border-soft-beige
 
-                [&_table]:my-8
+                [&_table]:my-5
                 [&_table]:w-full
                 [&_table]:border-separate
                 [&_table]:border-spacing-0
@@ -323,10 +358,10 @@ export default async function PostPage({
                 [&_th]:border-emerald/40
                 [&_th]:bg-deep-teal
                 [&_th]:px-4
-                [&_th]:py-3.5
+                [&_th]:py-2.5
                 [&_th]:text-left
                 [&_th]:text-xs
-                [&_th]:font-semibold
+                [&_th]:font-medium
                 [&_th]:uppercase
                 [&_th]:tracking-wider
                 [&_th]:text-warm-white
@@ -336,7 +371,7 @@ export default async function PostPage({
                 [&_td]:border-b
                 [&_td]:border-emerald/20
                 [&_td]:px-4
-                [&_td]:py-3
+                [&_td]:py-2.5
                 [&_td]:text-sm
                 [&_td]:leading-6
                 [&_td:not(:last-child)]:border-r
@@ -358,16 +393,16 @@ export default async function PostPage({
                 [&_code]:text-[0.9em]
                 [&_code]:text-charcoal
 
-                [&_pre]:my-6
+                [&_pre]:my-4
                 [&_pre]:overflow-x-auto
                 [&_pre]:rounded-xl
                 [&_pre]:bg-deep-teal
                 [&_pre]:p-4
 
-                [&_img]:my-7
+                [&_img]:my-5
                 [&_img]:rounded-xl
 
-                [&_figure]:my-7
+                [&_figure]:my-5
 
                 [&_figcaption]:mt-2
                 [&_figcaption]:text-center
@@ -382,10 +417,10 @@ export default async function PostPage({
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
 
-            <div className="mt-12 border-t border-soft-beige pt-6">
+            <div className="mt-8 border-t border-soft-beige pt-4">
               <Link
                 href="/blog"
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-emerald transition-colors hover:text-rich-emerald"
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-emerald transition-colors hover:text-rich-emerald"
               >
                 ← Back to all articles
               </Link>
