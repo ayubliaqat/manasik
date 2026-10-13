@@ -504,6 +504,28 @@ export default function PlanningTools() {
           })}
         </div>
       </div>
+              {/* Explore all tools button */}
+        <div className="mt-7 flex justify-center sm:mt-8">
+          <Link
+            href="/tools"
+            className="
+              group inline-flex items-center justify-center gap-2
+              rounded-full border border-emerald/30
+              bg-emerald/10 px-6 py-3
+              text-sm font-semibold text-emerald
+              transition-all duration-300
+              hover:border-emerald/50 hover:bg-emerald/15
+              focus-visible:outline-none focus-visible:ring-2
+              focus-visible:ring-emerald/60 focus-visible:ring-offset-2
+            "
+          >
+            Explore All Tools
+            <ArrowRight
+              className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+              aria-hidden="true"
+            />
+          </Link>
+        </div>
     </section>
   )
 }
