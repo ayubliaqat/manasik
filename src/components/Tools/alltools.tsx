@@ -1,4 +1,3 @@
-
 import Link from "next/link"
 import type { ReactElement, ReactNode } from "react"
 import { ArrowRight } from "lucide-react"
@@ -244,6 +243,119 @@ function QaidaIcon({ className }: IconProps) {
   )
 }
 
+/* Prayer Times */
+function ClockIcon({ className }: IconProps) {
+  return (
+    <IconBase className={className}>
+      <circle cx="12" cy="12" r="9" fill="currentColor" fillOpacity="0.12" />
+      <circle cx="12" cy="12" r="9" />
+      {[0, 90, 180, 270].map((angle) => (
+        <path key={angle} d="M12 3.7V5.5" transform={`rotate(${angle} 12 12)`} opacity="0.55" />
+      ))}
+      <path d="M12 12V8.8" transform="rotate(130 12 12)" strokeWidth="1.8" />
+      <g className="pt-hand text-gold">
+        <path d="M12 12V6.2" strokeWidth="1.5" />
+      </g>
+      <circle cx="12" cy="12" r="1.2" fill="currentColor" />
+    </IconBase>
+  )
+}
+
+/* Mosque Finder */
+function MosqueIcon({ className }: IconProps) {
+  return (
+    <IconBase className={className}>
+      <rect x="5.5" y="12.5" width="13" height="8.5" rx="1" fill="currentColor" fillOpacity="0.12" />
+      <path
+        d="M7 12.5C7 9 9.6 7.6 12 5.8C14.4 7.6 17 9 17 12.5"
+        fill="currentColor"
+        fillOpacity="0.12"
+      />
+      <path d="M7 12.5C7 9 9.6 7.6 12 5.8C14.4 7.6 17 9 17 12.5" />
+      <path d="M2.6 21V11.4L3.9 8.8L5.2 11.4V21M18.8 21V11.4L20.1 8.8L21.4 11.4V21" />
+      <path d="M10.2 21v-3.2a1.8 1.8 0 0 1 3.6 0V21" />
+      <path d="M2 21H22" />
+      <g className="text-gold">
+        <path
+          className="pt-twinkle"
+          d="M12 1.6 L12.55 2.8 L13.75 3.35 L12.55 3.9 L12 5.1 L11.45 3.9 L10.25 3.35 L11.45 2.8 Z"
+          fill="currentColor"
+          strokeWidth="0.6"
+        />
+      </g>
+    </IconBase>
+  )
+}
+
+/* Hijri Converter */
+function CalendarIcon({ className }: IconProps) {
+  return (
+    <IconBase className={className}>
+      <rect x="3.5" y="5" width="17" height="15.5" rx="2.4" fill="currentColor" fillOpacity="0.12" />
+      <path d="M3.5 10H20.5" />
+      <path d="M8 3V6.6M16 3V6.6" />
+      <g className="text-gold">
+        <g transform="translate(7 10.85) scale(0.375)">
+          <g className="pt-twinkle">
+            <path
+              d="M16.9 3.7a8.2 8.2 0 1 0 3.4 13.7A8.8 8.8 0 0 1 16.9 3.7Z"
+              fill="currentColor"
+              strokeWidth="1.8"
+            />
+          </g>
+        </g>
+      </g>
+    </IconBase>
+  )
+}
+
+/* Ramadan Counter */
+function LanternIcon({ className }: IconProps) {
+  return (
+    <IconBase className={className}>
+      <path d="M12 1.8V4.2" />
+      <path d="M9.6 6.2L10.6 4.2H13.4L14.4 6.2Z" fill="currentColor" fillOpacity="0.12" />
+      <path
+        d="M8.2 6.2H15.8L17 14.2Q17 17.8 12 19Q7 17.8 7 14.2Z"
+        fill="currentColor"
+        fillOpacity="0.12"
+      />
+      <path d="M10.4 6.4L9.4 16.9M13.6 6.4L14.6 16.9" opacity="0.5" strokeWidth="1.2" />
+      <g className="text-gold">
+        <path
+          className="pt-twinkle"
+          d="M12 9.2C13.7 10.8 13.8 12.7 12 14.3C10.2 12.7 10.3 10.8 12 9.2Z"
+          fill="currentColor"
+          strokeWidth="0.8"
+        />
+      </g>
+      <path d="M12 19V21.2M10.8 21.5H13.2" />
+    </IconBase>
+  )
+}
+
+/* Inheritance Calculator */
+function ScaleIcon({ className }: IconProps) {
+  return (
+    <IconBase className={className}>
+      <path d="M12 6.5V20.5M8.5 20.5H15.5" />
+      <g className="pt-scale">
+        <path d="M4.5 6.5H19.5" />
+        <path
+          d="M4.5 6.5L2.5 12.5M4.5 6.5L6.5 12.5M19.5 6.5L17.5 12.5M19.5 6.5L21.5 12.5"
+          opacity="0.6"
+          strokeWidth="1.2"
+        />
+        <path d="M2.2 12.5H6.8a2.3 2 0 0 1-4.6 0Z" fill="currentColor" fillOpacity="0.12" />
+        <g className="text-gold">
+          <path d="M17.2 12.5H21.8a2.3 2 0 0 1-4.6 0Z" fill="currentColor" fillOpacity="0.25" />
+        </g>
+      </g>
+      <circle cx="12" cy="6.5" r="1.3" fill="currentColor" />
+    </IconBase>
+  )
+}
+
 const tools: Tool[] = [
   {
     title: "Hajj Checklist",
@@ -289,7 +401,7 @@ const tools: Tool[] = [
   },
   {
     title: "Qibla Finder",
-    description: "Find the direction of the Kaaba for your prayers.",
+    description: "Find the direction of the Kaaba from anywhere in the world.",
     href: "/tools/qibla-finder",
     icon: QiblaIcon,
     accent: "emerald",
@@ -300,6 +412,41 @@ const tools: Tool[] = [
     href: "/tools/noorani-qaida",
     icon: QaidaIcon,
     accent: "gold",
+  },
+  {
+    title: "Prayer Times",
+    description: "See today's prayer times for your location.",
+    href: "/tools/prayer-times",
+    icon: ClockIcon,
+    accent: "emerald",
+  },
+  {
+    title: "Mosque Finder",
+    description: "Find mosques near you on a live map, with distances.",
+    href: "/tools/mosque-finder",
+    icon: MosqueIcon,
+    accent: "gold",
+  },
+  {
+    title: "Hijri Converter",
+    description: "Convert dates between the Hijri and Gregorian calendars.",
+    href: "/tools/hijri-converter",
+    icon: CalendarIcon,
+    accent: "emerald",
+  },
+  {
+    title: "Ramadan Counter",
+    description: "Count down to Ramadan and keep track of the days.",
+    href: "/tools/ramadan-counter",
+    icon: LanternIcon,
+    accent: "gold",
+  },
+  {
+    title: "Inheritance Calculator",
+    description: "Work out each heir's share under Islamic inheritance law.",
+    href: "/tools/inheritance-calculator",
+    icon: ScaleIcon,
+    accent: "emerald",
   },
 ]
 
@@ -379,6 +526,13 @@ const motionCss = `
   45%, 82% { transform: translateY(0); opacity: 1; }
   100% { transform: translateY(0); opacity: 0; }
 }
+@keyframes pt-scale-tilt {
+  0%, 100% { transform: rotate(-7deg); }
+  50% { transform: rotate(7deg); }
+}
+@keyframes pt-hand-turn {
+  to { transform: rotate(360deg); }
+}
 .pt-draw { stroke-dasharray: 1; stroke-dashoffset: 0; animation: pt-draw 4.5s ease-in-out infinite; }
 .pt-bob { animation: pt-bob 2.4s ease-in-out infinite; }
 .pt-twinkle, .pt-digits, .pt-key, .pt-drop, .pt-bead, .pt-needle { transform-box: fill-box; }
@@ -387,7 +541,9 @@ const motionCss = `
 .pt-key { transform-origin: center; animation: pt-key 3.2s ease-in-out infinite; }
 .pt-drop { transform-origin: center; animation: pt-drop 3.4s ease-in infinite; }
 .pt-bead { transform-origin: center; animation: pt-bead-pulse 2.2s ease-in-out infinite; }
-.pt-needle { transform-origin: 12px 12px; animation: pt-needle-turn 4.5s ease-in-out infinite; }
+.pt-needle { transform-origin: center; animation: pt-needle-turn 4.5s ease-in-out infinite; }
+.pt-scale { transform-box: view-box; transform-origin: 12px 6.5px; animation: pt-scale-tilt 4.2s ease-in-out infinite; }
+.pt-hand { transform-box: view-box; transform-origin: 12px 12px; animation: pt-hand-turn 12s linear infinite; }
 @supports (animation-timeline: view()) {
   .pt-card {
     animation: pt-rise linear both;
@@ -396,7 +552,7 @@ const motionCss = `
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .pt-card, .pt-draw, .pt-bob, .pt-twinkle, .pt-digits, .pt-key, .pt-drop, .pt-bead, .pt-needle {
+  .pt-card, .pt-draw, .pt-bob, .pt-twinkle, .pt-digits, .pt-key, .pt-drop, .pt-bead, .pt-needle, .pt-scale, .pt-hand {
     animation: none !important;
   }
 }
@@ -451,14 +607,17 @@ export default function PlanningTools() {
           </div>
         </div>
 
-        {/* All eight tool cards */}
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {/* All tool cards. Flex-wrap keeps a short last row centred, whatever the number of tools. */}
+        <div className="flex flex-wrap justify-center gap-4">
           {tools.map((tool, index) => {
             const Icon = tool.icon
             const styles = ACCENT_STYLES[tool.accent]
 
             return (
-              <div key={tool.title} className="pt-card relative h-full">
+              <div
+                key={tool.title}
+                className="pt-card relative w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)]"
+              >
                 <Link
                   href={tool.href}
                   className={`
