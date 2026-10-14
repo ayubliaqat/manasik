@@ -1,8 +1,11 @@
+// app/tools/prayer-times/page.tsx
 import type { Metadata } from "next"
 import ToolHero from "@/components/Tools/tool-hero"
 import PrayerTimes from "@/components/Tools/PrayerTimes"
 import ToolArticle, { type ArticleSection } from "@/components/Tools/tool-article"
 import ToolGuide, { type GuideSection } from "@/components/Tools/tool-guide"
+import RelatedTools from "@/components/Tools/related-tools"
+import ToolsFaq, { type FaqItem } from "@/components/Tools/tools-faq"
 
 export const metadata: Metadata = {
   title: "Prayer Times | Manasik",
@@ -80,6 +83,39 @@ const guideSections: GuideSection[] = [
   },
 ]
 
+const faqs: FaqItem[] = [
+  {
+    question: "How are prayer times calculated?",
+    answer:
+      "The five daily prayers are tied to the position of the sun. Fajr begins at dawn, Dhuhr after the sun passes its highest point, Asr in the afternoon, Maghrib at sunset and Isha once the evening twilight has gone. Because of this, times change every day and differ in every city.",
+  },
+  {
+    question: "Why do prayer times differ between websites and mosques?",
+    answer:
+      "Scholars and organisations use different calculation methods, mainly for the sun angles used for Fajr and Isha. Mosques also often follow their own published timetable, so follow your local mosque's timetable where it differs.",
+  },
+  {
+    question: "What is the difference between Standard and Hanafi Asr?",
+    answer:
+      "Asr has two common calculations. The standard method gives an earlier Asr, and the Hanafi method gives a later Asr. Choose the one that matches the school you follow.",
+  },
+  {
+    question: "Why are Fajr and Isha hard to define in the UK in summer?",
+    answer:
+      "Summer nights in the UK are very short, so the twilight angles used for Fajr and Isha can be hard to define. Check with your local mosque if you want to match its timetable.",
+  },
+  {
+    question: "Can I use it for Makkah and Madinah?",
+    answer:
+      "Yes. Switch the region to Saudi Arabia and pick Makkah or Madinah to see the local times. The countdown follows the city you have selected, not your phone's time zone.",
+  },
+  {
+    question: "Do I need an internet connection?",
+    answer:
+      "Yes, an internet connection is needed to load the times. They are calculated and may differ by a few minutes from your local mosque.",
+  },
+]
+
 export default function PrayerTimesPage() {
   return (
     <div>
@@ -102,6 +138,12 @@ export default function PrayerTimesPage() {
 
         <ToolGuide title="How to Use Prayer Times" sections={guideSections} />
       </div>
+
+      <RelatedTools
+        keys={["mosque-finder", "hijri-converter", "hajj-checklist", "packing-list"]}
+      />
+
+      <ToolsFaq faqs={faqs} title="Prayer Times" highlight="FAQs" />
     </div>
   )
 }

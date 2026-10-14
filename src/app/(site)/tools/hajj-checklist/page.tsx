@@ -1,8 +1,11 @@
+// app/tools/hajj-checklist/page.tsx
 import type { Metadata } from "next"
 import ToolHero from "@/components/Tools/tool-hero"
 import HajjChecklist from "@/components/Tools/HajjChecklist"
 import ToolArticle, { type ArticleSection } from "@/components/Tools/tool-article"
 import ToolGuide, { type GuideSection } from "@/components/Tools/tool-guide"
+import RelatedTools from "@/components/Tools/related-tools"
+import ToolsFaq, { type FaqItem } from "@/components/Tools/tools-faq"
 
 export const metadata: Metadata = {
   title: "Hajj Checklist | Manasik",
@@ -80,6 +83,34 @@ const guideSections: GuideSection[] = [
   },
 ]
 
+const faqs: FaqItem[] = [
+  {
+    question: "What should I prepare before Hajj?",
+    answer:
+      "Prepare your documents, your spiritual readiness, your health and fitness, your ihram and essentials, and your money and family arrangements. The checklist groups all of these into sections so you can work through them one at a time.",
+  },
+  {
+    question: "When should I start preparing for Hajj?",
+    answer:
+      "Start several months before departure if you can. Visas, vaccinations and bookings take the longest, so do those first. Keep the final week for packing, confirming meeting points with your group and asking family and friends for their duas.",
+  },
+  {
+    question: "What documents do I need for Hajj?",
+    answer:
+      "Commonly needed documents include your passport, Hajj visa and permit, insurance, tickets and copies of everything. Requirements can differ by country and operator, so confirm the exact list with your Hajj operator or the official authorities.",
+  },
+  {
+    question: "How do I prepare for my first Hajj?",
+    answer:
+      "Learn the rituals step by step, practise the talbiyah and key duas, and ask your Hajj operator what to expect. Experienced pilgrims in your family or community are also a great source of advice.",
+  },
+  {
+    question: "Is my checklist progress saved?",
+    answer:
+      "Yes, your ticks are saved on this device only and are not shared with anyone. Clearing your browser data or switching devices will remove them, and you can press Reset list at any time to start again.",
+  },
+]
+
 export default function HajjChecklistPage() {
   return (
     <div>
@@ -105,6 +136,12 @@ export default function HajjChecklistPage() {
           sections={guideSections}
         />
       </div>
+
+      <RelatedTools
+        keys={["packing-list", "cost-estimator", "zakat-calculator", "prayer-times"]}
+      />
+
+      <ToolsFaq faqs={faqs} title="Hajj Checklist" highlight="FAQs" />
     </div>
   )
 }

@@ -1,8 +1,11 @@
+// app/tools/inheritance-calculator/page.tsx
 import type { Metadata } from "next"
 import ToolHero from "@/components/Tools/tool-hero"
 import InheritanceCalculator from "@/components/Tools/InheritanceCalculator"
 import ToolArticle, { type ArticleSection } from "@/components/Tools/tool-article"
 import ToolGuide, { type GuideSection } from "@/components/Tools/tool-guide"
+import RelatedTools from "@/components/Tools/related-tools"
+import ToolsFaq, { type FaqItem } from "@/components/Tools/tools-faq"
 
 export const metadata: Metadata = {
   title: "Islamic Inheritance Calculator (Faraid) | Manasik",
@@ -82,6 +85,39 @@ const guideSections: GuideSection[] = [
   },
 ]
 
+const faqs: FaqItem[] = [
+  {
+    question: "What is faraid?",
+    answer:
+      "Faraid, also called mirath, is Islamic inheritance law. It sets out who inherits from a Muslim and how much each heir receives, based mainly on the shares given in Surah An-Nisa.",
+  },
+  {
+    question: "What is paid before the estate is shared?",
+    answer:
+      "The estate first pays for the funeral, then any debts. Up to one third of what remains can be given as a bequest (wasiyyah) to people who are not heirs. The rest is divided between the heirs.",
+  },
+  {
+    question: "Why does a relative show as blocked?",
+    answer:
+      "A closer relative can block a more distant one. For example, a son blocks brothers and sisters, and a father blocks his own father. The calculator explains in the notes why a relative does not inherit.",
+  },
+  {
+    question: "Does a daughter get the same share as a son?",
+    answer:
+      "When a daughter and a son inherit together, the daughter receives half of the son's share. Daughters can also receive a fixed share when there are no sons, and the calculator works this out from the relatives you select.",
+  },
+  {
+    question: "Which relatives does the calculator not cover?",
+    answer:
+      "It does not cover relatives such as uncles or nephews, relatives of a different religion, a missing person, an unborn child, or other special situations in a family. It follows the Hanafi view where schools of thought differ.",
+  },
+  {
+    question: "Can I use this instead of a will or legal advice?",
+    answer:
+      "No. It gives general guidance only. In the UK, a Muslim's estate follows the law of the country unless there is a valid will, so you need a will that sets out Islamic shares. Confirm the result with a qualified scholar and a solicitor. Nothing you enter is saved.",
+  },
+]
+
 export default function InheritanceCalculatorPage() {
   return (
     <div>
@@ -104,6 +140,12 @@ export default function InheritanceCalculatorPage() {
 
         <ToolGuide title="How to Use the Inheritance Calculator" sections={guideSections} />
       </div>
+
+      <RelatedTools
+        keys={["zakat-calculator", "hijri-converter", "hajj-checklist", "prayer-times"]}
+      />
+
+      <ToolsFaq faqs={faqs} title="Inheritance Calculator" highlight="FAQs" />
     </div>
   )
 }

@@ -1,8 +1,11 @@
+// app/tools/noorani-qaida/page.tsx
 import type { Metadata } from "next"
 import ToolHero from "@/components/Tools/tool-hero"
 import NooraniQaida from "@/components/Tools/NooraniQaida"
 import ToolArticle, { type ArticleSection } from "@/components/Tools/tool-article"
 import ToolGuide, { type GuideSection } from "@/components/Tools/tool-guide"
+import RelatedTools from "@/components/Tools/related-tools"
+import ToolsFaq, { type FaqItem } from "@/components/Tools/tools-faq"
 
 export const metadata: Metadata = {
   title: "Noorani Qaida | Manasik",
@@ -84,6 +87,39 @@ const guideSections: GuideSection[] = [
   },
 ]
 
+const faqs: FaqItem[] = [
+  {
+    question: "What is the Noorani Qaida?",
+    answer:
+      "The Noorani Qaida is a beginner's primer for learning to read the Arabic of the Quran. It takes a learner step by step from single letters to reading full words, and it is used in many homes, madrasas and mosques.",
+  },
+  {
+    question: "What does this tool teach?",
+    answer:
+      "It covers the 28 Arabic letters, the short vowels (harakat), tanween, sukoon, shaddah and madd. Each lesson uses simple flashcards so you can practise one item at a time.",
+  },
+  {
+    question: "How should I practise with the flashcards?",
+    answer:
+      "Look at the card, say the sound out loud, and only then tap Show sound to check. Mark an item as learned when you can say it correctly without help, and use Random to test yourself.",
+  },
+  {
+    question: "Which direction do I read Arabic?",
+    answer:
+      "Arabic is read from right to left. When a card shows several forms, start from the one on the right.",
+  },
+  {
+    question: "Do I still need a teacher?",
+    answer:
+      "Yes. Some Arabic sounds, such as the heavy letters and the throat letters, are hard to learn from text alone. A qualified teacher can correct your pronunciation, and this tool is best used to revise alongside your teacher or Qaida book.",
+  },
+  {
+    question: "Is my progress saved?",
+    answer:
+      "Yes, but only in your browser on this device. Clearing your browser data, or using private browsing, will remove it.",
+  },
+]
+
 export default function NooraniQaidaPage() {
   return (
     <div>
@@ -106,6 +142,12 @@ export default function NooraniQaidaPage() {
 
         <ToolGuide title="How to Use the Noorani Qaida Practice" sections={guideSections} />
       </div>
+
+      <RelatedTools
+        keys={["prayer-times", "mosque-finder", "hijri-converter", "hajj-checklist"]}
+      />
+
+      <ToolsFaq faqs={faqs} title="Noorani Qaida" highlight="FAQs" />
     </div>
   )
 }

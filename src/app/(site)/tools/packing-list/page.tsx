@@ -1,8 +1,11 @@
+// app/tools/packing-list/page.tsx
 import type { Metadata } from "next"
 import ToolHero from "@/components/Tools/tool-hero"
 import UmrahPackingList from "@/components/Tools/UmrahPackingList"
 import ToolArticle, { type ArticleSection } from "@/components/Tools/tool-article"
 import ToolGuide, { type GuideSection } from "@/components/Tools/tool-guide"
+import RelatedTools from "@/components/Tools/related-tools"
+import ToolsFaq, { type FaqItem } from "@/components/Tools/tools-faq"
 
 export const metadata: Metadata = {
   title: "Packing List for Hajj and Umrah | Manasik",
@@ -81,6 +84,39 @@ const guideSections: GuideSection[] = [
   },
 ]
 
+const faqs: FaqItem[] = [
+  {
+    question: "What should I pack for Hajj or Umrah?",
+    answer:
+      "Pack clothing, unscented toiletries, health items, documents and money, electronics, and worship and comfort items such as a prayer mat, dua book and water bottle. The list groups everything by category so you can pack one section at a time.",
+  },
+  {
+    question: "What should men and women pack differently?",
+    answer:
+      "Choose Men, Women or With children above the list and it shows the items that apply to you. For example, ihram sets for men, modest loose clothing and sanitary supplies for women, and snacks and spare clothes for children.",
+  },
+  {
+    question: "Why should I pack unscented toiletries?",
+    answer:
+      "Scented products are avoided while in ihram, so unscented soap, shampoo and sun cream are the safer choice.",
+  },
+  {
+    question: "What should go in my hand luggage?",
+    answer:
+      "Keep your documents, medicines and a change of clothes in your hand luggage. Airline baggage rules vary, so check your allowance and what is allowed in hand luggage before you travel.",
+  },
+  {
+    question: "How can I pack light?",
+    answer:
+      "Take fewer items that are easy to wash and dry, and leave some space in your bag for gifts and Zamzam on the way back.",
+  },
+  {
+    question: "Is my packing progress saved?",
+    answer:
+      "Yes, your ticks are saved on this device only and are not shared with anyone. Clearing your browser data or switching devices will remove them.",
+  },
+]
+
 export default function PackingListPage() {
   return (
     <div>
@@ -106,6 +142,12 @@ export default function PackingListPage() {
           sections={guideSections}
         />
       </div>
+
+      <RelatedTools
+        keys={["hajj-checklist", "cost-estimator", "prayer-times", "mosque-finder"]}
+      />
+
+      <ToolsFaq faqs={faqs} title="Packing List" highlight="FAQs" />
     </div>
   )
 }

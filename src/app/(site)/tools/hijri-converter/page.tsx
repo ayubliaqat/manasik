@@ -1,8 +1,11 @@
+// app/tools/hijri-converter/page.tsx
 import type { Metadata } from "next"
 import ToolHero from "@/components/Tools/tool-hero"
 import HijriConverter from "@/components/Tools/HijriConverter"
 import ToolArticle, { type ArticleSection } from "@/components/Tools/tool-article"
 import ToolGuide, { type GuideSection } from "@/components/Tools/tool-guide"
+import RelatedTools from "@/components/Tools/related-tools"
+import ToolsFaq, { type FaqItem } from "@/components/Tools/tools-faq"
 
 export const metadata: Metadata = {
   title: "Hijri Date Converter | Manasik",
@@ -85,6 +88,34 @@ const guideSections: GuideSection[] = [
   },
 ]
 
+const faqs: FaqItem[] = [
+  {
+    question: "How do I convert a Gregorian date to Hijri?",
+    answer:
+      "Choose Gregorian to Hijri, enter the date, and the converter shows the Hijri date with the weekday and the month name in English and Arabic. You can also switch to Hijri to Gregorian to convert the other way.",
+  },
+  {
+    question: "Why do Islamic dates change every year in the Gregorian calendar?",
+    answer:
+      "A Hijri year is about ten or eleven days shorter than a Gregorian year. Because of this, dates such as Ramadan and Eid fall about ten or eleven days earlier each year.",
+  },
+  {
+    question: "Why is the date different in my country?",
+    answer:
+      "Each Hijri month begins with the sighting of the new moon, so the start of a month can differ by a day between countries and communities. This converter uses the Umm al-Qura calendar of Saudi Arabia, and you can adjust the date by one day either way to match your local sighting.",
+  },
+  {
+    question: "Which dates does the converter support?",
+    answer:
+      "It supports Gregorian dates from 1900 to 2070 and Hijri years 1320 to 1490.",
+  },
+  {
+    question: "Is the converted date official?",
+    answer:
+      "No. Dates are calculated in advance and may differ by a day from the date announced in your country. Check with your local mosque for the confirmed date of Ramadan and Eid.",
+  },
+]
+
 export default function HijriConverterPage() {
   return (
     <div>
@@ -107,6 +138,12 @@ export default function HijriConverterPage() {
 
         <ToolGuide title="How to Use the Hijri Date Converter" sections={guideSections} />
       </div>
+
+      <RelatedTools
+        keys={["prayer-times", "hajj-checklist", "zakat-calculator", "cost-estimator"]}
+      />
+
+      <ToolsFaq faqs={faqs} title="Hijri Date Converter" highlight="FAQs" />
     </div>
   )
 }

@@ -1,8 +1,11 @@
+// app/tools/tasbih-counter/page.tsx
 import type { Metadata } from "next"
 import ToolHero from "@/components/Tools/tool-hero"
 import TasbihCounter from "@/components/Tools/TasbihCounter"
 import ToolArticle, { type ArticleSection } from "@/components/Tools/tool-article"
 import ToolGuide, { type GuideSection } from "@/components/Tools/tool-guide"
+import RelatedTools from "@/components/Tools/related-tools"
+import ToolsFaq, { type FaqItem } from "@/components/Tools/tools-faq"
 
 export const metadata: Metadata = {
   title: "Tasbih Counter | Manasik",
@@ -81,6 +84,39 @@ const guideSections: GuideSection[] = [
   },
 ]
 
+const faqs: FaqItem[] = [
+  {
+    question: "What is a tasbih counter?",
+    answer:
+      "A tasbih counter is a digital version of a string of prayer beads. You tap once for each recitation of your dhikr, and the ring fills as you get closer to your target.",
+  },
+  {
+    question: "What is the common dhikr routine after prayer?",
+    answer:
+      "A widely practised routine after the obligatory prayers is 33 times SubhanAllah, 33 times Alhamdulillah and 34 times Allahu Akbar. There is no single required number for every dhikr, so you can choose a target that suits you.",
+  },
+  {
+    question: "Can I set my own target?",
+    answer:
+      "Yes. You can choose 33, 99, 100 or a custom number, and the counter tracks your completed rounds.",
+  },
+  {
+    question: "What if I tap by mistake?",
+    answer:
+      "Use Undo last to remove your most recent tap. You can also reset a single dhikr or everything.",
+  },
+  {
+    question: "Does it vibrate when I tap?",
+    answer:
+      "Yes, on supported phones there is a short vibration on each tap and a longer one when you finish a round. Vibration works on most Android phones but not on iPhones.",
+  },
+  {
+    question: "Are my counts saved?",
+    answer:
+      "Yes, but only in your browser on this device. Clearing your browser data, or using private browsing, will remove them.",
+  },
+]
+
 export default function TasbihCounterPage() {
   return (
     <div>
@@ -103,6 +139,12 @@ export default function TasbihCounterPage() {
 
         <ToolGuide title="How to Use the Tasbih Counter" sections={guideSections} />
       </div>
+
+      <RelatedTools
+        keys={["prayer-times", "noorani-qaida", "hajj-checklist", "ramadan-counter"]}
+      />
+
+      <ToolsFaq faqs={faqs} title="Tasbih Counter" highlight="FAQs" />
     </div>
   )
 }

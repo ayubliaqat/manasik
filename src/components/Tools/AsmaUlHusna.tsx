@@ -1,14 +1,15 @@
+// components/Tools/AsmaUlHusna.tsx
 "use client"
 
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react"
 import {
+  BookmarkCheck,
   Check,
   ChevronLeft,
   ChevronRight,
   Heart,
-  Search,
   RotateCcw,
-  BookmarkCheck,
+  Search,
 } from "lucide-react"
 
 type Name = {
@@ -204,14 +205,6 @@ function updateSavedSnapshot(next: SavedState) {
   savedListeners.forEach((notify) => notify())
 }
 
-function Heading({ children }: { children: React.ReactNode }) {
-  return (
-    <h3 className="mb-3 border-b border-deep-teal/15 pb-2 font-heading text-sm font-semibold text-deep-teal">
-      {children}
-    </h3>
-  )
-}
-
 export default function AsmaUlHusna() {
   const [search, setSearch] = useState("")
   const [filter, setFilter] = useState<Filter>("all")
@@ -303,8 +296,6 @@ export default function AsmaUlHusna() {
 
   return (
     <div className="space-y-5">
-     
-
       {current ? (
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_300px]">
           <section className="overflow-hidden rounded-2xl border border-deep-teal/15 bg-card shadow-[0_8px_28px_rgba(6,63,58,0.07)]">
@@ -571,7 +562,8 @@ export default function AsmaUlHusna() {
           </button>
         </div>
       )}
-       <div className="rounded-2xl border border-deep-teal/15 bg-card p-4 shadow-[0_2px_10px_rgba(6,63,58,0.05)] sm:p-5">
+
+      <div className="rounded-2xl border border-deep-teal/15 bg-card p-4 shadow-[0_2px_10px_rgba(6,63,58,0.05)] sm:p-5">
         <label htmlFor="asma-search" className="sr-only">
           Search the 99 Names of Allah
         </label>

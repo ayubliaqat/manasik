@@ -1,8 +1,11 @@
+// app/tools/ramadan-counter/page.tsx
 import type { Metadata } from "next"
 import ToolHero from "@/components/Tools/tool-hero"
 import RamadanCounter from "@/components/Tools/RamadanCounter"
 import ToolArticle, { type ArticleSection } from "@/components/Tools/tool-article"
 import ToolGuide, { type GuideSection } from "@/components/Tools/tool-guide"
+import RelatedTools from "@/components/Tools/related-tools"
+import ToolsFaq, { type FaqItem } from "@/components/Tools/tools-faq"
 
 export const metadata: Metadata = {
   title: "Ramadan Counter & Islamic Dates | Manasik",
@@ -90,6 +93,39 @@ const guideSections: GuideSection[] = [
   },
 ]
 
+const faqs: FaqItem[] = [
+  {
+    question: "When does Ramadan start?",
+    answer:
+      "A new month begins with the sighting of the new crescent moon, so the start of Ramadan can differ by a day between countries and communities. The counter shows the calculated date, and you should check with your local mosque for the confirmed start.",
+  },
+  {
+    question: "Why does Ramadan move earlier each year?",
+    answer:
+      "The Islamic calendar follows the moon, and its year is about ten or eleven days shorter than the Gregorian year. Because of this, Ramadan falls about ten or eleven days earlier in the Gregorian calendar each year.",
+  },
+  {
+    question: "Which calendar does the counter use?",
+    answer:
+      "It uses the Umm al-Qura calendar, which is the calendar used in Saudi Arabia. If your country or local mosque starts a day earlier or later, use the one-day date adjustment to match it.",
+  },
+  {
+    question: "How does the fasting tracker work?",
+    answer:
+      "Open the Ramadan calendar and tap each day you fast to mark it. The tracker shows which day of Ramadan you are on and how many days you have fasted.",
+  },
+  {
+    question: "Which Islamic dates does it show?",
+    answer:
+      "It lists upcoming dates including Eid al-Fitr, Hajj, the Day of Arafah and Eid al-Adha, each with a countdown and the Hijri and Gregorian date together. You can also convert any date between Gregorian and Hijri.",
+  },
+  {
+    question: "Are my fasting ticks saved?",
+    answer:
+      "Yes, but only in your browser on this device. Clearing your browser data, or using private browsing, will remove them.",
+  },
+]
+
 export default function RamadanCounterPage() {
   return (
     <div>
@@ -112,6 +148,12 @@ export default function RamadanCounterPage() {
 
         <ToolGuide title="How to Use the Ramadan Counter" sections={guideSections} />
       </div>
+
+      <RelatedTools
+        keys={["hijri-converter", "prayer-times", "zakat-calculator", "mosque-finder"]}
+      />
+
+      <ToolsFaq faqs={faqs} title="Ramadan Counter" highlight="FAQs" />
     </div>
   )
 }

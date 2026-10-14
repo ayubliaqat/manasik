@@ -1,8 +1,11 @@
+// app/tools/cost-estimator/page.tsx
 import type { Metadata } from "next"
 import ToolHero from "@/components/Tools/tool-hero"
 import CostEstimator from "@/components/Tools/CostEstimator"
 import ToolArticle, { type ArticleSection } from "@/components/Tools/tool-article"
 import ToolGuide, { type GuideSection } from "@/components/Tools/tool-guide"
+import RelatedTools from "@/components/Tools/related-tools"
+import ToolsFaq, { type FaqItem } from "@/components/Tools/tools-faq"
 
 export const metadata: Metadata = {
   title: "Hajj and Umrah Cost Estimator | Manasik",
@@ -81,6 +84,34 @@ const guideSections: GuideSection[] = [
   },
 ]
 
+const faqs: FaqItem[] = [
+  {
+    question: "How much does Hajj or Umrah cost?",
+    answer:
+      "The cost varies widely with your country, the season, the package and how close your hotel is to the Haram. Flights, visa, hotels, food, transport and extras all add up, so use real quotes from your operator and enter them in the estimator for a realistic total.",
+  },
+  {
+    question: "What costs should I include in my budget?",
+    answer:
+      "Include flights, visa and permits, hotels in Makkah and Madinah, food, local transport, ziyarah and tours, gifts and any other costs. It also helps to add a safety buffer for unexpected expenses.",
+  },
+  {
+    question: "How big should my safety buffer be?",
+    answer:
+      "A buffer of at least 10 percent of your total is a sensible starting point. Increase it if you are travelling in Ramadan or the Hajj period, when prices tend to rise.",
+  },
+  {
+    question: "Can I see the total in my own currency?",
+    answer:
+      "Yes. Choose from 20 currencies and your amounts convert automatically using live exchange rates when you switch. If live rates are unavailable, amounts are not converted when you change currency.",
+  },
+  {
+    question: "Is the estimate exact, and is my data saved?",
+    answer:
+      "It is an estimate only, so confirm current rates before you book. Nothing you enter is saved or shared.",
+  },
+]
+
 export default function CostEstimatorPage() {
   return (
     <div>
@@ -103,6 +134,12 @@ export default function CostEstimatorPage() {
 
         <ToolGuide title="How to Use the Cost Estimator" sections={guideSections} />
       </div>
+
+      <RelatedTools
+        keys={["hajj-checklist", "packing-list", "zakat-calculator", "prayer-times"]}
+      />
+
+      <ToolsFaq faqs={faqs} title="Cost Estimator" highlight="FAQs" />
     </div>
   )
 }

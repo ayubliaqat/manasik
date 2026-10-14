@@ -1,9 +1,11 @@
-
+// app/tools/99-names-of-allah/page.tsx
 import type { Metadata } from "next"
 import ToolHero from "@/components/Tools/tool-hero"
 import AsmaUlHusna from "@/components/Tools/AsmaUlHusna"
 import ToolArticle, { type ArticleSection } from "@/components/Tools/tool-article"
 import ToolGuide, { type GuideSection } from "@/components/Tools/tool-guide"
+import RelatedTools from "@/components/Tools/related-tools"
+import ToolsFaq, { type FaqItem } from "@/components/Tools/tools-faq"
 
 export const metadata: Metadata = {
   title: "99 Names of Allah with Meanings | Manasik",
@@ -86,6 +88,34 @@ const guideSections: GuideSection[] = [
   },
 ]
 
+const faqs: FaqItem[] = [
+  {
+    question: "What are the 99 Names of Allah?",
+    answer:
+      "The 99 Names of Allah, known as Asma ul Husna, are the beautiful names that describe His attributes, such as Ar-Rahman (The Most Compassionate) and Al-Alim (The All-Knowing). Muslims learn them to know Allah better and to call upon Him by them in dua.",
+  },
+  {
+    question: "Where do the 99 Names come from?",
+    answer:
+      "The names are drawn from the Qur'an and the Sunnah. Allah says in the Qur'an that the most beautiful names belong to Him, so we should call upon Him by them. A well-known hadith also speaks of the virtue of learning 99 names.",
+  },
+  {
+    question: "Why do some lists of the names differ?",
+    answer:
+      "Scholars differ on the exact enumeration of the names, so a few names vary between lists. English meanings also vary slightly between translations. For detailed study, refer to the Qur'an and reliable scholarly sources.",
+  },
+  {
+    question: "How can I memorize the 99 Names?",
+    answer:
+      "Learn a few names each day rather than all at once, and read the meaning along with the Arabic. Mark each name as memorized once you know it, and revisit your favorites often. Reciting them regularly helps them stay with you.",
+  },
+  {
+    question: "Is my progress saved?",
+    answer:
+      "Yes. Your favorites and memorized names are saved on your own device, so they will still be here when you return. Clearing your browser data or switching devices will reset them.",
+  },
+]
+
 export default function AsmaUlHusnaPage() {
   return (
     <div>
@@ -111,6 +141,12 @@ export default function AsmaUlHusnaPage() {
           sections={guideSections}
         />
       </div>
+
+      <RelatedTools
+        keys={["tasbih-counter", "qibla-finder", "prayer-times", "noorani-qaida"]}
+      />
+
+      <ToolsFaq faqs={faqs} title="Frequently Asked Questions" highlight="FAQs" />
     </div>
   )
 }

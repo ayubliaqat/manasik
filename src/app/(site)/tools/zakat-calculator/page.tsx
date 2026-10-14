@@ -1,8 +1,11 @@
+// app/tools/zakat-calculator/page.tsx
 import type { Metadata } from "next"
 import ToolHero from "@/components/Tools/tool-hero"
 import ZakatCalculator from "@/components/Tools/ZakatCalculator"
 import ToolArticle, { type ArticleSection } from "@/components/Tools/tool-article"
 import ToolGuide, { type GuideSection } from "@/components/Tools/tool-guide"
+import RelatedTools from "@/components/Tools/related-tools"
+import ToolsFaq, { type FaqItem } from "@/components/Tools/tools-faq"
 
 export const metadata: Metadata = {
   title: "Zakat Calculator | Manasik",
@@ -82,6 +85,39 @@ const guideSections: GuideSection[] = [
   },
 ]
 
+const faqs: FaqItem[] = [
+  {
+    question: "What is zakat and how much is due?",
+    answer:
+      "Zakat is one of the five pillars of Islam. It is a fixed share of your wealth, given each year to those in need. The standard rate is 2.5 percent of your net wealth, once your wealth has stayed above the nisab for one full lunar year.",
+  },
+  {
+    question: "What is the nisab?",
+    answer:
+      "The nisab is the minimum amount of wealth before zakat becomes due. It is based on either 87.48 grams of gold or 612.36 grams of silver.",
+  },
+  {
+    question: "Should I use the gold or silver nisab?",
+    answer:
+      "Scholars differ on this. The silver nisab is lower, so more people qualify when it is used, while the gold nisab is higher. The calculator lets you choose, and if you are unsure, ask a scholar you trust.",
+  },
+  {
+    question: "What counts towards my zakat?",
+    answer:
+      "Cash and bank balances, gold and silver, investments and shares, business stock held for sale, and money owed to you that you expect to get back all count. Debts that are due now are deducted from your total.",
+  },
+  {
+    question: "Does the calculator use live prices?",
+    answer:
+      "Yes. It loads current gold and silver prices in your chosen currency, and you can edit them. If live prices are unavailable, you can type in today's prices yourself.",
+  },
+  {
+    question: "Is my data saved, and can I rely on the result?",
+    answer:
+      "Nothing you enter is saved or shared. The result is a guide only and does not replace the advice of a qualified scholar, especially for complex situations such as business or pension assets.",
+  },
+]
+
 export default function ZakatCalculatorPage() {
   return (
     <div>
@@ -104,6 +140,12 @@ export default function ZakatCalculatorPage() {
 
         <ToolGuide title="How to Use the Zakat Calculator" sections={guideSections} />
       </div>
+
+      <RelatedTools
+        keys={["inheritance-calculator", "ramadan-counter", "hijri-converter", "cost-estimator"]}
+      />
+
+      <ToolsFaq faqs={faqs} title="Zakat Calculator" highlight="FAQs" />
     </div>
   )
 }
