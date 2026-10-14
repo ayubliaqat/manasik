@@ -40,6 +40,25 @@ const postInputSchema = z.object({
   categoryId: z.string().uuid().nullable(),
   tagIds: z.array(z.string().uuid()).default([]),
 
+  // FAQs: trimmed, and empty items are dropped before saving
+  faqs: z
+    .array(
+      z.object({
+        question: z.string().max(300, "A FAQ question is too long"),
+        answer: z.string().max(3000, "A FAQ answer is too long"),
+      })
+    )
+    .max(30, "You can add up to 30 FAQs")
+    .default([])
+    .transform((items) =>
+      items
+        .map((faq) => ({
+          question: faq.question.trim(),
+          answer: faq.answer.trim(),
+        }))
+        .filter((faq) => faq.question && faq.answer)
+    ),
+
   // SEO
   seoTitle: z.string().optional().default(""),
   metaDescription: z.string().optional().default(""),
@@ -173,6 +192,9 @@ export async function createPost(rawData: PostInput) {
 
           categoryId: data.categoryId || null,
           authorId: caller.id,
+
+          // FAQs
+          faqs: data.faqs,
 
           // SEO
           seoTitle: data.seoTitle || null,
@@ -324,6 +346,9 @@ export async function updatePost(postId: string, rawData: PostInput) {
           status,
 
           categoryId: data.categoryId || null,
+
+          // FAQs
+          faqs: data.faqs,
 
           // SEO
           seoTitle: data.seoTitle || null,

@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
 
@@ -19,6 +20,8 @@ type BlogCategory = {
   slug: string
 }
 
+const PAGE_SIZE = 12
+
 export default function BlogList({
   posts,
   categories,
@@ -27,11 +30,20 @@ export default function BlogList({
   categories: BlogCategory[]
 }) {
   const [active, setActive] = useState<string>("all")
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
 
-  const visiblePosts =
+  const filteredPosts =
     active === "all" ? posts : posts.filter((p) => p.categorySlug === active)
 
+  const visiblePosts = filteredPosts.slice(0, visibleCount)
+  const hasMore = filteredPosts.length > visibleCount
+
   const filterItems = [{ id: "all", name: "All", slug: "all" }, ...categories]
+
+  function handleFilter(slug: string) {
+    setActive(slug)
+    setVisibleCount(PAGE_SIZE)
+  }
 
   return (
     <section className="bg-warm-white pb-20 pt-8 sm:pb-24 sm:pt-10">
@@ -48,7 +60,7 @@ export default function BlogList({
               <button
                 key={item.id}
                 type="button"
-                onClick={() => setActive(item.slug)}
+                onClick={() => handleFilter(item.slug)}
                 aria-pressed={isActive}
                 className={[
                   "min-h-9 rounded-full border px-4 py-2 font-heading text-xs font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald/50 focus-visible:ring-offset-2 focus-visible:ring-offset-warm-white",
@@ -72,7 +84,7 @@ export default function BlogList({
           </p>
         ) : (
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
-            {visiblePosts.map((post) => (
+            {visiblePosts.map((post, index) => (
               <article
                 key={post.id}
                 className="
@@ -95,13 +107,14 @@ export default function BlogList({
                   className="relative block aspect-[16/10] overflow-hidden rounded-xl bg-soft-beige shadow-[0_2px_6px_rgba(6,63,58,0.15)]"
                 >
                   {post.featuredImage ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
+                    <Image
                       src={post.featuredImage}
                       alt=""
-                      className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
-                      loading="lazy"
-                      decoding="async"
+                      fill
+                      sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                      quality={70}
+                      priority={index < 4}
+                      className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
                     />
                   ) : (
                     <div className="flex h-full w-full items-center justify-center text-xs text-muted-teal">
@@ -156,6 +169,19 @@ export default function BlogList({
                 </div>
               </article>
             ))}
+          </div>
+        )}
+
+        {/* Load more */}
+        {hasMore && (
+          <div className="mt-10 flex justify-center">
+            <button
+              type="button"
+              onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
+              className="rounded-full border border-emerald/30 bg-white px-6 py-2.5 font-heading text-xs font-semibold text-emerald transition-all duration-200 hover:border-emerald hover:bg-emerald hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald/50 focus-visible:ring-offset-2 focus-visible:ring-offset-warm-white"
+            >
+              Load more articles
+            </button>
           </div>
         )}
       </div>

@@ -2,6 +2,8 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import type { PostFaq } from "@/db/schema"
+import PostFaqEditor from "@/components/Blog/post-faq-editor"
 import { EditorTabs, type TabId } from "./EditorTabs"
 import { ContentPanel } from "./ContentPanel"
 import { SeoPanel } from "./SeoPanel"
@@ -33,6 +35,9 @@ export type PostFormData = {
   status: PostStatus
   categoryId: string
   tagIds: string[]
+
+  // FAQs
+  faqs: PostFaq[]
 
   // SEO
   seoTitle: string
@@ -70,6 +75,8 @@ const emptyPost: PostFormData = {
   status: "draft",
   categoryId: "",
   tagIds: [],
+
+  faqs: [],
 
   seoTitle: "",
   metaDescription: "",
@@ -125,6 +132,8 @@ export function PostEditor({
   const [data, setData] = useState<PostFormData>({
     ...emptyPost,
     ...initialData,
+    // Always an array, even if the edit page passes nothing for faqs.
+    faqs: initialData?.faqs ?? [],
   })
 
   function update<K extends keyof PostFormData>(
@@ -200,10 +209,20 @@ export function PostEditor({
           )}
 
           {activeTab === "seo" && (
-            <SeoPanel
-              data={data}
-              update={update}
-            />
+            <div className="space-y-8">
+              <SeoPanel
+                data={data}
+                update={update}
+              />
+
+              {/* FAQs: added by the SEO team, shown on the post page */}
+              <div className="border-t border-soft-beige pt-6">
+                <PostFaqEditor
+                  value={data.faqs}
+                  onChange={(faqs) => update("faqs", faqs)}
+                />
+              </div>
+            </div>
           )}
 
           {activeTab === "social" && (

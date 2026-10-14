@@ -9,17 +9,20 @@ import {
   index,
   boolean,
   real,
+  jsonb,
 } from "drizzle-orm/pg-core"
 import type { AdapterAccountType } from "next-auth/adapters"
 
 export const userRoleEnum = pgEnum("user_role", ["author", "admin", "editor"])
+
+export type PostFaq = { question: string; answer: string }
 
 export const users = pgTable("users", {
   id: uuid("id").defaultRandom().primaryKey(),
   name: text("name"),
   email: text("email").unique().notNull(),
   password: text("password"),
-    role: userRoleEnum("role").default("author").notNull(),
+  role: userRoleEnum("role").default("author").notNull(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
   createdAt: timestamp("created_at").defaultNow(),
@@ -129,6 +132,8 @@ export const posts = pgTable(
     twitterImage: text("twitter_image"),
 
     schemaType: text("schema_type").default("BlogPosting").notNull(),
+
+    faqs: jsonb("faqs").$type<PostFaq[]>().default([]).notNull(),
 
     publishedAt: timestamp("published_at"),
     createdAt: timestamp("created_at").defaultNow(),

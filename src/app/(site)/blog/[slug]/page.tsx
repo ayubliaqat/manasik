@@ -1,12 +1,32 @@
-﻿import { notFound } from "next/navigation"
+﻿// app/blog/[slug]/page.tsx
+import { cache } from "react"
+import { notFound } from "next/navigation"
+import Image from "next/image"
 import Link from "next/link"
 import type { Metadata } from "next"
-import { eq } from "drizzle-orm"
+import { and, desc, eq, ne } from "drizzle-orm"
 import { db } from "@/db"
 import { posts, categories, users } from "@/db/schema"
 import { ChevronRight } from "lucide-react"
+import MoreReads from "@/components/Blog/more-reads"
+import PostFaqSection from "@/components/Blog/post-faq-section"
 
-async function getPost(slug: string) {
+// Build post pages ahead of time and refresh them every 5 minutes.
+export const revalidate = 300
+
+// Pre-render every published post at build time.
+// New posts not yet built are rendered on first visit, then cached.
+export async function generateStaticParams() {
+  const rows = await db
+    .select({ slug: posts.slug })
+    .from(posts)
+    .where(eq(posts.status, "published"))
+
+  return rows.map((row) => ({ slug: row.slug }))
+}
+
+// cache() makes generateMetadata and the page share ONE database query.
+const getPost = cache(async (slug: string) => {
   const [post] = await db
     .select({
       id: posts.id,
@@ -29,6 +49,7 @@ async function getPost(slug: string) {
       twitterDescription: posts.twitterDescription,
       twitterImage: posts.twitterImage,
       schemaType: posts.schemaType,
+      faqs: posts.faqs,
       publishedAt: posts.publishedAt,
       categoryName: categories.name,
       authorName: users.name,
@@ -40,6 +61,24 @@ async function getPost(slug: string) {
     .limit(1)
 
   return post
+})
+
+// 4 random other published posts, for the "You May Also Like" list.
+async function getRandomPosts(currentSlug: string) {
+  const rows = await db
+    .select({ id: posts.id, title: posts.title, slug: posts.slug })
+    .from(posts)
+    .where(and(eq(posts.status, "published"), ne(posts.slug, currentSlug)))
+    .orderBy(desc(posts.publishedAt))
+    .limit(50)
+
+  // Fisher-Yates shuffle, then take 4
+  for (let i = rows.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[rows[i], rows[j]] = [rows[j], rows[i]]
+  }
+
+  return rows.slice(0, 4)
 }
 
 export async function generateMetadata({
@@ -106,7 +145,10 @@ export default async function PostPage({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-  const post = await getPost(slug)
+  const [post, morePosts] = await Promise.all([
+    getPost(slug),
+    getRandomPosts(slug),
+  ])
 
   if (!post || post.status !== "published") {
     notFound()
@@ -126,141 +168,91 @@ export default async function PostPage({
       : undefined,
   }
 
+  // Lazy-load images inside the post body so they don't block the page.
+  const content = post.content.replace(
+    /<img(?![^>]*\sloading=)/gi,
+    '<img loading="lazy" decoding="async"'
+  )
+
   return (
     <div>
-      {/* Hero banner with breadcrumb + title + meta */}
-  {/* Hero banner with breadcrumb + title + meta */}
-{/* Hero banner with breadcrumb + title + meta */}
-<section className="relative overflow-hidden bg-warm-white bg-gradient-to-br from-emerald/35 via-emerald/20 to-gold/20 pb-9 pt-4 sm:pb-11 sm:pt-5">
-  {/* Soft glows */}
-  <div
-    aria-hidden="true"
-    className="pointer-events-none absolute -top-24 left-1/4 h-56 w-56 rounded-full bg-emerald/25 blur-3xl sm:h-64 sm:w-64"
-  />
-  <div
-    aria-hidden="true"
-    className="pointer-events-none absolute -top-20 right-1/4 h-52 w-52 rounded-full bg-gold/25 blur-3xl sm:h-60 sm:w-60"
-  />
+      {/* Hero: green, same style as the tool pages and blog list */}
+      <section className="relative overflow-hidden bg-deep-teal pb-14 pt-8 sm:pb-16 sm:pt-10">
+        <div className="relative z-10 mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
+          {/* Breadcrumb: centred */}
+          <nav
+            aria-label="Breadcrumb"
+            className="mb-3 flex flex-wrap items-center justify-center gap-2 text-sm text-white/70 sm:mb-4"
+          >
+            <Link href="/" className="transition-colors hover:text-gold">
+              Home
+            </Link>
 
-  {/* Faint crescent + star background */}
-  <svg
-    aria-hidden="true"
-    className="pointer-events-none absolute inset-0 h-full w-full text-deep-teal opacity-[0.12]"
-    style={{
-      maskImage: "linear-gradient(to bottom, black 0%, transparent 95%)",
-      WebkitMaskImage: "linear-gradient(to bottom, black 0%, transparent 95%)",
-    }}
-  >
-    <defs>
-      <pattern
-        id="hero-islamic-bg"
-        width="140"
-        height="140"
-        patternUnits="userSpaceOnUse"
-      >
-        {/* tiny crescent */}
-        <g transform="translate(18 16) scale(0.16)">
+            <ChevronRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+
+            <Link
+              href="/blog"
+              className="relative inline-block text-gold transition-colors hover:text-white"
+            >
+              Blog
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 120 10"
+                preserveAspectRatio="none"
+                fill="none"
+                className="pointer-events-none absolute left-1/2 top-full mt-[0.1em] h-[0.18em] w-[90%] -translate-x-1/2 text-gold"
+              >
+                <path
+                  d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  vectorEffect="non-scaling-stroke"
+                />
+              </svg>
+            </Link>
+          </nav>
+
+          <h1 className="mx-auto max-w-3xl font-heading text-xl font-normal leading-snug text-white sm:text-2xl lg:text-3xl">
+            {post.title}
+          </h1>
+
+          <div className="mt-3 flex flex-wrap items-center justify-center gap-2 text-xs text-white/70 sm:text-sm">
+            <span>By {post.authorName || "Admin"}</span>
+
+            {post.publishedAt && (
+              <>
+                <span aria-hidden="true">&middot;</span>
+
+                <time dateTime={new Date(post.publishedAt).toISOString()}>
+                  {new Date(post.publishedAt).toLocaleDateString("en-US", {
+                    month: "long",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                </time>
+              </>
+            )}
+          </div>
+        </div>
+
+        {/* Wavy bottom */}
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 1440 80"
+          preserveAspectRatio="none"
+          className="pointer-events-none absolute bottom-[-1px] left-0 z-10 block h-[36px] w-full text-warm-white sm:h-[48px] lg:h-[64px]"
+        >
           <path
-            d="M60 10 A40 40 0 0 0 60 90 A50 50 0 0 1 60 10 Z"
             fill="currentColor"
+            d="M0 40 C120 80 240 80 360 50 C480 20 600 20 720 45 C840 70 960 70 1080 45 C1200 20 1320 20 1440 50 L1440 80 L0 80 Z"
           />
-        </g>
-        {/* stars */}
-        <g transform="translate(98 40) scale(0.45)">
-          <path
-            d="M0 -11 Q0 0 11 0 Q0 0 0 11 Q0 0 -11 0 Q0 0 0 -11Z"
-            fill="currentColor"
-          />
-        </g>
-        <g transform="translate(62 96) scale(0.3)">
-          <path
-            d="M0 -11 Q0 0 11 0 Q0 0 0 11 Q0 0 -11 0 Q0 0 0 -11Z"
-            fill="currentColor"
-          />
-        </g>
-        <g transform="translate(120 120) scale(0.2)">
-          <path
-            d="M0 -11 Q0 0 11 0 Q0 0 0 11 Q0 0 -11 0 Q0 0 0 -11Z"
-            fill="currentColor"
-          />
-        </g>
-      </pattern>
-    </defs>
-    <rect width="100%" height="100%" fill="url(#hero-islamic-bg)" />
-  </svg>
-
-  <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    {/* Breadcrumb: top left, above title */}
-    <nav
-      aria-label="Breadcrumb"
-      className="mb-3 flex items-center justify-start gap-1 text-[11px] text-deep-teal/70 sm:mb-4 sm:text-xs"
-    >
-      <Link
-        href="/"
-        className="shrink-0 transition-colors hover:text-emerald"
-      >
-        Home
-      </Link>
-
-      <ChevronRight
-        className="h-3 w-3 shrink-0 text-deep-teal/50"
-        aria-hidden="true"
-      />
-
-      <Link
-        href="/blog"
-        className="shrink-0 transition-colors hover:text-emerald"
-      >
-        Blog
-      </Link>
-
-      <ChevronRight
-        className="h-3 w-3 shrink-0 text-deep-teal/50"
-        aria-hidden="true"
-      />
-    </nav>
-
-    <div className="mx-auto max-w-3xl text-center">
-      <h1 className="text-xl font-medium leading-snug tracking-tight text-charcoal sm:text-2xl lg:text-3xl">
-        {post.title}
-      </h1>
-
-      <div className="mt-2 flex flex-wrap items-center justify-center gap-2 text-xs text-deep-teal/80">
-        <span>By {post.authorName || "Admin"}</span>
-
-        {post.publishedAt && (
-          <>
-            <span aria-hidden="true">&middot;</span>
-
-            <time dateTime={new Date(post.publishedAt).toISOString()}>
-              {new Date(post.publishedAt).toLocaleDateString("en-US", {
-                month: "long",
-                day: "numeric",
-                year: "numeric",
-              })}
-            </time>
-          </>
-        )}
-      </div>
-    </div>
-  </div>
-
-  {/* Wavy bottom */}
-  <svg
-    aria-hidden="true"
-    viewBox="0 0 1440 80"
-    preserveAspectRatio="none"
-    className="pointer-events-none absolute bottom-[-1px] left-0 z-10 block h-[20px] w-full text-warm-white sm:h-[28px] lg:h-[36px]"
-  >
-    <path
-      fill="currentColor"
-      d="M0 40 C120 80 240 80 360 50 C480 20 600 20 720 45 C840 70 960 70 1080 45 C1200 20 1320 20 1440 50 L1440 80 L0 80 Z"
-    />
-  </svg>
-</section>
+        </svg>
+      </section>
 
       {/* Blog view */}
-      <div className="bg-warm-white">
+      <div className="bg-white">
         <article className="mx-auto max-w-5xl px-4 pb-10 pt-5 sm:px-6 sm:pb-14 sm:pt-6 lg:px-8">
           {/* JSON-LD */}
           {/* eslint-disable-next-line react/no-danger */}
@@ -274,11 +266,14 @@ export default async function PostPage({
           <div className="mx-auto max-w-4xl">
             {post.featuredImage && (
               <div className="relative mb-6 aspect-[16/9] w-full overflow-hidden rounded-2xl bg-soft-beige">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                   src={post.featuredImage}
                   alt={post.title}
-                  className="h-full w-full object-cover"
+                  fill
+                  priority
+                  quality={75}
+                  sizes="(min-width: 896px) 896px, 100vw"
+                  className="object-cover"
                 />
               </div>
             )}
@@ -414,8 +409,12 @@ export default async function PostPage({
                 [&_table]:whitespace-normal
                 sm:[&_table]:table
               "
-              dangerouslySetInnerHTML={{ __html: post.content }}
+              dangerouslySetInnerHTML={{ __html: content }}
             />
+
+            <PostFaqSection faqs={post.faqs} />
+
+            <MoreReads posts={morePosts} />
 
             <div className="mt-8 border-t border-soft-beige pt-4">
               <Link
