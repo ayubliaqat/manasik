@@ -28,18 +28,18 @@ export default function Hero() {
           <div className="max-w-[570px] text-center lg:text-left">
             {/* Heading */}
             <h1
-              className="hero-from-left font-serif text-[32px] font-semibold
+              className="hero-from-left font-serif text-[28px] font-semibold
               leading-[1.08] tracking-[-0.02em] text-white
               drop-shadow-[0_3px_2px_rgba(0,0,0,0.35)]
-              sm:text-[44px]
-              lg:text-[56px]"
+              sm:text-[36px]
+              lg:text-[48px]"
             >
-              Guidance for
+              Your Guide to Hajj, Umrah and
               <span
                 className="mt-1 block text-emerald
                 drop-shadow-[0_3px_3px_rgba(0,0,0,0.32)]"
               >
-                Your Spiritual Journey
+                Islamic Tools
               </span>
             </h1>
 
@@ -59,12 +59,12 @@ export default function Hero() {
               sm:text-[15px] sm:leading-6 lg:mx-0"
               style={{ animationDelay: "0.45s" }}
             >
-              Practical guides, tips and inspiring stories to help you prepare
+              Hajj and Umrah guides, Ziyarat, authentic duas and useful  
               for{" "}
               <span className="font-medium text-white underline decoration-gold decoration-2 underline-offset-4">
-                Hajj and Umrah
+                Islamic tools,
               </span>{" "}
-              with confidence.
+              all in one place.
             </p>
 
             {/* CTA buttons */}
@@ -93,7 +93,7 @@ export default function Hero() {
                 focus:ring-offset-2 focus:ring-offset-deep-teal
                 sm:w-auto sm:px-6 sm:text-sm"
               >
-                Explore Blogs
+                Estimate Hajj Cost
                 <ArrowRight
                   size={16}
                   className="transition-transform duration-300 group-hover:translate-x-1"
@@ -129,7 +129,7 @@ export default function Hero() {
                   size={16}
                   className="text-gold transition-transform duration-300 group-hover:rotate-6"
                 />
-                Explore Planning Tools
+                Explore Islamic Tools
               </Link>
             </div>
           </div>

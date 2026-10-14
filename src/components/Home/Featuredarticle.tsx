@@ -1,10 +1,10 @@
-import Link from "next/link"
-import Image from "next/image"
-import { db } from "@/db"
-import { posts } from "@/db/schema"
-import { eq, desc } from "drizzle-orm"
+import Link from "next/link";
+import Image from "next/image";
+import { db } from "@/db";
+import { posts } from "@/db/schema";
+import { eq, desc } from "drizzle-orm";
 
-export const revalidate = 300
+export const revalidate = 300;
 
 async function getFeaturedPosts() {
   try {
@@ -19,18 +19,18 @@ async function getFeaturedPosts() {
       .from(posts)
       .where(eq(posts.status, "published"))
       .orderBy(desc(posts.publishedAt))
-      .limit(4)
+      .limit(4);
   } catch (error) {
     console.error(
       "FeaturedBlog query failed:",
-      (error as { cause?: unknown }).cause ?? error
-    )
-    throw error
+      (error as { cause?: unknown }).cause ?? error,
+    );
+    throw error;
   }
 }
 
 export default async function FeaturedBlog() {
-  const featuredPosts = await getFeaturedPosts()
+  const featuredPosts = await getFeaturedPosts();
 
   return (
     <section
@@ -111,7 +111,7 @@ export default async function FeaturedBlog() {
             >
               Explore Our{" "}
               <span className="relative inline-block whitespace-nowrap text-emerald">
-                Featured Blog
+                Latest Blogs
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 120 10"
@@ -139,8 +139,8 @@ export default async function FeaturedBlog() {
             </h2>
 
             <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-muted-teal sm:text-[15px]">
-              Thoughtful guides and practical insights to help you prepare
-              with confidence and make your journey more meaningful.
+              Looking for Hajj and Umrah advice or need help with Islamic tools? We’ve got helpful guides, Ziyarat tips and duas to help you prepare for your journey and learn more about your faith.
+
             </p>
           </div>
         </div>
@@ -229,7 +229,7 @@ export default async function FeaturedBlog() {
                     <Link
                       href={`/blog/${post.slug}`}
                       aria-label={`Read guide: ${post.title}`}
-                     className="
+                      className="
   block
   rounded-xl border border-emerald/20 bg-emerald/10
   px-4 py-2
@@ -276,5 +276,5 @@ export default async function FeaturedBlog() {
         )}
       </div>
     </section>
-  )
+  );
 }

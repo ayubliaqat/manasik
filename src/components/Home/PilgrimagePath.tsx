@@ -208,9 +208,9 @@ export default function PilgrimagePath() {
               lg:text-[38px]
             "
           >
-            Your journey,{" "}
+            Your Hajj & Umrah,{" "}
             <span className="relative inline-block whitespace-nowrap text-emerald">
-              step by step.
+               Step by Step Guide
               {/* Gold hand-drawn underline */}
               <svg
                 aria-hidden="true"
@@ -239,8 +239,8 @@ export default function PilgrimagePath() {
           </h2>
 
           <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-muted-teal sm:text-[15px]">
-            From preparation to worship, follow a clear path designed to help
-            you understand what comes next.
+            Not sure what to do first? We’ll walk you through the preparations, rituals and travel details so you know what to expect at every stage.
+
           </p>
         </div>
 

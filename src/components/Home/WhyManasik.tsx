@@ -13,27 +13,27 @@ import {
 const audiences = [
   {
     icon: UserRound,
-    title: "Beginner-Friendly, Step-by-Step Guides",
+    title: "Easy Hajj and Umrah Guides",
   },
   {
     icon: BookOpenCheck,
-    title: "Sourced from the Qur'an & Sunnah",
+    title: "Qur'an and Sunnah Based Resources",
   },
   {
     icon: Backpack,
-    title: "Free Checklist & Packing Tools",
-  },
-  {
-    icon: UsersRound,
-    title: "Made for Families & Groups",
+    title: "Free Islamic Planning Tools",
   },
   {
     icon: MapPinned,
-    title: "Clear Rituals, From Ihram to Return",
+    title: "Helpful Duas and Ziyarat Guides",
+  },
+  {
+    icon: UsersRound,
+    title: "Guidance for Individuals and Families",
   },
   {
     icon: HeartHandshake,
-    title: "Free, Honest & Easy to Use",
+    title: "Simple, Clear and Easy to Use",
   },
 ]
 
@@ -133,14 +133,14 @@ export default function WhoIsItFor() {
                 leading-[1.15]
                 tracking-[-0.015em]
                 text-deep-teal
-                sm:text-[28px]
-                md:text-[32px]
-                lg:text-[38px]
+                sm:text-[24px]
+                md:text-[28px]
+                lg:text-[36px]
               "
             >
-              Guidance You{" "}
+              Islamic Guidance and Useful{" "}
               <span className="relative inline-block whitespace-nowrap text-emerald">
-                Can Trust
+                Tools in One Place
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 120 10"
@@ -168,10 +168,8 @@ export default function WhoIsItFor() {
             </h2>
 
             <p className="mt-5 max-w-xl text-sm leading-[26px] text-muted-teal sm:text-[15px]">
-              Manasik brings clear step-by-step guides, free planning tools and
-              a daily dua together in one place, with every ruling and dua
-              traced back to the Qur&apos;an and authentic Sunnah, so you can
-              prepare for Hajj and Umrah with confidence.
+              Preparing for Hajj or Umrah? Looking for a dua or a helpful Islamic tool? Manasik brings practical guides, religious resources and free tools together to help you find what you need with ease.
+
             </p>
 
             {/* Audience list: single column, each bullet keeps its own icon */}

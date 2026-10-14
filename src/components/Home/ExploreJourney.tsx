@@ -304,7 +304,7 @@ function StarOutline({ className }: { className?: string }) {
 
 export default function ExploreJourney() {
   return (
-    <section className="relative overflow-hidden bg-deep-teal pb-16 pt-20 sm:pb-20 sm:pt-24 lg:pb-24">
+    <section className="relative overflow-hidden bg-deep-teal pb-16 pt-12 sm:pb-20 sm:pt-16 lg:pb-24">
       {/* Scoped animations. Cards stay fully visible where scroll-driven
           animation is unsupported, and all motion stops for reduced-motion. */}
       <style>{`
@@ -433,9 +433,9 @@ export default function ExploreJourney() {
           </p>
 
           <h2 className="font-heading text-[24px] font-semibold leading-[1.2] tracking-tight text-white sm:text-[28px] md:text-[32px] lg:text-[38px]">
-            Everything you need,
+            Your Islamic Journey
             <span className="relative mx-auto mt-1 block w-fit text-gold">
-              one journey at a time.
+              Starts Here
               <svg
                 aria-hidden="true"
                 viewBox="0 0 120 10"
@@ -456,12 +456,11 @@ export default function ExploreJourney() {
           </h2>
 
           <p className="mx-auto mt-5 max-w-xl text-sm leading-6 text-white/70 sm:text-[15px] sm:leading-7">
-            From the first steps of preparation to the moments that matter
-            most, explore guidance designed to bring{" "}
+            Planning Hajj or Umrah? Looking for a dua, or a tool to help you prepare? You’ll find it all in one place.{" "}
             <span className="font-semibold text-white">
-              clarity, confidence, and peace
+              Manasik has step-by-step Hajj and Umrah guides, Ziyarat information, 
             </span>{" "}
-            to your pilgrimage.
+           duas with their references and practical Islamic tools.
           </p>
         </div>
 

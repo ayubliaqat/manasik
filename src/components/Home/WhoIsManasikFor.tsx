@@ -2,10 +2,12 @@ import Image from "next/image"
 
 const audience = [
   "First-time Hajj pilgrims",
-  "Those preparing for Umrah",
-  "Families travelling together",
+  "People preparing for Umrah",
+  "Families planning their pilgrimage",
   "New Muslims learning the rites",
-  "Pilgrims seeking authentic guidance",
+  "Muslims looking for authentic duas",
+  "Visitors exploring Ziyarat",
+  "Anyone using Islamic tools and resources",
 ]
 
 export default function WhoIsManasikFor() {
@@ -16,9 +18,7 @@ export default function WhoIsManasikFor() {
         <div className="grid gap-10 lg:grid-cols-[1fr_0.9fr] lg:items-stretch lg:gap-16">
           {/* Content */}
           <div className="flex max-w-xl flex-col lg:h-full">
-            <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.24em] text-gold sm:text-xs">
-              Hajj & Umrah Guides
-            </p>
+          
 
             <h2
               className="

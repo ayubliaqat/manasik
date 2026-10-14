@@ -384,7 +384,7 @@ export default function PlanningTools() {
             >
               Free{" "}
               <span className="relative inline-block whitespace-nowrap text-emerald">
-                Planning Tools
+                Islamic Tools
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 120 10"
@@ -412,8 +412,8 @@ export default function PlanningTools() {
             </h2>
 
             <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-muted-teal sm:text-[15px]">
-              Simple, practical tools to help you prepare, pack and budget
-              for your journey with confidence.
+              Use simple, helpful tools to plan your pilgrimage, manage your budget and support your daily Islamic practice.
+
             </p>
           </div>
         </div>

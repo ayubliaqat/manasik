@@ -5,29 +5,29 @@ import { ChevronDown } from "lucide-react"
 
 const faqs = [
   {
-    question: "What is the difference between Hajj and Umrah?",
+    question: "What can I find on Manasik?",
     answer:
-      "Hajj is one of the five pillars of Islam. It is obligatory once in a lifetime for those who are able, and it is performed on fixed days in the month of Dhul Hijjah. Umrah is the lesser pilgrimage. It can be performed at any time of the year, and it does not replace the obligation of Hajj.",
+      "Manasik is a place for Hajj and Umrah guides, Ziyarat information, duas and a few handy Islamic tools. Use it to get ready for your pilgrimage and learn at whatever pace suits you.",
   },
   {
-    question: "Who is Hajj obligatory for?",
+    question: "Are the Hajj and Umrah guides free?",
     answer:
-      "Hajj is obligatory for every adult Muslim of sound mind who is physically and financially able to make the journey, including providing for the family left behind. It is required once in a lifetime, and any Hajj after that is voluntary.",
+      "Yes, they're free. Read through the rituals, plan your trip and see what to expect before you go.",
   },
   {
-    question: "What do I need to prepare before I travel?",
+    question: "What Islamic tools can I use?",
     answer:
-      "You will need a valid passport, a Hajj or Umrah visa arranged through authorised channels, the required vaccinations, travel insurance and your booked flights and accommodation. Requirements change from year to year, so always check the latest official guidance for your country before you book.",
+      "There are free tools for planning your pilgrimage and working out a budget, plus guides to help with your wider learning.",
   },
   {
-    question: "What is Ihram and when do I enter it?",
+    question: "Are there duas and Ziyarat guides?",
     answer:
-      "Ihram is the sacred state a pilgrim enters before starting Hajj or Umrah. You make the intention and begin saying the Talbiyah at or before the miqat, the boundary you must not pass without it. Men wear two simple unstitched white cloths, women wear modest everyday clothing, and certain actions become prohibited until you leave the state of Ihram.",
+      "Yes. The duas and Ziyarat guides cover the key supplications and the places you'll visit. Each guide lists its references, so you can see where the information comes from.",
   },
   {
-    question: "Are the guides on Manasik based on authentic sources?",
+    question: "How can Manasik help me prepare for Hajj or Umrah?",
     answer:
-      "Yes. Our guides are based on the Qur'an, the authentic Sunnah and trusted Islamic references. They are written to give you clear, practical help, but for a personal ruling on your own situation please ask a qualified scholar.",
+      "We bring the key information together, from learning the rituals to organising your plans. Explore the guides and tools you need, then use them to prepare for your journey step by step.",
   },
 ]
 
