@@ -11,7 +11,18 @@ const announcements = [
     text: "Step-by-Step Rituals & Authentic Duas Available Now",
     arabic: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً",
   },
-  
+  {
+    text: "Free Zakat Calculator: Work Out Your Zakat in Minutes",
+    arabic: "وَآتُوا الزَّكَاةَ",
+  },
+  {
+    text: "Hajj Preparation Checklist: Pack and Prepare with Confidence",
+    arabic: "وَتَزَوَّدُوا فَإِنَّ خَيْرَ الزَّادِ التَّقْوَىٰ",
+  },
+  {
+    text: "Daily Islamic Tools: Qibla Finder, Tasbih Counter & More",
+    arabic: "وَذَكِّرْ فَإِنَّ الذِّكْرَىٰ تَنفَعُ الْمُؤْمِنِينَ",
+  },
 ];
 
 const marqueeItems = [...announcements, ...announcements, ...announcements];
@@ -23,7 +34,7 @@ export function AnnouncementBar() {
       className="relative z-50 overflow-hidden border-b border-white/10 bg-dark-teal text-white"
     >
       <p className="sr-only">
-        Essential Hajj and Umrah announcements and authentic Islamic reminders.
+        Essential Hajj and Umrah announcements, free Islamic tools and authentic Islamic reminders.
       </p>
 
       <div className="mx-auto max-w-7xl px-4 py-2.5">
