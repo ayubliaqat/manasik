@@ -63,6 +63,7 @@ export type PostFormData = {
 
   // Schema
   schemaType: string
+  customSchema: string
 }
 
 const emptyPost: PostFormData = {
@@ -98,6 +99,7 @@ const emptyPost: PostFormData = {
   twitterImage: "",
 
   schemaType: "BlogPosting",
+  customSchema: "",
 }
 
 function isRedirectError(error: unknown): boolean {
@@ -134,6 +136,8 @@ export function PostEditor({
     ...initialData,
     // Always an array, even if the edit page passes nothing for faqs.
     faqs: initialData?.faqs ?? [],
+    // Always a string, even if the edit page passes nothing for customSchema.
+    customSchema: initialData?.customSchema ?? "",
   })
 
   function update<K extends keyof PostFormData>(

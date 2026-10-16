@@ -25,6 +25,37 @@ export async function generateStaticParams() {
   return rows.map((row) => ({ slug: row.slug }))
 }
 
+/**
+ * Turns a JSON-LD object into a string that is safe to put inside a
+ * <script> tag. Escaping "<" stops a "</script>" in the data from
+ * breaking out of the tag.
+ */
+function toJsonLdString(value: unknown): string {
+  return JSON.stringify(value).replace(/</g, "\\u003c")
+}
+
+/**
+ * Parses the custom schema saved in the dashboard.
+ * Returns null if it is empty or invalid, so a bad value never breaks the page.
+ */
+function parseCustomSchema(raw: string | null): object | null {
+  if (!raw) {
+    return null
+  }
+
+  try {
+    const parsed: unknown = JSON.parse(raw)
+
+    if (typeof parsed !== "object" || parsed === null) {
+      return null
+    }
+
+    return parsed
+  } catch {
+    return null
+  }
+}
+
 // cache() makes generateMetadata and the page share ONE database query.
 const getPost = cache(async (slug: string) => {
   const [post] = await db
@@ -49,6 +80,7 @@ const getPost = cache(async (slug: string) => {
       twitterDescription: posts.twitterDescription,
       twitterImage: posts.twitterImage,
       schemaType: posts.schemaType,
+      customSchema: posts.customSchema,
       faqs: posts.faqs,
       publishedAt: posts.publishedAt,
       categoryName: categories.name,
@@ -168,6 +200,9 @@ export default async function PostPage({
       : undefined,
   }
 
+  // Custom JSON-LD pasted in the dashboard (FAQPage, HowTo, Event, etc.)
+  const customJsonLd = parseCustomSchema(post.customSchema)
+
   // Lazy-load images inside the post body so they don't block the page.
   const content = post.content.replace(
     /<img(?![^>]*\sloading=)/gi,
@@ -254,14 +289,25 @@ export default async function PostPage({
       {/* Blog view */}
       <div className="bg-white">
         <article className="mx-auto max-w-5xl px-4 pb-10 pt-5 sm:px-6 sm:pb-14 sm:pt-6 lg:px-8">
-          {/* JSON-LD */}
+          {/* JSON-LD: default schema from the schema type */}
           {/* eslint-disable-next-line react/no-danger */}
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{
-              __html: JSON.stringify(jsonLd),
+              __html: toJsonLdString(jsonLd),
             }}
           />
+
+          {/* JSON-LD: custom schema pasted in the dashboard */}
+          {customJsonLd && (
+            // eslint-disable-next-line react/no-danger
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: toJsonLdString(customJsonLd),
+              }}
+            />
+          )}
 
           <div className="mx-auto max-w-4xl">
             {post.featuredImage && (

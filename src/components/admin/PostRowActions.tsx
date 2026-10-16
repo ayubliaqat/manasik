@@ -53,7 +53,7 @@ export function PostRowActions({
 
       {canEdit && (
         <Link
-          href={`/admin/posts/${postId}/edit`}
+          href={`/admin/blog/${postId}/edit`}
           title="Edit post"
           aria-label="Edit post"
           className={`${iconBtn} hover:bg-soft-beige/70 hover:text-charcoal`}

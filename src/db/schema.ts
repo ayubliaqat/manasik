@@ -132,6 +132,7 @@ export const posts = pgTable(
     twitterImage: text("twitter_image"),
 
     schemaType: text("schema_type").default("BlogPosting").notNull(),
+    customSchema: text("custom_schema"),
 
     faqs: jsonb("faqs").$type<PostFaq[]>().default([]).notNull(),
 

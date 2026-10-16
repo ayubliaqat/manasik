@@ -29,6 +29,27 @@ function isPostgresError(
   )
 }
 
+/**
+ * Custom JSON-LD must be empty, or valid JSON (an object or an array),
+ * with no <script> tags pasted in.
+ */
+function isValidJsonLd(value: string): boolean {
+  if (!value) {
+    return true
+  }
+
+  if (/<\/?script/i.test(value)) {
+    return false
+  }
+
+  try {
+    const parsed: unknown = JSON.parse(value)
+    return typeof parsed === "object" && parsed !== null
+  } catch {
+    return false
+  }
+}
+
 const postInputSchema = z.object({
   title: z.string().min(1, "Title is required"),
   slug: z.string().optional().default(""),
@@ -83,6 +104,16 @@ const postInputSchema = z.object({
 
   // Schema
   schemaType: z.string().default("BlogPosting"),
+  customSchema: z
+    .string()
+    .max(50000, "Custom schema is too long")
+    .optional()
+    .default("")
+    .transform((value) => value.trim())
+    .refine(
+      isValidJsonLd,
+      "Custom schema must be valid JSON (an object or an array) with no <script> tags."
+    ),
 })
 
 export type PostInput = z.infer<typeof postInputSchema>
@@ -220,6 +251,7 @@ export async function createPost(rawData: PostInput) {
 
           // Schema
           schemaType: data.schemaType,
+          customSchema: data.customSchema || null,
 
           // Publishing
           publishedAt: status === "published" ? new Date() : null,
@@ -374,6 +406,7 @@ export async function updatePost(postId: string, rawData: PostInput) {
 
           // Schema
           schemaType: data.schemaType,
+          customSchema: data.customSchema || null,
 
           // Publishing
           publishedAt: nextPublishedAt,

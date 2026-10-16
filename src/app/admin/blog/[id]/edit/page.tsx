@@ -129,6 +129,7 @@ export default async function EditPostPage({
 
           // Schema
           schemaType: post.schemaType,
+          customSchema: post.customSchema ?? "",
         }}
       />
     </div>
