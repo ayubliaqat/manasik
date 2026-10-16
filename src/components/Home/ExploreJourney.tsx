@@ -233,7 +233,7 @@ const categories: Category[] = [
     title: "Hajj Guide",
     description:
       "Complete guidance from preparation and intention to the final rituals.",
-    href: "/hajj",
+    href: "/hajj-guide",
     icon: Landmark,
     label: "Begin Here",
     Art: TawafArt,
@@ -243,7 +243,7 @@ const categories: Category[] = [
     title: "Umrah Guide",
     description:
       "Clear, practical guidance to help you perform Umrah with confidence.",
-    href: "/umrah",
+    href: "/umrah-guide",
     icon: Compass,
     label: "Begin Here",
     Art: SaiArt,
@@ -253,7 +253,7 @@ const categories: Category[] = [
     title: "Practical Guidance",
     description:
       "Useful advice for preparation, planning, travel, and every stage between.",
-    href: "/guides",
+    href: "/preparation",
     icon: BookOpen,
     label: "Guidance",
     Art: GuidanceArt,
@@ -271,7 +271,7 @@ const categories: Category[] = [
     title: "Travel & Visa",
     description:
       "Important travel requirements, visa information, and preparation tips.",
-    href: "/travel",
+    href: "/visa",
     icon: Plane,
     label: "Travel",
     Art: TravelArt,
