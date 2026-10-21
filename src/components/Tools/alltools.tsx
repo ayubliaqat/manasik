@@ -356,7 +356,7 @@ function ScaleIcon({ className }: IconProps) {
   )
 }
 
-const tools: Tool[] = [
+export const tools: Tool[] = [
   {
     title: "Hajj Checklist",
     description: "Tick off documents, rituals and preparations step by step.",
