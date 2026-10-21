@@ -313,7 +313,7 @@ export default async function PostPage({
                 href="/blog"
                 className="inline-flex items-center gap-1.5 text-sm font-medium text-emerald transition-colors hover:text-rich-emerald"
               >
-                ← Back to all articles
+                ← Back to blogs
               </Link>
             </div>
 
