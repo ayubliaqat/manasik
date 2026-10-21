@@ -31,15 +31,22 @@ type Entry =
       sourceTitle: string
       sourceDetail: string
       note?: string
-      audio?: string // optional: your own recording, e.g. "/audio/talbiyah.mp3"
+      // Qari recording of your own, e.g. "/audio/talbiyah.mp3" (put the file in /public/audio).
+      // Without it, no Listen button is shown for this dua.
+      audio?: string
     }
 
 const SURAHS: Record<number, string> = {
   2: "Al-Baqarah",
   3: "Ali 'Imran",
   5: "Al-Ma'idah",
+  7: "Al-A'raf",
   14: "Ibrahim",
+  18: "Al-Kahf",
   22: "Al-Hajj",
+  23: "Al-Mu'minun",
+  25: "Al-Furqan",
+  59: "Al-Hashr",
 }
 
 const ENTRIES: Entry[] = [
@@ -185,6 +192,20 @@ const ENTRIES: Entry[] = [
     sourceDetail: "Narrated by Abdullah ibn Umar (may Allah be pleased with them).",
     note: "The Prophet ﷺ then included those who shorten their hair.",
   },
+
+  /* ---- More Quranic duas (recited by the qari) ---- */
+  { kind: "quran", surah: 2, ayah: 286, tag: "Quranic dua", context: "Asking Allah not to hold us to account for forgetting or mistakes" },
+  { kind: "quran", surah: 3, ayah: 8, tag: "Quranic dua", context: "Asking Allah to keep our hearts firm after guidance" },
+  { kind: "quran", surah: 3, ayah: 16, tag: "Quranic dua", context: "Asking forgiveness of sins and protection from the Fire" },
+  { kind: "quran", surah: 3, ayah: 147, tag: "Quranic dua", context: "Asking forgiveness and firmness of the feet" },
+  { kind: "quran", surah: 3, ayah: 191, tag: "Quranic dua", context: "Reflecting on creation and asking protection from the Fire" },
+  { kind: "quran", surah: 3, ayah: 193, tag: "Quranic dua", context: "Asking forgiveness and to die among the righteous" },
+  { kind: "quran", surah: 7, ayah: 23, tag: "Quranic dua", context: "The dua of Adam and Hawwa asking for forgiveness" },
+  { kind: "quran", surah: 7, ayah: 126, tag: "Quranic dua", context: "Asking Allah for patience and to die as a Muslim" },
+  { kind: "quran", surah: 18, ayah: 10, tag: "Quranic dua", context: "Asking Allah for mercy and right guidance" },
+  { kind: "quran", surah: 23, ayah: 118, tag: "Quranic dua", context: "Asking for forgiveness and mercy" },
+  { kind: "quran", surah: 25, ayah: 74, tag: "Quranic dua", context: "Asking for righteous family and to lead the God-fearing" },
+  { kind: "quran", surah: 59, ayah: 10, tag: "Quranic dua", context: "Praying for those who came before us in faith" },
 ]
 
 const pad3 = (n: number) => String(n).padStart(3, "0")
@@ -397,18 +418,14 @@ function DuaIcon() {
 }
 
 /* -------------------------------- Audio -------------------------------- */
+/* Qari audio only — no browser / Google voice. */
 
-// Only one thing plays at a time.
+// Only one recording plays at a time.
 let activeStop: (() => void) | null = null
 
-const subscribeNoop = () => () => {}
-const getCanSpeak = () => "speechSynthesis" in window
-const getCanSpeakServer = () => false
-
-function PlayButton({ src, text }: { src?: string; text: string | null }) {
+function PlayButton({ src }: { src?: string }) {
   const audioRef = useRef<HTMLAudioElement>(null)
   const [status, setStatus] = useState<"idle" | "loading" | "playing" | "error">("idle")
-  const canSpeak = useSyncExternalStore(subscribeNoop, getCanSpeak, getCanSpeakServer)
 
   const stop = useCallback(() => {
     const audio = audioRef.current
@@ -416,11 +433,10 @@ function PlayButton({ src, text }: { src?: string; text: string | null }) {
       audio.pause()
       audio.currentTime = 0
     }
-    if (!src) window.speechSynthesis?.cancel()
     setStatus("idle")
-  }, [src])
+  }, [])
 
-  if (!src && !(canSpeak && text)) return null
+  if (!src) return null
 
   const toggle = async () => {
     if (status === "playing" || status === "loading") {
@@ -432,49 +448,30 @@ function PlayButton({ src, text }: { src?: string; text: string | null }) {
     activeStop?.()
     activeStop = stop
 
-    if (src) {
-      const audio = audioRef.current
-      if (!audio) return
-      setStatus("loading")
-      try {
-        await audio.play()
-        setStatus("playing")
-      } catch (e) {
-        setStatus((e as DOMException)?.name === "AbortError" ? "idle" : "error")
-      }
-      return
-    }
-
-    if (text) {
-      const synth = window.speechSynthesis
-      synth.cancel()
-      const u = new SpeechSynthesisUtterance(text)
-      u.lang = "ar-SA"
-      u.rate = 0.85
-      u.onend = () => setStatus("idle")
-      u.onerror = () => setStatus("idle")
+    const audio = audioRef.current
+    if (!audio) return
+    setStatus("loading")
+    try {
+      await audio.play()
       setStatus("playing")
-      synth.speak(u)
+    } catch (e) {
+      setStatus((e as DOMException)?.name === "AbortError" ? "idle" : "error")
     }
   }
 
-  const label = src
-    ? src.includes("everyayah")
-      ? "Recitation by Mishary Alafasy"
-      : "Recorded audio"
-    : "Read aloud by your device's Arabic voice"
+  const label = src.includes("everyayah")
+    ? "Recitation by Mishary Alafasy"
+    : "Recited by a qari"
 
   return (
     <div className="flex flex-col items-center gap-1">
-      {src && (
-        <audio
-          ref={audioRef}
-          src={src}
-          preload="none"
-          onEnded={() => setStatus("idle")}
-          onError={() => setStatus("error")}
-        />
-      )}
+      <audio
+        ref={audioRef}
+        src={src}
+        preload="none"
+        onEnded={() => setStatus("idle")}
+        onError={() => setStatus("error")}
+      />
 
       <button
         type="button"
@@ -510,8 +507,10 @@ export default function VerseOfTheDay() {
   const key = useSyncExternalStore(subscribeDate, getDateKey, getDateKeyServer)
   const [texts, setTexts] = useState<Record<string, Text>>({})
 
-  const dayOfMonth = key ? Number(key.split("-")[2]) : 1
-  const entry = ENTRIES[(dayOfMonth - 1) % ENTRIES.length]
+  // Rotate by day of the year so every dua is shown over time.
+  const [y, m, d] = key ? key.split("-").map(Number) : [1970, 0, 1]
+  const dayOfYear = Math.floor((Date.UTC(y, m, d) - Date.UTC(y, 0, 0)) / 86_400_000)
+  const entry = ENTRIES[(dayOfYear - 1) % ENTRIES.length]
 
   const surah = entry.kind === "quran" ? entry.surah : 0
   const ayah = entry.kind === "quran" ? entry.ayah : 0
@@ -532,7 +531,6 @@ export default function VerseOfTheDay() {
     return <section className="min-h-[340px] bg-dark-teal" aria-hidden="true" />
   }
 
-  const [y, m, d] = key.split("-").map(Number)
   const today = new Date(y, m, d)
 
   const weekday = new Intl.DateTimeFormat("en-US", { weekday: "long" }).format(today)
@@ -675,10 +673,12 @@ export default function VerseOfTheDay() {
             )}
           </Reveal>
 
-          {/* Audio */}
-          <Reveal from="zoom" delay={240} className="mt-4 flex justify-center">
-            <PlayButton key={dayOfMonth} src={audio} text={arabic} />
-          </Reveal>
+          {/* Audio (qari only) */}
+          {audio && (
+            <Reveal from="zoom" delay={240} className="mt-4 flex justify-center">
+              <PlayButton key={dayOfYear} src={audio} />
+            </Reveal>
+          )}
         </div>
       </div>
     </section>
