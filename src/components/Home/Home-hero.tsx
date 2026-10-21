@@ -180,10 +180,10 @@ export default function Hero() {
 
   return (
     <section
-  className="relative overflow-hidden bg-dark-teal
+      className="relative overflow-hidden bg-dark-teal
   bg-[linear-gradient(165deg,#02332f_0%,#063f3a_55%,#c9a227_115%)]
   lg:bg-[linear-gradient(115deg,#02332f_0%,#063f3a_45%,#c9a227_105%)]"
->
+    >
       {/* Islamic geometric texture */}
       <div
         aria-hidden="true"
@@ -264,13 +264,13 @@ export default function Hero() {
 
               {/* CTA buttons */}
               <div
-  className="hero-from-left mt-5 flex flex-col items-stretch gap-2.5 sm:mt-6 sm:flex-row sm:items-center sm:justify-center sm:gap-4 lg:justify-start"
-  style={{ animationDelay: "0.65s" }}
->
-  {/* Primary — dark teal */}
-  <Link
-    href="/blog"
-    className="group inline-flex min-h-11 w-full items-center justify-center
+                className="hero-from-left mt-5 flex flex-col items-stretch gap-2.5 sm:mt-6 sm:flex-row sm:items-center sm:justify-center sm:gap-4 lg:justify-start"
+                style={{ animationDelay: "0.65s" }}
+              >
+                {/* Primary — dark teal */}
+                <Link
+                  href="/blog"
+                  className="group inline-flex min-h-11 w-full items-center justify-center
   gap-2 rounded-full
   border border-gold/60
   bg-dark-teal
@@ -288,44 +288,45 @@ export default function Hero() {
   focus:ring-2 focus:ring-gold-light
   focus:ring-offset-2 focus:ring-offset-deep-teal
   sm:w-auto sm:px-6 sm:text-sm"
-  >
-    Read Blogs
-    <ArrowRight
-      size={16}
-      className="text-gold-light transition-transform duration-300 group-hover:translate-x-1"
-    />
-  </Link>
+                >
+                  Read Blogs
+                  <ArrowRight
+                    size={16}
+                    className="text-gold-light transition-transform duration-300 group-hover:translate-x-1"
+                  />
+                </Link>
 
-  {/* Secondary — gold */}
-  <Link
-    href="/tools"
-    className="group inline-flex min-h-11 w-full items-center justify-center
-  gap-2 rounded-full
-  border border-gold-light/70
-  bg-gold
-  px-5 py-2.5
-  text-[13px] font-semibold text-dark-teal
-  shadow-[0_3px_0_#8a6f16,0_8px_18px_rgba(2,51,47,0.3)]
-  transition-all duration-300
-  hover:-translate-y-1
-  hover:bg-gold-light
-  hover:shadow-[0_4px_0_#8a6f16,0_13px_25px_rgba(2,51,47,0.35)]
-  active:translate-y-[1px]
-  active:shadow-[0_2px_0_#8a6f16,0_4px_10px_rgba(2,51,47,0.25)]
-  focus:outline-none
-  focus:ring-2 focus:ring-white
-  focus:ring-offset-2
-  focus:ring-offset-deep-teal
-  sm:w-auto sm:px-6 sm:text-sm"
-  >
-    <Compass
-      size={16}
-      className="text-dark-teal transition-transform duration-300 group-hover:rotate-6"
-    />
-    Explore Islamic Tools
-  </Link>
-</div>
-</div>
+                {/* Secondary — gold */}
+                {/* Secondary — gold */}
+<Link
+  href="/tools"
+  className="group inline-flex min-h-11 w-full items-center justify-center
+gap-2 rounded-full
+border border-gold-light/70
+bg-gold-light
+px-5 py-2.5
+text-[13px] font-semibold text-dark-teal
+shadow-[0_3px_0_#8a6f16,0_8px_18px_rgba(2,51,47,0.3)]
+transition-all duration-300
+hover:-translate-y-1
+hover:bg-gold
+hover:shadow-[0_4px_0_#8a6f16,0_13px_25px_rgba(2,51,47,0.35)]
+active:translate-y-[1px]
+active:shadow-[0_2px_0_#8a6f16,0_4px_10px_rgba(2,51,47,0.25)]
+focus:outline-none
+focus:ring-2 focus:ring-white
+focus:ring-offset-2
+focus:ring-offset-deep-teal
+sm:w-auto sm:px-6 sm:text-sm"
+>
+  <Compass
+    size={16}
+    className="text-dark-teal transition-transform duration-300 group-hover:rotate-6"
+  />
+  Explore Islamic Tools
+</Link>
+              </div>
+            </div>
 
             {/* RIGHT — glass card: Islamic date, UK prayer times, tools */}
             <div

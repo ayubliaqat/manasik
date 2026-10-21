@@ -8,7 +8,7 @@ import { and, desc, eq, ne } from "drizzle-orm"
 import { db } from "@/db"
 import { posts, categories, users } from "@/db/schema"
 import { ChevronRight } from "lucide-react"
-import MoreReads from "@/components/Blog/more-reads"
+import MorePostsSlider from "@/components/Blog/more-posts-slider"
 import PostFaqSection from "@/components/Blog/post-faq-section"
 
 // Build post pages ahead of time and refresh them every 5 minutes.
@@ -95,22 +95,19 @@ const getPost = cache(async (slug: string) => {
   return post
 })
 
-// 4 random other published posts, for the "You May Also Like" list.
-async function getRandomPosts(currentSlug: string) {
-  const rows = await db
-    .select({ id: posts.id, title: posts.title, slug: posts.slug })
+// All other published posts (newest first), for the "You May Also Like" cards.
+// Only the fields the cards need are selected.
+async function getOtherPosts(currentSlug: string) {
+  return db
+    .select({
+      id: posts.id,
+      title: posts.title,
+      slug: posts.slug,
+      featuredImage: posts.featuredImage,
+    })
     .from(posts)
     .where(and(eq(posts.status, "published"), ne(posts.slug, currentSlug)))
     .orderBy(desc(posts.publishedAt))
-    .limit(50)
-
-  // Fisher-Yates shuffle, then take 4
-  for (let i = rows.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[rows[i], rows[j]] = [rows[j], rows[i]]
-  }
-
-  return rows.slice(0, 4)
 }
 
 export async function generateMetadata({
@@ -177,9 +174,9 @@ export default async function PostPage({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-  const [post, morePosts] = await Promise.all([
+  const [post, otherPosts] = await Promise.all([
     getPost(slug),
-    getRandomPosts(slug),
+    getOtherPosts(slug),
   ])
 
   if (!post || post.status !== "published") {
@@ -310,6 +307,16 @@ export default async function PostPage({
           )}
 
           <div className="mx-auto max-w-4xl">
+            {/* Back button above the image */}
+            <div className="mb-4">
+              <Link
+                href="/blog"
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-emerald transition-colors hover:text-rich-emerald"
+              >
+                ← Back to all articles
+              </Link>
+            </div>
+
             {post.featuredImage && (
               <div className="relative mb-6 aspect-[16/9] w-full overflow-hidden rounded-2xl bg-soft-beige">
                 <Image
@@ -460,7 +467,8 @@ export default async function PostPage({
 
             <PostFaqSection faqs={post.faqs} />
 
-            <MoreReads posts={morePosts} />
+            {/* All other posts: 4 cards at a time, Previous / Next */}
+            <MorePostsSlider posts={otherPosts} />
 
             <div className="mt-8 border-t border-soft-beige pt-4">
               <Link
