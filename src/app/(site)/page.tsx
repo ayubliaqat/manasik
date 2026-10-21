@@ -17,13 +17,12 @@ export default function Home() {
       <HomeHero />
       {/* <AyahHighlightSection/> */}
       <TrustBadges/>
-      <PlanningTools/>
-      <WhoIsManasikFor/>
       <FeaturedBlog/>
       <VerseOfTheDay/>
+      <WhoIsManasikFor/>
       <PilgrimagePath/>
-      
       <ExploreJourney/>
+       <PlanningTools/>
       <WhyManasik/>
       <FaqSection/>
     </main>
