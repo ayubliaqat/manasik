@@ -217,7 +217,7 @@ export default function Hero() {
 
       {/* Content */}
       <div className="relative z-10 flex items-center">
-        <div className="mx-auto w-full max-w-[1400px] px-5 py-12 sm:px-8 sm:py-14 lg:px-16 lg:py-14 xl:px-20">
+        <div className="mx-auto w-full max-w-[1400px] px-5 pb-16 pt-12 sm:px-8 sm:pb-[4.5rem] sm:pt-14 lg:px-16 lg:pb-16 lg:pt-14 xl:px-20">
           <div className="flex flex-col items-center gap-9 sm:gap-10 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
             {/* LEFT */}
             <div className="max-w-[570px] text-center lg:text-left">
@@ -297,10 +297,9 @@ export default function Hero() {
                 </Link>
 
                 {/* Secondary — gold */}
-                {/* Secondary — gold */}
-<Link
-  href="/tools"
-  className="group inline-flex min-h-11 w-full items-center justify-center
+                <Link
+                  href="/tools"
+                  className="group inline-flex min-h-11 w-full items-center justify-center
 gap-2 rounded-full
 border border-gold-light/70
 bg-gold-light
@@ -318,13 +317,13 @@ focus:ring-2 focus:ring-white
 focus:ring-offset-2
 focus:ring-offset-deep-teal
 sm:w-auto sm:px-6 sm:text-sm"
->
-  <Compass
-    size={16}
-    className="text-dark-teal transition-transform duration-300 group-hover:rotate-6"
-  />
-  Explore Islamic Tools
-</Link>
+                >
+                  <Compass
+                    size={16}
+                    className="text-dark-teal transition-transform duration-300 group-hover:rotate-6"
+                  />
+                  Explore Islamic Tools
+                </Link>
               </div>
             </div>
 
