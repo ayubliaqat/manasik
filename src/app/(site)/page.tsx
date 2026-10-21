@@ -19,10 +19,10 @@ export default function Home() {
       <TrustBadges/>
       <FeaturedBlog/>
       <VerseOfTheDay/>
-      <WhoIsManasikFor/>
-      <PilgrimagePath/>
+      <PlanningTools/>
       <ExploreJourney/>
-       <PlanningTools/>
+      <PilgrimagePath/>
+      <WhoIsManasikFor/>
       <WhyManasik/>
       <FaqSection/>
     </main>
