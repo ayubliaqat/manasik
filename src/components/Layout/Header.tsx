@@ -16,7 +16,7 @@ const navLinks = [
   { label: "Hajj", href: "/hajj-guide" },
   { label: "Umrah", href: "/umrah-guide" },
   { label: "Duas", href: "/duas" },
-  { label: "Ziyaaraat", href: "/ziyarat" },
+  { label: "Ziyaraat", href: "/ziyarat" },
   { label: "Blog", href: "/blog" },
 ];
 
