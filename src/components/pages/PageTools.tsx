@@ -5,7 +5,15 @@ type Accent = "emerald" | "gold";
 
 type IconProps = { className?: string };
 
-export type ToolIconKey = "clipboard" | "suitcase" | "calculator" | "coins";
+export type ToolIconKey =
+  | "clipboard"
+  | "suitcase"
+  | "calculator"
+  | "coins"
+  | "tasbih"
+  | "names"
+  | "qibla"
+  | "clock";
 
 export type PageTool = {
   title: string;
@@ -213,11 +221,110 @@ function CoinsIcon({ className }: IconProps) {
   );
 }
 
+/* Tasbih Counter */
+function TasbihIcon({ className }: IconProps) {
+  const beads = Array.from({ length: 10 }, (_, i) => {
+    const angle = (i * Math.PI * 2) / 10 - Math.PI / 2;
+    return { x: 12 + Math.cos(angle) * 7, y: 12 + Math.sin(angle) * 7 };
+  });
+
+  return (
+    <IconBase className={className}>
+      <circle cx="12" cy="12" r="7.8" strokeDasharray="2 2.5" opacity="0.45" />
+      {beads.map((bead, index) => (
+        <circle
+          key={index}
+          className={index === 0 ? "pt-bead" : undefined}
+          cx={bead.x}
+          cy={bead.y}
+          r="1.35"
+          fill={index % 3 === 0 ? "currentColor" : "white"}
+          stroke="currentColor"
+          strokeWidth="1.1"
+        />
+      ))}
+      <circle cx="12" cy="12" r="2.1" fill="currentColor" fillOpacity="0.13" />
+      <path d="M12 14.2v2.3m-1.3 0h2.6" />
+    </IconBase>
+  );
+}
+
+/* 99 Names of Allah */
+function NamesOfAllahIcon({ className }: IconProps) {
+  return (
+    <IconBase className={className}>
+      <path
+        d="M16.9 3.7a8.2 8.2 0 1 0 3.4 13.7A8.8 8.8 0 0 1 16.9 3.7Z"
+        fill="currentColor"
+        fillOpacity="0.12"
+      />
+      <path d="M16.9 3.7a8.2 8.2 0 1 0 3.4 13.7A8.8 8.8 0 0 1 16.9 3.7Z" />
+      <path
+        d="m8 5.3.7 1.5 1.6.7-1.6.7L8 9.8l-.7-1.6-1.6-.7 1.6-.7L8 5.3Z"
+        fill="currentColor"
+        strokeWidth="0.7"
+      />
+      <path
+        d="m5.1 12 .4.9.9.4-.9.4-.4.9-.4-.9-.9-.4.9-.4.4-.9Z"
+        fill="currentColor"
+        strokeWidth="0.6"
+      />
+    </IconBase>
+  );
+}
+
+/* Qibla Finder */
+function QiblaIcon({ className }: IconProps) {
+  return (
+    <IconBase className={className}>
+      <circle cx="12" cy="12" r="9" fill="currentColor" fillOpacity="0.06" />
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 3v2m9 7h-2M12 21v-2M3 12h2" opacity="0.55" />
+      <g className="pt-needle">
+        <path
+          d="m15.9 8.1-2.8 6.2-5 1.6 2.7-6.2 5.1-1.6Z"
+          fill="currentColor"
+          fillOpacity="0.16"
+        />
+        <path d="m15.9 8.1-2.8 6.2-5 1.6 2.7-6.2 5.1-1.6Z" />
+      </g>
+      <circle cx="12" cy="12" r="1.1" fill="currentColor" />
+    </IconBase>
+  );
+}
+
+/* Prayer Times */
+function ClockIcon({ className }: IconProps) {
+  return (
+    <IconBase className={className}>
+      <circle cx="12" cy="12" r="9" fill="currentColor" fillOpacity="0.12" />
+      <circle cx="12" cy="12" r="9" />
+      {[0, 90, 180, 270].map((angle) => (
+        <path
+          key={angle}
+          d="M12 3.7V5.5"
+          transform={`rotate(${angle} 12 12)`}
+          opacity="0.55"
+        />
+      ))}
+      <path d="M12 12V8.8" transform="rotate(130 12 12)" strokeWidth="1.8" />
+      <g className="pt-hand text-gold">
+        <path d="M12 12V6.2" strokeWidth="1.5" />
+      </g>
+      <circle cx="12" cy="12" r="1.2" fill="currentColor" />
+    </IconBase>
+  );
+}
+
 const ICONS: Record<ToolIconKey, (props: IconProps) => React.ReactElement> = {
   clipboard: ClipboardIcon,
   suitcase: SuitcaseIcon,
   calculator: CalculatorIcon,
   coins: CoinsIcon,
+  tasbih: TasbihIcon,
+  names: NamesOfAllahIcon,
+  qibla: QiblaIcon,
+  clock: ClockIcon,
 };
 
 const ACCENT_STYLES: Record<
@@ -288,6 +395,17 @@ const motionCss = `
   45%, 82% { transform: translateY(0); opacity: 1; }
   100% { transform: translateY(0); opacity: 0; }
 }
+@keyframes pt-bead-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.35); opacity: 0.75; }
+}
+@keyframes pt-needle-turn {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(12deg); }
+}
+@keyframes pt-hand-turn {
+  to { transform: rotate(360deg); }
+}
 .pt-draw { stroke-dasharray: 1; stroke-dashoffset: 0; animation: pt-draw 4.5s ease-in-out infinite; }
 .pt-bob { animation: pt-bob 2.4s ease-in-out infinite; }
 .pt-twinkle, .pt-digits, .pt-key, .pt-drop { transform-box: fill-box; }
@@ -295,6 +413,10 @@ const motionCss = `
 .pt-digits { transform-origin: 0 50%; animation: pt-digits 3s ease-in-out infinite; }
 .pt-key { transform-origin: center; animation: pt-key 3.2s ease-in-out infinite; }
 .pt-drop { transform-origin: center; animation: pt-drop 3.4s ease-in infinite; }
+.pt-bead, .pt-needle { transform-box: fill-box; }
+.pt-bead { transform-origin: center; animation: pt-bead-pulse 2.2s ease-in-out infinite; }
+.pt-needle { transform-origin: center; animation: pt-needle-turn 4.5s ease-in-out infinite; }
+.pt-hand { transform-box: view-box; transform-origin: 12px 12px; animation: pt-hand-turn 12s linear infinite; }
 @supports (animation-timeline: view()) {
   .pt-card {
     animation: pt-rise linear both;
@@ -303,7 +425,7 @@ const motionCss = `
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .pt-card, .pt-draw, .pt-bob, .pt-twinkle, .pt-digits, .pt-key, .pt-drop {
+  .pt-card, .pt-draw, .pt-bob, .pt-twinkle, .pt-digits, .pt-key, .pt-drop, .pt-bead, .pt-needle, .pt-hand {
     animation: none !important;
   }
 }
