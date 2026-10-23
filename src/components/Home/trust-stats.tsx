@@ -66,14 +66,16 @@ function CountUp({
 
 const line = "border-gold/50"
 const col =
-  "group relative flex flex-col gap-2 bg-gradient-to-b from-white/85 to-white/55 p-5 transition-colors duration-300 hover:from-white hover:to-white/80 lg:p-6"
+  "group relative flex flex-col items-center gap-2 bg-gradient-to-b from-white/85 to-white/55 p-5 text-center transition-colors duration-300 hover:from-white hover:to-white/80 sm:items-stretch sm:text-left lg:p-6"
 const chip =
   "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-emerald/10 text-emerald ring-1 ring-emerald/20 transition-transform duration-300 group-hover:scale-105"
 const labelCls =
   "text-[11px] font-bold uppercase tracking-[0.16em] text-gold"
 const numCls =
-  "flex h-10 items-center font-heading text-[40px] font-bold leading-none tracking-tight"
+  "flex h-10 items-center justify-center font-heading text-[40px] font-bold leading-none tracking-tight sm:justify-start"
 const descCls = "text-[12px] leading-[1.55] text-muted-teal"
+const headRow =
+  "flex h-9 items-center justify-center gap-2.5 sm:justify-start"
 
 export default function TrustStats({ toolsCount }: { toolsCount: number }) {
   return (
@@ -97,16 +99,16 @@ export default function TrustStats({ toolsCount }: { toolsCount: number }) {
         />
 
         {/* Intro */}
-        <div className="relative flex flex-col gap-2 overflow-hidden bg-gradient-to-br from-deep-teal to-dark-teal p-5 lg:p-6">
+        <div className="relative flex flex-col items-center gap-2 overflow-hidden bg-gradient-to-br from-deep-teal to-dark-teal p-5 text-center sm:items-stretch sm:text-left lg:p-6">
           <div
             aria-hidden="true"
             className="pointer-events-none absolute -right-10 -top-10 h-44 w-44 rounded-full bg-gold-light/25 blur-2xl"
           />
-          <span className="relative flex h-9 items-center gap-2 text-[11px] font-bold uppercase tracking-[0.16em] text-white/65">
+          <span className="relative flex h-9 items-center justify-center gap-2 text-[11px] font-bold uppercase tracking-[0.16em] text-white/65 sm:justify-start">
             <span className="h-1.5 w-1.5 rounded-full bg-gold-light" />
             Our tools &amp; guides
           </span>
-          <h3 className="relative flex h-10 items-center font-heading text-[24px] font-bold leading-none tracking-tight text-white">
+          <h3 className="relative flex h-10 items-center justify-center font-heading text-[24px] font-bold leading-none tracking-tight text-white sm:justify-start">
             <span>
               Worth <span className="text-gold-light">Trusting</span>
             </span>
@@ -119,10 +121,10 @@ export default function TrustStats({ toolsCount }: { toolsCount: number }) {
 
         {/* Tools (live count) */}
         <div className={`${col} border-t ${line} sm:border-l sm:border-t-0`}>
-          <div className="flex h-9 items-center gap-2.5">
+          <div className={headRow}>
             <span className={chip}>
-            <Wrench className="h-[18px] w-[18px]" aria-hidden="true" />
-          </span>
+              <Wrench className="h-[18px] w-[18px]" aria-hidden="true" />
+            </span>
             <span className={labelCls}>Tools</span>
           </div>
           <div className={`${numCls} text-deep-teal`}>
@@ -136,10 +138,10 @@ export default function TrustStats({ toolsCount }: { toolsCount: number }) {
 
         {/* Accuracy */}
         <div className={`${col} border-t ${line} lg:border-l lg:border-t-0`}>
-          <div className="flex h-9 items-center gap-2.5">
+          <div className={headRow}>
             <span className={chip}>
-            <ShieldCheck className="h-[18px] w-[18px]" aria-hidden="true" />
-          </span>
+              <ShieldCheck className="h-[18px] w-[18px]" aria-hidden="true" />
+            </span>
             <span className={labelCls}>Accuracy</span>
           </div>
           <div className={`${numCls} text-emerald`}>
@@ -150,14 +152,15 @@ export default function TrustStats({ toolsCount }: { toolsCount: number }) {
 
         {/* References */}
         <div className={`${col} border-t ${line} sm:border-l lg:border-t-0`}>
-          <div className="flex h-9 items-center gap-2.5">
+          <div className={headRow}>
             <span className={chip}>
-            <BookOpen className="h-[18px] w-[18px]" aria-hidden="true" />
-          </span>
+              <BookOpen className="h-[18px] w-[18px]" aria-hidden="true" />
+            </span>
             <span className={labelCls}>References</span>
           </div>
-          <div className="flex h-10 items-center font-heading text-[24px] font-bold leading-none tracking-tight text-deep-teal">
-            Quran <span className="text-gold">&amp;</span> Hadith
+          <div className="flex h-10 items-center justify-center font-heading text-[24px] font-bold leading-none tracking-tight text-deep-teal sm:justify-start">
+            Quran <span className="ml-1.5 text-gold">&amp;</span>
+            <span className="ml-1.5">Hadith</span>
           </div>
           <p className={descCls}>
             Authentic sources, clearly referenced for every step.

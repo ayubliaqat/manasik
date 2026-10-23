@@ -124,48 +124,47 @@ export default function WhoIsItFor() {
               Why Choose Manasik
             </p>
 
-            <h2
-              className="
-                text-balance
-                font-serif
-                text-[24px]
-                font-medium
-                leading-[1.15]
-                tracking-[-0.015em]
-                text-deep-teal
-                sm:text-[24px]
-                md:text-[28px]
-                lg:text-[36px]
-              "
-            >
-              Islamic Guidance and Useful{" "}
-              <span className="relative inline-block whitespace-nowrap text-emerald">
-                Tools in One Place
-                <svg
-                  aria-hidden="true"
-                  viewBox="0 0 120 10"
-                  preserveAspectRatio="none"
-                  fill="none"
-                  className="
-                    pointer-events-none absolute
-                    left-1/2 top-full
-                    mt-[0.05em]
-                    h-[0.2em] w-[78%]
-                    -translate-x-1/2
-                    text-gold
-                  "
-                >
-                  <path
-                    d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    vectorEffect="non-scaling-stroke"
-                  />
-                </svg>
-              </span>
-            </h2>
+          <h2
+  className="
+    text-balance
+    font-serif
+    text-[26px] font-bold
+    leading-[1.1]
+    tracking-[-0.02em]
+    text-deep-teal
+    sm:text-[30px]
+    md:text-[34px]
+    lg:text-[40px]
+  "
+>
+  <span className="text-gold">Islamic Guidance and Useful</span>{" "}
+  <span className="relative inline-block whitespace-nowrap text-emerald">
+    Tools in One Place
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 120 10"
+      preserveAspectRatio="none"
+      fill="none"
+      className="
+        pointer-events-none absolute
+        left-1/2 top-full
+        mt-[0.05em]
+        h-[0.2em] w-[78%]
+        -translate-x-1/2
+        text-gold
+      "
+    >
+      <path
+        d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        vectorEffect="non-scaling-stroke"
+      />
+    </svg>
+  </span>
+</h2>
 
             <p className="mt-5 max-w-xl text-sm leading-[26px] text-muted-teal sm:text-[15px]">
               Preparing for Hajj or Umrah? Looking for a dua or a helpful Islamic tool? Manasik brings practical guides, religious resources and free tools together to help you find what you need with ease.

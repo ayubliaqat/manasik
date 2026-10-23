@@ -21,47 +21,46 @@ export default function WhoIsManasikFor() {
           
 
             <h2
-              className="
-                text-balance
-                font-serif
-                text-[28px]
-                font-medium
-                leading-[1.15]
-                tracking-[-0.015em]
-                text-deep-teal
-                sm:text-[34px]
-                md:text-[38px]
-                lg:text-[44px]
-              "
-            >
-              Who Is{" "}
-              <span className="relative inline-block whitespace-nowrap text-emerald">
-                Manasik For?
-                <svg
-                  aria-hidden="true"
-                  viewBox="0 0 120 10"
-                  preserveAspectRatio="none"
-                  fill="none"
-                  className="
-                    pointer-events-none absolute
-                    left-1/2 top-full
-                    mt-[0.05em]
-                    h-[0.2em] w-[78%]
-                    -translate-x-1/2
-                    text-gold
-                  "
-                >
-                  <path
-                    d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    vectorEffect="non-scaling-stroke"
-                  />
-                </svg>
-              </span>
-            </h2>
+  className="
+    text-balance
+    font-serif
+    text-[28px] font-bold
+    leading-[1.1]
+    tracking-[-0.02em]
+    text-deep-teal
+    sm:text-[34px]
+    md:text-[38px]
+    lg:text-[46px]
+  "
+>
+  <span className="text-gold">Who Is</span>{" "}
+  <span className="relative inline-block whitespace-nowrap text-emerald">
+    Manasik For?
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 120 10"
+      preserveAspectRatio="none"
+      fill="none"
+      className="
+        pointer-events-none absolute
+        left-1/2 top-full
+        mt-[0.05em]
+        h-[0.2em] w-[78%]
+        -translate-x-1/2
+        text-gold
+      "
+    >
+      <path
+        d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        vectorEffect="non-scaling-stroke"
+      />
+    </svg>
+  </span>
+</h2>
 
             <p className="mt-6 max-w-xl text-sm leading-7 text-muted-teal sm:text-[15px]">
               Manasik is for anyone who wants to approach Hajj or Umrah with

@@ -1,17 +1,17 @@
-import Link from "next/link"
-import { ArrowRight } from "lucide-react"
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
-type Accent = "emerald" | "gold"
+type Accent = "emerald" | "gold";
 
-type IconProps = { className?: string }
+type IconProps = { className?: string };
 
 type Tool = {
-  title: string
-  description: string
-  href: string
-  icon: (props: IconProps) => React.ReactElement
-  accent: Accent
-}
+  title: string;
+  description: string;
+  href: string;
+  icon: (props: IconProps) => React.ReactElement;
+  accent: Accent;
+};
 
 /* ---------------------------------------------------------------
    Animated icons. Pure SVG + CSS. Main strokes use currentColor
@@ -35,7 +35,7 @@ function IconBase({
     >
       {children}
     </svg>
-  )
+  );
 }
 
 /* Hajj Checklist: clipboard, ticks draw one after another */
@@ -44,7 +44,7 @@ function ClipboardIcon({ className }: IconProps) {
     { y: 10.5, delay: "0s" },
     { y: 14.5, delay: "0.6s" },
     { y: 18.5, delay: "1.2s" },
-  ]
+  ];
 
   return (
     <IconBase className={className}>
@@ -73,7 +73,7 @@ function ClipboardIcon({ className }: IconProps) {
         </g>
       ))}
     </IconBase>
-  )
+  );
 }
 
 /* Umrah Packing List: suitcase, handle bobs, star twinkles */
@@ -104,13 +104,13 @@ function SuitcaseIcon({ className }: IconProps) {
         />
       </g>
     </IconBase>
-  )
+  );
 }
 
 /* Cost Estimator: calculator, keys light up in sequence, display grows */
 function CalculatorIcon({ className }: IconProps) {
-  const cols = [9, 12, 15]
-  const rows = [12.4, 15.6, 18.8]
+  const cols = [9, 12, 15];
+  const rows = [12.4, 15.6, 18.8];
 
   return (
     <IconBase className={className}>
@@ -149,15 +149,15 @@ function CalculatorIcon({ className }: IconProps) {
               stroke="none"
             />
           </g>
-        ))
+        )),
       )}
     </IconBase>
-  )
+  );
 }
 
 /* Zakat Calculator: stack of coins, a gold coin drops on top */
 function CoinsIcon({ className }: IconProps) {
-  const coins = [18.2, 14.8]
+  const coins = [18.2, 14.8];
 
   return (
     <IconBase className={className}>
@@ -197,7 +197,7 @@ function CoinsIcon({ className }: IconProps) {
         </g>
       </g>
     </IconBase>
-  )
+  );
 }
 
 const tools: Tool[] = [
@@ -229,18 +229,18 @@ const tools: Tool[] = [
     icon: CoinsIcon,
     accent: "gold",
   },
-]
+];
 
 const ACCENT_STYLES: Record<
   Accent,
   {
-    border: string
-    bar: string
-    glow: string
-    iconBox: string
-    icon: string
-    number: string
-    button: string
+    border: string;
+    bar: string;
+    glow: string;
+    iconBox: string;
+    icon: string;
+    number: string;
+    button: string;
   }
 > = {
   emerald: {
@@ -265,7 +265,7 @@ const ACCENT_STYLES: Record<
     button:
       "border-gold/40 bg-gold/10 text-deep-teal group-hover:border-gold/65 group-hover:bg-gold/20",
   },
-}
+};
 
 const motionCss = `
 @keyframes pt-rise {
@@ -318,7 +318,7 @@ const motionCss = `
     animation: none !important;
   }
 }
-`
+`;
 
 export default function PlanningTools() {
   return (
@@ -371,18 +371,18 @@ export default function PlanningTools() {
           <div className="mx-auto max-w-2xl text-center">
             <h2
               className="
-                text-balance
-                font-serif
-                text-[24px] font-medium
-                leading-[1.15]
-                tracking-[-0.015em]
-                text-deep-teal
-                sm:text-[28px]
-                md:text-[32px]
-                lg:text-[38px]
-              "
+    text-balance
+    font-serif
+    text-[28px] font-bold
+    leading-[1.1]
+    tracking-[-0.02em]
+    text-deep-teal
+    sm:text-[34px]
+    md:text-[38px]
+    lg:text-[46px]
+  "
             >
-              Free{" "}
+              <span className="text-gold">100% Free</span>{" "}
               <span className="relative inline-block whitespace-nowrap text-emerald">
                 Islamic Tools
                 <svg
@@ -391,13 +391,13 @@ export default function PlanningTools() {
                   preserveAspectRatio="none"
                   fill="none"
                   className="
-                    pointer-events-none absolute
-                    left-1/2 top-full
-                    mt-[0.05em]
-                    h-[0.2em] w-[70%]
-                    -translate-x-1/2
-                    text-gold
-                  "
+        pointer-events-none absolute
+        left-1/2 top-full
+        mt-[0.05em]
+        h-[0.2em] w-[70%]
+        -translate-x-1/2
+        text-gold
+      "
                 >
                   <path
                     d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
@@ -412,8 +412,8 @@ export default function PlanningTools() {
             </h2>
 
             <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-muted-teal sm:text-[15px]">
-              Use simple, helpful tools to plan your pilgrimage, manage your budget and support your daily Islamic practice.
-
+              Use simple, helpful tools to plan your pilgrimage, manage your
+              budget and support your daily Islamic practice.
             </p>
           </div>
         </div>
@@ -421,8 +421,8 @@ export default function PlanningTools() {
         {/* Tool cards */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {tools.map((tool, index) => {
-            const Icon = tool.icon
-            const styles = ACCENT_STYLES[tool.accent]
+            const Icon = tool.icon;
+            const styles = ACCENT_STYLES[tool.accent];
 
             return (
               <div key={tool.title} className="pt-card relative h-full">
@@ -500,15 +500,15 @@ export default function PlanningTools() {
                   </span>
                 </Link>
               </div>
-            )
+            );
           })}
         </div>
       </div>
-              {/* Explore all tools button */}
-        <div className="mt-7 flex justify-center sm:mt-8">
-          <Link
-            href="/tools"
-            className="
+      {/* Explore all tools button */}
+      <div className="mt-7 flex justify-center sm:mt-8">
+        <Link
+          href="/tools"
+          className="
               group inline-flex items-center justify-center gap-2
               rounded-full border border-emerald/30
               bg-emerald/10 px-6 py-3
@@ -518,14 +518,14 @@ export default function PlanningTools() {
               focus-visible:outline-none focus-visible:ring-2
               focus-visible:ring-emerald/60 focus-visible:ring-offset-2
             "
-          >
-            Explore All Tools
-            <ArrowRight
-              className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
-              aria-hidden="true"
-            />
-          </Link>
-        </div>
+        >
+          Explore All Tools
+          <ArrowRight
+            className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+            aria-hidden="true"
+          />
+        </Link>
+      </div>
     </section>
-  )
+  );
 }

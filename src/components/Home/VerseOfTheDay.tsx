@@ -589,28 +589,28 @@ export default function VerseOfTheDay() {
               </p>
             </div>
 
-            <h2 className="mt-2 text-balance font-serif text-[22px] font-medium leading-[1.2] tracking-[-0.015em] text-white sm:text-[26px] lg:text-[30px]">
-              Hajj &amp; Umrah{" "}
-              <span className="relative inline-block whitespace-nowrap text-emerald">
-                Dua of the Day
-                <svg
-                  aria-hidden="true"
-                  viewBox="0 0 120 10"
-                  preserveAspectRatio="none"
-                  fill="none"
-                  className="pointer-events-none absolute left-1/2 top-full mt-[0.05em] h-[0.2em] w-[75%] -translate-x-1/2 text-gold"
-                >
-                  <path
-                    d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    vectorEffect="non-scaling-stroke"
-                  />
-                </svg>
-              </span>
-            </h2>
+          <h2 className="mt-2 text-balance font-serif text-[26px] font-bold leading-[1.15] tracking-[-0.02em] text-white sm:text-[30px] lg:text-[36px]">
+  Hajj &amp; Umrah{" "}
+  <span className="relative inline-block whitespace-nowrap text-gold-light">
+    Dua of the Day
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 120 10"
+      preserveAspectRatio="none"
+      fill="none"
+      className="pointer-events-none absolute left-1/2 top-full mt-[0.05em] h-[0.2em] w-[75%] -translate-x-1/2 text-gold"
+    >
+      <path
+        d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        vectorEffect="non-scaling-stroke"
+      />
+    </svg>
+  </span>
+</h2>
           </Reveal>
 
           {/* Context */}

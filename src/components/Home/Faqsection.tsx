@@ -43,48 +43,48 @@ export default function FaqSection() {
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <div className="mb-8 text-center sm:mb-10 lg:mb-12">
-          <h2
-            id="faq-heading"
-            className="
-              text-balance
-              font-serif
-              text-[24px] font-medium
-              leading-[1.15]
-              tracking-[-0.015em]
-              text-deep-teal
-              sm:text-[28px]
-              md:text-[32px]
-              lg:text-[38px]
-            "
-          >
-            Frequently Asked{" "}
-            <span className="relative inline-block whitespace-nowrap text-emerald">
-              Questions
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 120 10"
-                preserveAspectRatio="none"
-                fill="none"
-                className="
-                  pointer-events-none absolute
-                  left-1/2 top-full
-                  mt-[0.05em]
-                  h-[0.2em] w-[70%]
-                  -translate-x-1/2
-                  text-gold
-                "
-              >
-                <path
-                  d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  vectorEffect="non-scaling-stroke"
-                />
-              </svg>
-            </span>
-          </h2>
+         <h2
+  id="faq-heading"
+  className="
+    text-balance
+    font-serif
+    text-[28px] font-bold
+    leading-[1.1]
+    tracking-[-0.02em]
+    text-deep-teal
+    sm:text-[34px]
+    md:text-[38px]
+    lg:text-[46px]
+  "
+>
+  <span className="text-gold">Frequently Asked</span>{" "}
+  <span className="relative inline-block whitespace-nowrap text-emerald">
+    Questions
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 120 10"
+      preserveAspectRatio="none"
+      fill="none"
+      className="
+        pointer-events-none absolute
+        left-1/2 top-full
+        mt-[0.05em]
+        h-[0.2em] w-[70%]
+        -translate-x-1/2
+        text-gold
+      "
+    >
+      <path
+        d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        vectorEffect="non-scaling-stroke"
+      />
+    </svg>
+  </span>
+</h2>
         </div>
 
         {/* Accordion */}

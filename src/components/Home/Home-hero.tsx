@@ -33,8 +33,8 @@ const heroTools: HeroTool[] = [
     wide: true,
   },
   {
-    label: "Umrah Checklist",
-    href: "/tools/umrah-checklist",
+    label: "Hijri Converter",
+    href: "/tools/hijri-converter",
     Icon: ClipboardCheck,
     span: "col-span-1",
   },
@@ -334,9 +334,9 @@ sm:w-auto sm:px-6 sm:text-sm"
             >
               <aside
                 aria-label="Islamic date, prayer times and tools"
-                className="relative overflow-hidden rounded-[30px] border border-white/15 p-4
+                className="relative overflow-hidden rounded-[30px] border border-gold-light/35 p-4
                 bg-[linear-gradient(160deg,rgba(14,90,82,0.96)_0%,rgba(6,63,58,0.96)_100%)]
-                shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_24px_50px_rgba(2,51,47,0.4)]
+                shadow-[inset_0_1px_0_rgba(221,187,85,0.35),0_24px_50px_rgba(2,51,47,0.4)]
                 backdrop-blur-xl
                 sm:p-5 lg:p-4 xl:p-5"
               >
@@ -344,7 +344,7 @@ sm:w-auto sm:px-6 sm:text-sm"
                   {/* Islamic date + countdown ring */}
                   <div className="flex items-center justify-between gap-4">
                     <div className="min-w-0">
-                      <h2 className="min-h-[26px] text-[21px] font-semibold leading-tight text-white drop-shadow-[0_1px_1px_rgba(2,51,47,0.35)]">
+                      <h2 className="min-h-[26px] bg-gradient-to-r from-white via-white to-gold-light bg-clip-text text-[21px] font-semibold leading-tight text-transparent drop-shadow-[0_1px_1px_rgba(2,51,47,0.35)]">
                         {hijri || "\u00A0"}
                       </h2>
                       <p className="mt-0.5 min-h-5 text-[13px] leading-5 text-white/80">
@@ -369,7 +369,7 @@ sm:w-auto sm:px-6 sm:text-sm"
                           cx="50"
                           cy="50"
                           r="32"
-                          fill="rgba(6,63,58,0.35)"
+                          fill="rgba(2,51,47,0.45)"
                         />
                         <circle
                           cx="50"
@@ -377,7 +377,7 @@ sm:w-auto sm:px-6 sm:text-sm"
                           r={RING_R}
                           fill="none"
                           strokeWidth="9"
-                          stroke="rgba(250,248,243,0.85)"
+                          stroke="rgba(221,187,85,0.22)"
                         />
                         <circle
                           cx="50"
@@ -386,7 +386,7 @@ sm:w-auto sm:px-6 sm:text-sm"
                           fill="none"
                           strokeWidth="9"
                           strokeLinecap="round"
-                          className="stroke-gold"
+                          className="stroke-gold-light"
                           strokeDasharray={`${progress * RING_C} ${RING_C}`}
                         />
                       </svg>
@@ -394,7 +394,7 @@ sm:w-auto sm:px-6 sm:text-sm"
                         <span className="text-[16px] font-semibold text-white">
                           {nextName ? formatRemaining(remaining) : "—"}
                         </span>
-                        <span className="mt-1 text-[10px] font-medium text-white/85">
+                        <span className="mt-1 text-[10px] font-medium text-gold-light">
                           {nextName
                             ? `until ${nextName}`
                             : failed
@@ -410,11 +410,11 @@ sm:w-auto sm:px-6 sm:text-sm"
                     {nextName && timings ? (
                       <>
                         Next prayer —{" "}
-                        <span className="font-semibold text-white">
+                        <span className="font-semibold text-gold-light">
                           {nextName}
                         </span>{" "}
                         at{" "}
-                        <span className="font-semibold text-white">
+                        <span className="font-semibold text-gold-light">
                           {formatClock(timings[nextName])}
                         </span>
                       </>
@@ -429,7 +429,7 @@ sm:w-auto sm:px-6 sm:text-sm"
                   <Link
                     href="/tools/prayer-times"
                     aria-label="Open prayer times"
-                    className="mt-2 grid grid-cols-5 gap-1.5 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                    className="mt-2 grid grid-cols-5 gap-1.5 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-light"
                   >
                     {PRAYERS.map((name, i) => {
                       const active = i === nextIndex;
@@ -438,13 +438,13 @@ sm:w-auto sm:px-6 sm:text-sm"
                           key={name}
                           className={`flex flex-col items-center justify-center rounded-xl border px-0.5 py-1.5 text-center transition-colors duration-300 ${
                             active
-                              ? "border-warm-white bg-warm-white text-deep-teal shadow-[0_4px_12px_rgba(2,51,47,0.25)]"
-                              : "border-white/25 bg-white/10 text-white hover:border-white/60 hover:bg-white/20"
+                              ? "border-gold-light bg-gold-light text-dark-teal shadow-[0_4px_12px_rgba(2,51,47,0.3)]"
+                              : "border-gold-light/25 bg-white/10 text-white hover:border-gold-light/70 hover:bg-white/20"
                           }`}
                         >
                           <span
                             className={`text-[10.5px] leading-tight sm:text-[11px] xl:text-xs ${
-                              active ? "text-muted-teal" : "text-white/80"
+                              active ? "text-dark-teal/75" : "text-white/80"
                             }`}
                           >
                             {name}
@@ -464,13 +464,13 @@ sm:w-auto sm:px-6 sm:text-sm"
                         <li key={href} className={span}>
                           <Link
                             href={href}
-                            className={`group flex h-full rounded-xl border border-white/25 bg-white/10 p-2 text-white
+                            className={`group flex h-full rounded-xl border border-gold-light/25 bg-white/10 p-2 text-white
                             transition-all duration-300
-                            hover:-translate-y-0.5 hover:border-white hover:bg-warm-white hover:text-deep-teal
-                            focus:outline-none focus-visible:ring-2 focus-visible:ring-white
+                            hover:-translate-y-0.5 hover:border-gold-light hover:bg-gold-light hover:text-dark-teal
+                            focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-light
                             ${wide ? "items-center gap-3" : "flex-col items-start gap-1.5"}`}
                           >
-                            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-deep-teal/45 text-gold-light transition-colors duration-300 group-hover:bg-deep-teal/10 group-hover:text-deep-teal">
+                            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-dark-teal/50 text-gold-light transition-colors duration-300 group-hover:bg-dark-teal/15 group-hover:text-dark-teal">
                               <Icon size={16} />
                             </span>
                             <span className="min-w-0">
@@ -478,7 +478,7 @@ sm:w-auto sm:px-6 sm:text-sm"
                                 {label}
                               </span>
                               {hint && (
-                                <span className="mt-0.5 block text-[11px] leading-tight text-white/75 transition-colors duration-300 group-hover:text-muted-teal">
+                                <span className="mt-0.5 block text-[11px] leading-tight text-white/75 transition-colors duration-300 group-hover:text-dark-teal/75">
                                   {hint}
                                 </span>
                               )}
