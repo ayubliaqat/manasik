@@ -116,6 +116,7 @@ export default function Page() {
       <PageHero
         title="Your Complete Guide to"
         highlight="Umrah"
+        image="/images/umrah-guide-image.png"
         description={
           <>
             Learn how to perform Umrah step by step, from preparing for ihram

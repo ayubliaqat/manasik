@@ -108,6 +108,7 @@ export default function Page() {
       <PageHero
         title="Your Complete Guide to"
         highlight="Hajj"
+        image="/images/hajj-guide-image.png"
         description={
           <>
             Learn every step of Hajj, from preparation to the final ritual, with{" "}

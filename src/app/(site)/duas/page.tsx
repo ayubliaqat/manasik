@@ -115,6 +115,7 @@ export default function Page() {
       <PageHero
         title="Your Complete Guide to"
         highlight="Duas"
+        image="/images/duas-image.png" 
         description={
           <>
             Discover authentic duas for every stage of your journey, from

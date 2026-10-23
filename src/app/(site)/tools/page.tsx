@@ -141,28 +141,28 @@ export default function ToolsPage() {
             Free tools
           </span>
 
-          <h1 className="mt-3 text-balance font-serif text-[24px] font-medium leading-[1.15] tracking-[-0.015em] text-white sm:text-[30px] lg:text-[34px]">
-            Islamic Tools for Hajj, Umrah and{" "}
-            <span className="relative inline-block text-[#2BB589]">
-              Everyday Life
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 120 10"
-                preserveAspectRatio="none"
-                fill="none"
-                className="pointer-events-none absolute left-1/2 top-full mt-[0.05em] h-[0.2em] w-[70%] -translate-x-1/2 text-gold"
-              >
-                <path
-                  d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  vectorEffect="non-scaling-stroke"
-                />
-              </svg>
-            </span>
-          </h1>
+         <h1 className="mt-3 text-balance font-serif text-[34px] font-bold leading-[1.1] tracking-[-0.02em] sm:text-[44px] md:text-[48px] lg:text-[56px]">
+  <span className="text-gold">Free Islamic</span>{" "}
+  <span className="relative inline-block whitespace-nowrap text-[#2BB589]">
+    Tools
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 120 10"
+      preserveAspectRatio="none"
+      fill="none"
+      className="pointer-events-none absolute left-1/2 top-full mt-[0.05em] h-[0.2em] w-[70%] -translate-x-1/2 text-gold"
+    >
+      <path
+        d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        vectorEffect="non-scaling-stroke"
+      />
+    </svg>
+  </span>
+</h1>
 
           <p className="mx-auto mt-4 max-w-lg text-[13px] leading-6 text-white/75 sm:text-sm">
             Planning Hajj or Umrah? Need prayer times, or help learning to read

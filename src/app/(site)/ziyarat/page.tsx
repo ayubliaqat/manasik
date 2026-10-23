@@ -115,6 +115,7 @@ export default function Page() {
       <PageHero
         title="Your Complete Guide to"
         highlight="Ziyarat"
+        image="/images/ziyaraat-image.png" 
         description={
           <>
             Discover the blessed places to visit in Madinah and Makkah, from
