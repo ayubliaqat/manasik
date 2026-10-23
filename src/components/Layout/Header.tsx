@@ -170,25 +170,25 @@ export default function Header() {
       {mobileOpen && (
         <div className="max-h-[calc(100dvh-68px)] overflow-y-auto border-t border-soft-beige bg-white sm:max-h-[calc(100dvh-72px)] lg:hidden">
           <nav className="mx-auto max-w-7xl px-4 py-4 sm:px-6">
-            <div className="flex flex-col gap-1.5">
+            <div className="flex flex-col gap-2.5">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="rounded-xl px-4 py-3 font-heading text-[14px] font-semibold text-charcoal transition-all duration-200 hover:bg-warm-white hover:text-emerald"
+                  className="rounded-xl border border-soft-beige bg-warm-white px-4 py-3 font-heading text-[14px] font-semibold text-charcoal shadow-[0_3px_10px_rgba(6,63,58,0.08)] transition-all duration-200 hover:border-gold/60 hover:text-emerald hover:shadow-[0_5px_14px_rgba(6,63,58,0.14)] active:translate-y-[1px] active:shadow-[0_1px_4px_rgba(6,63,58,0.1)]"
                 >
                   {link.label}
                 </Link>
               ))}
 
               {/* Mobile Guides */}
-              <div className="overflow-hidden rounded-xl">
+              <div>
                 <button
                   type="button"
                   onClick={() => setMobileGuidesOpen((open) => !open)}
                   aria-expanded={mobileGuidesOpen}
-                  className="flex w-full items-center justify-between rounded-xl px-4 py-3 font-heading text-[14px] font-semibold text-charcoal transition-colors hover:bg-warm-white hover:text-emerald"
+                  className="flex w-full items-center justify-between rounded-xl border border-soft-beige bg-warm-white px-4 py-3 font-heading text-[14px] font-semibold text-charcoal shadow-[0_3px_10px_rgba(6,63,58,0.08)] transition-all duration-200 hover:border-gold/60 hover:text-emerald hover:shadow-[0_5px_14px_rgba(6,63,58,0.14)] active:translate-y-[1px] active:shadow-[0_1px_4px_rgba(6,63,58,0.1)]"
                 >
                   Guides
 
@@ -200,13 +200,13 @@ export default function Header() {
                 </button>
 
                 {mobileGuidesOpen && (
-                  <div className="ml-3 flex flex-col border-l-2 border-gold/30 pl-3">
+                  <div className="ml-3 mt-2.5 flex flex-col gap-2 border-l-2 border-gold/30 pb-1 pl-3">
                     {guidesDropdown.map((item) => (
                       <Link
                         key={item.href}
                         href={item.href}
                         onClick={() => setMobileOpen(false)}
-                        className="rounded-lg px-3 py-2.5 text-sm font-medium text-muted-teal transition-colors hover:bg-warm-white hover:text-emerald"
+                        className="rounded-lg border border-soft-beige bg-warm-white px-3 py-2.5 text-sm font-medium text-muted-teal shadow-[0_2px_8px_rgba(6,63,58,0.07)] transition-all duration-200 hover:border-gold/60 hover:text-emerald hover:shadow-[0_4px_12px_rgba(6,63,58,0.12)] active:translate-y-[1px]"
                       >
                         {item.label}
                       </Link>
