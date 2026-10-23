@@ -115,7 +115,7 @@ export default function Page() {
       <PageHero
         title="Your Complete Guide to Umrah"
         highlight="Travel Tips"
-        image="/images/travel-tips-image.png" 
+        image="/images/travel-tips-imge.png" 
         description={
           <>
             Learn how to travel comfortably and safely, from packing and health
