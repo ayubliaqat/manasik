@@ -29,9 +29,9 @@ export default function ToolHero({
   description: string
 }) {
   return (
-    <section className="relative overflow-hidden bg-deep-teal pb-14 pt-10 sm:pb-16 sm:pt-12">
+    <section className="relative overflow-hidden bg-deep-teal pb-16 pt-12 sm:pb-20 sm:pt-16">
       <div className="relative z-10 mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-        <h1 className="font-heading text-2xl font-medium text-white sm:text-3xl lg:text-4xl">
+        <h1 className="font-heading text-3xl font-semibold leading-tight text-white sm:text-4xl lg:text-[2.75rem]">
           {title}{" "}
           <span className="relative inline-block text-[#2BB589]">
             {highlight}
@@ -39,7 +39,7 @@ export default function ToolHero({
           </span>
         </h1>
 
-        <p className="mx-auto mt-3 max-w-xl text-sm font-normal leading-6 text-white/70 sm:text-base">
+        <p className="mx-auto mt-5 max-w-3xl text-base font-normal leading-7 text-white/80 sm:mt-6 sm:text-lg sm:leading-8">
           {description}
         </p>
       </div>
