@@ -12,29 +12,15 @@ import { ExternalLink, Loader2, Pause, Play } from "lucide-react"
 
 type Text = { arabic: string; translation: string }
 
-type Entry =
-  | {
-      kind: "quran"
-      surah: number
-      ayah: number
-      tag: string
-      context: string
-      note?: string
-      fallback?: Text
-    }
-  | {
-      kind: "hadith"
-      tag: string
-      context: string
-      arabic: string
-      translation: string
-      sourceTitle: string
-      sourceDetail: string
-      note?: string
-      // Qari recording of your own, e.g. "/audio/talbiyah.mp3" (put the file in /public/audio).
-      // Without it, no Listen button is shown for this dua.
-      audio?: string
-    }
+type Entry = {
+  kind: "quran"
+  surah: number
+  ayah: number
+  tag: string
+  context: string
+  note?: string
+  fallback?: Text
+}
 
 const SURAHS: Record<number, string> = {
   2: "Al-Baqarah",
@@ -50,28 +36,6 @@ const SURAHS: Record<number, string> = {
 }
 
 const ENTRIES: Entry[] = [
-  {
-    kind: "hadith",
-    tag: "Prophetic dua",
-    context: "Said when entering ihram, if you fear being prevented from completing",
-    arabic: "اللَّهُمَّ مَحِلِّي حَيْثُ حَبَسْتَنِي",
-    translation: "O Allah, my place of release is wherever You detain me.",
-    sourceTitle: "Sahih Muslim 1207 · Sahih al-Bukhari 5089",
-    sourceDetail:
-      "Narrated by Aisha (may Allah be pleased with her). The Prophet ﷺ taught it to Duba'ah bint az-Zubayr.",
-  },
-  {
-    kind: "hadith",
-    tag: "Talbiyah",
-    context: "Recited from ihram until the start of Tawaf (Umrah) or stoning on Eid day (Hajj)",
-    arabic:
-      "لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ، لَبَّيْكَ لَا شَرِيكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ وَالنِّعْمَةَ لَكَ وَالْمُلْكَ، لَا شَرِيكَ لَكَ",
-    translation:
-      "Here I am, O Allah, here I am. Here I am, You have no partner, here I am. Indeed all praise, grace and sovereignty belong to You. You have no partner.",
-    sourceTitle: "Sahih al-Bukhari 1549 · Sahih Muslim 1184",
-    sourceDetail:
-      "Narrated by Abdullah ibn Umar (may Allah be pleased with him): the talbiyah of the Messenger of Allah ﷺ.",
-  },
   { kind: "quran", surah: 22, ayah: 27, tag: "Verse of Hajj", context: "The call of Ibrahim ﷺ to the pilgrims" },
   { kind: "quran", surah: 3, ayah: 96, tag: "Verse of Hajj", context: "The first House built for mankind" },
   { kind: "quran", surah: 3, ayah: 97, tag: "Verse of Hajj", context: "The obligation of Hajj" },
@@ -98,16 +62,6 @@ const ENTRIES: Entry[] = [
   { kind: "quran", surah: 14, ayah: 37, tag: "Quranic dua", context: "Ibrahim leaving his family beside the Sacred House" },
   { kind: "quran", surah: 14, ayah: 40, tag: "Quranic dua", context: "Ibrahim's prayer for steadfast prayer" },
   { kind: "quran", surah: 14, ayah: 41, tag: "Quranic dua", context: "Ibrahim's prayer for forgiveness" },
-  {
-    kind: "hadith",
-    tag: "Dhikr",
-    context: "Said when facing the Black Stone during Tawaf",
-    arabic: "اللَّهُ أَكْبَرُ",
-    translation: "Allah is the Greatest.",
-    sourceTitle: "Sahih al-Bukhari 1613",
-    sourceDetail: "Narrated by Abdullah ibn Abbas (may Allah be pleased with them).",
-    note: "The Prophet ﷺ pointed to the Black Stone and said Allahu Akbar each time he reached it during Tawaf.",
-  },
   {
     kind: "quran",
     surah: 2,
@@ -138,60 +92,13 @@ const ENTRIES: Entry[] = [
     context: "Recited on approaching Safa before Sa'i",
     note: "Recited by the Prophet ﷺ on approaching Safa: Sahih Muslim 1218.",
   },
-  {
-    kind: "hadith",
-    tag: "Dhikr",
-    context: "Said on Safa and Marwa during Sa'i",
-    arabic:
-      "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ، أَنْجَزَ وَعْدَهُ، وَنَصَرَ عَبْدَهُ، وَهَزَمَ الْأَحْزَابَ وَحْدَهُ",
-    translation:
-      "There is no god but Allah alone, with no partner. His is the dominion and His is the praise, and He is over all things Able. There is no god but Allah alone; He fulfilled His promise, aided His servant, and defeated the confederates alone.",
-    sourceTitle: "Sahih Muslim 1218",
-    sourceDetail:
-      "Narrated by Jabir ibn Abdullah (may Allah be pleased with him) in the long hadith describing the Prophet's ﷺ Hajj.",
-    note: "The Prophet ﷺ said this three times on Safa, making dua in between, and did the same on Marwa.",
-  },
-  {
-    kind: "hadith",
-    tag: "Prophetic dua",
-    context: "Asking for a Hajj free of showing off",
-    arabic: "اللَّهُمَّ حَجَّةً لَا رِيَاءَ فِيهَا وَلَا سُمْعَةَ",
-    translation:
-      "O Allah, [make this] a Hajj in which there is no showing off and no seeking of reputation.",
-    sourceTitle: "Sunan Ibn Majah 2890",
-    sourceDetail: "Narrated by Anas ibn Malik (may Allah be pleased with him).",
-    note: "The Prophet ﷺ performed Hajj on a plain saddle and said this.",
-  },
   { kind: "quran", surah: 22, ayah: 28, tag: "Verse of Hajj", context: "Witnessing the benefits of Hajj and remembering Allah's name" },
-  {
-    kind: "hadith",
-    tag: "Dua of Arafah",
-    context: "The best dua, made on the Day of Arafah",
-    arabic:
-      "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",
-    translation:
-      "There is no god but Allah alone, with no partner. To Him belongs the dominion and to Him belongs all praise, and He is over all things Able.",
-    sourceTitle: "Jami' at-Tirmidhi 3585",
-    sourceDetail:
-      "Narrated by Amr ibn Shu'ayb, from his father, from his grandfather (may Allah be pleased with them).",
-    note: "The Prophet ﷺ called this the best of what he and the Prophets before him said. Graded hasan (Al-Albani).",
-  },
   { kind: "quran", surah: 2, ayah: 198, tag: "Verse of Hajj", context: "Remembering Allah at al-Mash'ar al-Haram in Muzdalifah" },
   { kind: "quran", surah: 2, ayah: 199, tag: "Verse of Hajj", context: "Seeking Allah's forgiveness during Hajj" },
   { kind: "quran", surah: 22, ayah: 32, tag: "Verse of Hajj", context: "Honouring the symbols of Allah" },
   { kind: "quran", surah: 22, ayah: 36, tag: "Verse of Hajj", context: "The sacrificial animals as symbols of Allah" },
   { kind: "quran", surah: 2, ayah: 200, tag: "Verse of Hajj", context: "Remembering Allah after completing the rites" },
   { kind: "quran", surah: 2, ayah: 203, tag: "Verse of Hajj", context: "Remembering Allah in the days of Tashreeq" },
-  {
-    kind: "hadith",
-    tag: "Prophetic dua",
-    context: "The Prophet's ﷺ prayer for pilgrims who shave their heads after the rites",
-    arabic: "اللَّهُمَّ ارْحَمِ الْمُحَلِّقِينَ",
-    translation: "O Allah, have mercy on those who shave their heads.",
-    sourceTitle: "Sahih al-Bukhari 1727 · Sahih Muslim 1301",
-    sourceDetail: "Narrated by Abdullah ibn Umar (may Allah be pleased with them).",
-    note: "The Prophet ﷺ then included those who shorten their hair.",
-  },
 
   /* ---- More Quranic duas (recited by the qari) ---- */
   { kind: "quran", surah: 2, ayah: 286, tag: "Quranic dua", context: "Asking Allah not to hold us to account for forgetting or mistakes" },
@@ -205,7 +112,7 @@ const ENTRIES: Entry[] = [
   { kind: "quran", surah: 18, ayah: 10, tag: "Quranic dua", context: "Asking Allah for mercy and right guidance" },
   { kind: "quran", surah: 23, ayah: 118, tag: "Quranic dua", context: "Asking for forgiveness and mercy" },
   { kind: "quran", surah: 25, ayah: 74, tag: "Quranic dua", context: "Asking for righteous family and to lead the God-fearing" },
-  { kind: "quran", surah: 59, ayah: 10, tag: "Quranic dua", context: "Praying for those who came before us in faith" },
+  { kind: "quran", surah: 59, ayah: 10, tag: "Quranic dua", context: "Praying for those who came before us in faith" }
 ]
 
 const pad3 = (n: number) => String(n).padStart(3, "0")
@@ -540,28 +447,13 @@ export default function VerseOfTheDay() {
     year: "numeric",
   }).format(today)
 
-  let arabic: string | null
-  let translation: string | null
-  let reference: string
-  let detail: string | undefined
-  let link: string | undefined
-  let audio: string | undefined
-
-  if (entry.kind === "quran") {
-    const text = texts[`${entry.surah}:${entry.ayah}`] ?? entry.fallback ?? null
-    arabic = text?.arabic ?? null
-    translation = text?.translation ?? null
-    reference = `Surah ${SURAHS[entry.surah]} ${entry.surah}:${entry.ayah}`
-    detail = entry.note
-    link = `https://quran.com/${entry.surah}/${entry.ayah}`
-    audio = `https://everyayah.com/data/Alafasy_128kbps/${pad3(entry.surah)}${pad3(entry.ayah)}.mp3`
-  } else {
-    arabic = entry.arabic
-    translation = entry.translation
-    reference = entry.sourceTitle
-    detail = `${entry.sourceDetail}${entry.note ? ` ${entry.note}` : ""}`
-    audio = entry.audio
-  }
+  const text = texts[`${entry.surah}:${entry.ayah}`] ?? entry.fallback ?? null
+  const arabic = text?.arabic ?? null
+  const translation = text?.translation ?? null
+  const reference = `Surah ${SURAHS[entry.surah]} ${entry.surah}:${entry.ayah}`
+  const detail = entry.note
+  const link = `https://quran.com/${entry.surah}/${entry.ayah}`
+  const audio = `https://everyayah.com/data/Alafasy_128kbps/${pad3(entry.surah)}${pad3(entry.ayah)}.mp3`
 
   return (
     <section className="relative overflow-hidden bg-dark-teal py-8 sm:py-10">
@@ -589,28 +481,28 @@ export default function VerseOfTheDay() {
               </p>
             </div>
 
-          <h2 className="mt-2 text-balance font-serif text-[26px] font-bold leading-[1.15] tracking-[-0.02em] text-white sm:text-[30px] lg:text-[36px]">
-  Hajj &amp; Umrah{" "}
-  <span className="relative inline-block whitespace-nowrap text-gold-light">
-    Dua of the Day
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 120 10"
-      preserveAspectRatio="none"
-      fill="none"
-      className="pointer-events-none absolute left-1/2 top-full mt-[0.05em] h-[0.2em] w-[75%] -translate-x-1/2 text-gold"
-    >
-      <path
-        d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
-        stroke="currentColor"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        vectorEffect="non-scaling-stroke"
-      />
-    </svg>
-  </span>
-</h2>
+            <h2 className="mt-2 text-balance font-serif text-[22px] font-medium leading-[1.2] tracking-[-0.015em] text-white sm:text-[26px] lg:text-[30px]">
+              Hajj &amp; Umrah{" "}
+              <span className="relative inline-block whitespace-nowrap text-emerald">
+                Dua of the Day
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 120 10"
+                  preserveAspectRatio="none"
+                  fill="none"
+                  className="pointer-events-none absolute left-1/2 top-full mt-[0.05em] h-[0.2em] w-[75%] -translate-x-1/2 text-gold"
+                >
+                  <path
+                    d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    vectorEffect="non-scaling-stroke"
+                  />
+                </svg>
+              </span>
+            </h2>
           </Reveal>
 
           {/* Context */}
@@ -618,7 +510,7 @@ export default function VerseOfTheDay() {
             <p className="text-[11px] leading-4 text-white/55 sm:text-xs">
               <span
                 className={`font-semibold uppercase tracking-wide ${
-                  entry.kind === "quran" ? "text-gold" : "text-emerald"
+                  "text-gold"
                 }`}
               >
                 {entry.tag}
@@ -673,7 +565,7 @@ export default function VerseOfTheDay() {
             )}
           </Reveal>
 
-          {/* Audio (qari only) */}
+          {/* Quran recitation audio */}
           {audio && (
             <Reveal from="zoom" delay={240} className="mt-4 flex justify-center">
               <PlayButton key={dayOfYear} src={audio} />

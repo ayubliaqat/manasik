@@ -31,8 +31,7 @@ export default function ToolHero({
   return (
     <section className="relative overflow-hidden bg-deep-teal pb-16 pt-12 sm:pb-20 sm:pt-16">
       <div className="relative z-10 mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-        <h1 className="font-heading text-3xl font-semibold leading-tight text-white sm:text-4xl lg:text-[2.75rem]">
-          {title}{" "}
+<h1 className="font-heading text-3xl font-medium leading-tight text-white sm:text-4xl lg:text-[2.75rem]">          {title}{" "}
           <span className="relative inline-block text-[#2BB589]">
             {highlight}
             <Squiggle className="mt-[0.05em] h-[0.18em] w-[70%]" />

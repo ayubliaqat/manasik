@@ -571,37 +571,37 @@ export default function PlanningTools() {
 
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* All Tools heading */}
-        <div className="relative mb-5 pb-6 sm:mb-6 sm:pb-8">
+        <div className="relative mb-2 pb-6 sm:mb-4">
           <div
             aria-hidden="true"
             className="pointer-events-none absolute bottom-0 left-1/2 -z-10 h-[340px] w-[200vw] -translate-x-1/2 rounded-[0_0_50%_50%] bg-gradient-to-br from-emerald/[0.09] via-emerald/[0.04] to-gold/[0.07] sm:w-[150vw] lg:w-[130vw]"
           />
 
           <div className="mx-auto max-w-2xl text-center">
-           <h2 className="text-balance font-serif text-[28px] font-bold leading-[1.1] tracking-[-0.02em] text-deep-teal sm:text-[34px] md:text-[38px] lg:text-[46px]">
-  <span className="text-gold">All</span>{" "}
-  <span className="relative inline-block whitespace-nowrap text-emerald">
-    Tools
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 120 10"
-      preserveAspectRatio="none"
-      fill="none"
-      className="pointer-events-none absolute left-1/2 top-full mt-[0.05em] h-[0.2em] w-[70%] -translate-x-1/2 text-gold"
-    >
-      <path
-        d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
-        stroke="currentColor"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        vectorEffect="non-scaling-stroke"
-      />
-    </svg>
-  </span>
-</h2>
+            <h2 className="text-balance font-serif text-[22px] font-semibold leading-[1.2] tracking-[-0.01em] text-deep-teal sm:text-[26px] lg:text-[30px]">
+              <span className="text-gold">Explore</span>{" "}
+              <span className="relative inline-block whitespace-nowrap text-emerald">
+                All Tools
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 120 10"
+                  preserveAspectRatio="none"
+                  fill="none"
+                  className="pointer-events-none absolute left-1/2 top-full mt-[0.05em] h-[0.2em] w-[70%] -translate-x-1/2 text-gold"
+                >
+                  <path
+                    d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    vectorEffect="non-scaling-stroke"
+                  />
+                </svg>
+              </span>
+            </h2>
 
-            <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-muted-teal sm:text-[15px]">
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-muted-teal">
               Explore practical tools for pilgrimage planning, daily worship and Quran learning.
             </p>
           </div>

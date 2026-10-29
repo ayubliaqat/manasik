@@ -18,8 +18,8 @@ type ToolsFaqProps = {
 
 export default function ToolsFaq({
   faqs,
-  title = "Tools",
-  highlight = "FAQs",
+  title = "Frequently Asked",
+  highlight = "Questions",
   includeSchema = true,
 }: ToolsFaqProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
@@ -42,7 +42,7 @@ export default function ToolsFaq({
   return (
     <section
       aria-labelledby={headingId}
-      className="bg-white py-10 sm:py-12 lg:py-14"
+      className="bg-white pt-10 pb-10 sm:pt-10 sm:pb-12 lg:pt-10 lg:pb-10"
     >
       {includeSchema && (
         <script
@@ -51,21 +51,20 @@ export default function ToolsFaq({
         />
       )}
 
-      <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         {/* Heading */}
-        <div className="mb-8 text-center sm:mb-10 lg:mb-12">
+        <div className="mb-4 text-center sm:mb-4 lg:mb-8">
           <h2
             id={headingId}
             className="
               text-balance
               font-serif
-              text-[24px] font-medium
-              leading-[1.15]
-              tracking-[-0.015em]
+              text-[22px] font-semibold
+              leading-[1.2]
+              tracking-[-0.01em]
               text-deep-teal
-              sm:text-[28px]
-              md:text-[32px]
-              lg:text-[38px]
+              sm:text-[26px]
+              lg:text-[30px]
             "
           >
             {title}{" "}
@@ -131,7 +130,7 @@ export default function ToolsFaq({
                   >
                     <span
                       className={[
-                        "font-heading text-sm font-semibold leading-snug transition-colors duration-200 sm:text-[15px]",
+                        "font-heading text-sm font-semibold leading-snug transition-colors duration-200",
                         isOpen ? "text-white" : "text-charcoal group-hover:text-emerald",
                       ].join(" ")}
                     >
@@ -169,7 +168,7 @@ export default function ToolsFaq({
                   ].join(" ")}
                 >
                   <div className="overflow-hidden">
-                    <p className="px-4 pb-5 pt-4 text-sm leading-6.5 text-muted-teal sm:px-5 sm:text-[15px]">
+                    <p className="px-4 pb-5 pt-4 text-sm leading-6 text-black/85 sm:px-5">
                       {faq.answer}
                     </p>
                   </div>

@@ -1,33 +1,33 @@
-import { Check, Info, Lightbulb, ListChecks, Sparkles } from "lucide-react"
+import { Check, Info, Lightbulb, ListChecks, Sparkles } from "lucide-react";
 
 export type GuideSection = {
-  heading: string
-  text?: string
-  items?: string[]
-  variant?: "steps" | "highlight" | "tips" | "note"
-}
+  heading: string;
+  text?: string;
+  items?: string[];
+  variant?: "steps" | "highlight" | "tips" | "note";
+};
 
 export default function ToolGuide({
   title,
   sections,
 }: {
-  title: string
-  sections: GuideSection[]
+  title: string;
+  sections: GuideSection[];
 }) {
-  const steps = sections.find((s) => s.variant === "steps")
-  const highlight = sections.find((s) => s.variant === "highlight")
-  const tips = sections.find((s) => s.variant === "tips")
-  const note = sections.find((s) => s.variant === "note")
+  const steps = sections.find((s) => s.variant === "steps");
+  const highlight = sections.find((s) => s.variant === "highlight");
+  const tips = sections.find((s) => s.variant === "tips");
+  const note = sections.find((s) => s.variant === "note");
 
   const stepCols =
     steps?.items?.length === 3
       ? "lg:grid-cols-3"
       : steps?.items?.length === 4
         ? "lg:grid-cols-4"
-        : "lg:grid-cols-5"
+        : "lg:grid-cols-5";
 
   return (
-    <section className="mx-auto max-w-5xl px-4 pb-16 sm:px-6 sm:pb-20 lg:px-8">
+    <section className="mx-auto max-w-5xl px-4 pb-8 sm:px-6 sm:pb-10 lg:px-8">
       <div className="mb-8 text-center">
         <h2 className="font-heading text-xl font-medium text-deep-teal sm:text-2xl">
           {title}
@@ -52,7 +52,9 @@ export default function ToolGuide({
             </h3>
           </div>
 
-          <ol className={`grid grid-cols-1 gap-6 sm:grid-cols-2 lg:gap-4 ${stepCols}`}>
+          <ol
+            className={`grid grid-cols-1 gap-6 sm:grid-cols-2 lg:gap-4 ${stepCols}`}
+          >
             {steps.items.map((item, i) => (
               <li
                 key={item}
@@ -66,7 +68,9 @@ export default function ToolGuide({
                 <span className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-emerald text-sm font-medium text-white ring-4 ring-card">
                   {i + 1}
                 </span>
-                <p className="text-sm leading-6 text-charcoal/80 lg:px-1">{item}</p>
+                <p className="text-sm leading-6 text-charcoal/80 lg:px-1">
+                  {item}
+                </p>
               </li>
             ))}
           </ol>
@@ -125,7 +129,9 @@ export default function ToolGuide({
                     <span className="font-heading text-lg leading-6 text-gold">
                       0{i + 1}
                     </span>
-                    <span className="text-sm leading-6 text-charcoal/80">{item}</span>
+                    <span className="text-sm leading-6 text-charcoal/80">
+                      {item}
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -144,10 +150,12 @@ export default function ToolGuide({
             <h3 className="font-heading text-base font-medium text-deep-teal">
               {note.heading}
             </h3>
-            <p className="mt-1.5 text-sm leading-7 text-charcoal/80">{note.text}</p>
+            <p className="mt-1.5 text-sm leading-7 text-charcoal/80">
+              {note.text}
+            </p>
           </div>
         </div>
       )}
     </section>
-  )
+  );
 }
