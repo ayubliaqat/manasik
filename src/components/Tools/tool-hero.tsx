@@ -39,7 +39,7 @@ export default function ToolHero({
           </span>
         </h1>
 
-        <p className="mx-auto mt-4 max-w-2xl text-xs font-normal leading-5 text-white/80 sm:mt-5 sm:leading-6">
+        <p className="mx-auto mt-4 max-w-2xl text-sm font-normal leading-5 text-white/80 sm:mt-5 sm:leading-6">
           {description}
         </p>
       </div>
