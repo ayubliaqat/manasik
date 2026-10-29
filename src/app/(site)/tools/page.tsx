@@ -226,7 +226,7 @@ export default function ToolsPage() {
           </header>
 
           <div className="px-5 py-10 sm:px-8 sm:py-12 lg:px-12 lg:py-14">
-            <div className="mx-auto max-w-4xl space-y-10 sm:space-y-12">
+            <div className="mx-auto max-w-5xl space-y-10 sm:space-y-12">
               <article>
                 <GuideHeading>What Can You Do With Manasik Tools?</GuideHeading>
                 <p className={bodyClass}>

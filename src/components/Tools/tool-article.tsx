@@ -13,6 +13,7 @@ export type ArticleSection = {
   numbered?: string[]
   bullets?: string[]
   subsections?: ArticleSubsection[]
+  closing?: string[]
 }
 
 function Squiggle({ className }: { className: string }) {
@@ -68,129 +69,167 @@ function renderText(text: string): ReactNode[] {
 
 export default function ToolArticle({
   title,
+  highlight,
+  badge,
   intro,
   sections,
 }: {
   title: string
-  intro: string
+  highlight?: string
+  badge?: string
+  intro?: string
   sections: ArticleSection[]
 }) {
-  // First half of the title in gold, second half in emerald
-  const words = title.trim().split(/\s+/)
-  const splitAt = Math.ceil(words.length / 2)
-  const firstHalf = words.slice(0, splitAt).join(" ")
-  const secondHalf = words.slice(splitAt).join(" ")
+  // White lead + emerald highlight. If no highlight is passed, split the title in half.
+  let lead = title.trim()
+  let accent = highlight?.trim() ?? ""
+  if (!accent) {
+    const words = lead.split(/\s+/)
+    const splitAt = Math.ceil(words.length / 2)
+    lead = words.slice(0, splitAt).join(" ")
+    accent = words.slice(splitAt).join(" ")
+  }
 
   return (
-    <section className="mx-auto -mt-4 max-w-5xl px-4 pb-10 sm:-mt-6 sm:px-6 lg:px-8">
-      {/* h2 — above the card */}
-      <h2 className="mb-8 text-center font-serif text-xl font-bold leading-tight sm:mb-10 sm:text-2xl lg:text-3xl">
-        <span className="text-gold">{firstHalf}</span>
-        {secondHalf && (
-          <>
-            {" "}
-            <span className="relative inline-block text-emerald">
-              {secondHalf}
-              <Squiggle className="mt-[0.05em] h-[0.18em] w-[70%]" />
-            </span>
-          </>
-        )}
-      </h2>
-
+    <section className="mx-auto max-w-5xl px-4 pb-10 sm:px-6 lg:px-8">
       <article
         className="
-          rounded-2xl border-[1.5px] border-deep-teal/60 bg-card p-5 sm:p-8 lg:p-10
+          overflow-hidden rounded-2xl border-[1.5px] border-deep-teal/60 bg-card
           shadow-[inset_0_0_14px_rgba(6,63,58,0.2),0_2px_4px_rgba(6,63,58,0.1),0_12px_26px_rgba(6,63,58,0.18)]
         "
       >
-        <p className="text-sm leading-6 text-black/85">{renderText(intro)}</p>
+        {/* h2 — header attached to the card */}
+        <header className="bg-deep-teal px-5 py-8 text-center sm:px-8 sm:py-10 lg:px-12">
+          {badge && (
+            <span className="inline-block rounded-full border border-gold/50 px-3 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-gold">
+              {badge}
+            </span>
+          )}
+          <h2
+            className={`${
+              badge ? "mt-3 " : ""
+            }text-balance font-serif text-[22px] font-medium leading-[1.2] tracking-[-0.01em] text-white sm:text-[26px] lg:text-[30px]`}
+          >
+            {lead}
+            {accent && (
+              <>
+                {lead && " "}
+                <span className="relative inline-block whitespace-nowrap text-[#2BB589]">
+                  {accent}
+                  <Squiggle className="mt-[0.05em] h-[0.2em] w-[70%]" />
+                </span>
+              </>
+            )}
+          </h2>
+        </header>
 
-        {sections.map((section) => (
-          <section key={section.heading} className="mt-5 sm:mt-6">
-            {/* h3 */}
-            <h3 className="mb-3.5 font-heading text-base font-semibold leading-snug text-black sm:text-lg">
-              {section.heading}
-            </h3>
+        <div className="p-5 sm:p-8 lg:p-10">
+          {intro && (
+            <p className="text-sm leading-6 text-black/85">
+              {renderText(intro)}
+            </p>
+          )}
 
-            <div className="space-y-3">
-              {section.paragraphs?.map((p) => (
-                <p key={p} className="text-sm leading-6 text-black/85">
-                  {renderText(p)}
-                </p>
-              ))}
-            </div>
+          {sections.map((section) => (
+            <section
+              key={section.heading}
+              className="mt-5 first:mt-0 sm:mt-6 sm:first:mt-0"
+            >
+              {/* h3 */}
+              <h3 className="mb-3.5 font-heading text-base font-semibold leading-snug text-black sm:text-lg">
+                {section.heading}
+              </h3>
 
-            {section.numbered && (
-              <ol className="mt-3 space-y-2">
-                {section.numbered.map((item, index) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-3 text-sm leading-6 text-black/85"
-                  >
-                    <span
-                      aria-hidden="true"
-                      className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald text-xs font-semibold text-white"
+              <div className="space-y-3">
+                {section.paragraphs?.map((p) => (
+                  <p key={p} className="text-sm leading-6 text-black/85">
+                    {renderText(p)}
+                  </p>
+                ))}
+              </div>
+
+              {section.numbered && (
+                <ol className="mt-3 space-y-2">
+                  {section.numbered.map((item, index) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-3 text-sm leading-6 text-black/85"
                     >
-                      {index + 1}
-                    </span>
-                    <span>{renderText(item)}</span>
-                  </li>
-                ))}
-              </ol>
-            )}
+                      <span
+                        aria-hidden="true"
+                        className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald text-xs font-semibold text-white"
+                      >
+                        {index + 1}
+                      </span>
+                      <span>{renderText(item)}</span>
+                    </li>
+                  ))}
+                </ol>
+              )}
 
-            {section.bullets && (
-              <ul className="mt-3 space-y-0.5">
-                {section.bullets.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-3 text-sm leading-6 text-black/85"
-                  >
-                    <span
-                      aria-hidden="true"
-                      className="mt-[8px] h-1.5 w-1.5 shrink-0 rounded-full bg-emerald"
-                    />
-                    <span>{renderText(item)}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
+              {section.bullets && (
+                <ul className="mt-3 space-y-0.5">
+                  {section.bullets.map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-3 text-sm leading-6 text-black/85"
+                    >
+                      <span
+                        aria-hidden="true"
+                        className="mt-[8px] h-1.5 w-1.5 shrink-0 rounded-full bg-emerald"
+                      />
+                      <span>{renderText(item)}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
 
-            {section.subsections?.map((sub) => (
-              <div key={sub.heading} className="mt-4">
-                {/* h4 */}
-                <h4 className="mb-2.5 font-heading text-[0.9375rem] font-semibold leading-snug text-black">
-                  {sub.heading}
-                </h4>
+              {section.subsections?.map((sub) => (
+                <div key={sub.heading} className="mt-4">
+                  {/* h4 */}
+                  <h4 className="mb-2.5 font-heading text-[0.9375rem] font-semibold leading-snug text-black">
+                    {sub.heading}
+                  </h4>
 
-                <div className="space-y-3">
-                  {sub.paragraphs?.map((p) => (
+                  <div className="space-y-3">
+                    {sub.paragraphs?.map((p) => (
+                      <p key={p} className="text-sm leading-6 text-black/85">
+                        {renderText(p)}
+                      </p>
+                    ))}
+                  </div>
+
+                  {sub.bullets && (
+                    <ul className="mt-3 space-y-0.5">
+                      {sub.bullets.map((item) => (
+                        <li
+                          key={item}
+                          className="flex items-start gap-3 text-sm leading-6 text-black/85"
+                        >
+                          <span
+                            aria-hidden="true"
+                            className="mt-[8px] h-1.5 w-1.5 shrink-0 rounded-full bg-emerald"
+                          />
+                          <span>{renderText(item)}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              ))}
+
+              {section.closing && (
+                <div className="mt-3 space-y-3">
+                  {section.closing.map((p) => (
                     <p key={p} className="text-sm leading-6 text-black/85">
                       {renderText(p)}
                     </p>
                   ))}
                 </div>
-
-                {sub.bullets && (
-                  <ul className="mt-3 space-y-0.5">
-                    {sub.bullets.map((item) => (
-                      <li
-                        key={item}
-                        className="flex items-start gap-3 text-sm leading-6 text-black/85"
-                      >
-                        <span
-                          aria-hidden="true"
-                          className="mt-[8px] h-1.5 w-1.5 shrink-0 rounded-full bg-emerald"
-                        />
-                        <span>{renderText(item)}</span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            ))}
-          </section>
-        ))}
+              )}
+            </section>
+          ))}
+        </div>
       </article>
     </section>
   )
