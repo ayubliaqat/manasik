@@ -17,7 +17,6 @@ const navLinks = [
   { label: "Umrah", href: "/umrah-guide" },
   { label: "Duas", href: "/duas" },
   { label: "Ziyaraat", href: "/ziyaraat" },
-  { label: "Blog", href: "/blog" },
 ];
 
 export default function Header() {
@@ -65,18 +64,18 @@ export default function Header() {
             className="group flex flex-col leading-none"
           >
             <span className="font-heading text-xl font-semibold tracking-tight text-deep-teal transition-colors duration-200 group-hover:text-emerald sm:text-[21px]">
-              Manasik
+              Islamic Religion
             </span>
 
-            <span className="mt-1 text-[9px] font-medium tracking-[0.25em] text-gold sm:text-[10px]">
+            <span className="mt-1 text-[9px] font-medium tracking-[0.25em] text-gold-text sm:text-[10px]">
               HAJJ &amp; UMRAH{" "}
-              <span className="text-deep-teal/60">|</span> BLOG
+              <span className="text-deep-teal/60">|</span> GUIDES
             </span>
           </Link>
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex">
+        <nav aria-label="Main navigation" className="hidden lg:flex">
           <div className="flex items-center gap-6 xl:gap-7">
             {navLinks.map((link) => (
               <Link
@@ -106,8 +105,9 @@ export default function Header() {
                 Guides
 
                 <ChevronDown
+                  aria-hidden="true"
                   className={`h-3.5 w-3.5 transition-transform duration-200 ${
-                    guidesOpen ? "rotate-180 text-gold" : ""
+                    guidesOpen ? "rotate-180 text-gold-text" : ""
                   }`}
                 />
 
@@ -145,7 +145,10 @@ export default function Header() {
             href="/tools"
             className="group flex min-h-10 items-center gap-2 rounded-full border border-emerald/80 bg-gradient-to-r from-deep-teal to-emerald px-5 py-2.5 font-heading text-[13px] font-semibold text-warm-white shadow-[0_4px_0_#045c48,0_7px_16px_rgba(6,63,58,0.18)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_5px_0_#045c48,0_11px_22px_rgba(6,63,58,0.22)] active:translate-y-[1px]"
           >
-            <Compass className="h-4 w-4 transition-transform duration-300 group-hover:rotate-6" />
+            <Compass
+              aria-hidden="true"
+              className="h-4 w-4 transition-transform duration-300 group-hover:rotate-6"
+            />
             Plan Your Journey
           </Link>
         </div>
@@ -155,21 +158,28 @@ export default function Header() {
           type="button"
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
           aria-expanded={mobileOpen}
+          aria-controls="mobile-menu"
           onClick={() => setMobileOpen((open) => !open)}
           className="flex h-10 w-10 items-center justify-center rounded-xl text-deep-teal transition-all duration-200 hover:bg-warm-white hover:text-emerald lg:hidden"
         >
           {mobileOpen ? (
-            <X className="h-5 w-5" />
+            <X aria-hidden="true" className="h-5 w-5" />
           ) : (
-            <Menu className="h-5 w-5" />
+            <Menu aria-hidden="true" className="h-5 w-5" />
           )}
         </button>
       </div>
 
       {/* Mobile Navigation: scrolls inside itself if the screen is short */}
       {mobileOpen && (
-        <div className="max-h-[calc(100dvh-68px)] overflow-y-auto border-t border-soft-beige bg-white sm:max-h-[calc(100dvh-72px)] lg:hidden">
-          <nav className="mx-auto max-w-7xl px-4 py-4 sm:px-6">
+        <div
+          id="mobile-menu"
+          className="max-h-[calc(100dvh-68px)] overflow-y-auto border-t border-soft-beige bg-white sm:max-h-[calc(100dvh-72px)] lg:hidden"
+        >
+          <nav
+            aria-label="Mobile navigation"
+            className="mx-auto max-w-7xl px-4 py-4 sm:px-6"
+          >
             <div className="flex flex-col gap-2.5">
               {navLinks.map((link) => (
                 <Link
@@ -188,19 +198,24 @@ export default function Header() {
                   type="button"
                   onClick={() => setMobileGuidesOpen((open) => !open)}
                   aria-expanded={mobileGuidesOpen}
+                  aria-controls="mobile-guides-menu"
                   className="flex w-full items-center justify-between rounded-xl border border-soft-beige bg-warm-white px-4 py-3 font-heading text-[14px] font-semibold text-charcoal shadow-[0_3px_10px_rgba(6,63,58,0.08)] transition-all duration-200 hover:border-gold/60 hover:text-emerald hover:shadow-[0_5px_14px_rgba(6,63,58,0.14)] active:translate-y-[1px] active:shadow-[0_1px_4px_rgba(6,63,58,0.1)]"
                 >
                   Guides
 
                   <ChevronDown
+                    aria-hidden="true"
                     className={`h-4 w-4 transition-transform duration-200 ${
-                      mobileGuidesOpen ? "rotate-180 text-gold" : ""
+                      mobileGuidesOpen ? "rotate-180 text-gold-text" : ""
                     }`}
                   />
                 </button>
 
                 {mobileGuidesOpen && (
-                  <div className="ml-3 mt-2.5 flex flex-col gap-2 border-l-2 border-gold/30 pb-1 pl-3">
+                  <div
+                    id="mobile-guides-menu"
+                    className="ml-3 mt-2.5 flex flex-col gap-2 border-l-2 border-gold/30 pb-1 pl-3"
+                  >
                     {guidesDropdown.map((item) => (
                       <Link
                         key={item.href}
@@ -221,7 +236,7 @@ export default function Header() {
                 onClick={() => setMobileOpen(false)}
                 className="mt-3 flex min-h-11 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-deep-teal to-emerald px-5 py-3 font-heading text-sm font-semibold text-warm-white shadow-[0_4px_0_#045c48,0_8px_18px_rgba(6,63,58,0.18)] transition-all duration-300 active:translate-y-[1px]"
               >
-                <Compass className="h-4 w-4" />
+                <Compass aria-hidden="true" className="h-4 w-4" />
                 Plan Your Journey
               </Link>
             </div>
