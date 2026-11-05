@@ -225,21 +225,13 @@ export default function Hero() {
             <div className="max-w-[570px] text-center lg:text-left">
               {/* Heading */}
               <h1
-                className="hero-from-left font-serif text-[28px] font-semibold
-              leading-[1.08] tracking-[-0.02em] text-white
-              drop-shadow-[0_3px_2px_rgba(0,0,0,0.3)]
-              sm:text-[36px]
-              lg:text-[48px]"
-              >
-                Islamic Tools and Guides for
-                <span
-                  className="mt-1 block text-gold-light
-                drop-shadow-[0_3px_3px_rgba(0,0,0,0.3)]"
-                >
-                  Hajj and Umrah
-                </span>
-              </h1>
-
+  className="hero-from-left font-heading text-white drop-shadow-[0_3px_2px_rgba(0,0,0,0.3)]"
+>
+  Islamic Tools and Guides for
+  <span className="mt-1 block text-gold-light drop-shadow-[0_3px_3px_rgba(0,0,0,0.3)]">
+    Hajj and Umrah
+  </span>
+</h1>
               {/* Gold accent */}
               <div
                 className="hero-from-left my-3 flex items-center justify-center gap-2 sm:my-4 lg:justify-start"
