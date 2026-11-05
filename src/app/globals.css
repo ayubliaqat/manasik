@@ -1,5 +1,4 @@
-﻿
-@import "tailwindcss";
+﻿@import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
 :root {
@@ -45,65 +44,37 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-body), Arial, Helvetica, sans-serif;
-  font-size: 16px;
-  line-height: 1.7;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading), sans-serif;
-  text-wrap: balance;
 }
 
+/* Default sizes and weights only. Tailwind classes on components still override these. */
 @layer base {
-  h1 {
-    font-size: clamp(2.25rem, 1.85rem + 1.6vw, 3rem);
-    font-weight: 700;
-    line-height: 1.15;
-    letter-spacing: -0.035em;
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  h2 {
-    font-size: clamp(1.75rem, 1.55rem + 0.8vw, 2.125rem);
-    font-weight: 650;
-    line-height: 1.25;
-    letter-spacing: -0.025em;
-  }
-
-  h3 {
-    font-size: clamp(1.3125rem, 1.2rem + 0.45vw, 1.5rem);
-    font-weight: 600;
-    line-height: 1.35;
-    letter-spacing: -0.015em;
-  }
-
-  h4 {
-    font-size: clamp(1.125rem, 1.08rem + 0.2vw, 1.25rem);
-    font-weight: 600;
-    line-height: 1.4;
-  }
-
-  h5 {
-    font-size: 1.0625rem;
-    font-weight: 550;
-    line-height: 1.45;
-  }
-
-  h6 {
-    font-size: 0.9375rem;
-    font-weight: 550;
-    line-height: 1.5;
-  }
-
-  p {
-    font-size: 1rem;
+  body {
     font-weight: 400;
-    line-height: 1.7;
+    line-height: 1.65;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  h1 { font-size: clamp(1.75rem, 1.55rem + 0.9vw, 2.25rem); line-height: 1.2; }    /* 28 to 36px */
+  h2 { font-size: clamp(1.375rem, 1.27rem + 0.5vw, 1.75rem); line-height: 1.25; }  /* 22 to 28px */
+  h3 { font-size: clamp(1.125rem, 1.07rem + 0.3vw, 1.375rem); line-height: 1.3; }  /* 18 to 22px */
+  h4 { font-size: clamp(1.0625rem, 1.04rem + 0.1vw, 1.125rem); line-height: 1.35; font-weight: 500; } /* 17 to 18px */
+  h5 { font-size: 1rem; line-height: 1.4; font-weight: 500; }
+  h6 { font-size: 0.875rem; line-height: 1.4; font-weight: 500; }
+  p { font-size: 1rem; line-height: 1.7; }
+  strong, b { font-weight: 600; }
 }
 
 @keyframes marquee-scroll {
@@ -128,7 +99,6 @@ h6 {
     animation: none;
   }
 }
-
 @keyframes hero-from-left {
   from {
     opacity: 0;
