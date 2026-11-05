@@ -93,7 +93,7 @@ export default function TrustStats({ toolsCount }: { toolsCount: number }) {
   return (
     <section className="relative overflow-hidden py-6 sm:py-8 lg:py-10">
       {/* Transparent section, no background color */}
-      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Main panel */}
         <div className="relative grid w-full grid-cols-1 overflow-hidden rounded-[24px] border border-soft-beige shadow-[0_18px_40px_-14px_rgba(6,63,58,0.35),inset_0_1px_0_rgba(255,255,255,0.8)] backdrop-blur-xl sm:grid-cols-2 lg:grid-cols-[1.15fr_1fr_1fr_1fr]">
           {/* Gloss sheen */}

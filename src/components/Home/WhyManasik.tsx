@@ -40,7 +40,7 @@ const audiences = [
 export default function WhoIsItFor() {
   return (
     <section className="relative overflow-hidden bg-[#faf8f3] py-10 sm:py-12 lg:py-14">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Image left, content right. items-stretch: both columns share the same height on lg */}
         <div className="grid gap-8 sm:gap-10 lg:grid-cols-[0.9fr_1fr] lg:items-stretch lg:gap-14">
           {/* Organic Image (second on mobile, first on lg) */}

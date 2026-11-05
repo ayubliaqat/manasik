@@ -13,7 +13,7 @@ const audience = [
 export default function WhoIsManasikFor() {
   return (
     <section className="relative overflow-hidden bg-[#faf8f3] py-14 sm:py-16 lg:py-20">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* items-stretch: both columns share the same height on lg */}
         <div className="grid gap-10 lg:grid-cols-[1fr_0.9fr] lg:items-stretch lg:gap-16">
           {/* Content */}
