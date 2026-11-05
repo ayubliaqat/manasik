@@ -428,20 +428,20 @@ export default function ExploreJourney() {
             <span className="h-px w-10 bg-gold/70" />
           </div>
 
-          <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.25em] text-gold">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-gold-light">
             Explore Manasik
           </p>
 
-          <h2 className="font-heading text-[24px] font-semibold leading-[1.2] tracking-tight text-white sm:text-[28px] md:text-[32px] lg:text-[38px]">
-            Your Islamic Journey
-            <span className="relative mx-auto mt-1 block w-fit text-gold">
+          <h2 className="text-balance font-heading text-[28px] font-bold leading-[1.2] tracking-[-0.02em] text-white sm:text-[34px] lg:text-[40px]">
+            <span className="text-gold-light">Your Islamic Journey</span>
+            <span className="relative mx-auto mt-1 block w-fit text-white">
               Starts Here
               <svg
                 aria-hidden="true"
                 viewBox="0 0 120 10"
                 preserveAspectRatio="none"
                 fill="none"
-                className="pointer-events-none absolute left-1/2 top-full mt-[0.05em] h-[0.2em] w-[70%] -translate-x-1/2 text-gold"
+                className="pointer-events-none absolute left-1/2 top-full mt-[0.05em] h-[0.2em] w-[70%] -translate-x-1/2 text-white"
               >
                 <path
                   d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
@@ -455,12 +455,14 @@ export default function ExploreJourney() {
             </span>
           </h2>
 
-          <p className="mx-auto mt-5 max-w-xl text-sm leading-6 text-white/70 sm:text-[15px] sm:leading-7">
-            Planning Hajj or Umrah? Looking for a dua, or a tool to help you prepare? You’ll find it all in one place.{" "}
+          <p className="mx-auto mt-6 max-w-xl text-[15px] leading-relaxed text-white/75">
+            Planning Hajj or Umrah? Looking for a dua, or a tool to help you
+            prepare? You’ll find it all in one place.{" "}
             <span className="font-semibold text-white">
-              Manasik has step-by-step Hajj and Umrah guides, Ziyarat information, 
+              Manasik has step-by-step Hajj and Umrah guides, Ziyarat
+              information,
             </span>{" "}
-           duas with their references and practical Islamic tools.
+            duas with their references and practical Islamic tools.
           </p>
         </div>
 
@@ -584,13 +586,13 @@ function CategoryCard({ category }: { category: Category }) {
         <span
           className={[
             "absolute left-2.5 top-2.5 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1",
-            "text-[9px] font-bold uppercase tracking-[0.16em]",
+            "text-[11px] font-semibold uppercase tracking-[0.12em]",
             featured
               ? "bg-gold text-deep-teal"
               : "bg-white/90 text-emerald ring-1 ring-soft-beige",
           ].join(" ")}
         >
-          <Icon size={11} strokeWidth={2.2} aria-hidden="true" />
+          <Icon size={12} strokeWidth={2.2} aria-hidden="true" />
           {category.label}
         </span>
 
@@ -619,11 +621,11 @@ function CategoryCard({ category }: { category: Category }) {
           {category.title}
         </h3>
 
-        <p className="mt-2 max-w-md text-[13px] leading-[22px] text-muted-teal">
+        <p className="mt-2 max-w-md text-[13px] leading-relaxed text-muted-teal">
           {category.description}
         </p>
 
-        <div className="mt-auto flex items-center gap-2 pt-4 text-[11px] font-semibold text-emerald">
+        <div className="mt-auto flex items-center gap-2 pt-4 text-[13px] font-semibold text-emerald">
           Explore
           <span className="h-px w-6 bg-gold transition-all duration-300 group-hover:w-12" />
         </div>

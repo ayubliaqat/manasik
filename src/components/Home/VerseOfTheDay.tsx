@@ -371,7 +371,7 @@ function PlayButton({ src }: { src?: string }) {
     : "Recited by a qari"
 
   return (
-    <div className="flex flex-col items-center gap-1">
+    <div className="flex flex-col items-center gap-1.5">
       <audio
         ref={audioRef}
         src={src}
@@ -387,7 +387,7 @@ function PlayButton({ src }: { src?: string }) {
         className="
           inline-flex items-center gap-1.5 rounded-full
           border border-gold/50 bg-gold/10
-          px-4 py-1.5 text-[11px] font-medium text-gold
+          px-5 py-2 text-[13px] font-semibold text-gold-light
           transition-colors hover:bg-gold/20
           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60
         "
@@ -401,7 +401,7 @@ function PlayButton({ src }: { src?: string }) {
         )}
         {status === "playing" ? "Pause" : "Listen"}
       </button>
-      <span className="text-[10px] text-white/45">
+      <span className="text-xs text-white/60">
         {status === "error" ? "Audio unavailable right now" : label}
       </span>
     </div>
@@ -476,21 +476,21 @@ export default function VerseOfTheDay() {
           <Reveal from="down">
             <div className="flex flex-col items-center gap-2">
               <DuaIcon />
-              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gold sm:text-[11px]">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gold-light">
                 {weekday} · {fullDate}
               </p>
             </div>
 
-            <h2 className="mt-2 text-balance font-serif text-[22px] font-medium leading-[1.2] tracking-[-0.015em] text-white sm:text-[26px] lg:text-[30px]">
-              Hajj &amp; Umrah{" "}
-              <span className="relative inline-block whitespace-nowrap text-emerald">
-                Dua of the Day
+            <h2 className="mt-2 text-balance font-heading text-[28px] font-bold leading-[1.2] tracking-[-0.02em] text-white sm:text-[34px] lg:text-[40px]">
+              <span className="text-gold-light">Dua</span>{" "}
+              <span className="relative inline-block whitespace-nowrap text-white">
+                of the Day
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 120 10"
                   preserveAspectRatio="none"
                   fill="none"
-                  className="pointer-events-none absolute left-1/2 top-full mt-[0.05em] h-[0.2em] w-[75%] -translate-x-1/2 text-gold"
+                  className="pointer-events-none absolute left-1/2 top-full mt-[0.05em] h-[0.2em] w-[75%] -translate-x-1/2 text-white"
                 >
                   <path
                     d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
@@ -506,13 +506,9 @@ export default function VerseOfTheDay() {
           </Reveal>
 
           {/* Context */}
-          <Reveal from="up" delay={60} className="mt-4">
-            <p className="text-[11px] leading-4 text-white/55 sm:text-xs">
-              <span
-                className={`font-semibold uppercase tracking-wide ${
-                  "text-gold"
-                }`}
-              >
+          <Reveal from="up" delay={60} className="mt-5">
+            <p className="text-[13px] leading-5 text-white/70">
+              <span className="font-semibold uppercase tracking-wide text-gold-light">
                 {entry.tag}
               </span>
               <span className="mx-1.5 text-white/30">·</span>
@@ -521,12 +517,12 @@ export default function VerseOfTheDay() {
           </Reveal>
 
           {/* Arabic */}
-          <Reveal from="left" delay={120} className="mt-3">
+          <Reveal from="left" delay={120} className="mt-4">
             {arabic ? (
               <p
                 dir="rtl"
                 lang="ar"
-                className="font-serif text-[20px] font-normal leading-[1.8] text-white sm:text-[24px] lg:text-[28px]"
+                className="font-serif text-[22px] font-normal leading-[1.9] text-white sm:text-[26px] lg:text-[30px]"
               >
                 {arabic}
               </p>
@@ -536,14 +532,14 @@ export default function VerseOfTheDay() {
           </Reveal>
 
           {/* Translation + reference */}
-          <Reveal from="right" delay={180} className="mt-2">
+          <Reveal from="right" delay={180} className="mt-3">
             {translation && (
-              <p className="mx-auto max-w-2xl text-[13px] leading-6 text-white/75 sm:text-sm">
+              <p className="mx-auto max-w-2xl text-[15px] leading-relaxed text-white/80">
                 “{translation}”
               </p>
             )}
 
-            <p className="mt-1.5 text-xs font-medium text-gold">
+            <p className="mt-2 text-[13px] font-semibold text-gold-light">
               {reference}
               {link && (
                 <a
@@ -551,15 +547,15 @@ export default function VerseOfTheDay() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Read this verse on Quran.com"
-                  className="ml-1.5 inline-flex translate-y-[2px] text-gold/70 transition-colors hover:text-gold"
+                  className="ml-1.5 inline-flex translate-y-[2px] text-gold-light/70 transition-colors hover:text-gold-light"
                 >
-                  <ExternalLink className="h-3 w-3" aria-hidden="true" />
+                  <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
                 </a>
               )}
             </p>
 
             {detail && (
-              <p className="mx-auto mt-1 max-w-xl text-[10.5px] leading-4 text-white/45">
+              <p className="mx-auto mt-1.5 max-w-xl text-xs leading-relaxed text-white/60">
                 {detail}
               </p>
             )}
@@ -567,7 +563,7 @@ export default function VerseOfTheDay() {
 
           {/* Quran recitation audio */}
           {audio && (
-            <Reveal from="zoom" delay={240} className="mt-4 flex justify-center">
+            <Reveal from="zoom" delay={240} className="mt-5 flex justify-center">
               <PlayButton key={dayOfYear} src={audio} />
             </Reveal>
           )}

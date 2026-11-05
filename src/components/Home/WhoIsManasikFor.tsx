@@ -12,57 +12,54 @@ const audience = [
 
 export default function WhoIsManasikFor() {
   return (
-    <section className="relative overflow-hidden bg-[#faf8f3] py-14 sm:py-16 lg:py-20">
+    <section className="relative overflow-hidden bg-warm-white py-14 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* items-stretch: both columns share the same height on lg */}
         <div className="grid gap-10 lg:grid-cols-[1fr_0.9fr] lg:items-stretch lg:gap-16">
           {/* Content */}
           <div className="flex max-w-xl flex-col lg:h-full">
-          
-
             <h2
-  className="
-    text-balance
-    font-serif
-    text-[28px] font-bold
-    leading-[1.1]
-    tracking-[-0.02em]
-    text-deep-teal
-    sm:text-[34px]
-    md:text-[38px]
-    lg:text-[46px]
-  "
->
-  <span className="text-gold">Who Is</span>{" "}
-  <span className="relative inline-block whitespace-nowrap text-emerald">
-    Manasik For?
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 120 10"
-      preserveAspectRatio="none"
-      fill="none"
-      className="
-        pointer-events-none absolute
-        left-1/2 top-full
-        mt-[0.05em]
-        h-[0.2em] w-[78%]
-        -translate-x-1/2
-        text-gold
-      "
-    >
-      <path
-        d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
-        stroke="currentColor"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        vectorEffect="non-scaling-stroke"
-      />
-    </svg>
-  </span>
-</h2>
+              className="
+                text-balance
+                font-heading
+                text-[28px] font-bold
+                leading-[1.2]
+                tracking-[-0.02em]
+                text-deep-teal
+                sm:text-[34px]
+                lg:text-[40px]
+              "
+            >
+              <span className="text-gold-text">Who Is</span>{" "}
+              <span className="relative inline-block whitespace-nowrap text-emerald">
+                Manasik For?
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 120 10"
+                  preserveAspectRatio="none"
+                  fill="none"
+                  className="
+                    pointer-events-none absolute
+                    left-1/2 top-full
+                    mt-[0.05em]
+                    h-[0.2em] w-[78%]
+                    -translate-x-1/2
+                    text-gold
+                  "
+                >
+                  <path
+                    d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    vectorEffect="non-scaling-stroke"
+                  />
+                </svg>
+              </span>
+            </h2>
 
-            <p className="mt-6 max-w-xl text-sm leading-7 text-muted-teal sm:text-[15px]">
+            <p className="mt-6 max-w-xl text-[15px] leading-relaxed text-muted-teal">
               Manasik is for anyone who wants to approach Hajj or Umrah with
               greater understanding, preparation and confidence. Whether this
               is your first journey or you simply want to refresh your
@@ -77,7 +74,7 @@ export default function WhoIsManasikFor() {
                   key={item}
                   className="
                     flex items-center gap-3
-                    text-sm font-medium
+                    text-[15px] font-medium
                     text-deep-teal
                   "
                 >

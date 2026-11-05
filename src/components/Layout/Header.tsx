@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Menu, X, Compass } from "lucide-react";
 
@@ -15,12 +16,16 @@ const navLinks = [
 ];
 
 export default function Header() {
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
+  // Menu is open only for the page it was opened on, so it closes itself on route change
+  const [openPath, setOpenPath] = useState<string | null>(null);
+  const mobileOpen = openPath === pathname;
 
+  // Close on Escape
   useEffect(() => {
     function handleEscape(e: KeyboardEvent) {
       if (e.key === "Escape") {
-        setMobileOpen(false);
+        setOpenPath(null);
       }
     }
 
@@ -31,22 +36,44 @@ export default function Header() {
     };
   }, []);
 
+  // Close when screen grows to desktop size
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+
+    function handleChange(e: MediaQueryListEvent) {
+      if (e.matches) setOpenPath(null);
+    }
+
+    mq.addEventListener("change", handleChange);
+
+    return () => {
+      mq.removeEventListener("change", handleChange);
+    };
+  }, []);
+
+  // Lock page scroll while the mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-soft-beige bg-white/95 backdrop-blur-md">
       {/* Main Header */}
       <div className="mx-auto flex h-[68px] max-w-7xl items-center justify-between px-4 sm:h-[72px] sm:px-6 lg:px-8">
         {/* Brand */}
-                      <div className="shrink-0">
+        <div className="shrink-0">
           <Link
             href="/"
-            onClick={() => setMobileOpen(false)}
+            onClick={() => setOpenPath(null)}
             className="group flex items-center gap-2.5"
           >
-            {/* Logo mark: crescent and star on a deep-teal tile with a gold ring */}
-          
             <span className="flex flex-col leading-none">
-              {/* Wordmark: bold, two-tone gradient, raised (embossed) look */}
-              <span className="font-heading text-xl font-bold tracking-tight [filter:drop-shadow(0_1px_0_rgba(255,255,255,0.9))_drop-shadow(0_2px_2px_rgba(2,51,47,0.28))] sm:text-[22px]">
+              {/* Wordmark: two-tone gradient, raised (embossed) look */}
+              <span className="font-heading text-xl font-semibold tracking-tight [filter:drop-shadow(0_1px_0_rgba(255,255,255,0.9))_drop-shadow(0_2px_2px_rgba(2,51,47,0.28))] sm:text-[22px]">
                 <span className="bg-gradient-to-b from-deep-teal to-dark-teal bg-clip-text text-transparent transition-all duration-200 group-hover:from-emerald group-hover:to-deep-teal">
                   Islam
                 </span>{" "}
@@ -104,8 +131,8 @@ export default function Header() {
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
           aria-expanded={mobileOpen}
           aria-controls="mobile-menu"
-          onClick={() => setMobileOpen((open) => !open)}
-          className="flex h-10 w-10 items-center justify-center rounded-xl text-deep-teal transition-all duration-200 hover:bg-warm-white hover:text-emerald lg:hidden"
+          onClick={() => setOpenPath(mobileOpen ? null : pathname)}
+          className="relative z-10 flex h-10 w-10 cursor-pointer touch-manipulation items-center justify-center rounded-xl text-deep-teal transition-all duration-200 hover:bg-warm-white hover:text-emerald lg:hidden"
         >
           {mobileOpen ? (
             <X aria-hidden="true" className="h-5 w-5" />
@@ -115,11 +142,11 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Mobile Navigation: scrolls inside itself if the screen is short */}
+      {/* Mobile Navigation: overlays the page below the header, scrolls inside itself */}
       {mobileOpen && (
         <div
           id="mobile-menu"
-          className="max-h-[calc(100dvh-68px)] overflow-y-auto border-t border-soft-beige bg-white sm:max-h-[calc(100dvh-72px)] lg:hidden"
+          className="absolute inset-x-0 top-full max-h-[calc(100dvh-68px)] overflow-y-auto border-t border-soft-beige bg-white shadow-[0_14px_24px_rgba(6,63,58,0.12)] sm:max-h-[calc(100dvh-72px)] lg:hidden"
         >
           <nav
             aria-label="Mobile navigation"
@@ -130,7 +157,7 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  onClick={() => setMobileOpen(false)}
+                  onClick={() => setOpenPath(null)}
                   className="flex min-h-11 items-center rounded-xl border border-soft-beige bg-warm-white px-4 py-2 font-heading text-[13px] font-semibold text-charcoal shadow-[0_3px_10px_rgba(6,63,58,0.08)] transition-all duration-200 hover:border-gold/60 hover:text-emerald hover:shadow-[0_5px_14px_rgba(6,63,58,0.14)] active:translate-y-[1px] active:shadow-[0_1px_4px_rgba(6,63,58,0.1)]"
                 >
                   {link.label}
@@ -140,7 +167,7 @@ export default function Header() {
               {/* Mobile CTA */}
               <Link
                 href="/islamic-tools"
-                onClick={() => setMobileOpen(false)}
+                onClick={() => setOpenPath(null)}
                 className="mt-2 flex min-h-11 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-deep-teal to-emerald px-5 py-2.5 font-heading text-[13px] font-semibold text-warm-white shadow-[0_4px_0_#045c48,0_8px_18px_rgba(6,63,58,0.18)] transition-all duration-300 active:translate-y-[1px]"
               >
                 <Compass aria-hidden="true" className="h-4 w-4" />

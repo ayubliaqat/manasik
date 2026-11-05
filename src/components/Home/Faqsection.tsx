@@ -40,54 +40,60 @@ export default function FaqSection() {
       aria-labelledby="faq-heading"
       className="bg-white py-10 sm:py-12 lg:py-14"
     >
-      <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-        {/* Heading */}
-        <div className="mb-8 text-center sm:mb-10 lg:mb-12">
-         <h2
-  id="faq-heading"
-  className="
-    text-balance
-    font-serif
-    text-[28px] font-bold
-    leading-[1.1]
-    tracking-[-0.02em]
-    text-deep-teal
-    sm:text-[34px]
-    md:text-[38px]
-    lg:text-[46px]
-  "
->
-  <span className="text-gold">Frequently Asked</span>{" "}
-  <span className="relative inline-block whitespace-nowrap text-emerald">
-    Questions
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 120 10"
-      preserveAspectRatio="none"
-      fill="none"
-      className="
-        pointer-events-none absolute
-        left-1/2 top-full
-        mt-[0.05em]
-        h-[0.2em] w-[70%]
-        -translate-x-1/2
-        text-gold
-      "
-    >
-      <path
-        d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
-        stroke="currentColor"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        vectorEffect="non-scaling-stroke"
-      />
-    </svg>
-  </span>
-</h2>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-start lg:gap-14">
+        {/* Heading: left side */}
+        <div className="text-center lg:sticky lg:top-28 lg:text-left">
+          <h2
+            id="faq-heading"
+            className="
+              text-balance
+              font-heading
+              text-[28px] font-bold
+              leading-[1.2]
+              tracking-[-0.02em]
+              text-deep-teal
+              sm:text-[34px]
+              lg:text-[40px]
+            "
+          >
+            <span className="text-gold-text">Frequently Asked</span>{" "}
+            <span className="relative inline-block whitespace-nowrap text-emerald">
+              Questions
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 120 10"
+                preserveAspectRatio="none"
+                fill="none"
+                className="
+                  pointer-events-none absolute
+                  left-1/2 top-full
+                  mt-[0.05em]
+                  h-[0.2em] w-[70%]
+                  -translate-x-1/2
+                  text-gold
+                "
+              >
+                <path
+                  d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  vectorEffect="non-scaling-stroke"
+                />
+              </svg>
+            </span>
+          </h2>
+
+          <p className="mx-auto mt-6 max-w-xl text-[15px] leading-relaxed text-muted-teal lg:mx-0">
+            Got a question about Hajj, Umrah or how Manasik works? Here are
+            quick answers to the things people ask most. Can&apos;t find what
+            you need? Explore our guides and tools for more detail.
+          </p>
         </div>
 
-        {/* Accordion */}
+        {/* Accordion: right side */}
         <div className="flex flex-col gap-3 sm:gap-4">
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index
@@ -120,7 +126,7 @@ export default function FaqSection() {
                   >
                     <span
                       className={[
-                        "font-heading text-sm font-semibold leading-snug transition-colors duration-200 sm:text-[15px]",
+                        "font-heading text-base font-semibold leading-snug transition-colors duration-200",
                         isOpen ? "text-white" : "text-charcoal group-hover:text-emerald",
                       ].join(" ")}
                     >
@@ -158,7 +164,7 @@ export default function FaqSection() {
                   ].join(" ")}
                 >
                   <div className="overflow-hidden">
-                    <p className="px-4 pb-5 pt-4 text-sm leading-6.5 text-muted-teal sm:px-5 sm:text-[15px]">
+                    <p className="px-4 pb-5 pt-4 text-[15px] leading-relaxed text-muted-teal sm:px-5">
                       {faq.answer}
                     </p>
                   </div>
@@ -166,6 +172,7 @@ export default function FaqSection() {
               </div>
             )
           })}
+        </div>
         </div>
       </div>
     </section>

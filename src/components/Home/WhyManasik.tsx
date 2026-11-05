@@ -39,7 +39,7 @@ const audiences = [
 
 export default function WhoIsItFor() {
   return (
-    <section className="relative overflow-hidden bg-[#faf8f3] py-10 sm:py-12 lg:py-14">
+    <section className="relative overflow-hidden bg-warm-white py-10 sm:py-12 lg:py-14">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Image left, content right. items-stretch: both columns share the same height on lg */}
         <div className="grid gap-8 sm:gap-10 lg:grid-cols-[0.9fr_1fr] lg:items-stretch lg:gap-14">
@@ -120,55 +120,56 @@ export default function WhoIsItFor() {
 
           {/* Content (first on mobile, second on lg) */}
           <div className="order-1 flex w-full max-w-xl flex-col lg:order-2 lg:ml-auto lg:h-full lg:justify-center">
-            <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.24em] text-gold sm:text-xs">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-gold-text">
               Why Choose Manasik
             </p>
 
-          <h2
-  className="
-    text-balance
-    font-serif
-    text-[26px] font-bold
-    leading-[1.1]
-    tracking-[-0.02em]
-    text-deep-teal
-    sm:text-[30px]
-    md:text-[34px]
-    lg:text-[40px]
-  "
->
-  <span className="text-gold">Islamic Guidance and Useful</span>{" "}
-  <span className="relative inline-block whitespace-nowrap text-emerald">
-    Tools in One Place
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 120 10"
-      preserveAspectRatio="none"
-      fill="none"
-      className="
-        pointer-events-none absolute
-        left-1/2 top-full
-        mt-[0.05em]
-        h-[0.2em] w-[78%]
-        -translate-x-1/2
-        text-gold
-      "
-    >
-      <path
-        d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
-        stroke="currentColor"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        vectorEffect="non-scaling-stroke"
-      />
-    </svg>
-  </span>
-</h2>
+            <h2
+              className="
+                text-balance
+                font-heading
+                text-[28px] font-bold
+                leading-[1.2]
+                tracking-[-0.02em]
+                text-deep-teal
+                sm:text-[34px]
+                lg:text-[40px]
+              "
+            >
+              <span className="text-gold-text">Islamic Guidance and Useful</span>{" "}
+              <span className="relative inline-block whitespace-nowrap text-emerald">
+                Tools in One Place
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 120 10"
+                  preserveAspectRatio="none"
+                  fill="none"
+                  className="
+                    pointer-events-none absolute
+                    left-1/2 top-full
+                    mt-[0.05em]
+                    h-[0.2em] w-[78%]
+                    -translate-x-1/2
+                    text-gold
+                  "
+                >
+                  <path
+                    d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    vectorEffect="non-scaling-stroke"
+                  />
+                </svg>
+              </span>
+            </h2>
 
-            <p className="mt-5 max-w-xl text-sm leading-[26px] text-muted-teal sm:text-[15px]">
-              Preparing for Hajj or Umrah? Looking for a dua or a helpful Islamic tool? Manasik brings practical guides, religious resources and free tools together to help you find what you need with ease.
-
+            <p className="mt-6 max-w-xl text-[15px] leading-relaxed text-muted-teal">
+              Preparing for Hajj or Umrah? Looking for a dua or a helpful
+              Islamic tool? Manasik brings practical guides, religious
+              resources and free tools together to help you find what you need
+              with ease.
             </p>
 
             {/* Audience list: single column, each bullet keeps its own icon */}
@@ -176,7 +177,7 @@ export default function WhoIsItFor() {
               {audiences.map(({ icon: Icon, title }) => (
                 <li
                   key={title}
-                  className="flex items-center gap-3 text-sm font-medium text-deep-teal"
+                  className="flex items-center gap-3 text-[15px] font-medium text-deep-teal"
                 >
                   <span
                     aria-hidden="true"
@@ -194,7 +195,7 @@ export default function WhoIsItFor() {
             <div className="mt-6">
               <Link
                 href="/guides"
-                className="group relative inline-flex min-h-11 items-center gap-2.5 overflow-hidden rounded-full bg-deep-teal px-6 py-3 text-[12px] font-semibold text-white shadow-[0_4px_0_rgba(2,51,47,0.65),0_10px_22px_rgba(6,63,58,0.16)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-emerald focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f3]"
+                className="group relative inline-flex min-h-11 items-center gap-2.5 overflow-hidden rounded-full bg-deep-teal px-6 py-3 text-sm font-semibold text-white shadow-[0_4px_0_rgba(2,51,47,0.65),0_10px_22px_rgba(6,63,58,0.16)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-emerald focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-warm-white"
               >
                 <span
                   className="pointer-events-none absolute inset-y-0 -left-full w-full skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-[220%]"

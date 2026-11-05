@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useEffect, useRef, useState } from "react"
@@ -79,12 +78,12 @@ const chip =
   "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-emerald/10 text-emerald ring-1 ring-emerald/20 transition-transform duration-300 group-hover:scale-105"
 
 const labelCls =
-  "text-[11px] font-bold uppercase tracking-[0.16em] text-gold"
+  "text-xs font-semibold uppercase tracking-[0.14em] text-gold-text"
 
 const numCls =
-  "flex h-10 items-center justify-center font-heading text-[40px] font-bold leading-none tracking-tight sm:justify-start"
+  "flex h-11 items-center justify-center font-heading text-[40px] font-semibold leading-none tracking-tight sm:justify-start"
 
-const descCls = "text-[12px] leading-[1.55] text-muted-teal"
+const descCls = "text-[13px] leading-relaxed text-muted-teal"
 
 const headRow =
   "flex h-9 items-center justify-center gap-2.5 sm:justify-start"
@@ -109,18 +108,18 @@ export default function TrustStats({ toolsCount }: { toolsCount: number }) {
               className="pointer-events-none absolute -right-10 -top-10 h-44 w-44 rounded-full bg-gold-light/25 blur-2xl"
             />
 
-            <span className="relative flex h-9 items-center justify-center gap-2 text-[11px] font-bold uppercase tracking-[0.16em] text-white/65 sm:justify-start">
+            <span className="relative flex h-9 items-center justify-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-white/70 sm:justify-start">
               <span className="h-1.5 w-1.5 rounded-full bg-gold-light" />
               Our tools &amp; guides
             </span>
 
-            <h3 className="relative flex h-10 items-center justify-center font-heading text-[24px] font-bold leading-none tracking-tight text-white sm:justify-start">
+            <h3 className="relative flex h-11 items-center justify-center font-heading text-[24px] font-semibold leading-none tracking-tight text-white sm:justify-start">
               <span>
                 Worth <span className="text-gold-light">Trusting</span>
               </span>
             </h3>
 
-            <p className="relative text-[12px] leading-[1.55] text-white/70">
+            <p className="relative text-[13px] leading-relaxed text-white/75">
               Simple, reliable Hajj and Umrah tools and guides, built to help you
               worship with confidence and ease.
             </p>
@@ -172,7 +171,7 @@ export default function TrustStats({ toolsCount }: { toolsCount: number }) {
               <span className={labelCls}>References</span>
             </div>
 
-            <div className="flex h-10 items-center justify-center font-heading text-[24px] font-bold leading-none tracking-tight text-deep-teal sm:justify-start">
+            <div className="flex h-11 items-center justify-center font-heading text-[24px] font-semibold leading-none tracking-tight text-deep-teal sm:justify-start">
               Quran <span className="ml-1.5 text-gold">&amp;</span>
               <span className="ml-1.5">Hadith</span>
             </div>

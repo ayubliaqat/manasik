@@ -96,51 +96,51 @@ export default async function FeaturedBlog() {
           />
 
           <div className="mx-auto max-w-2xl text-center">
-           <h2
-  className="
-    text-balance
-    font-serif
-    text-[28px] font-bold
-    leading-[1.1]
-    tracking-[-0.02em]
-    text-deep-teal
-    sm:text-[34px]
-    md:text-[38px]
-    lg:text-[46px]
-  "
->
-  <span className="text-gold">Explore Our</span>{" "}
-  <span className="relative inline-block whitespace-nowrap text-emerald">
-    Latest Blogs
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 120 10"
-      preserveAspectRatio="none"
-      fill="none"
-      className="
-        pointer-events-none absolute
-        left-1/2 top-full
-        mt-[0.05em]
-        h-[0.2em] w-[70%]
-        -translate-x-1/2
-        text-gold
-      "
-    >
-      <path
-        d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
-        stroke="currentColor"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        vectorEffect="non-scaling-stroke"
-      />
-    </svg>
-  </span>
-</h2>
+            <h2
+              className="
+                text-balance
+                font-heading
+                text-[28px] font-bold
+                leading-[1.2]
+                tracking-[-0.02em]
+                text-deep-teal
+                sm:text-[34px]
+                lg:text-[40px]
+              "
+            >
+              <span className="text-gold-text">Explore Our</span>{" "}
+              <span className="relative inline-block whitespace-nowrap text-emerald">
+                Latest Blogs
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 120 10"
+                  preserveAspectRatio="none"
+                  fill="none"
+                  className="
+                    pointer-events-none absolute
+                    left-1/2 top-full
+                    mt-[0.05em]
+                    h-[0.2em] w-[70%]
+                    -translate-x-1/2
+                    text-gold
+                  "
+                >
+                  <path
+                    d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    vectorEffect="non-scaling-stroke"
+                  />
+                </svg>
+              </span>
+            </h2>
 
-            <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-muted-teal sm:text-[15px]">
-              Looking for Hajj and Umrah advice or need help with Islamic tools? We’ve got helpful guides, Ziyarat tips and duas to help you prepare for your journey and learn more about your faith.
-
+            <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-muted-teal">
+              Looking for Hajj and Umrah advice or need help with Islamic
+              tools? We’ve got helpful guides, Ziyarat tips and duas to help
+              you prepare for your journey and learn more about your faith.
             </p>
           </div>
         </div>
@@ -153,7 +153,7 @@ export default async function FeaturedBlog() {
               border-[1.5px] border-deep-teal/50
               bg-card
               px-5 py-10
-              text-center text-sm text-muted-teal
+              text-center text-[15px] text-muted-teal
               shadow-[inset_0_0_14px_rgba(6,63,58,0.16),0_10px_24px_rgba(6,63,58,0.14)]
             "
           >
@@ -192,7 +192,7 @@ export default async function FeaturedBlog() {
                       sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 25vw"
                     />
                   ) : (
-                    <div className="flex h-full items-center justify-center text-xs text-muted-teal">
+                    <div className="flex h-full items-center justify-center text-[13px] text-muted-teal">
                       No image
                     </div>
                   )}
@@ -204,7 +204,7 @@ export default async function FeaturedBlog() {
                   <h3
                     className="
                       line-clamp-2 min-h-[2.7em]
-                      font-heading text-[15px] font-semibold
+                      font-heading text-base font-semibold
                       leading-[1.35] text-charcoal
                       transition-colors duration-200
                       group-hover:text-emerald
@@ -219,7 +219,7 @@ export default async function FeaturedBlog() {
                   </h3>
 
                   {post.metaDescription && (
-                    <p className="mt-1.5 line-clamp-3 text-xs leading-[1.6] text-muted-teal">
+                    <p className="mt-1.5 line-clamp-3 text-[13px] leading-relaxed text-muted-teal">
                       {post.metaDescription}
                     </p>
                   )}
@@ -230,16 +230,16 @@ export default async function FeaturedBlog() {
                       href={`/blog/${post.slug}`}
                       aria-label={`Read guide: ${post.title}`}
                       className="
-  block
-  rounded-xl border border-emerald/20 bg-emerald/10
-  px-4 py-2
-  text-center text-xs font-semibold tracking-wide text-emerald
-  shadow-[0_2px_6px_rgba(6,63,58,0.08)]
-  transition-all duration-200
-  hover:border-emerald/30 hover:bg-emerald/20
-  active:translate-y-[1px]
-  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald/30 focus-visible:ring-offset-2
-"
+                        block
+                        rounded-xl border border-emerald/20 bg-emerald/10
+                        px-4 py-2
+                        text-center text-[13px] font-semibold tracking-wide text-emerald
+                        shadow-[0_2px_6px_rgba(6,63,58,0.08)]
+                        transition-all duration-200
+                        hover:border-emerald/30 hover:bg-emerald/20
+                        active:translate-y-[1px]
+                        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald/30 focus-visible:ring-offset-2
+                      "
                     >
                       Read Guide
                     </Link>

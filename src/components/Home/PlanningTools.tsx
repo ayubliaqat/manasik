@@ -371,18 +371,17 @@ export default function PlanningTools() {
           <div className="mx-auto max-w-2xl text-center">
             <h2
               className="
-    text-balance
-    font-serif
-    text-[28px] font-bold
-    leading-[1.1]
-    tracking-[-0.02em]
-    text-deep-teal
-    sm:text-[34px]
-    md:text-[38px]
-    lg:text-[46px]
-  "
+                text-balance
+                font-heading
+                text-[28px] font-bold
+                leading-[1.2]
+                tracking-[-0.02em]
+                text-deep-teal
+                sm:text-[34px]
+                lg:text-[40px]
+              "
             >
-              <span className="text-gold">100% Free</span>{" "}
+              <span className="text-gold-text">100% Free</span>{" "}
               <span className="relative inline-block whitespace-nowrap text-emerald">
                 Islamic Tools
                 <svg
@@ -391,13 +390,13 @@ export default function PlanningTools() {
                   preserveAspectRatio="none"
                   fill="none"
                   className="
-        pointer-events-none absolute
-        left-1/2 top-full
-        mt-[0.05em]
-        h-[0.2em] w-[70%]
-        -translate-x-1/2
-        text-gold
-      "
+                    pointer-events-none absolute
+                    left-1/2 top-full
+                    mt-[0.05em]
+                    h-[0.2em] w-[70%]
+                    -translate-x-1/2
+                    text-gold
+                  "
                 >
                   <path
                     d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
@@ -411,7 +410,7 @@ export default function PlanningTools() {
               </span>
             </h2>
 
-            <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-muted-teal sm:text-[15px]">
+            <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-muted-teal">
               Use simple, helpful tools to plan your pilgrimage, manage your
               budget and support your daily Islamic practice.
             </p>
@@ -455,7 +454,7 @@ export default function PlanningTools() {
                   {/* Number */}
                   <span
                     aria-hidden="true"
-                    className={`absolute right-4 top-4 text-[10px] font-bold tracking-[0.2em] ${styles.number}`}
+                    className={`absolute right-4 top-4 text-[11px] font-semibold tracking-[0.2em] ${styles.number}`}
                   >
                     {String(index + 1).padStart(2, "0")}
                   </span>
@@ -473,11 +472,11 @@ export default function PlanningTools() {
                     <Icon className={`h-7 w-7 ${styles.icon}`} />
                   </span>
 
-                  <h3 className="relative font-heading text-[15px] font-semibold leading-[1.35] text-deep-teal">
+                  <h3 className="relative font-heading text-base font-semibold leading-[1.35] text-deep-teal">
                     {tool.title}
                   </h3>
 
-                  <p className="relative mb-4 mt-1.5 text-xs leading-[1.6] text-muted-teal">
+                  <p className="relative mb-4 mt-1.5 text-[13px] leading-relaxed text-muted-teal">
                     {tool.description}
                   </p>
 
@@ -487,7 +486,7 @@ export default function PlanningTools() {
                       relative mt-auto flex items-center justify-center gap-1.5
                       rounded-xl border
                       px-4 py-2
-                      text-xs font-semibold tracking-wide
+                      text-[13px] font-semibold tracking-wide
                       transition-all duration-300
                       ${styles.button}
                     `}
@@ -509,15 +508,15 @@ export default function PlanningTools() {
         <Link
           href="/tools"
           className="
-              group inline-flex items-center justify-center gap-2
-              rounded-full border border-emerald/30
-              bg-emerald/10 px-6 py-3
-              text-sm font-semibold text-emerald
-              transition-all duration-300
-              hover:border-emerald/50 hover:bg-emerald/15
-              focus-visible:outline-none focus-visible:ring-2
-              focus-visible:ring-emerald/60 focus-visible:ring-offset-2
-            "
+            group inline-flex items-center justify-center gap-2
+            rounded-full border border-emerald/30
+            bg-emerald/10 px-6 py-3
+            text-sm font-semibold text-emerald
+            transition-all duration-300
+            hover:border-emerald/50 hover:bg-emerald/15
+            focus-visible:outline-none focus-visible:ring-2
+            focus-visible:ring-emerald/60 focus-visible:ring-offset-2
+          "
         >
           Explore All Tools
           <ArrowRight
