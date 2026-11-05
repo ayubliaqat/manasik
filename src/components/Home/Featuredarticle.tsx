@@ -60,7 +60,7 @@ export default async function FeaturedBlog() {
         "
       />
 
-      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Heading: the top curves are anchored to this block so the
             h2 and description always sit inside them */}
         <div className="relative mb-5 pb-6 sm:mb-6 sm:pb-8">

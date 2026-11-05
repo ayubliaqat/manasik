@@ -34,7 +34,7 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-soft-beige bg-white/95 backdrop-blur-md">
       {/* Main Header */}
-      <div className="mx-auto flex h-[68px] max-w-6xl items-center justify-between px-4 sm:h-[72px] sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-[68px] max-w-7xl items-center justify-between px-4 sm:h-[72px] sm:px-6 lg:px-8">
         {/* Brand */}
                       <div className="shrink-0">
           <Link

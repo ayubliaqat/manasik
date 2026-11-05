@@ -106,7 +106,7 @@ export default function Footer() {
       </div>
 
       {/* Footer content */}
-      <div className="mx-auto w-full max-w-6xl px-4 pb-8 pt-4 sm:px-6 sm:pt-5 lg:px-8 lg:pb-10 lg:pt-6">
+      <div className="mx-auto w-full max-w-7xl px-4 pb-8 pt-4 sm:px-6 sm:pt-5 lg:px-8 lg:pb-10 lg:pt-6">
         <div className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 lg:grid-cols-4 lg:gap-x-10 lg:gap-y-9">
 
           {/* Brand */}

@@ -220,7 +220,7 @@ export default function Hero() {
 
       {/* Content: same 7xl width and side padding as the header and footer */}
       <div className="relative z-10 flex items-center">
-<div className="mx-auto w-full max-w-6xl px-4 pb-12 pt-8 sm:px-6 sm:pb-14 sm:pt-10 lg:px-8 lg:pb-12 lg:pt-10">          <div className="flex flex-col items-center gap-7 sm:gap-8 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
+<div className="mx-auto w-full max-w-7xl px-4 pb-12 pt-8 sm:px-6 sm:pb-14 sm:pt-10 lg:px-8 lg:pb-12 lg:pt-10">          <div className="flex flex-col items-center gap-7 sm:gap-8 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
             {/* LEFT */}
             <div className="max-w-[570px] text-center lg:text-left">
               {/* Heading */}
