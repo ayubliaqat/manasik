@@ -185,20 +185,20 @@ export default function ToolsPage() {
         />
 
         <div className="relative z-10 mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-8">
-          <span className="inline-block rounded-full border border-gold/50 px-3 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-gold">
+          <span className="inline-block rounded-full border border-gold/50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-gold-light">
             Free tools
           </span>
 
-          <h1 className="mt-3 text-balance font-serif text-[34px] font-bold leading-[1.1] tracking-[-0.02em] sm:text-[44px] md:text-[48px] lg:text-[56px]">
-            <span className="text-gold">Free Islamic</span>{" "}
-            <span className="relative inline-block whitespace-nowrap text-[#2BB589]">
+          <h1 className="mt-4 text-balance font-heading text-[32px] font-bold leading-[1.15] tracking-[-0.02em] sm:text-[40px] lg:text-[48px]">
+            <span className="text-gold-light">Free Islamic</span>{" "}
+            <span className="relative inline-block whitespace-nowrap text-white">
               Tools
               <svg
                 aria-hidden="true"
                 viewBox="0 0 120 10"
                 preserveAspectRatio="none"
                 fill="none"
-                className="pointer-events-none absolute left-1/2 top-full mt-[0.05em] h-[0.2em] w-[70%] -translate-x-1/2 text-gold"
+                className="pointer-events-none absolute left-1/2 top-full mt-[0.05em] h-[0.2em] w-[70%] -translate-x-1/2 text-white"
               >
                 <path
                   d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
@@ -212,7 +212,7 @@ export default function ToolsPage() {
             </span>
           </h1>
 
-          <p className="mx-auto mt-4 max-w-2xl text-xs font-normal leading-5 text-white/80 sm:mt-5 sm:leading-6">
+          <p className="mx-auto mt-6 max-w-2xl text-[15px] leading-relaxed text-white/80 sm:text-base">
             Planning Hajj or Umrah? Need prayer times, or help learning to read
             the Quran? Manasik puts free Islamic tools in one place.
           </p>

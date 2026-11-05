@@ -23,7 +23,7 @@ function Squiggle({ className }: { className: string }) {
       viewBox="0 0 120 10"
       preserveAspectRatio="none"
       fill="none"
-      className={`pointer-events-none absolute left-1/2 top-full -translate-x-1/2 text-gold ${className}`}
+      className={`pointer-events-none absolute left-1/2 top-full -translate-x-1/2 ${className}`}
     >
       <path
         d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
@@ -67,6 +67,8 @@ function renderText(text: string): ReactNode[] {
   return nodes
 }
 
+const bodyText = "text-[15px] leading-relaxed text-charcoal"
+
 export default function ToolArticle({
   title,
   highlight,
@@ -80,7 +82,7 @@ export default function ToolArticle({
   intro?: string
   sections: ArticleSection[]
 }) {
-  // White lead + emerald highlight. If no highlight is passed, split the title in half.
+  // Gold lead + white highlight. If no highlight is passed, split the title in half.
   let lead = title.trim()
   let accent = highlight?.trim() ?? ""
   if (!accent) {
@@ -91,32 +93,32 @@ export default function ToolArticle({
   }
 
   return (
-    <section className="mx-auto max-w-5xl px-4 pb-10 sm:px-6 lg:px-8">
+    <section className="mx-auto max-w-7xl px-4 pb-10 sm:px-6 lg:px-8">
       <article
         className="
           overflow-hidden rounded-2xl border-[1.5px] border-deep-teal/60 bg-card
           shadow-[inset_0_0_14px_rgba(6,63,58,0.2),0_2px_4px_rgba(6,63,58,0.1),0_12px_26px_rgba(6,63,58,0.18)]
         "
       >
-        {/* h2 — header attached to the card */}
+        {/* h2: header attached to the card */}
         <header className="bg-deep-teal px-5 py-8 text-center sm:px-8 sm:py-10 lg:px-12">
           {badge && (
-            <span className="inline-block rounded-full border border-gold/50 px-3 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-gold">
+            <span className="inline-block rounded-full border border-gold/50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-gold-light">
               {badge}
             </span>
           )}
           <h2
             className={`${
-              badge ? "mt-3 " : ""
-            }text-balance font-serif text-[22px] font-medium leading-[1.2] tracking-[-0.01em] text-white sm:text-[26px] lg:text-[30px]`}
+              badge ? "mt-4 " : ""
+            }text-balance font-heading text-[28px] font-bold leading-[1.2] tracking-[-0.02em] sm:text-[34px] lg:text-[40px]`}
           >
-            {lead}
+            <span className="text-gold-light">{lead}</span>
             {accent && (
               <>
                 {lead && " "}
-                <span className="relative inline-block whitespace-nowrap text-[#2BB589]">
+                <span className="relative inline-block whitespace-nowrap text-white">
                   {accent}
-                  <Squiggle className="mt-[0.05em] h-[0.2em] w-[70%]" />
+                  <Squiggle className="mt-[0.05em] h-[0.2em] w-[70%] text-white" />
                 </span>
               </>
             )}
@@ -124,25 +126,21 @@ export default function ToolArticle({
         </header>
 
         <div className="p-5 sm:p-8 lg:p-10">
-          {intro && (
-            <p className="text-sm leading-6 text-black/85">
-              {renderText(intro)}
-            </p>
-          )}
+          {intro && <p className={bodyText}>{renderText(intro)}</p>}
 
           {sections.map((section) => (
             <section
               key={section.heading}
-              className="mt-5 first:mt-0 sm:mt-6 sm:first:mt-0"
+              className="mt-6 first:mt-0 sm:mt-8 sm:first:mt-0"
             >
               {/* h3 */}
-              <h3 className="mb-3.5 font-heading text-base font-semibold leading-snug text-black sm:text-lg">
+              <h3 className="mb-3.5 font-heading text-lg font-semibold leading-snug text-deep-teal sm:text-xl">
                 {section.heading}
               </h3>
 
               <div className="space-y-3">
                 {section.paragraphs?.map((p) => (
-                  <p key={p} className="text-sm leading-6 text-black/85">
+                  <p key={p} className={bodyText}>
                     {renderText(p)}
                   </p>
                 ))}
@@ -151,10 +149,7 @@ export default function ToolArticle({
               {section.numbered && (
                 <ol className="mt-3 space-y-2">
                   {section.numbered.map((item, index) => (
-                    <li
-                      key={item}
-                      className="flex items-start gap-3 text-sm leading-6 text-black/85"
-                    >
+                    <li key={item} className={`flex items-start gap-3 ${bodyText}`}>
                       <span
                         aria-hidden="true"
                         className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald text-xs font-semibold text-white"
@@ -168,15 +163,12 @@ export default function ToolArticle({
               )}
 
               {section.bullets && (
-                <ul className="mt-3 space-y-0.5">
+                <ul className="mt-3 space-y-1">
                   {section.bullets.map((item) => (
-                    <li
-                      key={item}
-                      className="flex items-start gap-3 text-sm leading-6 text-black/85"
-                    >
+                    <li key={item} className={`flex items-start gap-3 ${bodyText}`}>
                       <span
                         aria-hidden="true"
-                        className="mt-[8px] h-1.5 w-1.5 shrink-0 rounded-full bg-emerald"
+                        className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-emerald"
                       />
                       <span>{renderText(item)}</span>
                     </li>
@@ -185,30 +177,27 @@ export default function ToolArticle({
               )}
 
               {section.subsections?.map((sub) => (
-                <div key={sub.heading} className="mt-4">
+                <div key={sub.heading} className="mt-5">
                   {/* h4 */}
-                  <h4 className="mb-2.5 font-heading text-[0.9375rem] font-semibold leading-snug text-black">
+                  <h4 className="mb-2.5 font-heading text-base font-semibold leading-snug text-deep-teal">
                     {sub.heading}
                   </h4>
 
                   <div className="space-y-3">
                     {sub.paragraphs?.map((p) => (
-                      <p key={p} className="text-sm leading-6 text-black/85">
+                      <p key={p} className={bodyText}>
                         {renderText(p)}
                       </p>
                     ))}
                   </div>
 
                   {sub.bullets && (
-                    <ul className="mt-3 space-y-0.5">
+                    <ul className="mt-3 space-y-1">
                       {sub.bullets.map((item) => (
-                        <li
-                          key={item}
-                          className="flex items-start gap-3 text-sm leading-6 text-black/85"
-                        >
+                        <li key={item} className={`flex items-start gap-3 ${bodyText}`}>
                           <span
                             aria-hidden="true"
-                            className="mt-[8px] h-1.5 w-1.5 shrink-0 rounded-full bg-emerald"
+                            className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-emerald"
                           />
                           <span>{renderText(item)}</span>
                         </li>
@@ -221,7 +210,7 @@ export default function ToolArticle({
               {section.closing && (
                 <div className="mt-3 space-y-3">
                   {section.closing.map((p) => (
-                    <p key={p} className="text-sm leading-6 text-black/85">
+                    <p key={p} className={bodyText}>
                       {renderText(p)}
                     </p>
                   ))}

@@ -51,7 +51,7 @@ export default function ToolsFaq({
         />
       )}
 
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <div className="mb-4 text-center sm:mb-4 lg:mb-8">
           <h2
