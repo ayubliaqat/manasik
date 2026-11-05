@@ -413,7 +413,7 @@ export default function ExploreJourney() {
 
       <StarOutline className="ej-spin pointer-events-none absolute -right-28 top-28 h-72 w-72 text-gold opacity-[0.08] sm:-right-16 sm:h-96 sm:w-96" />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+      <div className="relative z-10 mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* =========================================================
             HEADING
            ========================================================= */}

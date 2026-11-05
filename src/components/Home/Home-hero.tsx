@@ -5,8 +5,8 @@ import Link from "next/link";
 import {
   ArrowRight,
   Calculator,
+  CalendarDays,
   CircleDot,
-  ClipboardCheck,
   Compass,
   Moon,
   type LucideIcon,
@@ -25,34 +25,34 @@ type HeroTool = {
 
 const heroTools: HeroTool[] = [
   {
-    label: "Qibla Finder",
+    label: "Qibla Direction",
     hint: "Find the direction",
-    href: "/tools/qibla-finder",
+    href: "/islamic-tools/qibla-direction",
     Icon: Compass,
     span: "col-span-2",
     wide: true,
   },
   {
-    label: "Hijri Converter",
-    href: "/tools/hijri-converter",
-    Icon: ClipboardCheck,
+    label: "Hijri Date Converter",
+    href: "/islamic-tools/hijri-date-converter",
+    Icon: CalendarDays,
     span: "col-span-1",
   },
   {
     label: "Tasbih Counter",
-    href: "/tools/tasbih-counter",
+    href: "/islamic-tools/tasbih-counter",
     Icon: CircleDot,
     span: "col-span-1",
   },
   {
     label: "Zakat Calculator",
-    href: "/tools/zakat-calculator",
+    href: "/islamic-tools/zakat-calculator",
     Icon: Calculator,
     span: "col-span-1",
   },
   {
     label: "Ramadan Counter",
-    href: "/tools/ramadan-counter",
+    href: "/islamic-tools/ramadan-counter",
     Icon: Moon,
     span: "col-span-1",
   },
@@ -117,7 +117,10 @@ export default function Hero() {
   useEffect(() => {
     let cancelled = false;
     fetch(PRAYER_URL)
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error("bad response");
+        return res.json();
+      })
       .then((json) => {
         const raw = json?.data?.timings;
         const parsed = {} as Timings;
@@ -215,10 +218,9 @@ export default function Hero() {
         </svg>
       </div>
 
-      {/* Content */}
+      {/* Content: same 7xl width and side padding as the header and footer */}
       <div className="relative z-10 flex items-center">
-        <div className="mx-auto w-full max-w-[1400px] px-5 pb-16 pt-12 sm:px-8 sm:pb-[4.5rem] sm:pt-14 lg:px-16 lg:pb-16 lg:pt-14 xl:px-20">
-          <div className="flex flex-col items-center gap-9 sm:gap-10 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
+<div className="mx-auto w-full max-w-6xl px-4 pb-12 pt-8 sm:px-6 sm:pb-14 sm:pt-10 lg:px-8 lg:pb-12 lg:pt-10">          <div className="flex flex-col items-center gap-7 sm:gap-8 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
             {/* LEFT */}
             <div className="max-w-[570px] text-center lg:text-left">
               {/* Heading */}
@@ -258,7 +260,7 @@ export default function Hero() {
                 <span className="font-medium text-white underline decoration-gold-light decoration-2 underline-offset-4">
                   Islamic tools,
                 </span>{" "}
-                Hajj and Umrah guides, Ziyarat and authentic duas, all in one
+                Hajj and Umrah guides, Ziyaraat and authentic duas, all in one
                 place.
               </p>
 
@@ -292,13 +294,14 @@ export default function Hero() {
                   Read Blogs
                   <ArrowRight
                     size={16}
+                    aria-hidden="true"
                     className="text-gold-light transition-transform duration-300 group-hover:translate-x-1"
                   />
                 </Link>
 
                 {/* Secondary — gold */}
                 <Link
-                  href="/tools"
+                  href="/islamic-tools"
                   className="group inline-flex min-h-11 w-full items-center justify-center
 gap-2 rounded-full
 border border-gold-light/70
@@ -320,6 +323,7 @@ sm:w-auto sm:px-6 sm:text-sm"
                 >
                   <Compass
                     size={16}
+                    aria-hidden="true"
                     className="text-dark-teal transition-transform duration-300 group-hover:rotate-6"
                   />
                   Explore Islamic Tools
@@ -344,9 +348,9 @@ sm:w-auto sm:px-6 sm:text-sm"
                   {/* Islamic date + countdown ring */}
                   <div className="flex items-center justify-between gap-4">
                     <div className="min-w-0">
-                      <h2 className="min-h-[26px] bg-gradient-to-r from-white via-white to-gold-light bg-clip-text text-[21px] font-semibold leading-tight text-transparent drop-shadow-[0_1px_1px_rgba(2,51,47,0.35)]">
+                      <p className="min-h-[26px] bg-gradient-to-r from-white via-white to-gold-light bg-clip-text font-heading text-[21px] font-semibold leading-tight text-transparent drop-shadow-[0_1px_1px_rgba(2,51,47,0.35)]">
                         {hijri || "\u00A0"}
-                      </h2>
+                      </p>
                       <p className="mt-0.5 min-h-5 text-[13px] leading-5 text-white/80">
                         {ready ? `London, UK · ${gregorian}` : "\u00A0"}
                       </p>
@@ -427,7 +431,7 @@ sm:w-auto sm:px-6 sm:text-sm"
 
                   {/* Prayer times row */}
                   <Link
-                    href="/tools/prayer-times"
+                    href="/islamic-tools/prayer-times"
                     aria-label="Open prayer times"
                     className="mt-2 grid grid-cols-5 gap-1.5 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-light"
                   >
@@ -443,13 +447,13 @@ sm:w-auto sm:px-6 sm:text-sm"
                           }`}
                         >
                           <span
-                            className={`text-[10.5px] leading-tight sm:text-[11px] xl:text-xs ${
+                            className={`text-[10px] leading-tight sm:text-[11px] xl:text-xs ${
                               active ? "text-dark-teal/75" : "text-white/80"
                             }`}
                           >
                             {name}
                           </span>
-                          <span className="mt-0.5 whitespace-nowrap text-[10.5px] font-semibold leading-tight sm:text-[11px] xl:text-[12.5px]">
+                          <span className="mt-0.5 whitespace-nowrap text-[10px] font-semibold leading-tight sm:text-[11px] xl:text-[12.5px]">
                             {timings ? formatClock(timings[name]) : "—"}
                           </span>
                         </span>
@@ -471,7 +475,7 @@ sm:w-auto sm:px-6 sm:text-sm"
                             ${wide ? "items-center gap-3" : "flex-col items-start gap-1.5"}`}
                           >
                             <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-dark-teal/50 text-gold-light transition-colors duration-300 group-hover:bg-dark-teal/15 group-hover:text-dark-teal">
-                              <Icon size={16} />
+                              <Icon size={16} aria-hidden="true" />
                             </span>
                             <span className="min-w-0">
                               <span className="block text-[12.5px] font-semibold leading-tight">

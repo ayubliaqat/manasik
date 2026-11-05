@@ -52,11 +52,12 @@ export function AnnouncementBar() {
           />
 
           {/* Marquee — .marquee animation class defined in globals.css */}
-          <div className="marquee flex min-w-max shrink-0 items-center gap-12 whitespace-nowrap">
+          <div className="marquee flex min-w-max shrink-0 items-center whitespace-nowrap">
             {marqueeItems.map((item, index) => (
               <div
                 key={index}
-                className="inline-flex items-center gap-8 text-xs font-medium tracking-wide sm:text-sm"
+                aria-hidden={index >= announcements.length ? true : undefined}
+                className="inline-flex items-center gap-8 pr-12 text-xs font-medium tracking-wide sm:text-sm"
               >
                 <span className="flex items-center gap-2 text-white/90 transition-colors duration-300 hover:text-white">
                   <Sparkles
