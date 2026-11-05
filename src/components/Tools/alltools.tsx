@@ -569,7 +569,7 @@ export default function PlanningTools() {
         className="pointer-events-none absolute bottom-[-190px] left-1/2 h-[340px] w-[130%] -translate-x-1/2 rounded-[50%_50%_0_0] bg-gradient-to-t from-emerald/[0.08] via-emerald/[0.03] to-transparent"
       />
 
-      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* All Tools heading */}
         <div className="relative mb-2 pb-6 sm:mb-4">
           <div
@@ -578,8 +578,8 @@ export default function PlanningTools() {
           />
 
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-balance font-serif text-[22px] font-semibold leading-[1.2] tracking-[-0.01em] text-deep-teal sm:text-[26px] lg:text-[30px]">
-              <span className="text-gold">Explore</span>{" "}
+            <h2 className="text-balance font-heading text-[28px] font-bold leading-[1.2] tracking-[-0.02em] text-deep-teal sm:text-[34px] lg:text-[40px]">
+              <span className="text-gold-text">Explore</span>{" "}
               <span className="relative inline-block whitespace-nowrap text-emerald">
                 All Tools
                 <svg
@@ -601,8 +601,9 @@ export default function PlanningTools() {
               </span>
             </h2>
 
-            <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-muted-teal">
-              Explore practical tools for pilgrimage planning, daily worship and Quran learning.
+            <p className="mx-auto mt-4 max-w-2xl text-[15px] leading-relaxed text-muted-teal">
+              Explore practical tools for pilgrimage planning, daily worship
+              and Quran learning.
             </p>
           </div>
         </div>
@@ -647,7 +648,7 @@ export default function PlanningTools() {
                   {/* Card number */}
                   <span
                     aria-hidden="true"
-                    className={`absolute right-4 top-4 text-[10px] font-bold tracking-[0.2em] ${styles.number}`}
+                    className={`absolute right-4 top-4 text-[11px] font-semibold tracking-[0.2em] ${styles.number}`}
                   >
                     {String(index + 1).padStart(2, "0")}
                   </span>
@@ -663,11 +664,11 @@ export default function PlanningTools() {
                     <Icon className={`h-7 w-7 ${styles.icon}`} />
                   </span>
 
-                  <h3 className="relative font-heading text-[15px] font-semibold leading-[1.35] text-deep-teal">
+                  <h3 className="relative font-heading text-base font-semibold leading-[1.35] text-deep-teal">
                     {tool.title}
                   </h3>
 
-                  <p className="relative mb-4 mt-1.5 text-xs leading-[1.6] text-muted-teal">
+                  <p className="relative mb-4 mt-1.5 text-[13px] leading-relaxed text-muted-teal">
                     {tool.description}
                   </p>
 
@@ -675,7 +676,7 @@ export default function PlanningTools() {
                   <span
                     className={`
                       relative mt-auto flex items-center justify-center gap-1.5
-                      rounded-xl border px-4 py-2 text-xs font-semibold tracking-wide
+                      rounded-xl border px-4 py-2 text-[13px] font-semibold tracking-wide
                       transition-all duration-300 ${styles.button}
                     `}
                   >
