@@ -20,8 +20,8 @@ export default function PageContent({
   sections,
 }: PageContentProps) {
   return (
-    <section className="bg-white py-10 sm:py-12 lg:py-14">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+    <section className="bg-white py-6 sm:py-8 lg:py-10">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Heading above the card */}
         <div className="mx-auto mb-8 max-w-2xl text-center sm:mb-10">
           <h2

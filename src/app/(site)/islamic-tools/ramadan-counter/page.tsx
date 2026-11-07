@@ -139,14 +139,12 @@ export default function RamadanCounterPage() {
         <section className="mx-auto max-w-5xl px-4 pb-10 sm:px-6 lg:px-8">
           <RamadanCounter />
         </section>
-
+        <ToolGuide title="How to Use the Ramadan Counter" sections={guideSections} />
         <ToolArticle
           title="Count Down to Ramadan"
           intro="A simple guide to when Ramadan starts, how the Islamic calendar works, and how to use this tool."
           sections={articleSections}
         />
-
-        <ToolGuide title="How to Use the Ramadan Counter" sections={guideSections} />
       </div>
 
       <RelatedTools

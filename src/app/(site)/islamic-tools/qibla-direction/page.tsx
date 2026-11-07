@@ -93,14 +93,12 @@ export default function QiblaFinderPage() {
         <section className="mx-auto max-w-5xl px-4 pb-10 sm:px-6 lg:px-8">
           <QiblaFinder />
         </section>
-
+         <ToolGuide title="How to Use the Qibla Finder" sections={guideSections} />
         <ToolArticle
           title="Find the Qibla Wherever You Are"
           intro="A simple explanation of the Qibla, how its direction is calculated, and how to get the most accurate result."
           sections={articleSections}
         />
-
-        <ToolGuide title="How to Use the Qibla Finder" sections={guideSections} />
       </div>
     </div>
   )

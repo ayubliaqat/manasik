@@ -129,7 +129,7 @@ export default function AboutUsPage() {
             <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link
                 href="/islamic-tools"
-                className="inline-flex items-center justify-center rounded-full bg-gold px-6 py-2.5 text-sm font-semibold text-deep-teal transition-colors hover:bg-gold-light"
+                className="inline-flex items-center justify-center rounded-full bg-gold-light px-6 py-2.5 text-sm font-semibold text-deep-teal transition-colors hover:bg-gold-light"
               >
                 Explore the tools
               </Link>

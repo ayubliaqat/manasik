@@ -130,14 +130,12 @@ export default function TasbihCounterPage() {
         <section className="mx-auto max-w-5xl px-4 pb-10 sm:px-6 lg:px-8">
           <TasbihCounter />
         </section>
-
+        <ToolGuide title="How to Use the Tasbih Counter" sections={guideSections} />
         <ToolArticle
           title="Count Your Dhikr with Ease"
           intro="A simple guide to the tasbih, common dhikr counts, and how to get the most from this counter."
           sections={articleSections}
         />
-
-        <ToolGuide title="How to Use the Tasbih Counter" sections={guideSections} />
       </div>
 
       <RelatedTools

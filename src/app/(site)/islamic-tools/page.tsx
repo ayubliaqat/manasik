@@ -172,7 +172,7 @@ const toolsFaqs: FaqItem[] = [
 
 export default function ToolsPage() {
   return (
-    <main className="w-full overflow-x-hidden">
+    <main className="w-full overflow-x-clip">
       {/* Hero */}
       <section className="relative overflow-hidden bg-deep-teal pb-14 pt-9 text-center sm:pb-16 sm:pt-11 lg:pb-20 lg:pt-12">
         <div

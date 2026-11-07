@@ -1,17 +1,19 @@
 // app/tools/99-names-of-allah/page.tsx
-import type { Metadata } from "next"
-import ToolHero from "@/components/Tools/tool-hero"
-import AsmaUlHusna from "@/components/Tools/AsmaUlHusna"
-import ToolArticle, { type ArticleSection } from "@/components/Tools/tool-article"
-import ToolGuide, { type GuideSection } from "@/components/Tools/tool-guide"
-import RelatedTools from "@/components/Tools/related-tools"
-import ToolsFaq, { type FaqItem } from "@/components/Tools/tools-faq"
+import type { Metadata } from "next";
+import ToolHero from "@/components/Tools/tool-hero";
+import AsmaUlHusna from "@/components/Tools/AsmaUlHusna";
+import ToolArticle, {
+  type ArticleSection,
+} from "@/components/Tools/tool-article";
+import ToolGuide, { type GuideSection } from "@/components/Tools/tool-guide";
+import RelatedTools from "@/components/Tools/related-tools";
+import ToolsFaq, { type FaqItem } from "@/components/Tools/tools-faq";
 
 export const metadata: Metadata = {
   title: "99 Names of Allah with Meanings | Manasik",
   description:
     "Explore the 99 Names of Allah (Asma ul Husna) with Arabic text, English transliteration, meanings, and reflections. Search, save favorites, and track your memorization progress.",
-}
+};
 
 const articleSections: ArticleSection[] = [
   {
@@ -46,7 +48,7 @@ const articleSections: ArticleSection[] = [
       "The aim is not simply to finish a list. Take time to understand each name, reflect on its meaning, and learn how it informs your relationship with Allah.",
     ],
   },
-]
+];
 
 const guideSections: GuideSection[] = [
   {
@@ -86,7 +88,7 @@ const guideSections: GuideSection[] = [
     variant: "note",
     text: "Your favourites and memorization progress are saved in your browser on this device. Clearing browser data or using private browsing may remove saved progress. English translations are concise explanations, and some names have different transliterations or meanings across scholarly sources. The displayed sequence follows a widely circulated traditional list.",
   },
-]
+];
 
 const faqs: FaqItem[] = [
   {
@@ -114,7 +116,7 @@ const faqs: FaqItem[] = [
     answer:
       "Yes. Your favorites and memorized names are saved on your own device, so they will still be here when you return. Clearing your browser data or switching devices will reset them.",
   },
-]
+];
 
 export default function AsmaUlHusnaPage() {
   return (
@@ -129,24 +131,31 @@ export default function AsmaUlHusnaPage() {
         <section className="mx-auto max-w-6xl px-4 pb-10 sm:px-6 lg:px-8">
           <AsmaUlHusna />
         </section>
-
+        <ToolGuide
+          title="How to Use the 99 Names of Allah Tool"
+          sections={guideSections}
+        />
         <ToolArticle
           title="Discover the 99 Beautiful Names of Allah"
           intro="Learn about Asma ul Husna, explore the meanings behind the names, and develop a meaningful habit of reflection and memorization."
           sections={articleSections}
         />
-
-        <ToolGuide
-          title="How to Use the 99 Names of Allah Tool"
-          sections={guideSections}
-        />
       </div>
 
       <RelatedTools
-        keys={["tasbih-counter", "qibla-finder", "prayer-times", "noorani-qaida"]}
+        keys={[
+          "tasbih-counter",
+          "qibla-finder",
+          "prayer-times",
+          "noorani-qaida",
+        ]}
       />
 
-      <ToolsFaq faqs={faqs} title="Frequently Asked Questions" highlight="FAQs" />
+      <ToolsFaq
+        faqs={faqs}
+        title="Frequently Asked Questions"
+        highlight="FAQs"
+      />
     </div>
-  )
+  );
 }

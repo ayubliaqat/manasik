@@ -50,7 +50,7 @@ function IconBase({
   )
 }
 
-/* Hajj Checklist */
+/* Hajj Packing Checklist */
 function ClipboardIcon({ className }: IconProps) {
   const rows = [
     { y: 10.5, delay: "0s" },
@@ -78,7 +78,7 @@ function ClipboardIcon({ className }: IconProps) {
   )
 }
 
-/* Umrah Packing List */
+/* Umrah Packing Checklist */
 function SuitcaseIcon({ className }: IconProps) {
   return (
     <IconBase className={className}>
@@ -218,7 +218,7 @@ function TasbihIcon({ className }: IconProps) {
   )
 }
 
-/* Qibla Finder */
+/* Qibla Direction */
 function QiblaIcon({ className }: IconProps) {
   return (
     <IconBase className={className}>
@@ -303,7 +303,7 @@ function MosqueIcon({ className }: IconProps) {
   )
 }
 
-/* Hijri Converter */
+/* Hijri Date Converter */
 function CalendarIcon({ className }: IconProps) {
   return (
     <IconBase className={className}>
@@ -350,7 +350,7 @@ function LanternIcon({ className }: IconProps) {
   )
 }
 
-/* Inheritance Calculator */
+/* Islamic Inheritance Calculator */
 function ScaleIcon({ className }: IconProps) {
   return (
     <IconBase className={className}>
@@ -375,93 +375,93 @@ function ScaleIcon({ className }: IconProps) {
 const TOOLS: Tool[] = [
   {
     key: "hajj-checklist",
-    title: "Hajj Checklist",
-    description: "Tick off documents, rituals and preparations step by step.",
-    href: "/tools/hajj-checklist",
+    title: "Hajj Packing Checklist",
+    description: "Tick off everything to pack for Hajj, step by step.",
+    href: "/islamic-tools/hajj-packing-checklist",
     icon: ClipboardIcon,
   },
   {
     key: "packing-list",
-    title: "Umrah Packing List",
+    title: "Umrah Packing Checklist",
     description: "Everything to pack for men, women and families.",
-    href: "/tools/packing-list",
+    href: "/islamic-tools/umrah-packing-checklist",
     icon: SuitcaseIcon,
   },
   {
     key: "cost-estimator",
     title: "Cost Estimator",
     description: "Plan your flights, stay and daily spending in one place.",
-    href: "/tools/cost-estimator",
+    href: "/islamic-tools/hajj-umrah-cost-estimator",
     icon: CalculatorIcon,
   },
   {
     key: "zakat-calculator",
     title: "Zakat Calculator",
     description: "Work out your zakat on savings, gold, silver and more.",
-    href: "/tools/zakat-calculator",
+    href: "/islamic-tools/zakat-calculator",
     icon: CoinsIcon,
   },
   {
     key: "99-names-of-allah",
     title: "99 Names of Allah",
     description: "Explore the beautiful names of Allah and their meanings.",
-    href: "/tools/99-names-of-allah",
+    href: "/islamic-tools/99-names-of-allah",
     icon: NamesOfAllahIcon,
   },
   {
     key: "tasbih-counter",
     title: "Tasbih Counter",
     description: "Keep track of your dhikr with a simple digital counter.",
-    href: "/tools/tasbih-counter",
+    href: "/islamic-tools/tasbih-counter",
     icon: TasbihIcon,
   },
   {
     key: "qibla-finder",
-    title: "Qibla Finder",
+    title: "Qibla Direction",
     description: "Find the direction of the Kaaba from anywhere in the world.",
-    href: "/tools/qibla-finder",
+    href: "/islamic-tools/qibla-direction",
     icon: QiblaIcon,
   },
   {
     key: "noorani-qaida",
     title: "Noorani Qaida",
     description: "Build your Quran reading foundations step by step.",
-    href: "/tools/noorani-qaida",
+    href: "/islamic-tools/noorani-qaida",
     icon: QaidaIcon,
   },
   {
     key: "prayer-times",
     title: "Prayer Times",
     description: "See today's prayer times for your location.",
-    href: "/tools/prayer-times",
+    href: "/islamic-tools/prayer-times",
     icon: ClockIcon,
   },
   {
     key: "mosque-finder",
     title: "Mosque Finder",
     description: "Find mosques near you on a live map, with distances.",
-    href: "/tools/mosque-finder",
+    href: "/islamic-tools/mosque-finder",
     icon: MosqueIcon,
   },
   {
     key: "hijri-converter",
-    title: "Hijri Converter",
+    title: "Hijri Date Converter",
     description: "Convert dates between the Hijri and Gregorian calendars.",
-    href: "/tools/hijri-converter",
+    href: "/islamic-tools/hijri-date-converter",
     icon: CalendarIcon,
   },
   {
     key: "ramadan-counter",
     title: "Ramadan Counter",
     description: "Count down to Ramadan and keep track of the days.",
-    href: "/tools/ramadan-counter",
+    href: "/islamic-tools/ramadan-counter",
     icon: LanternIcon,
   },
   {
     key: "inheritance-calculator",
     title: "Inheritance Calculator",
     description: "Work out each heir's share under Islamic inheritance law.",
-    href: "/tools/inheritance-calculator",
+    href: "/islamic-tools/islamic-inheritance-calculator",
     icon: ScaleIcon,
   },
 ]
@@ -582,7 +582,7 @@ export default function RelatedTools({
   return (
     <section
       aria-labelledby="related-tools-heading"
-      className="relative overflow-hidden border-y border-emerald/20 bg-white py-10 sm:py-12 lg:py-14"
+      className="relative overflow-hidden border-y border-emerald/20 bg-white py-6 sm:py-8 lg:py-10"
     >
       <style>{motionCss}</style>
 
@@ -591,13 +591,13 @@ export default function RelatedTools({
         className="pointer-events-none absolute bottom-[-190px] left-1/2 h-[340px] w-[130%] -translate-x-1/2 rounded-[50%_50%_0_0] bg-gradient-to-t from-emerald/[0.08] via-emerald/[0.03] to-transparent"
       />
 
-      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-8 lg:px-10 xl:px-12">
         <div className="mb-8 text-center sm:mb-10">
           <h2
             id="related-tools-heading"
-            className="text-balance font-serif text-[24px] font-medium leading-[1.15] tracking-[-0.015em] text-deep-teal sm:text-[28px] md:text-[32px] lg:text-[38px]"
+            className="text-balance font-heading text-[28px] font-bold leading-[1.2] tracking-[-0.02em] sm:text-[34px] lg:text-[40px]"
           >
-            {title}{" "}
+            <span className="text-gold-light">{title}</span>{" "}
             <span className="relative inline-block whitespace-nowrap text-emerald">
               {highlight}
               <svg

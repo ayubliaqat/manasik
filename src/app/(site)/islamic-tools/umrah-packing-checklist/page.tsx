@@ -367,12 +367,10 @@ export default function PackingListPage() {
         <section className="mx-auto max-w-5xl px-4 pb-10 sm:px-6 lg:px-8">
           <UmrahPackingList />
         </section>
-
-        <ToolGuide
+         <ToolGuide
           title="How to Use the Packing List"
           sections={guideSections}
         />
-
         <ToolArticle
           title="Get your Umrah packing sorted before you travel"
           intro="What do you need to pack for Umrah, and how can you make sure nothing important gets left behind? Manasik’s Umrah Packing List helps you organise your belongings, work through your essentials and see how much you have packed."

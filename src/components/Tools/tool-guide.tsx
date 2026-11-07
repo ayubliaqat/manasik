@@ -7,15 +7,48 @@ export type GuideSection = {
   variant?: "steps" | "highlight" | "tips" | "note";
 };
 
+function Squiggle({ className }: { className: string }) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 120 10"
+      preserveAspectRatio="none"
+      fill="none"
+      className={`pointer-events-none absolute left-1/2 top-full -translate-x-1/2 ${className}`}
+    >
+      <path
+        d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        vectorEffect="non-scaling-stroke"
+      />
+    </svg>
+  );
+}
+
 export default function ToolGuide({
   title,
+  highlight,
   sections,
 }: {
   title: string;
+  highlight?: string;
   sections: GuideSection[];
 }) {
+  // Gold-light lead + emerald highlight. If no highlight is passed, split the title in half.
+  let lead = title.trim();
+  let accent = highlight?.trim() ?? "";
+  if (!accent) {
+    const words = lead.split(/\s+/);
+    const splitAt = Math.ceil(words.length / 2);
+    lead = words.slice(0, splitAt).join(" ");
+    accent = words.slice(splitAt).join(" ");
+  }
+
   const steps = sections.find((s) => s.variant === "steps");
-  const highlight = sections.find((s) => s.variant === "highlight");
+  const highlightSection = sections.find((s) => s.variant === "highlight");
   const tips = sections.find((s) => s.variant === "tips");
   const note = sections.find((s) => s.variant === "note");
 
@@ -27,12 +60,20 @@ export default function ToolGuide({
         : "lg:grid-cols-5";
 
   return (
-    <section className="mx-auto max-w-5xl px-4 pb-8 sm:px-6 sm:pb-10 lg:px-8">
+    <section className="mx-auto max-w-7xl px-4 pb-8 sm:px-6 sm:pb-10 lg:px-8">
       <div className="mb-8 text-center">
-        <h2 className="font-heading text-xl font-medium text-deep-teal sm:text-2xl">
-          {title}
+        <h2 className="text-balance font-heading text-[28px] font-bold leading-[1.2] tracking-[-0.02em] sm:text-[34px] lg:text-[40px]">
+          <span className="text-gold-light">{lead}</span>
+          {accent && (
+            <>
+              {lead && " "}
+              <span className="relative inline-block whitespace-nowrap text-emerald">
+                {accent}
+                <Squiggle className="mt-[0.05em] h-[0.2em] w-[70%] text-gold" />
+              </span>
+            </>
+          )}
         </h2>
-        <span className="mx-auto mt-2 block h-[3px] w-10 rounded-full bg-gold" />
       </div>
 
       {/* Steps timeline */}
@@ -78,9 +119,9 @@ export default function ToolGuide({
       )}
 
       {/* Highlight + tips */}
-      {(highlight || tips) && (
+      {(highlightSection || tips) && (
         <div className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-5">
-          {highlight?.items && (
+          {highlightSection?.items && (
             <div className="relative overflow-hidden rounded-2xl bg-deep-teal p-5 shadow-[0_12px_26px_rgba(6,63,58,0.25)] sm:p-7 md:col-span-3">
               <div
                 aria-hidden="true"
@@ -92,12 +133,12 @@ export default function ToolGuide({
                   <Sparkles className="h-5 w-5" aria-hidden="true" />
                 </span>
                 <h3 className="font-heading text-base font-medium text-white sm:text-lg">
-                  {highlight.heading}
+                  {highlightSection.heading}
                 </h3>
               </div>
 
               <ul className="relative mt-5 space-y-3">
-                {highlight.items.map((item) => (
+                {highlightSection.items.map((item) => (
                   <li
                     key={item}
                     className="flex items-start gap-3 text-sm leading-6 text-white/80"

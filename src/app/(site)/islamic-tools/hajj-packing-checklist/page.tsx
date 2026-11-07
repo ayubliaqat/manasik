@@ -124,16 +124,14 @@ export default function HajjChecklistPage() {
         <section className="mx-auto max-w-5xl px-4 pb-10 sm:px-6 lg:px-8">
           <HajjChecklist />
         </section>
-
+          <ToolGuide
+          title="How to Use the Hajj Checklist"
+          sections={guideSections}
+        />
         <ToolArticle
           title="Your Complete Hajj Preparation Checklist"
           intro="Everything you need to get ready for Hajj, from documents and health to spiritual readiness, organised so you can prepare calmly and with confidence."
           sections={articleSections}
-        />
-
-        <ToolGuide
-          title="How to Use the Hajj Checklist"
-          sections={guideSections}
         />
       </div>
 

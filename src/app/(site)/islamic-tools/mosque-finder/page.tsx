@@ -121,14 +121,14 @@ export default function MosqueFinderPage() {
         <section className="mx-auto max-w-5xl px-4 pb-10 sm:px-6 lg:px-8">
           <MosqueFinder />
         </section>
-
+        <ToolGuide title="How to Use the Mosque Finder" sections={guideSections} />
         <ToolArticle
           title="Find a Mosque Wherever You Are"
           intro="How the mosque finder works, what it shows, and how to get the most from it."
           sections={articleSections}
         />
 
-        <ToolGuide title="How to Use the Mosque Finder" sections={guideSections} />
+        
       </div>
 
       <RelatedTools

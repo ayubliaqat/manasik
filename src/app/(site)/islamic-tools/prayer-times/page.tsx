@@ -129,14 +129,12 @@ export default function PrayerTimesPage() {
         <section className="mx-auto max-w-5xl px-4 pb-10 sm:px-6 lg:px-8">
           <PrayerTimes />
         </section>
-
+        <ToolGuide title="How to Use Prayer Times" sections={guideSections} />
         <ToolArticle
           title="Know Your Prayer Times"
           intro="A simple guide to how prayer times are calculated, and why they can differ between sources."
           sections={articleSections}
         />
-
-        <ToolGuide title="How to Use Prayer Times" sections={guideSections} />
       </div>
 
       <RelatedTools

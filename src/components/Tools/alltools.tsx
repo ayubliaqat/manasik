@@ -579,7 +579,7 @@ export default function PlanningTools() {
 
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-balance font-heading text-[28px] font-bold leading-[1.2] tracking-[-0.02em] text-deep-teal sm:text-[34px] lg:text-[40px]">
-              <span className="text-gold-text">Explore</span>{" "}
+              <span className="text-gold-light">Explore</span>{" "}
               <span className="relative inline-block whitespace-nowrap text-emerald">
                 All Tools
                 <svg

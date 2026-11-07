@@ -131,14 +131,12 @@ export default function ZakatCalculatorPage() {
         <section className="mx-auto max-w-5xl px-4 pb-10 sm:px-6 lg:px-8">
           <ZakatCalculator />
         </section>
-
+        <ToolGuide title="How to Use the Zakat Calculator" sections={guideSections} />
         <ToolArticle
           title="Calculate Your Zakat with Confidence"
           intro="A simple explanation of how zakat works, what counts towards it, and how to calculate what you owe."
           sections={articleSections}
         />
-
-        <ToolGuide title="How to Use the Zakat Calculator" sections={guideSections} />
       </div>
 
       <RelatedTools

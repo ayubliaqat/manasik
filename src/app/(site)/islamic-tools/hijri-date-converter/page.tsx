@@ -129,14 +129,14 @@ export default function HijriConverterPage() {
         <section className="mx-auto max-w-5xl px-4 pb-10 sm:px-6 lg:px-8">
           <HijriConverter />
         </section>
-
+        <ToolGuide title="How to Use the Hijri Date Converter" sections={guideSections} />
         <ToolArticle
           title="Convert Islamic and Gregorian Dates"
           intro="A simple guide to the Hijri calendar, why Islamic dates move, and how to use this converter."
           sections={articleSections}
         />
 
-        <ToolGuide title="How to Use the Hijri Date Converter" sections={guideSections} />
+        
       </div>
 
       <RelatedTools

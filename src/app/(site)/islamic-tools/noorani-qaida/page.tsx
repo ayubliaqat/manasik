@@ -133,14 +133,12 @@ export default function NooraniQaidaPage() {
         <section className="mx-auto max-w-5xl px-4 pb-10 sm:px-6 lg:px-8">
           <NooraniQaida />
         </section>
-
+        <ToolGuide title="How to Use the Noorani Qaida Practice" sections={guideSections} />
         <ToolArticle
           title="Learn to Read the Quran, Step by Step"
           intro="A simple introduction to the Noorani Qaida, what the first lessons cover, and how to practise well."
           sections={articleSections}
         />
-
-        <ToolGuide title="How to Use the Noorani Qaida Practice" sections={guideSections} />
       </div>
 
       <RelatedTools

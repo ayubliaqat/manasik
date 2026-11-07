@@ -125,14 +125,12 @@ export default function CostEstimatorPage() {
         <section className="mx-auto max-w-5xl px-4 pb-10 sm:px-6 lg:px-8">
           <CostEstimator />
         </section>
-
+           <ToolGuide title="How to Use the Cost Estimator" sections={guideSections} />
         <ToolArticle
           title="Plan Your Hajj and Umrah Budget"
           intro="A clear, realistic budget makes the journey calmer. Here is what to include and how to estimate it."
           sections={articleSections}
         />
-
-        <ToolGuide title="How to Use the Cost Estimator" sections={guideSections} />
       </div>
 
       <RelatedTools

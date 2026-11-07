@@ -131,14 +131,14 @@ export default function InheritanceCalculatorPage() {
         <section className="mx-auto max-w-5xl px-4 pb-10 sm:px-6 lg:px-8">
           <InheritanceCalculator />
         </section>
-
+        <ToolGuide title="How to Use the Inheritance Calculator" sections={guideSections} />
         <ToolArticle
           title="Understand Your Family's Shares"
           intro="A simple guide to faraid, how the shares are worked out, and what this calculator covers."
           sections={articleSections}
         />
 
-        <ToolGuide title="How to Use the Inheritance Calculator" sections={guideSections} />
+        
       </div>
 
       <RelatedTools
