@@ -111,7 +111,7 @@ export default function AboutUsPage() {
       />
 
       {/* Closing call to action */}
-      <section className="mx-auto max-w-7xl px-5 pb-12 sm:px-8 lg:px-10 xl:px-12">
+      <section className="mx-auto max-w-7xl px-4 pb-12 sm:px-8 lg:px-10 xl:px-12">
         <div className="relative overflow-hidden rounded-2xl bg-deep-teal px-5 py-10 text-center sm:px-8 sm:py-12">
           <div
             aria-hidden="true"

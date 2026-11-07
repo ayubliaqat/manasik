@@ -468,8 +468,9 @@ export default function ExploreJourney() {
 
         {/* =========================================================
             CATEGORY GRID
+            Full width of the 7xl container (no extra max-w wrapper).
            ========================================================= */}
-        <div className="mx-auto max-w-6xl">
+        <div className="w-full">
           {/* First row */}
           <div className="grid gap-4 sm:gap-5 md:grid-cols-2">
             {categories.slice(0, 2).map((category, index) => (

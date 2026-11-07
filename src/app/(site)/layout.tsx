@@ -1,21 +1,45 @@
+import type { Metadata } from "next";
 import Header from "@/components/Layout/Header";
 import Footer from "@/components/Layout/Footer";
 import { AnnouncementBar } from "@/components/Layout/AnnouncementBar";
 
-// Current site URL. Change this when you move to a custom domain.
-const SITE_URL = "https://manasik-ten.vercel.app";
+// Updated custom domain URL
+const SITE_URL = "https://islam-religion.com";
 
+// Next.js Metadata for SEO, Page Title, and Favicons
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Islam Religion",
+    template: "%s | Islam Religion",
+  },
+  description: "Learn about Islam, faith, guidance, and teachings.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+    other: [
+      { rel: "icon", url: "/android-chrome-192x192.png", sizes: "192x192" },
+      { rel: "icon", url: "/android-chrome-512x512.png", sizes: "512x512" },
+    ],
+  },
+};
 const siteJsonLd = [
   {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "Manasik",
+    name: "Islam Religion",
     url: SITE_URL,
   },
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Manasik",
+    name: "Islam Religion",
     url: SITE_URL,
   },
 ];
