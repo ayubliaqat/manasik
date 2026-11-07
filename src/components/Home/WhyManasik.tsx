@@ -120,7 +120,7 @@ export default function WhoIsItFor() {
 
           {/* Content (first on mobile, second on lg) */}
           <div className="order-1 flex w-full max-w-xl flex-col lg:order-2 lg:ml-auto lg:h-full lg:justify-center">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-gold-text">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-gold-light">
               Why Choose Manasik
             </p>
 
@@ -136,7 +136,7 @@ export default function WhoIsItFor() {
                 lg:text-[40px]
               "
             >
-              <span className="text-gold-text">Islamic Guidance and Useful</span>{" "}
+              <span className="text-gold-light">Islamic Guides and Useful</span>{" "}
               <span className="relative inline-block whitespace-nowrap text-emerald">
                 Tools in One Place
                 <svg

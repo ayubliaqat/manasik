@@ -66,34 +66,33 @@ export default function Header() {
       <div className="mx-auto flex h-[68px] max-w-7xl items-center justify-between px-4 sm:h-[72px] sm:px-6 lg:px-8">
         {/* Brand */}
         <div className="shrink-0">
-          <Link
-            href="/"
-            onClick={() => setOpenPath(null)}
-            className="group flex items-center gap-2.5"
-          >
-            <span className="flex flex-col leading-none">
-              {/* Wordmark: two-tone gradient, raised (embossed) look */}
-              <span className="font-heading text-xl font-semibold tracking-tight [filter:drop-shadow(0_1px_0_rgba(255,255,255,0.9))_drop-shadow(0_2px_2px_rgba(2,51,47,0.28))] sm:text-[22px]">
-                <span className="bg-gradient-to-b from-deep-teal to-dark-teal bg-clip-text text-transparent transition-all duration-200 group-hover:from-emerald group-hover:to-deep-teal">
-                  Islam
-                </span>{" "}
-                <span className="bg-gradient-to-b from-[#ad8a10] to-[#7a5f00] bg-clip-text text-transparent">
-                  Religion
-                </span>
-              </span>
+  <Link
+    href="/"
+    onClick={() => setOpenPath(null)}
+    className="group flex items-center gap-2.5"
+  >
+    <span className="flex flex-col leading-none">
+      {/* Wordmark: strong raised look from the gradient only, no shadows */}
+      <span className="font-heading text-xl font-extrabold tracking-tight sm:text-[24px]">
+        <span className="bg-gradient-to-b from-emerald via-deep-teal to-dark-teal bg-clip-text text-transparent transition-all duration-200 group-hover:from-rich-emerald group-hover:via-emerald group-hover:to-deep-teal">
+          Islam
+        </span>{" "}
+        <span className="bg-gradient-to-b from-gold-light via-gold to-gold-text bg-clip-text text-transparent">
+          Religion
+        </span>
+      </span>
 
-              <span className="mt-1.5 flex items-center gap-2 text-[9px] font-semibold tracking-[0.22em] text-gold-text [text-shadow:0_1px_0_rgba(255,255,255,0.95),0_1px_2px_rgba(135,106,0,0.35)] sm:text-[10px]">
-                ISLAMIC TOOLS
-                <span
-                  aria-hidden="true"
-                  className="h-2.5 w-px bg-gradient-to-b from-transparent via-gold to-transparent"
-                />
-                GUIDES
-              </span>
-            </span>
-          </Link>
-        </div>
-
+      <span className="mt-1.5 flex items-center gap-2 text-[9px] font-bold tracking-[0.22em] text-gold-text sm:text-[10px]">
+        ISLAMIC TOOLS
+        <span
+          aria-hidden="true"
+          className="h-2.5 w-px bg-gradient-to-b from-transparent via-gold to-transparent"
+        />
+        GUIDES
+      </span>
+    </span>
+  </Link>
+</div>
         {/* Desktop Navigation */}
         <nav aria-label="Main navigation" className="hidden lg:flex">
           <div className="flex items-center gap-4 xl:gap-6">

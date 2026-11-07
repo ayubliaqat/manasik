@@ -380,7 +380,7 @@ export default function PlanningTools() {
                 lg:text-[40px]
               "
             >
-              <span className="text-gold-text">100% Free</span>{" "}
+              <span className="text-gold-light">100% Free</span>{" "}
               <span className="relative inline-block whitespace-nowrap text-emerald">
                 Islamic Tools
                 <svg

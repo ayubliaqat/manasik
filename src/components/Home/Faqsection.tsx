@@ -57,7 +57,7 @@ export default function FaqSection() {
               lg:text-[40px]
             "
           >
-            <span className="text-gold-text">Frequently Asked</span>{" "}
+            <span className="text-gold-light">Frequently Asked</span>{" "}
             <span className="relative inline-block whitespace-nowrap text-emerald">
               Questions
               <svg

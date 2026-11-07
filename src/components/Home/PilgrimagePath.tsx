@@ -207,7 +207,7 @@ export default function PilgrimagePath() {
               lg:text-[40px]
             "
           >
-            <span className="text-gold-text">Your Hajj &amp; Umrah,</span>{" "}
+            <span className="text-gold-light">Your Hajj &amp; Umrah,</span>{" "}
             <span className="relative inline-block whitespace-nowrap text-emerald">
               Step by Step Guide
               {/* Gold hand-drawn underline */}

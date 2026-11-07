@@ -30,7 +30,7 @@ export default function WhoIsManasikFor() {
                 lg:text-[40px]
               "
             >
-              <span className="text-gold-text">Who Is</span>{" "}
+              <span className="text-gold-light">Who Is</span>{" "}
               <span className="relative inline-block whitespace-nowrap text-emerald">
                 Manasik For?
                 <svg

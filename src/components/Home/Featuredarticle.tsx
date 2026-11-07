@@ -108,7 +108,7 @@ export default async function FeaturedBlog() {
                 lg:text-[40px]
               "
             >
-              <span className="text-gold-text">Explore Our</span>{" "}
+              <span className="text-gold-light">Explore Our</span>{" "}
               <span className="relative inline-block whitespace-nowrap text-emerald">
                 Latest Blogs
                 <svg
