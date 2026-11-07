@@ -1,17 +1,18 @@
-﻿import Link from "next/link"
-import { db } from "@/db"
-import { posts, categories } from "@/db/schema"
-import { eq, desc, asc } from "drizzle-orm"
-import { ChevronRight } from "lucide-react"
-import type { Metadata } from "next"
-import BlogList from "./blog-list"
+﻿import Link from "next/link";
+import { db } from "@/db";
+import { posts, categories } from "@/db/schema";
+import { eq, desc, asc } from "drizzle-orm";
+import { ChevronRight } from "lucide-react";
+import type { Metadata } from "next";
+import BlogList from "./blog-list";
 
 export const metadata: Metadata = {
   title: "Blog | Manasik",
-  description: "Guides, tips, and stories to help you prepare for Hajj and Umrah.",
-}
+  description:
+    "Guides, tips, and stories to help you prepare for Hajj and Umrah.",
+};
 
-export const revalidate = 300
+export const revalidate = 300;
 
 async function getPublishedPosts() {
   return db
@@ -27,7 +28,7 @@ async function getPublishedPosts() {
     .from(posts)
     .leftJoin(categories, eq(posts.categoryId, categories.id))
     .where(eq(posts.status, "published"))
-    .orderBy(desc(posts.publishedAt))
+    .orderBy(desc(posts.publishedAt));
 }
 
 async function getCategories() {
@@ -38,14 +39,14 @@ async function getCategories() {
       slug: categories.slug,
     })
     .from(categories)
-    .orderBy(asc(categories.name))
+    .orderBy(asc(categories.name));
 }
 
 export default async function BlogPage() {
   const [allPosts, allCategories] = await Promise.all([
     getPublishedPosts(),
     getCategories(),
-  ])
+  ]);
 
   return (
     <div>
@@ -82,34 +83,32 @@ export default async function BlogPage() {
               </svg>
             </span>
           </nav>
-<h1 className="font-heading text-3xl font-medium text-white sm:text-4xl lg:text-5xl">
-  Explore Our{" "}
-  <span className="relative inline-block text-[#2BB589]">
-    Blog
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 120 10"
-      preserveAspectRatio="none"
-      fill="none"
-      className="pointer-events-none absolute left-1/2 top-full mt-[0.05em] h-[0.18em] w-[70%] -translate-x-1/2 text-gold"
-    >
-      <path
-        d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
-        stroke="currentColor"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        vectorEffect="non-scaling-stroke"
-      />
-    </svg>
-  </span>
-</h1>
-
-
+          <h1 className="font-heading text-3xl font-medium text-white sm:text-4xl lg:text-5xl">
+            Explore Our{" "}
+            <span className="relative inline-block text-[#2BB589]">
+              Blog
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 120 10"
+                preserveAspectRatio="none"
+                fill="none"
+                className="pointer-events-none absolute left-1/2 top-full mt-[0.05em] h-[0.18em] w-[70%] -translate-x-1/2 text-gold"
+              >
+                <path
+                  d="M2 5 Q12 0 22 5 T42 5 T62 5 T82 5 T102 5 T118 5"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  vectorEffect="non-scaling-stroke"
+                />
+              </svg>
+            </span>
+          </h1>
 
           <p className="mx-auto mt-3 max-w-xl text-sm font-normal leading-6 text-white/70 sm:mt-4 sm:text-base">
-            Practical guides, authentic reflections, and everything you need
-            to prepare for Hajj and Umrah with confidence.
+            Practical guides, authentic reflections, and everything you need to
+            prepare for Hajj and Umrah with confidence.
           </p>
         </div>
 
@@ -130,5 +129,5 @@ export default async function BlogPage() {
       {/* Category filter + posts grid */}
       <BlogList posts={allPosts} categories={allCategories} />
     </div>
-  )
+  );
 }

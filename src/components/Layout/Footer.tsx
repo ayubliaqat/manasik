@@ -14,7 +14,7 @@ const footerLinks = {
     { label: "Umrah Packing List", href: "/islamic-tools/umrah-packing-checklist" },
     { label: "Hijri Converter", href: "/islamic-tools/hijri-date-converter" },
     { label: "Zakat Calculator", href: "/islamic-tools/zakat-calculator" },
-    { label: "Inheritance Calculator", href: "/islamic-tools/islamic-inheritance-calculator" },
+    { label: "Inheritance Calculator", href: "/islamic-tools/inheritance-calculator" },
   ],
   company: [
     { label: "About Us", href: "/about-us" },

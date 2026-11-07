@@ -204,33 +204,32 @@ const tools: Tool[] = [
   {
     title: "Hajj Checklist",
     description: "Tick off documents, rituals and preparations step by step.",
-    href: "/tools/hajj-checklist",
+    href: "/islamic-tools/hajj-packing-checklist",
     icon: ClipboardIcon,
     accent: "emerald",
   },
   {
     title: "Umrah Packing List",
     description: "Everything to pack for men, women and families.",
-    href: "/tools/packing-list",
+    href: "/islamic-tools/umrah-packing-checklist",
     icon: SuitcaseIcon,
     accent: "gold",
   },
   {
     title: "Cost Estimator",
     description: "Plan your flights, stay and daily spending in one place.",
-    href: "/tools/cost-estimator",
+    href: "/islamic-tools/hajj-umrah-cost-estimator",
     icon: CalculatorIcon,
     accent: "emerald",
   },
   {
     title: "Zakat Calculator",
     description: "Work out your zakat on savings, gold, silver and more.",
-    href: "/tools/zakat-calculator",
+    href: "/islamic-tools/zakat-calculator",
     icon: CoinsIcon,
     accent: "gold",
   },
 ];
-
 const ACCENT_STYLES: Record<
   Accent,
   {

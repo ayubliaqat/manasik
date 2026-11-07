@@ -17,7 +17,7 @@ export default function Home() {
       <HomeHero />
       {/* <AyahHighlightSection/> */}
       <TrustBadges />
-      <TrustStats toolsCount={tools.length} />
+      <TrustStats toolsCount={tools.length} /> 
       <PlanningTools />
       <VerseOfTheDay />
       <PilgrimagePath />
