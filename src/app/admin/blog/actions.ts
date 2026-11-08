@@ -1,19 +1,35 @@
 ﻿"use server"
 
 import { db } from "@/db"
-import { posts, postTags, postSlugHistory, users } from "@/db/schema"
-import { eq } from "drizzle-orm"
+import { posts, postTags, postSlugHistory, tags, users } from "@/db/schema"
+import { eq, inArray } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import { auth } from "@/auth"
 import { can, type Role } from "@/lib/supabase/permissions"
 import { z } from "zod"
 
+const MAX_TAGS = 15
+const MAX_TAG_LENGTH = 40
+
 function slugify(text: string) {
   return text
     .toLowerCase()
     .trim()
     .replace(/[^\w\s-]/g, "")
+    .replace(/[\s_-]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+}
+
+/**
+ * Tag slugs keep letters and numbers from any language (so Arabic tags work),
+ * unlike post slugs above.
+ */
+function tagSlugify(text: string) {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\p{L}\p{N}\s-]/gu, "")
     .replace(/[\s_-]+/g, "-")
     .replace(/^-+|-+$/g, "")
 }
@@ -59,7 +75,47 @@ const postInputSchema = z.object({
   isFeatured: z.boolean().default(false),
   status: z.enum(["draft", "published", "scheduled"]),
   categoryId: z.string().uuid().nullable(),
-  tagIds: z.array(z.string().uuid()).default([]),
+
+  // Scheduling: an exact moment (ISO string) from the editor, turned into a Date
+  scheduledAt: z
+    .string()
+    .nullable()
+    .optional()
+    .transform((value, ctx) => {
+      if (!value) return null
+
+      const date = new Date(value)
+
+      if (Number.isNaN(date.getTime())) {
+        ctx.addIssue({ code: "custom", message: "Invalid schedule date." })
+        return z.NEVER
+      }
+
+      return date
+    }),
+
+  // Tags typed by the user for this post: cleaned, de-duplicated and capped
+  tags: z
+    .array(z.string())
+    .default([])
+    .transform((items) => {
+      const seen = new Set<string>()
+      const clean: { name: string; slug: string }[] = []
+
+      for (const item of items) {
+        const name = item.trim().replace(/\s+/g, " ").slice(0, MAX_TAG_LENGTH)
+        const slug = tagSlugify(name)
+
+        if (!name || !slug || seen.has(slug)) continue
+
+        seen.add(slug)
+        clean.push({ name, slug })
+
+        if (clean.length >= MAX_TAGS) break
+      }
+
+      return clean
+    }),
 
   // FAQs: trimmed, and empty items are dropped before saving
   faqs: z
@@ -116,7 +172,8 @@ const postInputSchema = z.object({
     ),
 })
 
-export type PostInput = z.infer<typeof postInputSchema>
+// The editor sends tags as plain names; the schema cleans them on the server.
+export type PostInput = z.input<typeof postInputSchema>
 
 type Caller = { id: string; role: Role }
 
@@ -124,6 +181,8 @@ type PostAccessInfo = {
   authorId: string | null
   status: string
 }
+
+type Tx = Parameters<Parameters<typeof db.transaction>[0]>[0]
 
 /**
  * Returns the logged-in user with their CURRENT role from the database,
@@ -183,6 +242,59 @@ function canDeletePost(caller: Caller, post: PostAccessInfo) {
 }
 
 /**
+ * A scheduled post needs a date in the future. Any other status
+ * has no schedule, so the date is cleared.
+ */
+function resolveScheduledAt(
+  status: string,
+  scheduledAt: Date | null
+): Date | null {
+  if (status !== "scheduled") {
+    return null
+  }
+
+  if (!scheduledAt) {
+    throw new Error("Choose a date and time to schedule this post.")
+  }
+
+  if (scheduledAt.getTime() <= Date.now()) {
+    throw new Error("The scheduled time must be in the future.")
+  }
+
+  return scheduledAt
+}
+
+/**
+ * Turns the typed tag names into tag ids. Tags that don't exist yet are
+ * created, and existing ones are reused by slug.
+ */
+async function resolveTagIds(
+  tx: Tx,
+  items: { name: string; slug: string }[]
+): Promise<string[]> {
+  if (items.length === 0) {
+    return []
+  }
+
+  await tx
+    .insert(tags)
+    .values(items.map((t) => ({ name: t.name, slug: t.slug })))
+    .onConflictDoNothing({ target: tags.slug })
+
+  const rows = await tx
+    .select({ id: tags.id })
+    .from(tags)
+    .where(
+      inArray(
+        tags.slug,
+        items.map((t) => t.slug)
+      )
+    )
+
+  return rows.map((r) => r.id)
+}
+
+/**
  * Create a new blog post.
  *
  * The post and its tags are created inside one transaction.
@@ -202,11 +314,17 @@ export async function createPost(rawData: PostInput) {
   const status = canPublish ? data.status : "draft"
   const isFeatured = canPublish ? data.isFeatured : false
 
+  const scheduledAt = resolveScheduledAt(status, data.scheduledAt)
+
   const slug = data.slug || slugify(data.title)
 
   if (!slug) {
     throw new Error("Unable to generate a valid slug from the title.")
   }
+
+  // A scheduled post gets its publish date when it is due to go live.
+  const publishedAt =
+    status === "published" ? new Date() : status === "scheduled" ? scheduledAt : null
 
   try {
     await db.transaction(async (tx) => {
@@ -254,7 +372,8 @@ export async function createPost(rawData: PostInput) {
           customSchema: data.customSchema || null,
 
           // Publishing
-          publishedAt: status === "published" ? new Date() : null,
+          scheduledAt,
+          publishedAt,
         })
         .returning()
 
@@ -262,9 +381,11 @@ export async function createPost(rawData: PostInput) {
         throw new Error("Post could not be created.")
       }
 
-      if (data.tagIds.length > 0) {
+      const tagIds = await resolveTagIds(tx, data.tags)
+
+      if (tagIds.length > 0) {
         await tx.insert(postTags).values(
-          data.tagIds.map((tagId) => ({
+          tagIds.map((tagId) => ({
             postId: newPost.id,
             tagId,
           }))
@@ -288,7 +409,7 @@ export async function createPost(rawData: PostInput) {
       // Foreign-key violation
       if (error.code === "23503") {
         throw new Error(
-          "The selected category, author, or tag is no longer available. Please refresh the page and try again."
+          "The selected category or author is no longer available. Please refresh the page and try again."
         )
       }
 
@@ -351,6 +472,8 @@ export async function updatePost(postId: string, rawData: PostInput) {
   const status = canPublish ? data.status : "draft"
   const isFeatured = canPublish ? data.isFeatured : existing.isFeatured
 
+  const scheduledAt = resolveScheduledAt(status, data.scheduledAt)
+
   const nextSlug = data.slug || slugify(data.title)
 
   if (!nextSlug) {
@@ -359,10 +482,25 @@ export async function updatePost(postId: string, rawData: PostInput) {
 
   const slugChanged = nextSlug !== existing.slug
 
-  const nextPublishedAt =
-    status === "published"
-      ? existing.publishedAt ?? new Date()
-      : existing.publishedAt
+  const now = new Date()
+
+  let nextPublishedAt: Date | null
+
+  if (status === "published") {
+    if (existing.status === "scheduled") {
+      // Keep the scheduled date if it already passed, otherwise publish now
+      nextPublishedAt =
+        existing.publishedAt && existing.publishedAt <= now
+          ? existing.publishedAt
+          : now
+    } else {
+      nextPublishedAt = existing.publishedAt ?? now
+    }
+  } else if (status === "scheduled") {
+    nextPublishedAt = scheduledAt
+  } else {
+    nextPublishedAt = existing.publishedAt
+  }
 
   try {
     await db.transaction(async (tx) => {
@@ -409,9 +547,10 @@ export async function updatePost(postId: string, rawData: PostInput) {
           customSchema: data.customSchema || null,
 
           // Publishing
+          scheduledAt,
           publishedAt: nextPublishedAt,
 
-          updatedAt: new Date(),
+          updatedAt: now,
         })
         .where(eq(posts.id, postId))
 
@@ -422,12 +561,14 @@ export async function updatePost(postId: string, rawData: PostInput) {
         })
       }
 
-      // Replace existing tags
+      // Replace this post's tags with the ones typed in the editor
       await tx.delete(postTags).where(eq(postTags.postId, postId))
 
-      if (data.tagIds.length > 0) {
+      const tagIds = await resolveTagIds(tx, data.tags)
+
+      if (tagIds.length > 0) {
         await tx.insert(postTags).values(
-          data.tagIds.map((tagId) => ({
+          tagIds.map((tagId) => ({
             postId,
             tagId,
           }))
@@ -449,7 +590,7 @@ export async function updatePost(postId: string, rawData: PostInput) {
 
       if (error.code === "23503") {
         throw new Error(
-          "The selected category or tag is no longer available. Please refresh the page and try again."
+          "The selected category is no longer available. Please refresh the page and try again."
         )
       }
 

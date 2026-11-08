@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import dynamic from "next/dynamic"
 import { LocateFixed, MapPin, Navigation, Search } from "lucide-react"
 import ToolField from "./ToolField"
@@ -13,16 +13,6 @@ const MosqueMap = dynamic(() => import("./MosqueMap"), {
 })
 
 type Point = { lat: number; lng: number; label: string }
-
-const UK_CITIES: Point[] = [
-  { label: "London", lat: 51.5074, lng: -0.1278 },
-  { label: "Birmingham", lat: 52.4862, lng: -1.8904 },
-  { label: "Manchester", lat: 53.4808, lng: -2.2426 },
-  { label: "Bradford", lat: 53.7938, lng: -1.7564 },
-  { label: "Leicester", lat: 52.6369, lng: -1.1398 },
-  { label: "Glasgow", lat: 55.8642, lng: -4.2518 },
-  { label: "Cardiff", lat: 51.4816, lng: -3.1791 },
-]
 
 const RADII = [1, 3, 5, 10]
 const EMPTY: Mosque[] = []
@@ -53,13 +43,18 @@ function formatDistance(km: number): { value: string; unit: string } {
   return { value: km.toFixed(1), unit: "km" }
 }
 
+function getPosition(options: PositionOptions): Promise<GeolocationPosition> {
+  return new Promise((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject, options))
+}
+
 export default function MosqueFinder() {
   const [point, setPoint] = useState<Point | null>(null)
   const [radiusKm, setRadiusKm] = useState(3)
   const [result, setResult] = useState<{ key: string; mosques: Mosque[]; error: string } | null>(null)
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const [locating, setLocating] = useState(false)
-  const [postcode, setPostcode] = useState("")
+  const [searching, setSearching] = useState(false)
+  const [place, setPlace] = useState("")
   const [error, setError] = useState("")
 
   // Results are stored with the request they belong to, so loading and fetch errors are derived
@@ -70,11 +65,11 @@ export default function MosqueFinder() {
   const mosques = ready && result ? result.mosques : EMPTY
   const fetchError = ready && result ? result.error : ""
 
-  const selectPoint = (p: Point) => {
+  const selectPoint = useCallback((p: Point) => {
     setPoint(p)
     setSelectedId(null)
     setError("")
-  }
+  }, [])
 
   const changeRadius = (r: number) => {
     setRadiusKm(r)
@@ -99,41 +94,73 @@ export default function MosqueFinder() {
     return () => ctrl.abort()
   }, [point, radiusKm])
 
-  const detect = () => {
+  const detect = useCallback(async () => {
     if (typeof navigator === "undefined" || !navigator.geolocation) {
-      setError("Location is not available in this browser. Choose a city or enter a postcode.")
+      setError("Location is not available in this browser. Search for a city, area or address instead.")
       return
     }
     setLocating(true)
     setError("")
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        setLocating(false)
-        selectPoint({ lat: pos.coords.latitude, lng: pos.coords.longitude, label: "Your location" })
-      },
-      (err) => {
-        setLocating(false)
-        setError(
-          err.code === 1
-            ? "Location permission was denied. Allow it in your browser, or choose a city or postcode instead."
-            : "We could not detect your location. Choose a city or enter a postcode instead."
-        )
-      },
-      { enableHighAccuracy: true, timeout: 12000, maximumAge: 60000 }
-    )
-  }
+    try {
+      let pos: GeolocationPosition
+      try {
+        pos = await getPosition({ enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 })
+      } catch (e) {
+        // Permission denied is final; for timeouts or unavailable GPS, retry with a coarser fix
+        if ((e as GeolocationPositionError).code === 1) throw e
+        pos = await getPosition({ enableHighAccuracy: false, timeout: 15000, maximumAge: 300000 })
+      }
+      selectPoint({ lat: pos.coords.latitude, lng: pos.coords.longitude, label: "Your location" })
+    } catch (e) {
+      const code = (e as GeolocationPositionError)?.code
+      setError(
+        code === 1
+          ? "Location permission was denied. Allow it in your browser settings, or search for a city, area or address instead."
+          : "We could not detect your location. Search for a city, area or address instead."
+      )
+    } finally {
+      setLocating(false)
+    }
+  }, [selectPoint])
 
-  const searchPostcode = async () => {
-    const pc = postcode.trim()
-    if (!pc) return
+  // If location permission was already granted, find nearby mosques straight away
+  useEffect(() => {
+    if (typeof navigator === "undefined" || !navigator.permissions?.query) return
+    let cancelled = false
+    navigator.permissions
+      .query({ name: "geolocation" as PermissionName })
+      .then((status) => {
+        if (!cancelled && status.state === "granted") detect()
+      })
+      .catch(() => {})
+    return () => {
+      cancelled = true
+    }
+  }, [detect])
+
+  const searchPlace = async () => {
+    const q = place.trim()
+    if (!q || searching) return
+    setSearching(true)
     setError("")
     try {
-      const res = await fetch(`https://api.postcodes.io/postcodes/${encodeURIComponent(pc)}`)
-      const data = await res.json()
-      if (!res.ok || !data?.result) throw new Error()
-      selectPoint({ lat: data.result.latitude, lng: data.result.longitude, label: data.result.postcode })
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q=${encodeURIComponent(q)}`,
+        { headers: { Accept: "application/json" } }
+      )
+      if (!res.ok) throw new Error()
+      const data = (await res.json()) as { lat: string; lon: string; display_name: string }[]
+      if (!data.length) throw new Error()
+      const top = data[0]
+      selectPoint({
+        lat: parseFloat(top.lat),
+        lng: parseFloat(top.lon),
+        label: top.display_name.split(",").slice(0, 2).join(",").trim(),
+      })
     } catch {
-      setError("We could not find that postcode. Check it and try again, for example B1 1AA.")
+      setError("We could not find that place. Check the spelling or try a nearby city, for example Birmingham or Dubai.")
+    } finally {
+      setSearching(false)
     }
   }
 
@@ -141,14 +168,16 @@ export default function MosqueFinder() {
   const near = nearest ? formatDistance(nearest.km) : null
 
   const hint = !point
-    ? "Detect your location or choose a city to find mosques near you."
+    ? locating
+      ? "Detecting your location..."
+      : "Allow location access to find the mosques closest to you."
     : loading
       ? "Finding mosques nearby..."
       : fetchError
         ? "We could not load mosques just now."
         : mosques.length === 0
-        ? `No mosques found within ${radiusKm} km. Try a larger distance.`
-        : `${mosques.length} ${mosques.length === 1 ? "mosque" : "mosques"} within ${radiusKm} km of ${point.label}.`
+          ? `No mosques found within ${radiusKm} km. Try a larger distance.`
+          : `${mosques.length} ${mosques.length === 1 ? "mosque" : "mosques"} within ${radiusKm} km of ${point.label}.`
 
   const secondaryBtn = `
     flex flex-1 items-center justify-center gap-2 rounded-xl border border-deep-teal/40 px-4 py-2.5
@@ -173,40 +202,38 @@ export default function MosqueFinder() {
             focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald/50
           "
         >
-          <LocateFixed className="h-4 w-4" aria-hidden="true" />
-          {locating ? "Detecting your location..." : "Use my location"}
+          <LocateFixed className={`h-4 w-4 ${locating ? "animate-pulse" : ""}`} aria-hidden="true" />
+          {locating ? "Detecting your location..." : point?.label === "Your location" ? "Refresh my location" : "Use my location"}
         </button>
 
-        <Heading>Or search a UK city</Heading>
-        <div className="flex flex-wrap gap-2" role="group" aria-label="Choose a UK city">
-          {UK_CITIES.map((c) => (
-            <button
-              key={c.label}
-              type="button"
-              onClick={() => selectPoint(c)}
-              aria-pressed={point?.label === c.label}
-              className={chipClass(point?.label === c.label)}
-            >
-              {c.label}
-            </button>
-          ))}
-        </div>
-
-        <Heading>Or enter a UK postcode</Heading>
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
+        <Heading>Or search any city, area or address</Heading>
+        <div
+          className="flex flex-col gap-3 sm:flex-row sm:items-end"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault()
+              searchPlace()
+            }
+          }}
+        >
           <div className="flex-1">
             <ToolField
-              id="m-postcode"
-              label="Postcode"
-              hint="For example B1 1AA"
+              id="m-place"
+              label="Place"
+              hint="For example Whitechapel, London or Dubai"
               unit=""
-              value={postcode}
-              onChange={(v: string) => setPostcode(v)}
+              value={place}
+              onChange={(v: string) => setPlace(v)}
             />
           </div>
-          <button type="button" onClick={searchPostcode} disabled={!postcode.trim()} className={`${secondaryBtn} sm:flex-none`}>
+          <button
+            type="button"
+            onClick={searchPlace}
+            disabled={!place.trim() || searching}
+            className={`${secondaryBtn} sm:flex-none`}
+          >
             <Search className="h-4 w-4" aria-hidden="true" />
-            Find mosques
+            {searching ? "Searching..." : "Find mosques"}
           </button>
         </div>
 
@@ -315,12 +342,12 @@ export default function MosqueFinder() {
         <p className="mt-1 font-serif text-[34px] font-medium leading-tight text-gold sm:text-[38px]">
           {near ? `${near.value} ${near.unit}` : "-"}
         </p>
-        <p className="mt-1 text-xs text-white/80">{nearest ? nearest.name : "Choose a location to begin"}</p>
+        <p className="mt-1 text-xs text-white/80">{nearest ? nearest.name : "Allow location access to begin"}</p>
 
         <dl className="mt-5 space-y-2.5 border-t border-white/15 pt-4 text-xs">
           <div className="flex items-baseline justify-between gap-3">
             <dt className="text-white/70">Searching from</dt>
-            <dd className="font-semibold">{point ? point.label : "Not set"}</dd>
+            <dd className="text-right font-semibold">{point ? point.label : "Not set"}</dd>
           </div>
           <div className="flex items-baseline justify-between gap-3">
             <dt className="text-white/70">Distance</dt>

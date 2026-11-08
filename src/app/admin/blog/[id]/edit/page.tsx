@@ -1,7 +1,7 @@
 ﻿import { notFound, redirect } from "next/navigation"
 import { db } from "@/db"
 import { categories, tags, postTags, users } from "@/db/schema"
-import { eq } from "drizzle-orm"
+import { asc, eq } from "drizzle-orm"
 import { getPostById } from "@/app/admin/blog/actions"
 import { PostEditor, type PostStatus } from "@/components/admin/post-editor/PostEditor"
 import { auth } from "@/auth"
@@ -52,7 +52,7 @@ export default async function EditPostPage({
     notFound()
   }
 
-  const [allCategories, allTags, existingPostTags] = await Promise.all([
+  const [allCategories, existingPostTags] = await Promise.all([
     db
       .select({
         id: categories.id,
@@ -62,17 +62,12 @@ export default async function EditPostPage({
 
     db
       .select({
-        id: tags.id,
         name: tags.name,
       })
-      .from(tags),
-
-    db
-      .select({
-        tagId: postTags.tagId,
-      })
       .from(postTags)
-      .where(eq(postTags.postId, id)),
+      .innerJoin(tags, eq(postTags.tagId, tags.id))
+      .where(eq(postTags.postId, id))
+      .orderBy(asc(tags.name)),
   ])
 
   const canPublish = can(caller.role, "posts:publish")
@@ -92,7 +87,6 @@ export default async function EditPostPage({
       <PostEditor
         postId={post.id}
         categories={allCategories}
-        tags={allTags}
         canPublish={canPublish}
         initialData={{
           title: post.title,
@@ -103,7 +97,10 @@ export default async function EditPostPage({
           isFeatured: post.isFeatured,
           status: post.status as PostStatus,
           categoryId: post.categoryId ?? "",
-          tagIds: existingPostTags.map((tag) => tag.tagId),
+          tags: existingPostTags.map((tag) => tag.name),
+
+          // FAQs
+          faqs: post.faqs ?? [],
 
           // SEO
           seoTitle: post.seoTitle ?? "",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -8,6 +8,7 @@ import {
   CalendarDays,
   CircleDot,
   Compass,
+  LocateFixed,
   Moon,
   type LucideIcon,
 } from "lucide-react";
@@ -58,14 +59,21 @@ const heroTools: HeroTool[] = [
   },
 ];
 
-/* ---------- Prayer times (UK by default) ---------- */
-const TZ = "Europe/London";
+/* ---------- Prayer times (follows the visitor's location) ---------- */
 const PRAYERS = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"] as const;
 type PrayerName = (typeof PRAYERS)[number];
-type Timings = Record<PrayerName, number>; // minutes since midnight (London)
+type Timings = Record<PrayerName, number>; // minutes since midnight (local to the place)
 
-const PRAYER_URL =
-  "https://api.aladhan.com/v1/timingsByCity?city=London&country=United%20Kingdom&method=15";
+type Place = { lat: number; lng: number; label: string };
+
+// Used until the visitor shares their location, or if they block it
+const DEFAULT_PLACE: Place = { lat: 51.51, lng: -0.13, label: "London, UK" };
+
+const GEO_OPTIONS: PositionOptions = {
+  enableHighAccuracy: false,
+  timeout: 10000,
+  maximumAge: 600000,
+};
 
 const RING_R = 40;
 const RING_C = 2 * Math.PI * RING_R;
@@ -77,9 +85,12 @@ function subscribe(onChange: () => void) {
 const getMinute = () => Math.floor(Date.now() / 60000);
 const getServerMinute = () => 0;
 
-function londonMinutes(ms: number) {
+// About 1 km of precision is plenty for prayer times, and keeps exact position private
+const round2 = (n: number) => Math.round(n * 100) / 100;
+
+function localMinutes(ms: number, timeZone: string) {
   const parts = new Intl.DateTimeFormat("en-GB", {
-    timeZone: TZ,
+    timeZone,
     hour: "numeric",
     minute: "numeric",
     hourCycle: "h23",
@@ -109,42 +120,126 @@ function formatRemaining(minutes: number) {
   return h > 0 ? `${h}h ${m}m` : `${m}m`;
 }
 
+// Turns coordinates into a short name like "Birmingham, United Kingdom"
+async function labelFor(lat: number, lng: number): Promise<string> {
+  try {
+    const res = await fetch(
+      `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`,
+    );
+    if (!res.ok) throw new Error("bad response");
+    const json = await res.json();
+    const town: string =
+      json?.city || json?.locality || json?.principalSubdivision || "";
+    let country = "";
+    if (json?.countryCode) {
+      try {
+        country =
+          new Intl.DisplayNames(["en"], { type: "region" }).of(
+            String(json.countryCode),
+          ) ?? "";
+      } catch {
+        country = "";
+      }
+    }
+    return [town, country].filter(Boolean).join(", ") || "Your location";
+  } catch {
+    return "Your location";
+  }
+}
+
+type GeoState = "idle" | "locating" | "done" | "denied";
+
+type TimesResult = {
+  key: string;
+  timings: Timings | null;
+  tz: string;
+  failed: boolean;
+};
+
 export default function Hero() {
   const minute = useSyncExternalStore(subscribe, getMinute, getServerMinute);
-  const [timings, setTimings] = useState<Timings | null>(null);
-  const [failed, setFailed] = useState(false);
+  const [place, setPlace] = useState<Place>(DEFAULT_PLACE);
+  const [geo, setGeo] = useState<GeoState>("idle");
+  const [result, setResult] = useState<TimesResult | null>(null);
+
+  const onPosition = useCallback((pos: GeolocationPosition) => {
+    const lat = round2(pos.coords.latitude);
+    const lng = round2(pos.coords.longitude);
+    setPlace({ lat, lng, label: "Your location" });
+    setGeo("done");
+    labelFor(lat, lng).then((label) =>
+      setPlace((p) => (p.lat === lat && p.lng === lng ? { ...p, label } : p)),
+    );
+  }, []);
+
+  const onGeoError = useCallback(() => setGeo("denied"), []);
+
+  // Ask for the visitor's location as soon as the page loads
+  useEffect(() => {
+    if (typeof navigator === "undefined" || !navigator.geolocation) return;
+    navigator.geolocation.getCurrentPosition(onPosition, onGeoError, GEO_OPTIONS);
+  }, [onPosition, onGeoError]);
+
+  function handleLocate() {
+    if (typeof navigator === "undefined" || !navigator.geolocation) {
+      setGeo("denied");
+      return;
+    }
+    setGeo("locating");
+    navigator.geolocation.getCurrentPosition(onPosition, onGeoError, GEO_OPTIONS);
+  }
+
+  // Load prayer times for the current place (also returns that place's timezone)
+  const { lat, lng } = place;
+  const key = `${lat},${lng}`;
 
   useEffect(() => {
     let cancelled = false;
-    fetch(PRAYER_URL)
+    const stamp = Math.floor(Date.now() / 1000);
+
+    fetch(
+      `https://api.aladhan.com/v1/timings/${stamp}?latitude=${lat}&longitude=${lng}`,
+    )
       .then((res) => {
         if (!res.ok) throw new Error("bad response");
         return res.json();
       })
       .then((json) => {
         const raw = json?.data?.timings;
+        const tz = String(json?.data?.meta?.timezone ?? "");
+        if (!tz) throw new Error("no timezone");
         const parsed = {} as Timings;
         for (const name of PRAYERS) {
           const value = parseClock(String(raw?.[name] ?? ""));
           if (value === null) throw new Error("bad timings");
           parsed[name] = value;
         }
-        if (!cancelled) setTimings(parsed);
+        if (!cancelled) setResult({ key, timings: parsed, tz, failed: false });
       })
       .catch(() => {
-        if (!cancelled) setFailed(true);
+        if (!cancelled) setResult({ key, timings: null, tz: "", failed: true });
       });
+
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [lat, lng, key]);
+
+  // Results belong to the place they were loaded for, so old times never show for a new place
+  const loaded = result?.key === key;
+  const timings = loaded && result ? result.timings : null;
+  const failed = loaded && result ? result.failed : false;
+  const tz =
+    loaded && result && result.tz
+      ? result.tz
+      : Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   /* Dates (client only — avoids hydration mismatch) */
   const ready = minute !== 0;
   const nowDate = new Date(minute * 60000);
   const hijri = ready
     ? new Intl.DateTimeFormat("en-GB-u-ca-islamic-umalqura", {
-        timeZone: TZ,
+        timeZone: tz,
         day: "numeric",
         month: "long",
         year: "numeric",
@@ -154,7 +249,7 @@ export default function Hero() {
     : "";
   const gregorian = ready
     ? new Intl.DateTimeFormat("en-GB", {
-        timeZone: TZ,
+        timeZone: tz,
         weekday: "short",
         day: "numeric",
         month: "short",
@@ -166,7 +261,7 @@ export default function Hero() {
   let remaining = 0;
   let progress = 0;
   if (ready && timings) {
-    const nowMin = londonMinutes(minute * 60000);
+    const nowMin = localMinutes(minute * 60000, tz);
     const mins = PRAYERS.map((p) => timings[p]);
     const ext = [mins[4] - 1440, ...mins, mins[0] + 1440];
     const idx = ext.findIndex((t) => t > nowMin);
@@ -331,7 +426,7 @@ sm:w-auto sm:px-6 sm:text-sm"
               </div>
             </div>
 
-            {/* RIGHT — glass card: Islamic date, UK prayer times, tools */}
+            {/* RIGHT — glass card: Islamic date, prayer times for your location, tools */}
             <div
               className="hero-from-right relative w-full max-w-[460px] shrink-0 lg:max-w-[390px] xl:max-w-[460px]"
               style={{ animationDelay: "0.55s" }}
@@ -351,8 +446,8 @@ sm:w-auto sm:px-6 sm:text-sm"
                       <p className="min-h-[26px] bg-gradient-to-r from-white via-white to-gold-light bg-clip-text font-heading text-[21px] font-semibold leading-tight text-transparent drop-shadow-[0_1px_1px_rgba(2,51,47,0.35)]">
                         {hijri || "\u00A0"}
                       </p>
-                      <p className="mt-0.5 min-h-5 text-[13px] leading-5 text-white/80">
-                        {ready ? `London, UK · ${gregorian}` : "\u00A0"}
+                      <p className="mt-0.5 min-h-5 truncate text-[13px] leading-5 text-white/80">
+                        {ready ? `${place.label} · ${gregorian}` : "\u00A0"}
                       </p>
                     </div>
 
@@ -409,25 +504,48 @@ sm:w-auto sm:px-6 sm:text-sm"
                     </div>
                   </div>
 
-                  {/* Next prayer */}
-                  <p className="mt-3 text-[13.5px] text-white/85">
-                    {nextName && timings ? (
-                      <>
-                        Next prayer —{" "}
-                        <span className="font-semibold text-gold-light">
-                          {nextName}
-                        </span>{" "}
-                        at{" "}
-                        <span className="font-semibold text-gold-light">
-                          {formatClock(timings[nextName])}
-                        </span>
-                      </>
-                    ) : failed ? (
-                      "Prayer times are unavailable right now"
-                    ) : (
-                      "Loading UK prayer times…"
+                  {/* Next prayer + use-my-location button */}
+                  <div className="mt-3 flex items-center justify-between gap-2">
+                    <p className="min-w-0 text-[13.5px] text-white/85">
+                      {nextName && timings ? (
+                        <>
+                          Next prayer —{" "}
+                          <span className="font-semibold text-gold-light">
+                            {nextName}
+                          </span>{" "}
+                          at{" "}
+                          <span className="font-semibold text-gold-light">
+                            {formatClock(timings[nextName])}
+                          </span>
+                        </>
+                      ) : failed ? (
+                        "Prayer times are unavailable right now"
+                      ) : (
+                        "Loading prayer times…"
+                      )}
+                    </p>
+
+                    {geo !== "done" && (
+                      <button
+                        type="button"
+                        onClick={handleLocate}
+                        disabled={geo === "locating"}
+                        aria-label="Use my location for prayer times"
+                        title={
+                          geo === "denied"
+                            ? "Location is blocked. Allow it in your browser settings, then tap again."
+                            : "Use my location"
+                        }
+                        className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-gold-light/40 text-gold-light transition-colors duration-300 hover:bg-gold-light hover:text-dark-teal focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-light disabled:pointer-events-none"
+                      >
+                        <LocateFixed
+                          size={14}
+                          aria-hidden="true"
+                          className={geo === "locating" ? "animate-pulse" : ""}
+                        />
+                      </button>
                     )}
-                  </p>
+                  </div>
 
                   {/* Prayer times row */}
                   <Link

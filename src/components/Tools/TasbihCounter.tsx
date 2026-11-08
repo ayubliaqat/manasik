@@ -118,7 +118,7 @@ const cardShadow =
 
 function Heading({ children }: { children: React.ReactNode }) {
   return (
-    <h3 className="mb-3 mt-7 border-b border-deep-teal/15 pb-2 font-heading text-sm font-semibold text-deep-teal first:mt-0">
+    <h3 className="mb-3 mt-6 border-b border-deep-teal/15 pb-2 font-heading text-sm font-semibold text-deep-teal first:mt-0">
       {children}
     </h3>
   )
@@ -184,7 +184,7 @@ export default function TasbihCounter() {
       : `${target - shown} to go in this round.`
 
   const secondaryBtn = `
-    flex flex-1 items-center justify-center gap-2 rounded-xl border border-deep-teal/40 px-4 py-2.5
+    flex flex-1 items-center justify-center gap-2 rounded-xl border border-deep-teal/40 px-4 py-2
     text-xs font-semibold text-deep-teal transition-colors duration-300
     hover:border-emerald hover:bg-emerald hover:text-white
     disabled:pointer-events-none disabled:opacity-50
@@ -192,9 +192,9 @@ export default function TasbihCounter() {
   `
 
   return (
-    <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-start">
+    <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start">
       {/* Counter (hero) */}
-      <section className={`rounded-2xl border-[1.5px] border-deep-teal/60 bg-card px-4 py-6 sm:px-6 sm:py-8 ${cardShadow}`}>
+      <section className={`rounded-2xl border-[1.5px] border-deep-teal/60 bg-card px-4 py-5 sm:px-6 sm:py-6 ${cardShadow}`}>
         <div className="flex flex-wrap justify-center gap-2" role="group" aria-label="Choose dhikr">
           {DHIKR.map((d) => (
             <button
@@ -209,8 +209,8 @@ export default function TasbihCounter() {
           ))}
         </div>
 
-        <div className="mt-6 text-center">
-          <p lang="ar" dir="rtl" className="font-serif text-3xl leading-relaxed text-deep-teal sm:text-4xl">
+        <div className="mt-5 text-center">
+          <p lang="ar" dir="rtl" className="font-serif text-2xl leading-relaxed text-deep-teal sm:text-3xl">
             {dhikr.arabic}
           </p>
           <p className="mt-1 text-xs text-muted-teal">{dhikr.meaning}</p>
@@ -219,7 +219,7 @@ export default function TasbihCounter() {
         <p
           aria-live="polite"
           className={`
-            mx-auto mb-6 mt-5 w-fit max-w-full rounded-full border px-4 py-2 text-center text-xs leading-relaxed
+            mx-auto mb-4 mt-4 w-fit max-w-full rounded-full border px-4 py-2 text-center text-xs leading-relaxed
             transition-colors duration-300
             ${atTarget ? "border-emerald bg-emerald/10 font-semibold text-emerald" : "border-deep-teal/20 bg-deep-teal/5 text-muted-teal"}
           `}
@@ -227,7 +227,7 @@ export default function TasbihCounter() {
           {hint}
         </p>
 
-        <div className="mx-auto w-full max-w-[340px] sm:max-w-[440px] xl:max-w-[500px]">
+        <div className="mx-auto w-full max-w-[230px] sm:max-w-[270px] xl:max-w-[290px]">
           <div className="relative aspect-square">
             {/* Progress ring */}
             <svg viewBox="0 0 200 200" className="absolute inset-0 h-full w-full" aria-hidden="true">
@@ -260,10 +260,10 @@ export default function TasbihCounter() {
                 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald/50
               "
             >
-              <span className="font-serif text-[56px] font-medium leading-none tabular-nums text-gold sm:text-[72px] xl:text-[84px]">
+              <span className="font-serif text-[40px] font-medium leading-none tabular-nums text-gold sm:text-[48px] xl:text-[54px]">
                 {shown}
               </span>
-              <span className="mt-2 text-xs text-white/70">of {target}</span>
+              <span className="mt-1.5 text-xs text-white/70">of {target}</span>
             </button>
           </div>
         </div>
@@ -272,7 +272,7 @@ export default function TasbihCounter() {
           {atTarget ? "Target reached" : ""}
         </span>
 
-        <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+        <div className="mt-5 flex flex-col gap-3 sm:flex-row">
           <button type="button" onClick={undo} disabled={count === 0} className={secondaryBtn}>
             <Undo2 className="h-4 w-4" aria-hidden="true" />
             Undo last
@@ -321,18 +321,18 @@ export default function TasbihCounter() {
       <aside
         aria-live="polite"
         className="
-          rounded-2xl border-[1.5px] border-deep-teal bg-deep-teal p-5 text-white sm:p-6
+          rounded-2xl border-[1.5px] border-deep-teal bg-deep-teal p-5 text-white
           shadow-[0_4px_8px_rgba(6,63,58,0.2),0_18px_34px_rgba(6,63,58,0.28)]
           lg:sticky lg:top-24
         "
       >
         <p className="text-[11px] font-semibold uppercase tracking-wide text-white/70">{dhikr.latin}</p>
-        <p className="mt-1 font-serif text-[34px] font-medium leading-tight text-gold sm:text-[38px]">
+        <p className="mt-1 font-serif text-[28px] font-medium leading-tight text-gold sm:text-[32px]">
           {count.toLocaleString("en-GB")}
         </p>
         <p className="mt-1 text-xs text-white/80">Total count for this dhikr</p>
 
-        <dl className="mt-5 space-y-2.5 border-t border-white/15 pt-4 text-xs">
+        <dl className="mt-4 space-y-2.5 border-t border-white/15 pt-4 text-xs">
           <div className="flex items-baseline justify-between gap-3">
             <dt className="text-white/70">This round</dt>
             <dd className="font-semibold">
@@ -349,7 +349,7 @@ export default function TasbihCounter() {
           </div>
         </dl>
 
-        <div className="mt-5 flex items-center justify-between gap-3 border-t border-white/15 pt-4 text-xs">
+        <div className="mt-4 flex items-center justify-between gap-3 border-t border-white/15 pt-4 text-xs">
           <span id="haptics-label" className="text-white/80">
             Vibrate on tap
           </span>
@@ -376,8 +376,8 @@ export default function TasbihCounter() {
           type="button"
           onClick={resetAll}
           className="
-            mt-5 flex w-full items-center justify-center gap-2
-            rounded-xl border border-white/30 px-3.5 py-2.5
+            mt-4 flex w-full items-center justify-center gap-2
+            rounded-xl border border-white/30 px-3.5 py-2
             text-xs font-semibold text-white
             transition-colors duration-300 hover:bg-white/10
             focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60

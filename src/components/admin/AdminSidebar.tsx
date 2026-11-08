@@ -9,12 +9,11 @@ import {
   PlusCircle,
   Users,
   FolderTree,
-  Tag,
   Moon,
   PanelLeftClose,
   PanelLeftOpen,
 } from "lucide-react"
-import { can, type Permission, type Role } from "@/lib//supabase/permissions"
+import { can, type Permission, type Role } from "@/lib/supabase/permissions"
 
 const navItems: {
   label: string
@@ -48,12 +47,6 @@ const navItems: {
     label: "Categories",
     href: "/admin/categories",
     icon: FolderTree,
-    permission: "taxonomy:manage",
-  },
-  {
-    label: "Tags",
-    href: "/admin/tags",
-    icon: Tag,
     permission: "taxonomy:manage",
   },
 ]

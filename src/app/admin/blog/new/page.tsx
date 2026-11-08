@@ -1,6 +1,6 @@
 ﻿import { redirect } from "next/navigation"
 import { db } from "@/db"
-import { categories, tags, users } from "@/db/schema"
+import { categories, users } from "@/db/schema"
 import { eq } from "drizzle-orm"
 import { PostEditor } from "@/components/admin/post-editor/PostEditor"
 import { auth } from "@/auth"
@@ -39,21 +39,12 @@ export default async function NewPostPage() {
     redirect("/admin/blog")
   }
 
-  const [allCategories, allTags] = await Promise.all([
-    db
-      .select({
-        id: categories.id,
-        name: categories.name,
-      })
-      .from(categories),
-
-    db
-      .select({
-        id: tags.id,
-        name: tags.name,
-      })
-      .from(tags),
-  ])
+  const allCategories = await db
+    .select({
+      id: categories.id,
+      name: categories.name,
+    })
+    .from(categories)
 
   const canPublish = can(caller.role, "posts:publish")
 
@@ -71,7 +62,6 @@ export default async function NewPostPage() {
 
       <PostEditor
         categories={allCategories}
-        tags={allTags}
         canPublish={canPublish}
       />
     </div>

@@ -1,9 +1,13 @@
 ﻿"use client"
 
-import { useState } from "react"
+import { useState, type KeyboardEvent } from "react"
+import { X } from "lucide-react"
 import { TiptapEditor } from "./TiptapEditor"
 import { ImageUploader } from "./ImageUploader"
-import type { PostFormData, Category, TagOption } from "./PostEditor"
+import type { PostFormData, Category } from "./PostEditor"
+
+const MAX_TAGS = 15
+const MAX_TAG_LENGTH = 40
 
 function slugify(text: string) {
   return text
@@ -18,14 +22,13 @@ export function ContentPanel({
   data,
   update,
   categories,
-  tags,
 }: {
   data: PostFormData
   update: <K extends keyof PostFormData>(key: K, value: PostFormData[K]) => void
   categories: Category[]
-  tags: TagOption[]
 }) {
   const [slugTouched, setSlugTouched] = useState(!!data.slug)
+  const [tagInput, setTagInput] = useState("")
 
   function handleTitleChange(value: string) {
     update("title", value)
@@ -34,13 +37,42 @@ export function ContentPanel({
     }
   }
 
-  function toggleTag(tagId: string) {
-    const exists = data.tagIds.includes(tagId)
+  function addTags(raw: string) {
+    const parts = raw
+      .split(",")
+      .map((t) => t.trim().replace(/\s+/g, " ").slice(0, MAX_TAG_LENGTH))
+      .filter(Boolean)
+
+    if (parts.length === 0) return
+
+    const next = [...data.tags]
+    for (const part of parts) {
+      if (next.length >= MAX_TAGS) break
+      const exists = next.some((t) => t.toLowerCase() === part.toLowerCase())
+      if (!exists) next.push(part)
+    }
+
+    update("tags", next)
+    setTagInput("")
+  }
+
+  function removeTag(tag: string) {
     update(
-      "tagIds",
-      exists ? data.tagIds.filter((id) => id !== tagId) : [...data.tagIds, tagId]
+      "tags",
+      data.tags.filter((t) => t !== tag)
     )
   }
+
+  function handleTagKeyDown(e: KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "Enter" || e.key === ",") {
+      e.preventDefault()
+      addTags(tagInput)
+    } else if (e.key === "Backspace" && tagInput === "" && data.tags.length > 0) {
+      removeTag(data.tags[data.tags.length - 1])
+    }
+  }
+
+  const tagLimitReached = data.tags.length >= MAX_TAGS
 
   return (
     <div className="space-y-6">
@@ -117,31 +149,54 @@ export function ContentPanel({
         </div>
 
         <div>
-          <label className="block text-xs font-medium text-charcoal mb-1.5">
+          <label
+            htmlFor="post-tags"
+            className="block text-xs font-medium text-charcoal mb-1.5"
+          >
             Tags
           </label>
-          <div className="flex flex-wrap gap-1.5 rounded-lg border border-soft-beige bg-warm-white px-2.5 py-2 min-h-[42px]">
-            {tags.length === 0 && (
-              <span className="text-xs text-muted-teal py-0.5">No tags yet</span>
-            )}
-            {tags.map((tag) => {
-              const isSelected = data.tagIds.includes(tag.id)
-              return (
+          <div className="flex flex-wrap items-center gap-1.5 rounded-lg border border-soft-beige bg-warm-white px-2.5 py-2 min-h-[42px] focus-within:ring-2 focus-within:ring-emerald focus-within:border-emerald transition">
+            {data.tags.map((tag) => (
+              <span
+                key={tag}
+                className="inline-flex items-center gap-1 text-xs pl-2.5 pr-1.5 py-1 rounded-full font-medium bg-gold/20 text-gold"
+              >
+                {tag}
                 <button
-                  key={tag.id}
                   type="button"
-                  onClick={() => toggleTag(tag.id)}
-                  className={`text-xs px-2.5 py-1 rounded-full font-medium transition ${
-                    isSelected
-                      ? "bg-gold/20 text-gold"
-                      : "bg-soft-beige/60 text-muted-teal hover:bg-soft-beige"
-                  }`}
+                  onClick={() => removeTag(tag)}
+                  aria-label={`Remove tag ${tag}`}
+                  className="rounded-full p-0.5 hover:bg-gold/30 transition"
                 >
-                  {tag.name}
+                  <X className="h-3 w-3" aria-hidden="true" />
                 </button>
-              )
-            })}
+              </span>
+            ))}
+            <input
+              id="post-tags"
+              type="text"
+              value={tagInput}
+              onChange={(e) => {
+                const v = e.target.value
+                if (v.includes(",")) addTags(v)
+                else setTagInput(v)
+              }}
+              onKeyDown={handleTagKeyDown}
+              onBlur={() => addTags(tagInput)}
+              disabled={tagLimitReached}
+              placeholder={
+                tagLimitReached
+                  ? "Tag limit reached"
+                  : data.tags.length === 0
+                    ? "Type a tag and press Enter"
+                    : "Add another..."
+              }
+              className="flex-1 min-w-[120px] bg-transparent text-sm text-charcoal placeholder:text-muted-teal focus:outline-none disabled:cursor-not-allowed"
+            />
           </div>
+          <p className="mt-1.5 text-[11px] text-muted-teal">
+            Press Enter or comma to add. Up to {MAX_TAGS} tags per post.
+          </p>
         </div>
       </div>
 

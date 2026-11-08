@@ -136,6 +136,9 @@ export const posts = pgTable(
 
     faqs: jsonb("faqs").$type<PostFaq[]>().default([]).notNull(),
 
+    // When a scheduled post should go live (null for drafts and published posts)
+    scheduledAt: timestamp("scheduled_at"),
+
     publishedAt: timestamp("published_at"),
     createdAt: timestamp("created_at").defaultNow(),
     updatedAt: timestamp("updated_at").defaultNow(),

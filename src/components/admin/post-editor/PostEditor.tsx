@@ -18,11 +18,6 @@ export type Category = {
   name: string
 }
 
-export type TagOption = {
-  id: string
-  name: string
-}
-
 export type PostStatus = "draft" | "published" | "scheduled"
 
 export type PostFormData = {
@@ -34,7 +29,12 @@ export type PostFormData = {
   isFeatured: boolean
   status: PostStatus
   categoryId: string
-  tagIds: string[]
+  // Tags typed by the user for this post (names, not ids)
+  tags: string[]
+
+  // Scheduling: local date and time from the picker, e.g. "2026-11-20T09:30".
+  // The edit page passes an ISO string, which is converted below.
+  scheduledAt: string
 
   // FAQs
   faqs: PostFaq[]
@@ -75,7 +75,9 @@ const emptyPost: PostFormData = {
   isFeatured: false,
   status: "draft",
   categoryId: "",
-  tagIds: [],
+  tags: [],
+
+  scheduledAt: "",
 
   faqs: [],
 
@@ -112,17 +114,27 @@ function isRedirectError(error: unknown): boolean {
   )
 }
 
+// Converts a saved ISO date into the local "YYYY-MM-DDTHH:mm" the picker needs
+function toLocalInputValue(iso: string | undefined): string {
+  if (!iso) return ""
+
+  const date = new Date(iso)
+  if (Number.isNaN(date.getTime())) return ""
+
+  const pad = (n: number) => String(n).padStart(2, "0")
+
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`
+}
+
 export function PostEditor({
   postId,
   initialData,
   categories,
-  tags,
   canPublish = false,
 }: {
   postId?: string
   initialData?: Partial<PostFormData>
   categories: Category[]
-  tags: TagOption[]
   canPublish?: boolean
 }) {
   const router = useRouter()
@@ -134,6 +146,10 @@ export function PostEditor({
   const [data, setData] = useState<PostFormData>({
     ...emptyPost,
     ...initialData,
+    // Always an array, even if the edit page passes nothing for tags.
+    tags: initialData?.tags ?? [],
+    // Saved ISO date -> local picker value.
+    scheduledAt: toLocalInputValue(initialData?.scheduledAt),
     // Always an array, even if the edit page passes nothing for faqs.
     faqs: initialData?.faqs ?? [],
     // Always a string, even if the edit page passes nothing for customSchema.
@@ -154,10 +170,26 @@ export function PostEditor({
     setIsSaving(true)
     setError(null)
 
+    const scheduledDate = data.scheduledAt ? new Date(data.scheduledAt) : null
+
+    if (
+      status === "scheduled" &&
+      (!scheduledDate || Number.isNaN(scheduledDate.getTime()))
+    ) {
+      setError("Choose a date and time to schedule this post.")
+      setIsSaving(false)
+      return
+    }
+
     const payload = {
       ...data,
       status,
       categoryId: data.categoryId || null,
+      // Sent as an exact moment (ISO), so the server needs no timezone guessing.
+      scheduledAt:
+        status === "scheduled" && scheduledDate
+          ? scheduledDate.toISOString()
+          : null,
     }
 
     try {
@@ -208,7 +240,6 @@ export function PostEditor({
               data={data}
               update={update}
               categories={categories}
-              tags={tags}
             />
           )}
 
@@ -249,6 +280,8 @@ export function PostEditor({
       <div className="space-y-5 xl:sticky xl:top-6">
         <PublishBox
           status={data.status}
+          scheduledAt={data.scheduledAt}
+          onScheduledAtChange={(value) => update("scheduledAt", value)}
           isSaving={isSaving}
           isEditing={!!postId}
           canPublish={canPublish}
