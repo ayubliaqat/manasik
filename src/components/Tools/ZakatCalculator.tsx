@@ -40,7 +40,7 @@ const TROY_OUNCE_GRAMS = 31.1034768
 const GOLD_URL = "https://api.gold-api.com/price/XAU"
 const SILVER_URL = "https://api.gold-api.com/price/XAG"
 const FX_URL = "https://open.er-api.com/v6/latest/USD"
-const CACHE_KEY = "zakat-market-v1"
+const CACHE_KEY = "zakat-market-v2"
 const CACHE_MS = 30 * 60 * 1000
 
 type Market = {
@@ -48,6 +48,7 @@ type Market = {
   silverUsd: number
   rates: Record<string, number>
   fetchedAt: number
+  priceUpdatedAt: number
 }
 type Metal = "gold" | "silver"
 type Status = "loading" | "live" | "error"
@@ -123,7 +124,20 @@ async function fetchMarket(signal: AbortSignal): Promise<Market> {
     if (rate > 0) rates[code] = rate
   }
 
-  const market: Market = { goldUsd, silverUsd, rates, fetchedAt: Date.now() }
+  // Use the price's own timestamp (older of gold and silver); fall back to fetch time
+  const stamps = [Date.parse(gold?.updatedAt), Date.parse(silver?.updatedAt)].filter(
+    (t) => Number.isFinite(t)
+  )
+  const now = Date.now()
+  const priceUpdatedAt = stamps.length ? Math.min(...stamps) : now
+
+  const market: Market = {
+    goldUsd,
+    silverUsd,
+    rates,
+    fetchedAt: now,
+    priceUpdatedAt,
+  }
   writeCache(market)
   return market
 }
@@ -237,11 +251,13 @@ export default function ZakatCalculator() {
   }, [values, basis, goldPrice, silverPrice])
 
   const updatedTime = market
-    ? new Date(market.fetchedAt).toLocaleTimeString("en-GB", {
+    ? new Date(market.priceUpdatedAt).toLocaleTimeString("en-GB", {
         hour: "2-digit",
         minute: "2-digit",
       })
     : ""
+
+  const rateMissing = status === "live" && !!market && !market.rates[currency]
 
   return (
     <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-start">
@@ -286,7 +302,10 @@ export default function ZakatCalculator() {
         <p className="-mt-1 mb-4 text-[11px] leading-relaxed text-muted-teal" aria-live="polite">
           {status === "loading" && "Loading today's prices…"}
           {status === "live" &&
+            !rateMissing &&
             `Live spot prices in ${currency}, updated ${updatedTime}. You can edit them. `}
+          {rateMissing &&
+            `No live rate for ${currency} right now. Please enter today's prices. `}
           {status === "error" &&
             "Couldn't load live prices. Please enter today's prices. "}
           {status !== "loading" && (

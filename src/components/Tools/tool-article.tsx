@@ -1,10 +1,19 @@
 import Link from "next/link"
 import type { ReactNode } from "react"
 
+export type ArticleTable = {
+  intro?: string
+  head: string[]
+  rows: string[][]
+  after?: string[]
+}
+
 export type ArticleSubsection = {
   heading: string
   paragraphs?: string[]
   bullets?: string[]
+  table?: ArticleTable
+  closing?: string[]
 }
 
 export type ArticleSection = {
@@ -12,6 +21,7 @@ export type ArticleSection = {
   paragraphs?: string[]
   numbered?: string[]
   bullets?: string[]
+  table?: ArticleTable
   subsections?: ArticleSubsection[]
   closing?: string[]
 }
@@ -37,9 +47,13 @@ function Squiggle({ className }: { className: string }) {
   )
 }
 
-// Turns [text](/internal-path) into a Next.js link. Plain text is left as is.
+const linkClass =
+  "font-semibold text-emerald underline decoration-gold decoration-2 underline-offset-4 transition-colors hover:text-deep-teal"
+
+// Turns [text](/internal-path) into a Next.js link and [text](https://...) into an external link.
+// Plain text is left as is.
 function renderText(text: string): ReactNode[] {
-  const pattern = /\[([^\]]+)\]\((\/[^)\s]*)\)/g
+  const pattern = /\[([^\]]+)\]\(((?:\/|https?:\/\/)[^)\s]*)\)/g
   const nodes: ReactNode[] = []
   let lastIndex = 0
   let match: RegExpExecArray | null
@@ -48,14 +62,24 @@ function renderText(text: string): ReactNode[] {
     if (match.index > lastIndex) {
       nodes.push(text.slice(lastIndex, match.index))
     }
+
+    const href = match[2]
     nodes.push(
-      <Link
-        key={`${match[2]}-${match.index}`}
-        href={match[2]}
-        className="font-semibold text-emerald underline decoration-gold decoration-2 underline-offset-4 transition-colors hover:text-deep-teal"
-      >
-        {match[1]}
-      </Link>
+      href.startsWith("/") ? (
+        <Link key={`${href}-${match.index}`} href={href} className={linkClass}>
+          {match[1]}
+        </Link>
+      ) : (
+        <a
+          key={`${href}-${match.index}`}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={linkClass}
+        >
+          {match[1]}
+        </a>
+      )
     )
     lastIndex = match.index + match[0].length
   }
@@ -68,6 +92,73 @@ function renderText(text: string): ReactNode[] {
 }
 
 const bodyText = "text-[15px] leading-relaxed text-charcoal"
+
+function Paragraphs({ items, className }: { items?: string[]; className?: string }) {
+  if (!items?.length) return null
+  return (
+    <div className={className ?? "space-y-3"}>
+      {items.map((p) => (
+        <p key={p} className={bodyText}>
+          {renderText(p)}
+        </p>
+      ))}
+    </div>
+  )
+}
+
+function Bullets({ items }: { items?: string[] }) {
+  if (!items?.length) return null
+  return (
+    <ul className="mt-3 space-y-1">
+      {items.map((item) => (
+        <li key={item} className={`flex items-start gap-3 ${bodyText}`}>
+          <span
+            aria-hidden="true"
+            className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-emerald"
+          />
+          <span>{renderText(item)}</span>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+function Table({ table }: { table?: ArticleTable }) {
+  if (!table) return null
+  return (
+    <div className="mt-4">
+      <Paragraphs items={table.intro ? [table.intro] : undefined} />
+      <div className="mt-3 overflow-x-auto rounded-xl border border-deep-teal/20 bg-white shadow-[0_2px_10px_rgba(6,63,58,0.08)]">
+        <table className="w-full min-w-[280px] border-collapse text-left text-sm">
+          <thead>
+            <tr className="bg-deep-teal text-white">
+              {table.head.map((h) => (
+                <th key={h} scope="col" className="px-4 py-3 font-semibold">
+                  {h}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {table.rows.map((row, i) => (
+              <tr key={row.join("|")} className={i % 2 ? "bg-emerald/5" : "bg-white"}>
+                {row.map((cell, j) => (
+                  <td
+                    key={`${cell}-${j}`}
+                    className={`px-4 py-3 text-charcoal ${j === 0 ? "font-medium" : ""}`}
+                  >
+                    {cell}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <Paragraphs items={table.after} className="mt-3 space-y-3" />
+    </div>
+  )
+}
 
 export default function ToolArticle({
   title,
@@ -138,13 +229,7 @@ export default function ToolArticle({
                 {section.heading}
               </h3>
 
-              <div className="space-y-3">
-                {section.paragraphs?.map((p) => (
-                  <p key={p} className={bodyText}>
-                    {renderText(p)}
-                  </p>
-                ))}
-              </div>
+              <Paragraphs items={section.paragraphs} />
 
               {section.numbered && (
                 <ol className="mt-3 space-y-2">
@@ -162,19 +247,8 @@ export default function ToolArticle({
                 </ol>
               )}
 
-              {section.bullets && (
-                <ul className="mt-3 space-y-1">
-                  {section.bullets.map((item) => (
-                    <li key={item} className={`flex items-start gap-3 ${bodyText}`}>
-                      <span
-                        aria-hidden="true"
-                        className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-emerald"
-                      />
-                      <span>{renderText(item)}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
+              <Bullets items={section.bullets} />
+              <Table table={section.table} />
 
               {section.subsections?.map((sub) => (
                 <div key={sub.heading} className="mt-5">
@@ -183,39 +257,14 @@ export default function ToolArticle({
                     {sub.heading}
                   </h4>
 
-                  <div className="space-y-3">
-                    {sub.paragraphs?.map((p) => (
-                      <p key={p} className={bodyText}>
-                        {renderText(p)}
-                      </p>
-                    ))}
-                  </div>
-
-                  {sub.bullets && (
-                    <ul className="mt-3 space-y-1">
-                      {sub.bullets.map((item) => (
-                        <li key={item} className={`flex items-start gap-3 ${bodyText}`}>
-                          <span
-                            aria-hidden="true"
-                            className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-emerald"
-                          />
-                          <span>{renderText(item)}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                  <Paragraphs items={sub.paragraphs} />
+                  <Bullets items={sub.bullets} />
+                  <Table table={sub.table} />
+                  <Paragraphs items={sub.closing} className="mt-3 space-y-3" />
                 </div>
               ))}
 
-              {section.closing && (
-                <div className="mt-3 space-y-3">
-                  {section.closing.map((p) => (
-                    <p key={p} className={bodyText}>
-                      {renderText(p)}
-                    </p>
-                  ))}
-                </div>
-              )}
+              <Paragraphs items={section.closing} className="mt-3 space-y-3" />
             </section>
           ))}
         </div>
