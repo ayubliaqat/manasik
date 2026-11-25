@@ -1,178 +1,351 @@
 // app/tools/page.tsx
-import type { Metadata } from "next"
-import AllTools from "@/components/Tools/alltools"
-import ToolArticle, { type ArticleSection } from "@/components/Tools/tool-article"
-import ToolsFaq, { type FaqItem } from "@/components/Tools/tools-faq"
+import type { Metadata } from "next";
+import AllTools from "@/components/Tools/alltools";
+import ToolArticle, {
+  type ArticleSection,
+} from "@/components/Tools/tool-article";
+import ToolsFaq, { type FaqItem } from "@/components/Tools/tools-faq";
 
 export const metadata: Metadata = {
-  title: "Free Islamic Tools for Hajj, Umrah & Daily Life | Manasik",
+  title: "Islamic Tools: Free Online Tools for Muslims | Religion Islam",
+
   description:
-    "Free Islamic tools in one place: prayer times, Qibla, Zakat and inheritance calculators, Hajj and Umrah planning, dhikr counter and more. Try them on Manasik.",
+    "Explore free Islamic tools online for daily worship, Hajj and Umrah planning, Quran learning and Islamic calculations. Find useful Muslim resources in one place.",
+
+  applicationName: "Religion Islam",
+
   alternates: {
-    canonical: "/tools",
+    canonical: "https://www.islam-religion.com/islamic-tools",
   },
+
+  keywords: [
+    "Islamic tools",
+    "free Islamic tools",
+    "online Islamic tools",
+    "Islamic tools for Muslims",
+    "Islamic resources",
+    "Islamic tools online",
+    "Islamic utilities",
+    "Muslim tools online",
+    "free Islamic resources",
+    "Islamic tools for daily life",
+    "Islamic tools for worship",
+    "Islamic calculation tools",
+    "online Islamic calculators",
+    "reliable Islamic information",
+  ],
+
   openGraph: {
-    title: "Free Islamic Tools for Hajj, Umrah & Daily Life | Manasik",
-    description:
-      "Free Islamic tools in one place: prayer times, Qibla, Zakat and inheritance calculators, Hajj and Umrah planning, dhikr counter and more.",
-    url: "/tools",
-    siteName: "Manasik",
     type: "website",
+    locale: "en_US",
+    url: "https://www.islam-religion.com/islamic-tools",
+    siteName: "Religion Islam",
+    title: "Islamic Tools: Free Online Tools for Muslims | Religion Islam",
+    description:
+      "Find free Islamic tools for daily worship, Hajj and Umrah preparation, Quran learning and Islamic calculations. Explore practical resources in one place.",
   },
+
   twitter: {
     card: "summary_large_image",
-    title: "Free Islamic Tools for Hajj, Umrah & Daily Life | Manasik",
+    title: "Islamic Tools: Free Online Tools for Muslims",
     description:
-      "Free Islamic tools in one place: prayer times, Qibla, Zakat and inheritance calculators, Hajj and Umrah planning, dhikr counter and more.",
+      "Explore free online Islamic tools for worship, pilgrimage preparation, Quran learning and everyday Muslim needs.",
   },
-}
 
-const useCases = [
-  "Plan your Hajj or Umrah preparations",
-  "Make a packing list and estimate travel costs",
-  "Check prayer times and find the Qibla",
-  "Count your dhikr and explore the 99 Names of Allah",
-  "Learn Quran reading basics with Noorani Qaida",
-  "Work out an estimated Zakat amount or explore inheritance shares",
-  "Convert Hijri dates and count down to Ramadan",
-]
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
 
-const accuracyTips = [
-  "Enter the correct details.",
-  "Follow the instructions on the tool.",
-  "Check dates, rates and other information that may change.",
-  "Ask a qualified expert when a calculation affects an important decision.",
-]
-
-const inheritanceFactors = [
-  "Which relatives are still alive",
-  "Any debts the person left behind",
-  "Valid bequests",
-  "The Islamic inheritance rules that apply",
-]
-
-const whoCanUse = [
-  "Preparing for your first Hajj or Umrah",
-  "Planning a trip with family",
-  "Learning to read the Quran",
-  "Checking prayer times or the Qibla",
-  "Keeping track of dhikr",
-  "Looking for help with Zakat or inheritance calculations",
-]
-
+  category: "Islamic Resources",
+};
 const guideSections: ArticleSection[] = [
   {
-    heading: "What Can You Do With Manasik Tools?",
+    heading: "Explore Our Collection of Islamic Tools",
     paragraphs: [
-      "Everyone has different needs. You may be getting ready for Umrah, learning the Quran or looking for help with an Islamic calculation. Manasik offers tools for these tasks and more.",
-      "You can use them to:",
-    ],
-    bullets: useCases,
-    closing: [
-      "Choose the tool you need from the list above and follow its instructions.",
+      "There is no single reason to visit an Islamic tools page. You might need something for an upcoming journey, or you may simply be looking for a resource to use today. We have brought together different options so you can find what you need without searching through unrelated websites.",
+      "Our collection currently includes 13 online Islamic tools above:",
+      "Choose a card to open the resource and find out how it works. Each tool has its own purpose so you can use the ones relevant to your needs without going through the entire collection.",
     ],
   },
   {
-    heading: "Are Manasik Tools Free to Use?",
+    heading: "Are Our Islamic Tools Accurate and Reliable?",
     paragraphs: [
-      "We want useful Islamic resources to be easy to access. You can explore the tools on this page and check each tool for any costs or access requirements. Our aim is to help you find practical support for pilgrimage planning and daily Islamic practice in one place.",
+      "When you use a tool for something important, you want to know where its result comes from. That is a fair question, particularly when the information relates to prayer, Islamic dates, financial calculations or religious responsibilities.",
+      "We take this seriously. Accuracy isn't the same for every type of tool. A prayer time depends on location and calculation settings. A financial calculator depends on the figures entered and the rules applied. An educational resource needs reliable references and clear explanations.",
+      "A few things are worth checking before you use a result:",
     ],
-  },
-  {
-    heading: "How Accurate Are Manasik Tools?",
-    paragraphs: [
-      "A tool is only as useful as the information behind it and the details you enter. We aim to make our tools clear and helpful, but you should check important results before acting on them.",
-      "For the best results:",
-    ],
-    bullets: accuracyTips,
-    closing: [
-      "This is especially important for Zakat and inheritance where personal circumstances and Islamic rulings can affect the result.",
-    ],
-  },
-  {
-    heading: "Can You Calculate Zakat With Manasik?",
-    paragraphs: [
-      "Manasik’s Zakat Calculator is intended to help you work out an estimate based on the information you enter. The result may depend on your eligible wealth, debts, the Nisab value and the calculation method used.",
-      "Before using the result, check whether the calculator covers the assets and deductions that apply to you. If you own different types of assets or are unsure about a ruling, speak to a qualified scholar.",
-    ],
-  },
-  {
-    heading: "Can You Calculate Inheritance Shares With Manasik?",
-    paragraphs: [
-      "Not sure how an estate gets divided under Islamic law? Our Inheritance Calculator shows you a rough split based on the relatives you enter. It helps most when several family members are involved and the shares get confusing.",
-    ],
-    subsections: [
-      {
-        heading: "What changes the final shares?",
-        bullets: inheritanceFactors,
-      },
+    bullets: [
+      "Whether the information you entered is correct.",
+      "Which calculation method or settings are selected.",
+      "Whether the information changes with time.",
+      "Whether your circumstances require additional guidance.",
     ],
     closing: [
-      "Use the result as a guide, not the final answer. Before you share out any assets, ask a qualified Islamic inheritance scholar to check the figures.",
+      "We want our Islamic tools to be useful starting points, not something you have to accept without question. If a result affects an important religious or financial decision, take the time to verify it.",
     ],
   },
   {
-    heading: "Who Can Use Manasik Tools?",
+    heading: "Where Does the Information and Data Come From?",
     paragraphs: [
-      "Manasik is for anyone looking for practical Islamic resources. You do not need to use every tool. Start with the one that meets your needs.",
-      "Our tools may help if you are:",
+      "Have you ever notced that two websites can show different prayer times or Islamic dates? This doesn't necessarily mean one is broken. They may be using different calculation methods, calendar conventions or regional information.",
+      "The same principle applies to other Islamic resources. The information behind a result depends on the type of tool and the details it uses.",
+      "Different resources may rely on:",
     ],
-    bullets: whoCanUse,
+    bullets: [
+      "Geographical information: Used when a result depends on your location.",
+      "Calculation methods: Applied to prayer schedules and financial estimates.",
+      "Calendar conventions: Used when working with Hijri and Gregorian dates.",
+      "Information you provide: Used to calculate or organise a result.",
+      "Religious references: Needed when presenting Islamic knowledge and learning material.",
+    ],
     closing: [
-      "Choose what works for you and use the guidance provided with each tool.",
+      "There is no single data source behind every tool. Where a calculation method or external provider is relevant, it should be identified on the corresponding tool page so you can understand how the result is produced.",
+      "We also recommend checking the references behind religious information, especially when it concerns matters of worship or Islamic obligations.",
     ],
   },
   {
-    heading: "Why Did We Create Manasik Tools?",
+    heading: "How Do Our Islamic Tools Work?",
     paragraphs: [
-      "Finding a useful Islamic resource can take time when you have to search across different websites. We created Manasik to bring practical tools for pilgrimage planning, daily worship, Quran learning and Islamic calculations together.",
-      "We want you to spend less time looking for resources and more time using them. Each tool has a clear purpose whether you are preparing for a journey or dealing with an everyday task.",
+      "You don't need to understand how the technology works behind a tool to use it. What matters is knowing what information it needs and what to do with the result.",
+      "Some of our Islamic digital resources work with information you enter yourself. Others use your selected location or provide an interactive feature directly on the page.",
+      "The process is generally straightforward:",
+    ],
+    numbered: [
+      "Open the tool you want to use.",
+      "Read the instructions provided.",
+      "Enter the required information or choose your settings.",
+      "Review the result or available features.",
+      "Check the information before relying on it.",
+    ],
+    closing: [
+      "If something doesn't look right, go back to your entries and settings first. A location, date or incorrect figure can make a difference to the result.",
     ],
   },
   {
-    heading: "Find the Tool You Need",
+    heading: "Do Our Islamic Tools Provide Real-Time and Updated Information?",
     paragraphs: [
-      "Ready to get started? Browse the tools listed above and choose the one that fits your needs. Whether you are planning your pilgrimage, learning something new or working through a calculation, Manasik is here to help you find a useful place to start.",
+      "Some information changes throughout the day, some changes with the Islamic calendar, and some stays the same. This is why it would be misleading to describe every online resource as a real-time service.",
+      "For example, prayer schedules are tied to the date, geographical location and selected calculation method. [Mosque Finder](/tools/mosque-finder) offers a live map with distances, depending on the available location information. A Hijri date conversion, on the other hand, follows the calendar convention used by the converter and may not match every local moon-sighting announcement.",
+      "It helps to understand three different types of information:",
+    ],
+    bullets: [
+      "Location-based information: Depends on your geographical position and relevant settings.",
+      "Calculated information: Produced from the figures and methods used by a tool.",
+      "Reference information: Provided for learning and planning or everyday use.",
+    ],
+    closing: [
+      "When information depends on an external source, its freshness also depends on that source. For important prayer schedules, Islamic dates and other changing details, check the relevant information before making plans.",
     ],
   },
-]
+  {
+    heading: "Can You Use Our Islamic Tools from Anywhere in the World?",
+    paragraphs: [
+      "Living in Lahore, travelling to Makkah or staying somewhere else entirely shouldn't stop you from accessing useful Islamic tools online. You can open our website through an internet-connected device wherever the service is available.",
+      "There is one thing to keep in mind: access and accuracy are not quite the same.",
+      "A tool may be available in your country, but its results can depend on your location and local settings. This is particularly important when checking prayer schedules or finding the direction of the Kaaba.",
+      "If you are using a location-based resource:",
+    ],
+    bullets: [
+      "Select your current city.",
+      "Check the local time zone.",
+      "Review the available calculation settings.",
+      "Update your location when travelling.",
+      "Follow local announcements where applicable.",
+    ],
+    closing: [
+      "A little attention to these details can prevent you from relying on information intended for a different location.",
+    ],
+  },
+  {
+    heading: "How to Get the Best Results from Our Islamic Tools",
+    paragraphs: [
+      "Before using a tool, take a moment to understand what it is asking you to do. It might seem like a small step but entering the right information can make a real difference.",
+      "For example, when working out an estimated Zakat amount you need to consider the wealth and financial details relevant to your circumstances. When checking prayer times the selected location and calculation method matter.",
+      "Here are a few habits worth following:",
+    ],
+    bullets: [
+      "Read the instructions before starting.",
+      "Check your entries and selected settings.",
+      "Use current information where required.",
+      "Review the result rather than assuming it is correct.",
+      "Ask for guidance when a matter needs personal attention.",
+    ],
+    closing: [
+      "If you are unsure about a particular result, don't simply change numbers until you get an answer that looks right. Find out which information or method applies to your situation.",
+    ],
+  },
+  {
+    heading: "Are Our Islamic Tools Free and Easy to Access?",
+    paragraphs: [
+      "You shouldn't have to install a different application every time you need a useful Islamic resource. Our collection is available through the website, making it easier to move between different resources from one place.",
+      "We aim to make our free Islamic resources straightforward to discover and access. You can browse the collection, open a tool and follow its instructions without having to learn a complicated system first.",
+      "Whether you are looking for an everyday worship resource or planning something further ahead, you can return to the collection whenever you need it.",
+      "Check the individual tool page for any specific access requirements or limitations.",
+    ],
+  },
+  {
+    heading: "Designed for Your Privacy and Convenience",
+    paragraphs: [
+      "Some tools need information to do their job. A location-based feature may ask where you are while a calculator needs figures relevant to the calculation. That doesn't mean you should share information without understanding why it is needed.",
+      "Before granting a permission or entering details consider what the tool is requesting.",
+      "A few sensible precautions can help:",
+    ],
+    bullets: [
+      "Check why location access is requested.",
+      "Review your browser permissions.",
+      "Avoid entering unnecessary personal information.",
+      "Read the website's [Privacy Policy](/privacy-policy).",
+      "Check how individual tools handle saved information.",
+    ],
+    closing: [
+      "For example, location access may help a tool determine information relevant to your current position. If you prefer not to share your location, check whether the tool offers manual entry instead.",
+      "You can read our [Privacy Policy](/privacy-policy) for further information about the website's approach to handling information.",
+    ],
+  },
+  {
+    heading: "Our Approach to Authentic Islamic Information",
+    paragraphs: [
+      "A digital resource can make information easier to find, but it should never make Islamic knowledge more confusing. When a subject involves worship, religious obligations or rulings, the information behind it matters.",
+      "We want Religion Islam to be a useful place to explore Islamic information online with a clear distinction between practical assistance and religious guidance.",
+      "The Quran and authentic Sunnah remain the foundations of Islamic knowledge. Scholarly explanations are also important when a matter requires interpretation or when different circumstances can affect a ruling.",
+      "This is particularly relevant to Zakat and inheritance. A calculator can help organise information and produce an estimate but personal circumstances and the applicable Islamic rulings need to be considered before acting on the result.",
+      "We encourage you to:",
+    ],
+    bullets: [
+      "Check Quranic and Hadith references.",
+      "Consider the scholarly context.",
+      "Ask qualified scholars about personal rulings.",
+      "Verify important religious information.",
+    ],
+    closing: [
+      "You can continue exploring through our [Duas](/duas), [Hajj Guide](/hajj-guide) and [Umrah Guide](/umrah-guide) where you can find further guidance on different aspects of Islamic practice.",
+    ],
+  },
+  {
+    heading: "Understanding the Limitations of Online Islamic Tools",
+    paragraphs: [
+      "An online tool can make a task easier but it cannot know every detail of your personal circumstances. That's something worth remembering, especially when a result concerns an important religious responsibility.",
+      "A calculator works with the information and rules available to it. A location-based result depends on the accuracy of your location information. Even Islamic dates can differ between communities because of local moon-sighting decisions.",
+      "Keep these limitations in mind:",
+    ],
+    bullets: [
+      "A calculated result may not cover every circumstance.",
+      "Location information can be imprecise.",
+      "External information can become outdated.",
+      "Calendar dates may differ between regions.",
+      "Religious rulings can require individual assessment.",
+    ],
+    closing: [
+      "For instance, Zakat calculations may involve different assets, debts and financial circumstances. Islamic inheritance can be more complicated when several heirs and debts or bequests are involved.",
+      "Use these Islamic tools for Muslims as practical assistance but don't treat their results as a replacement for qualified religious or professional advice.",
+    ],
+  },
+  {
+    heading: "Explore More Islamic Guidance and Resources",
+    paragraphs: [
+      "Perhaps you have found the tool you needed but there is something else you want to understand. Maybe you are preparing for pilgrimage, looking for a particular dua or planning your visit to important Islamic historical places.",
+      "You can continue exploring through our other resources.",
+      "If Hajj is on your mind, start with our [Hajj Guide](/hajj-guide). For those planning Umrah our [Umrah Guide](/umrah-guide) provides further guidance for the journey. You can also browse our [Duas](/duas) collection for supplications from the Quran and Sunnah.",
+      "Planning visits to Makkah and Madinah? Our [Ziyaaraat Guide](/ziyaaraat-guide) introduces important historical places while our [Travel Tips](/travel-tips) page covers practical considerations for travelling.",
+      "Each resource covers a different part of the journey so you can explore what is relevant without having to read everything at once.",
+    ],
+  },
+  {
+    heading: "What Do Our Islamic Tools Offer You?",
+    paragraphs: [
+      "You might have arrived here looking for one particular resource. Someone else might be exploring the collection for the first time. Either way, the idea is to give you a useful place to start.",
+      "Our Islamic tools for daily life bring several kinds of online assistance together:",
+    ],
+    bullets: [
+      "Worship: Resources for everyday Islamic practices.",
+      "Pilgrimage: Practical help with Hajj and Umrah preparation.",
+      "Calculations: Assistance with selected Islamic financial calculations.",
+      "Learning: Resources for Quran reading and Islamic knowledge.",
+      "Dates and location: Tools for relevant calendar and geographical information.",
+    ],
+    closing: [
+      "You don't need to use every resource or follow a particular order. Start with the one that answers your current question, then explore the rest whenever you need them.",
+      "We hope this collection makes finding useful Islamic utilities and free Islamic resources a little easier, wherever you are.",
+    ],
+  },
+];
 
 const toolsFaqs: FaqItem[] = [
   {
-    question: "Which tool should I start with for Hajj or Umrah?",
+    question: "Can I use more than one Islamic tool on Religion Islam?",
     answer:
-      "Start with the Hajj or Umrah checklist so you know what needs doing, then move on to the packing list and the cost estimator. Once your plans take shape, the prayer times, Qibla and dhikr tools can support your worship along the way.",
+      "Absolutely! You can explore and use different tools whenever you need them. For example, you might check a prayer time, use the Qibla Finder and then visit another tool. You can move between them freely.",
   },
   {
-    question: "How does the Qibla finder work?",
+    question: "What should I do if an Islamic tool does not work properly?",
     answer:
-      "It uses your location to work out the direction of the Kaaba from where you are. Allow location access, hold your phone flat and away from metal or magnets, and move it slowly until the direction settles.",
+      "First, refresh the page and try again. Check your internet connection and make sure you entered the right details. Still having trouble? Contact us and tell us what happened.",
   },
   {
-    question: "Why do prayer times differ between websites and apps?",
+    question: "Can I share an Islamic tool with my family?",
     answer:
-      "Prayer times depend on your location and the calculation method used, especially for Fajr and Isha. If your local mosque follows a particular method, check that the settings match it.",
+      "Yes, and you don't need to explain how to find it. Just copy the tool's page link and send it to your family or friends. They can open the link and use the same tool themselves.",
   },
   {
-    question: "What is Nisab and why does it matter for Zakat?",
+    question: "Are these resources suitable for beginners?",
     answer:
-      "Nisab is the minimum amount of wealth you must hold before Zakat becomes due. It is based on the value of gold or silver, so it changes with the market. Always check the current figure before you work out your Zakat.",
+      "Of course. You don't need to be an expert to get started. Each tool serves a different purpose so choose the one you need and follow the instructions on its page.",
   },
   {
-    question: "What is Noorani Qaida?",
+    question: "Can I bookmark a tool I use regularly?",
     answer:
-      "Noorani Qaida is a beginner's primer for learning to read the Quran. It teaches the Arabic letters, their sounds and the basic rules of recitation, step by step. It is a good starting point for children and adults who are new to reading Arabic.",
+      "Yes! Save its page in your browser's bookmarks. The next time you need it you can open it directly instead of searching for it again.",
   },
   {
-    question: "Why convert dates between Hijri and Gregorian?",
+    question: "Do the tools work without an internet connection?",
     answer:
-      "The Islamic calendar follows the moon, so its months fall on different Gregorian dates each year. Converting helps you plan for Ramadan, Hajj and other occasions. Actual start dates can vary by a day depending on moon sighting.",
+      "You'll need internet access to open our website and use its tools. Some features may behave differently once a page has loaded, depending on how that particular tool works.",
   },
-]
+  {
+    question: "Can I suggest another Islamic tool for the website?",
+    answer:
+      "We welcome useful suggestions. If there's an Islamic tool you'd like us to add, send us your idea. Your suggestion could help us decide what to build next.",
+  },
+  {
+    question:
+      "What should I do if I find incorrect information on a tool page?",
+    answer:
+      "Please let us know. Share the page link through our Contact Us page and point out the information you believe is incorrect. We'll review your feedback.",
+  },
+];
+
+const toolsFaqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://www.islam-religion.com/islamic-tools#faqs",
+  mainEntity: toolsFaqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer,
+    },
+  })),
+};
 
 export default function ToolsPage() {
   return (
     <main className="w-full overflow-x-clip">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(toolsFaqSchema).replace(/</g, "\\u003c"),
+        }}
+      />
+
       {/* Hero */}
       <section className="relative overflow-hidden bg-deep-teal pb-14 pt-9 text-center sm:pb-16 sm:pt-11 lg:pb-20 lg:pt-12">
         <div
@@ -183,16 +356,16 @@ export default function ToolsPage() {
           aria-hidden="true"
           className="pointer-events-none absolute bottom-[-240px] left-1/2 h-[400px] w-[130%] -translate-x-1/2 rounded-[50%_50%_0_0] bg-gold/[0.06]"
         />
-
+        {/* h1 + paragraphs */}
         <div className="relative z-10 mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-8">
           <span className="inline-block rounded-full border border-gold/50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-gold-light">
             Free tools
           </span>
 
           <h1 className="mt-4 text-balance font-heading text-[32px] font-bold leading-[1.15] tracking-[-0.02em] sm:text-[40px] lg:text-[48px]">
-            <span className="text-gold-light">Free Islamic</span>{" "}
+            <span className="text-gold-light">Free Islamic Tools</span>{" "}
             <span className="relative inline-block whitespace-nowrap text-white">
-              Tools
+              - 100% Correct
               <svg
                 aria-hidden="true"
                 viewBox="0 0 120 10"
@@ -240,8 +413,13 @@ export default function ToolsPage() {
       <div className="w-full min-w-0 bg-white">
         <ToolArticle
           badge="Guide"
-          title="A Simple Guide to"
-          highlight="Manasik Tools"
+          title="Islamic Tools to Support Your"
+          highlight="Everyday Muslim Life"
+          intro={`Looking for something to help with your daily worship? Perhaps you are preparing for Hajj or Umrah, checking an Islamic date, learning to read the Quran or trying to work out your Zakat. Whatever brings you here, you shouldn't have to visit several websites just to find a useful resource.
+
+At Religion Islam, we have brought together a collection of Islamic tools for different needs. You can find resources for pilgrimage preparation, worship, learning and Islamic calculations, all through one website.
+
+Some help you work with information, others make everyday tasks easier, and some give you a place to begin learning. Have a look through the collection and see what might be useful for you.`}
           sections={guideSections}
         />
       </div>
@@ -249,5 +427,5 @@ export default function ToolsPage() {
       {/* FAQ */}
       <ToolsFaq faqs={toolsFaqs} />
     </main>
-  )
+  );
 }

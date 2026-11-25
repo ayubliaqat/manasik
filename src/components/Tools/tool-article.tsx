@@ -217,7 +217,12 @@ export default function ToolArticle({
         </header>
 
         <div className="p-5 sm:p-8 lg:p-10">
-          {intro && <p className={bodyText}>{renderText(intro)}</p>}
+          {intro && (
+  <Paragraphs
+    items={intro.split(/\n\s*\n/).filter((paragraph) => paragraph.trim())}
+    className="space-y-3"
+  />
+)}
 
           {sections.map((section) => (
             <section
