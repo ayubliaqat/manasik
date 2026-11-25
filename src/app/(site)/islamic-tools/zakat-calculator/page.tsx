@@ -13,18 +13,19 @@ const SITE_URL = "https://www.islam-religion.com";
 const TOOLS_BASE_PATH = "/islamic-tools";
 const PAGE_PATH = `${TOOLS_BASE_PATH}/zakat-calculator`;
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
+const TITLE = "Zakat Calculator | Islam Religion";
+const DESCRIPTION =
+  "Work out your zakat with live gold and silver prices. Enter your assets and debts, choose gold or silver nisab, and see what is due in your own currency.";
 
 export const metadata: Metadata = {
-  title: "Zakat Calculator | Manasik",
-  description:
-    "Work out your zakat with live gold and silver prices. Enter your assets and debts, choose gold or silver nisab, and see what is due in your own currency.",
+  title: { absolute: TITLE },
+  description: DESCRIPTION,
   alternates: {
     canonical: PAGE_URL,
   },
   openGraph: {
-    title: "Zakat Calculator | Manasik",
-    description:
-      "Work out your zakat with live gold and silver prices. Enter your assets and debts, choose gold or silver nisab, and see what is due in your own currency.",
+    title: TITLE,
+    description: DESCRIPTION,
     url: PAGE_URL,
     siteName: "Islam Religion",
     type: "website",
@@ -32,9 +33,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Zakat Calculator | Manasik",
-    description:
-      "Work out your zakat with live gold and silver prices. Enter your assets and debts, choose gold or silver nisab, and see what is due in your own currency.",
+    title: TITLE,
+    description: DESCRIPTION,
   },
 };
 
@@ -82,7 +82,7 @@ const guideSections: GuideSection[] = [
 
 const articleSections: ArticleSection[] = [
   {
-    heading: "How to Use the Zakat Calculator",
+    heading: "Step-by-Step: Calculate Your Zakat Online",
     paragraphs: [
       "You can calculate your Zakat in a few simple steps. Make sure you have your account balances, gold and silver weights and other financial details ready.",
     ],
@@ -90,7 +90,7 @@ const articleSections: ArticleSection[] = [
       {
         heading: "1. Select Your Currency and Nisab Method",
         paragraphs: [
-          "Choose the currency you want to use such as GBP or USD. Then select what you want to calculate your Nisab using gold or silver.",
+          "Choose the currency you want to use, such as GBP or USD. Then choose whether to calculate your Nisab using gold or silver.",
           "The calculator uses the selected metal's price to work out the Nisab value.",
         ],
       },
@@ -120,7 +120,7 @@ const articleSections: ArticleSection[] = [
       {
         heading: "4. Add Your Debts",
         paragraphs: [
-          "Enter eligible debts that are currently due such as outstanding bills and short-term repayments.",
+          "Enter eligible debts that are currently due, such as outstanding bills and short-term repayments.",
           "The calculator deducts the amount you enter from your assets. Not every debt can be deducted in full. Mortgages, long-term loans and instalments may need a separate assessment under the Islamic guidance you follow.",
         ],
       },
@@ -135,7 +135,7 @@ const articleSections: ArticleSection[] = [
           "Estimated Zakat due.",
         ],
         closing: [
-          "If your wealth meets the selected Nisab and the other conditions for Zakat are fulfilled the calculator estimates 2.5% of your qualifying wealth.",
+          "If your wealth meets the selected Nisab and the other conditions for Zakat are fulfilled, the calculator estimates 2.5% of your qualifying wealth.",
           "Remember that this is an estimate. Your actual Zakat may depend on your circumstances and the scholarly guidance you follow.",
         ],
       },
@@ -179,7 +179,7 @@ const articleSections: ArticleSection[] = [
       "Zakat is one of the five pillars of Islam and an important responsibility for Muslims who meet its conditions. It requires eligible Muslims to give a portion of their qualifying wealth to people who are entitled to receive it.",
       "The word Zakat carries the meaning of purification and growth. Through Zakat, Muslims fulfil an important religious duty while helping people who are struggling financially.",
       "It is also important to understand the difference between Zakat and Sadaqah. Zakat is an obligatory form of charity for those who meet the required conditions, whereas Sadaqah is voluntary and can be given at any time. Both are valuable acts of generosity, but they have different rules and purposes.",
-      "Islam also provides guidance on how wealth is distributed among family members after a person's death. You can use our [Inheritance Calculator](/islamic-tools/inheritance-calculator) to explore Islamic inheritance shares. Since Zakat is based on the Islamic lunar year, our [Hijri Calendar Converter](/islamic-tools/hijri-calendar-converter) can also help you check Islamic dates.",
+      "Islam also provides guidance on how wealth is distributed among family members after a person's death. You can use our [Inheritance Calculator](/islamic-tools/inheritance-calculator) to explore Islamic inheritance shares. Since Zakat is based on the Islamic lunar year, our [Hijri Date Converter](/islamic-tools/hijri-date-converter) can also help you check Islamic dates.",
     ],
     subsections: [
       {
@@ -213,14 +213,14 @@ const articleSections: ArticleSection[] = [
       {
         heading: "Gold Nisab vs Silver Nisab",
         paragraphs: [
-          "Gold and silver Nisab can give different results. It is because the market value of each metal is different.",
+          "Gold and silver Nisab can give different results. This is because the market value of each metal is different.",
         ],
         bullets: [
           "Gold Nisab: Based on the value of 87.48 grams of gold.",
           "Silver Nisab: Based on the value of 612.36 grams of silver.",
         ],
         closing: [
-          "The silver threshold is usually lower in monetary terms. It means more people may become eligible to pay Zakat when using the silver method.",
+          "The silver threshold is usually lower in monetary terms. This means more people may become eligible to pay Zakat when using the silver method.",
           "Scholars differ on which method should be used in some circumstances. The Hanafi school traditionally uses silver, while many scholars from other schools use gold for certain personal wealth calculations.",
           "Our calculator lets you select either method. Choose the approach that follows the Islamic guidance you trust.",
         ],
@@ -231,7 +231,7 @@ const articleSections: ArticleSection[] = [
     heading: "How to Calculate Zakat on Gold",
     paragraphs: [
       "If you own gold jewellery, coins or bars, you may need to include their value in your Zakat calculation.",
-      "You need to know the value of your gold.",
+      "To work out its value, you need to know:",
     ],
     bullets: [
       "Its total weight.",
@@ -252,7 +252,7 @@ const articleSections: ArticleSection[] = [
         paragraphs: [
           "Yes. Gold jewellery is available in different purities such as 9K, 18K, 22K and 24K.",
           "Pure 24K gold contains more gold than lower-karat jewellery. This affects its value.",
-          "If you enter your gold weight into the calculator make sure the price per gram matches its purity. If the calculator only accepts one gold price, you may need to adjust the weight or value before entering it.",
+          "If you enter your gold weight into the calculator, make sure the price per gram matches its purity. If the calculator only accepts one gold price, you may need to adjust the weight or value before entering it.",
         ],
       },
       {
@@ -514,9 +514,8 @@ const webPageSchema = {
   "@type": "WebPage",
   "@id": `${PAGE_URL}#webpage`,
   url: PAGE_URL,
-  name: "Zakat Calculator – Calculate Your Zakat Online",
-  description:
-    "Calculate your Zakat online with our free Zakat Calculator. Estimate 2.5% Zakat on gold, silver, cash, savings, investments and other eligible assets.",
+  name: TITLE,
+  description: DESCRIPTION,
   isPartOf: {
     "@type": "WebSite",
     "@id": `${SITE_URL}/#website`,

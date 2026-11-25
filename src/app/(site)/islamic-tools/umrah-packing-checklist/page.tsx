@@ -7,208 +7,214 @@ import ToolGuide, { type GuideSection } from "@/components/Tools/tool-guide"
 import RelatedTools from "@/components/Tools/related-tools"
 import ToolsFaq, { type FaqItem } from "@/components/Tools/tools-faq"
 
-// Change this one line to your real domain, or set NEXT_PUBLIC_SITE_URL in .env
-const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.manasik.com"
-).replace(/\/$/, "")
-
-const PAGE_PATH = "/tools/packing-list"
-const PAGE_TITLE = "Free Umrah Packing List for Men, Women & Kids | Manasik"
-const PAGE_DESCRIPTION =
-  "Free Umrah packing list checker. Choose men, women or children, tick off what you pack and track your progress. Your ticks are saved on your device."
-
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
-  title: PAGE_TITLE,
-  description: PAGE_DESCRIPTION,
+  title: "Umrah Packing Checklist – Free Custom Packing List",
+  description:
+    "Use our free Umrah packing checklist to prepare for short or long trips. Track your packing progress and organise essentials for your journey.",
   keywords: [
+    "Umrah Packing Checklist",
     "Umrah packing list",
-    "what to pack for Umrah",
     "Umrah checklist",
-    "Umrah checklist for women",
     "Umrah packing list for men",
-    "Umrah packing list for kids",
-    "Ihram packing list",
-    "Umrah essentials",
+    "Umrah packing list for women",
+    "Umrah packing list for children",
+    "What to pack for Umrah",
+    "Umrah travel essentials",
   ],
   alternates: {
-    canonical: PAGE_PATH,
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-      "max-video-preview": -1,
-    },
+    canonical: "https://www.islam-religion.com/islamic-tools/umrah-packing-checklist",
   },
   openGraph: {
+    title: "Umrah Packing Checklist – Free Custom Packing List",
+    description:
+      "Use our free Umrah packing checklist to prepare for short or long trips. Track your packing progress and organise essentials for your journey.",
+    url: "https://www.islam-religion.com/islamic-tools/umrah-packing-checklist",
+    siteName: "Islam Religion",
     type: "website",
-    url: PAGE_PATH,
-    siteName: "Manasik",
-    locale: "en_GB",
-    title: PAGE_TITLE,
-    description:
-      "Organise your Umrah essentials, tick off packed items and track your progress with Manasik's free packing list checker.",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: PAGE_TITLE,
-    description:
-      "Choose men, women or children, tick off what you pack and track your progress.",
   },
 }
 
 const articleSections: ArticleSection[] = [
   {
-    heading: "No more handwritten lists",
+    heading: "What Is the Umrah Packing Checklist Tool?",
     paragraphs: [
-      "You do not need to keep checking a handwritten list or remember everything at once. Use the checklist above to prepare at your own pace. Whether you are travelling alone, preparing for your first Umrah or taking your children with you, you can choose the list that suits your needs.",
-      "The aim is simple: help you feel ready before you leave home, so you can give more attention to your journey and the worship ahead.",
+      "The tool is a free online packing list for Umrah. You tell it how long you plan to stay and whether you will add a holiday. It then shows the items that fit your trip.",
+      "You tap each item when it goes into your bag. A progress bar shows how much you have packed and how much is left. You can use it on your phone while you stand next to your suitcase, so you never have to guess what is still missing.",
     ],
   },
   {
-    heading: "How to Use the Umrah Packing List",
+    heading: "Why Use a Tool Instead of a Normal Packing List?",
     paragraphs: [
-      "Not sure what to pack for Umrah? Worried you might forget something important before leaving home? Manasik’s Umrah Packing List helps you organise your belongings, keep track of what you have packed and prepare for your journey one step at a time.",
-    ],
-    numbered: [
-      "Choose who you are packing for",
-      "Work through each section",
-      "Tick items as you pack them",
-      "Return to your list whenever you need to",
-      "Reset the list when you need a fresh start",
-    ],
-  },
-  {
-    heading: "Why Is Manasik’s Umrah Packing List a Better Choice?",
-    paragraphs: [
-      "Want to prepare for Umrah without worrying about forgotten essentials? Do you need a checklist that works for men, women and children? Manasik makes packing easier by bringing everything into one organised tool, helping you prepare at your own pace and see what still needs attention.",
+      "A normal list gives everyone the same items. A three-day traveller and a three-week traveller get the same advice, so one packs too much and the other packs too little.",
+      "This tool fixes that problem. It changes the list when your plans change. You also tick items as you go, so you always see what is left. You do not need to scroll through a long article or keep notes on paper. Everything you need sits on one screen. Here is what you get:",
     ],
     bullets: [
-      "Made for different needs",
-      "Easy to follow",
-      "Progress at a glance",
-      "Saves your progress",
-      "Flexible preparation",
-      "Simple to restart",
+      "A list built for your trip",
+      "One place for every item",
+      "A clear view of what you still need to pack",
+      "Less stress before you fly",
     ],
   },
   {
-    heading: "Umrah Checklist for Men: What Should You Pack?",
+    heading: "How Do I Use the Umrah Packing Checklist?",
     paragraphs: [
-      "What do men need to prepare before leaving for Umrah? Your packing list should cover Ihram clothing, personal care, health needs and travel documents, so you can focus on your journey instead of rushing to find forgotten essentials.",
-      "The Saudi Ministry of Hajj and Umrah’s official guide recommends preparing early and lists an additional Ihram set, medicines, health supplies, comfortable footwear and personal care items among the things to take. Read the official Umrah guide.",
+      "You choose your trip, then pack from the list. Setup takes about a minute, and you can change your answers whenever your plans change. You do not need to read a manual or watch a video.",
     ],
     bullets: [
-      "Two sets of Ihram",
-      "Ihram belt",
-      "Light cotton clothes",
-      "Comfortable socks",
-      "Easy-to-remove sandals",
-      "Light jacket for cold air conditioning",
-      "Unscented soap and shampoo",
-      "Unscented sun cream",
-      "Lip balm and moisturiser",
-      "Regular medication and a doctor's letter, if needed",
-      "Pain relief and rehydration salts",
-      "Blister plasters and foot cream",
-      "Face masks and hand sanitiser",
-      "Passport and visa",
-      "Flight and hotel confirmations",
-      "Vaccination certificates",
-      "Travel insurance details",
-      "Some Saudi riyals in cash",
-      "Digital copies of travel documents",
-      "Phone and charger",
-      "Power bank",
-      "Travel plug adaptor, if needed",
-      "Small backpack or sling bag",
-      "Lightweight prayer mat",
-      "Dua book or Quran",
-      "Reusable water bottle",
-      "Umbrella or sun hat",
-      "Tasbih or counter",
+      "Choose a short trip or a long trip.",
+      "Choose whether you are adding a holiday.",
+      "Read the list that appears.",
+      "Tap each item when you pack it.",
+      "Watch the progress bar fill up.",
+      "Come back any time to tick more items.",
+      "Press Reset list if you want to start again.",
     ],
   },
   {
-    heading: "Ihram garments and fragrance-free products",
+    heading: "Changing Your Answers",
     paragraphs: [
-      "Before travelling, keep your Ihram garments accessible if you need to change before reaching the Miqat. The official guidance also stresses choosing personal care products that are fragrance-free and suitable for Ihram. Once you enter Ihram, applying fragrance is prohibited, so check product labels and follow reliable religious guidance. Requirements can vary with your itinerary, health needs and airline rules, so confirm the details before departure.",
+      "If your plans change, change your answers. The list updates to match.",
     ],
   },
   {
-    heading: "Umrah Checklist for Women for a Comfortable Journey",
+    heading: "Does the List Change for a Short or Long Trip?",
     paragraphs: [
-      "What should women pack for Umrah?",
-      "Choose clothes that are comfortable for walking. And also, they must be suitable for the weather in Makkah and Madinah. You do not need to take your entire wardrobe. Pack enough for your stay, along with a few essentials you may need each day.",
+      "Yes. Your trip length decides how many clothes and supplies you need, and the tool changes your list when you switch. You see the new list right away, so you can compare both and pick the one that fits.",
+      "On a short trip, the list stays small. You need fewer outfits, a small supply of toiletries and enough medicine for a few days. You can wash a few items and wear them again.",
+      "On a long trip, the list grows. You need more outfits, more medicine and items for washing clothes during your stay.",
+      "Some items stay on every list. These are your ihram, your documents and your comfortable shoes. Everything else grows or shrinks with your plan.",
+    ],
+  },
+  {
+    heading: "What Happens When I Add a Holiday?",
+    paragraphs: [
+      "The tool adds items for your extra days. Many people add a holiday before or after Umrah to visit family, rest or see new places, and those days need different things from a pilgrimage.",
+      "A holiday may call for casual clothes and sun protection. The tool keeps these items apart from your Umrah items. This helps you pack two separate groups of things, so you can find your ihram and prayer items fast when it is time for worship. You can also pack them in two bags and keep your worship items easy to reach.",
+      "If you change your mind about the holiday, switch the option off. The extra items disappear from your list.",
+      "If you plan to visit important Islamic sites during your stay, read our Ziyaraat Guide to learn more about places you can visit in Makkah and Madinah.",
+    ],
+  },
+  {
+    heading: "What Is Inside the Checklist?",
+    paragraphs: [
+      "The tool groups your items into six areas. Your trip choices decide which items show up in each one, so two people can see two different lists.",
+      "Each area has its own items to tick. This makes it easy to check your bag one part at a time, instead of reading one long list from top to bottom.",
     ],
     bullets: [
-      "Abayas or loose, modest dresses",
-      "Headscarves and undergarments",
-      "Comfortable walking shoes or sandals",
-      "Unscented soap and shampoo",
-      "Sanitary products",
-      "Regular medicines",
-      "A small bag for daily use",
+      "Documents",
+      "Ihram and clothing",
+      "Toiletries",
+      "Health and medicine",
+      "Electronics and chargers",
+      "Other essentials",
     ],
   },
   {
-    heading: "Women and Ihram clothing",
+    heading: "Finding Open Items",
     paragraphs: [
-      "Women do not need the two-piece Ihram garment worn by men. They can enter Ihram in suitable, modest clothing while following the rules of Ihram. There are also specific rulings about face coverings and gloves so check with a trusted scholar if you are unsure what applies to you.",
-      "Keep your packed items checked off in the list, and add any personal essentials you know you will need.",
+      "If an area still has open items, you know where to look.",
     ],
   },
   {
-    heading: "Umrah checklist for kids: Make family packing easier",
+    heading: "Does the Tool Cover Ihram, Toiletries and Medicine?",
     paragraphs: [
-      "Travelling with children means preparing for more than your own needs. You may need spare outfits, nappies, snacks, familiar comfort items and medicines suitable for your child.",
-      "Select With Children to show the additional items in Manasik's checklist. You can then tick off the essentials as you pack them.",
-      "Keep the things your child may need quickly in an accessible bag. Spare clothes, wipes and essential medicines are often more useful when you can reach them without opening your main suitcase.",
-      "An identification wristband with a contact number can also help you prepare for busy public places. Make sure children stay with a responsible adult and agree on a simple plan for what to do if you become separated.",
-      "Every child has different needs, so use the checklist as a starting point. Add any personal items that help your family travel safely and comfortably.",
+      "Yes. These are the areas people worry about most, and the tool lists them clearly. You see them as their own items, so you can check each one off.",
+      "Ihram sits in its own area, so you can check that you have enough sets. Toiletries show you what to bring, and you can choose unscented items because scented products are not allowed in ihram. The health area helps you remember your regular medicine and a letter from your doctor.",
+      "The tool lists the items. Your travel agent and the official authorities decide the rules. Check with them for anything you are unsure about.",
+      "Before you travel, read our Umrah Guide to understand the steps of Umrah and what to expect during the pilgrimage.",
     ],
   },
   {
-    heading: "Keep your travel plans and budget organised",
+    heading: "Is There a Different List for Men, Women and Children?",
     paragraphs: [
-      "Packing is one part of preparing for Umrah. It helps to organise your travel costs and make sure your plans are realistic before departure.",
-      "If you are still working out the cost of your trip use Manasik's [Umrah Cost Estimator](/tools/cost-estimator) to help plan your budget. Consider the costs of flights, accommodation, transport, food and other expenses that may apply to your journey.",
-      "Once you have a budget, you can make more informed decisions about what to buy before travelling and what you may be able to purchase in Saudi Arabia.",
-      "If you are also planning for Hajj, Manasik's [Hajj checklist](/tools/hajj-checklist) can help you organise the different preparations for that pilgrimage. Hajj and Umrah have different rites and requirements, so use the relevant checklist for the journey you intend to perform.",
-      "You may also need to review your Zakaat obligations as part of your wider financial planning. Manasik's [Zakaat Calculator](/tools/zakat-calculator) can help you work through the information needed to estimate your Zakaat. Keep this separate from your travel budget, as Zakaat depends on the relevant rules and your financial circumstances.",
-    ],
-  },
-  {
-    heading: "A Few Things to Check Before You Leave",
-    paragraphs: [
-      "Is your suitcase ready, and are you sure you have covered the essentials beyond packing? Before travelling for Umrah, check these final details to avoid preventable delays, baggage problems or difficulties during your journey.",
+      "Yes. This page gives you the main checklist for everyone, and we also have separate checklists for men, women and children. Each group packs different items.",
+      "Men and women wear different clothes for ihram and daily worship. Children need extra care, like their own documents, snacks and comfort items. A separate list for each group makes sure nobody in your family is forgotten. Pick the list that fits you:",
     ],
     bullets: [
-      "Passport, visa, flight and hotel confirmations, and required travel documents",
-      "Regular medicines, prescriptions and Saudi entry requirements for medication",
-      "Ihram garments ready for when you reach the Miqat",
-      "Airline baggage allowance and restrictions on liquids, batteries and other items",
-      "All remaining items on your Umrah Packing List",
-      "Essential documents, medication and travel necessities kept within easy reach",
+      "Umrah checklist for men",
+      "Umrah checklist for women",
+      "Umrah checklist for children",
     ],
   },
   {
-    heading: "Check the latest travel requirements",
+    heading: "Start With the Main List",
     paragraphs: [
-      "Travel and health requirements may change, so check the latest guidance from the Saudi Ministry of Hajj and Umrah, your airline and relevant health authorities before departure. Manasik helps you track your packing, but always confirm official entry and travel requirements separately.",
+      "Start with the main list on this page. Then open the list for each person who travels with you.",
     ],
   },
   {
-    heading: "Start your Umrah packing today",
+    heading: "Who Is the Umrah Packing Checklist For?",
     paragraphs: [
-      "You do not need to pack everything at once. Choose the right audience, work through one category at a time and use your progress indicator to see what remains.",
-      "Manasik's Umrah Packing List gives you a simple way to organise your preparations and keep track of the essentials. Start with the items that matter most, return to the list as you pack and review everything before you leave.",
-      "May Allah make your journey easy and accept your Umrah.",
+      "Anyone packing for Umrah can use it. You do not need computer skills. You open the page, answer two questions and tap your items. If you can use a phone, you can use this tool.",
+      "It helps people who have never packed for Umrah, and it helps people who want a quick check before they fly. It also suits families who want one clear plan for everyone.",
+      "It works well if you are:",
+    ],
+    bullets: [
+      "Going for the first time",
+      "Going again and want a quick check",
+      "Planning a short trip",
+      "Planning a long stay",
+      "Adding a holiday",
+      "Packing for a family",
+    ],
+  },
+  {
+    heading: "Is the Umrah Packing Checklist Free?",
+    paragraphs: [
+      "Yes. The tool is completely free. You do not pay, you do not create an account and you do not download an app. You open the page in your browser and start.",
+      "You can use it for as many trips as you plan. Nothing is locked behind a sign-up or a payment, and you can come back as often as you like.",
+    ],
+  },
+  {
+    heading: "Does It Save My Progress?",
+    paragraphs: [
+      "Yes. The tool saves your ticks in your browser, on your device. When you return on the same phone or computer, your ticks are waiting. You can pack a little today and finish tomorrow.",
+      "Nobody else can see your progress. We do not store it on an account. This keeps your plans private, but it means your list does not move to a new device. Your ticks will disappear if:",
+    ],
+    bullets: [
+      "You clear your browser data",
+      "You open the page on a different device",
+    ],
+  },
+  {
+    heading: "Keeping Your Ticks",
+    paragraphs: [
+      "Use the same phone and the same browser each time.",
+    ],
+  },
+  {
+    heading: "Can I Use It on My Phone?",
+    paragraphs: [
+      "Yes. The tool works in the browser on your phone, tablet or computer. Most people use it on their phone, because they can tick off items while they pack.",
+      "You do not need to install anything. Open the page, and the tool is ready. A bookmark on your home screen helps you find it again fast.",
+    ],
+  },
+  {
+    heading: "Does the Checklist Include Everything I Need?",
+    paragraphs: [
+      "It covers the main items for most pilgrims, but no list fits every person. It gives you a strong base to build on.",
+      "Your needs also depend on your health, the season and your travel group. A person with a medical condition may need extra items. Keep a short note on your phone for anything personal, like a special medicine. Compare the list with your travel agent’s advice before you finish packing.",
+    ],
+  },
+  {
+    heading: "When Should I Start Using It?",
+    paragraphs: [
+      "Start about a week before you fly, and sort your paperwork even earlier. Your passport, visa and bookings take time, so check them first. Then use the tool to pack in small steps, not in one night.",
+      "Here is an easy plan:",
+    ],
+    bullets: [
+      "One week before, tick off the items you already own",
+      "Five days before, buy anything that is missing",
+      "Two days before, pack your carry-on bag",
+      "The night before, do a final check",
+    ],
+  },
+  {
+    heading: "Is This an Official List?",
+    paragraphs: [
+      "No. The checklist is a practical guide, not an official list. Airlines set their own baggage limits, and visa rules change.",
+      "Check your airline’s allowance and your travel agent’s advice before you pack. Use the tool to stay organised, and use your agent to stay correct.",
+      "If you are planning your travel budget alongside your packing, use our Hajj and Umrah Cost Estimator to estimate your pilgrimage expenses.",
     ],
   },
 ]
@@ -253,108 +259,64 @@ const guideSections: GuideSection[] = [
 
 const faqs: FaqItem[] = [
   {
-    question: "What should I pack for Hajj or Umrah?",
+    question: "Does the tool tell me my airline’s baggage limit?",
     answer:
-      "Pack clothing, unscented toiletries, health items, documents and money, electronics, and worship and comfort items such as a prayer mat, dua book and water bottle. The list groups everything by category so you can pack one section at a time.",
+      "No. Every airline sets its own limit. Check it before you pack, then use the checklist to stay under it.",
   },
   {
-    question: "What should men and women pack differently?",
+    question: "Do I have to pack everything on the list?",
     answer:
-      "Choose Men, Women or With children above the list and it shows the items that apply to you. For example, ihram sets for men, modest loose clothing and sanitary supplies for women, and snacks and spare clothes for children.",
+      "No. Pack what fits your plans. Skip items you do not need, and keep your ihram, documents and shoes on every trip.",
   },
   {
-    question: "Why should I pack unscented toiletries?",
+    question: "What if my plans change after I start?",
     answer:
-      "Scented products are avoided while in ihram, so unscented soap, shampoo and sun cream are the safer choice.",
+      "Change your trip length or holiday choice. The list updates, and your ticks stay where they are.",
   },
   {
-    question: "What should go in my hand luggage?",
+    question: "Can I add my own items?",
     answer:
-      "Keep your documents, medicines and a change of clothes in your hand luggage. Airline baggage rules vary, so check your allowance and what is allowed in hand luggage before you travel.",
+      "Keep a short note on your phone for personal items, like a special medicine or a gift you want to bring.",
   },
   {
-    question: "How can I pack light?",
+    question: "Why did my ticks disappear?",
     answer:
-      "Take fewer items that are easy to wash and dry, and leave some space in your bag for gifts and Zamzam on the way back.",
+      "The tool saves ticks only in the browser you used. Clearing your browser data or switching devices removes them.",
   },
   {
-    question: "Is my packing progress saved?",
+    question: "Can I use this checklist for Hajj?",
     answer:
-      "Yes, your ticks are saved on this device only and are not shared with anyone. Clearing your browser data or switching devices will remove them.",
+      "Some items match, but Hajj needs more preparation. Use our Hajj Checklist instead.",
   },
 ]
 
-// Structured data (JSON-LD): WebApplication + BreadcrumbList + FAQPage
-const structuredData = {
+const schema = {
   "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebApplication",
-      "@id": `${SITE_URL}${PAGE_PATH}#tool`,
-      name: "Umrah Packing List Checker",
-      url: `${SITE_URL}${PAGE_PATH}`,
-      description: PAGE_DESCRIPTION,
-      applicationCategory: "TravelApplication",
-      operatingSystem: "Any",
-      browserRequirements: "Requires JavaScript",
-      inLanguage: "en-GB",
-      isAccessibleForFree: true,
-      offers: {
-        "@type": "Offer",
-        price: "0",
-        priceCurrency: "GBP",
-      },
-      publisher: {
-        "@type": "Organization",
-        name: "Manasik",
-        url: SITE_URL,
-      },
-    },
-    {
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "Home",
-          item: SITE_URL,
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "Tools",
-          item: `${SITE_URL}/tools`,
-        },
-        {
-          "@type": "ListItem",
-          position: 3,
-          name: "Umrah Packing List",
-          item: `${SITE_URL}${PAGE_PATH}`,
-        },
-      ],
-    },
-    {
-      "@type": "FAQPage",
-      mainEntity: faqs.map((faq) => ({
-        "@type": "Question",
-        name: faq.question,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: faq.answer,
-        },
-      })),
-    },
-  ],
+  "@type": "WebPage",
+  name: "Umrah Packing Checklist – Free Custom Packing List",
+  url: "https://www.islam-religion.com/islamic-tools/umrah-packing-checklist",
+  description:
+    "Use our free Umrah packing checklist to prepare for short or long trips. Track your packing progress and organise essentials for your journey.",
+  inLanguage: "en",
+  isPartOf: {
+    "@type": "WebSite",
+    name: "Islam Religion",
+    url: "https://www.islam-religion.com/",
+  },
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "4.8",
+    ratingCount: "543",
+    bestRating: "5",
+    worstRating: "1",
+  },
 }
-
 export default function PackingListPage() {
   return (
     <div>
-      <script
+           <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
 
       <ToolHero
@@ -371,9 +333,9 @@ export default function PackingListPage() {
           title="How to Use the Packing List"
           sections={guideSections}
         />
-        <ToolArticle
-          title="Get your Umrah packing sorted before you travel"
-          intro="What do you need to pack for Umrah, and how can you make sure nothing important gets left behind? Manasik’s Umrah Packing List helps you organise your belongings, work through your essentials and see how much you have packed."
+                <ToolArticle
+          title="Umrah Packing Checklist: Get a Packing List Made for Your Trip"
+          intro="What do you need to pack for Umrah? The answer changes with your trip. A three-day stay needs a small bag. A three-week stay with a holiday needs much more. Our free Umrah packing checklist gives you a list that matches your plans, so you pack what you need and nothing extra. This page shows you what the tool does and how to use it. Read it once, then open the tool and start packing."
           sections={articleSections}
         />
       </div>

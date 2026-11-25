@@ -1,485 +1,389 @@
-// app/islamic-tools/qibla-finder/page.tsx
-import type { Metadata } from "next";
-import ToolHero from "@/components/Tools/tool-hero";
-import QiblaFinder from "@/components/Tools/QiblaFinder";
-import ToolArticle, {
-  type ArticleSection,
-} from "@/components/Tools/tool-article";
-import ToolGuide, { type GuideSection } from "@/components/Tools/tool-guide";
-import RelatedTools from "@/components/Tools/related-tools";
-import ToolsFaq, { type FaqItem } from "@/components/Tools/tools-faq";
+"use client"
 
-const SITE_URL = "https://www.islam-religion.com";
-const TOOLS_BASE_PATH = "/islamic-tools";
-const PAGE_PATH = `${TOOLS_BASE_PATH}/qibla-finder`;
-const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
-const TITLE = "Free Qibla Finder Online – Find Qibla Direction";
-const DESCRIPTION =
-  "Find your Qibla direction online with our free Qibla Finder. Use your location or enter coordinates to check the Kaaba bearing and distance to Makkah.";
+import { useCallback, useEffect, useMemo, useState } from "react"
+import geomagnetism from "geomagnetism"
+import { Compass, LocateFixed, MapPin } from "lucide-react"
+import ToolField from "./ToolField"
 
-export const metadata: Metadata = {
-  title: { absolute: TITLE },
-  description: DESCRIPTION,
-  keywords: ["Qibla Finder"],
-  alternates: {
-    canonical: PAGE_URL,
-  },
-  openGraph: {
-    type: "website",
-    url: PAGE_URL,
-    title: TITLE,
-    description: DESCRIPTION,
-    siteName: "Islam Religion",
-    locale: "en_GB",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: TITLE,
-    description: DESCRIPTION,
-  },
-};
+const KAABA = { lat: 21.4225, lon: 39.8262 }
 
-const guideSections: GuideSection[] = [
-  {
-    heading: "Four simple steps",
-    variant: "steps",
-    items: [
-      "Tap Use my location, or type your coordinates.",
-      "Read your Qibla direction and the distance to the Kaaba.",
-      "Turn on the live compass on your phone.",
-      "Turn slowly until the pointer turns green.",
-    ],
-  },
-  {
-    heading: "What this tool does",
-    variant: "highlight",
-    items: [
-      "Finds the Qibla direction from anywhere in the world.",
-      "Shows how far you are from the Kaaba in kilometres.",
-      "Gives you a live compass on your phone.",
-      "Corrects the compass for magnetic declination.",
-      "Has a dial you can turn by hand if your device has no compass.",
-      "Keeps your location on your device.",
-    ],
-  },
-  {
-    heading: "Handy tips",
-    variant: "tips",
-    items: [
-      "Hold your phone flat.",
-      "Keep it away from magnets and metal.",
-      "Move it in a figure of 8 if the pointer looks wrong.",
-      "No location? Type your latitude and longitude.",
-      "Not sure? Check with your local mosque.",
-    ],
-  },
-  {
-    heading: "Please note",
-    variant: "note",
-    text: "The result depends on your location and your phone's compass. If you are unsure, compare it with the Qibla direction at your local mosque.",
-  },
-];
+const toRad = (d: number) => (d * Math.PI) / 180
+const toDeg = (r: number) => (r * 180) / Math.PI
+const norm = (d: number) => ((d % 360) + 360) % 360
 
-const articleSections: ArticleSection[] = [
-  {
-    heading: "How to Use the Qibla Finder",
-    paragraphs: ["Follow these steps to find your direction and use the compass."],
-    subsections: [
-      {
-        heading: "1. Open the Qibla Finder",
-        paragraphs: [
-          "Visit the Qibla Finder page on Islam Religion's tool page. Make sure you have an internet connection to open the tool. It won't work offline.",
-        ],
-      },
-      {
-        heading: "2. Set Your Location",
-        paragraphs: [
-          "Choose automatic location detection. Your browser will ask for permission to access your location. Select Allow to continue.",
-          "If you don't want to share your location you can enter your latitude and longitude manually.",
-        ],
-      },
-      {
-        heading: "3. View Your Qibla Bearing",
-        paragraphs: [
-          "Once your coordinates are available the tool calculates the direction towards the Kaaba.",
-          "Your result shows the Qibla bearing in degrees and the geographical distance from your location to Makkah.",
-        ],
-      },
-      {
-        heading: "4. Use the Live Compass",
-        paragraphs: [
-          "Select the live compass option to use your phone's direction sensors. Your browser may ask for permission to access motion and orientation data.",
-          "Hold your phone flat and turn slowly. The green pointer indicates when your phone is aligned with the calculated Qibla direction.",
-          "Check your browser permissions and device compatibility as well if the compass doesn't respond.",
-        ],
-      },
-    ],
-  },
-  {
-    heading: "How Does the Qibla Finder Calculate the Direction?",
-    paragraphs: [
-      "The calculator uses your current location to find the Qibla direction. It calculates the direction from your position to the Kaaba in Makkah. It helps you know which direction to face when offering prayers. Make sure your device location is enabled for accurate results.",
-      "It needs two details:",
-    ],
-    bullets: [
-      "Latitude: Your position north or south of the Equator.",
-      "Longitude: Your position east or west of the Prime Meridian.",
-    ],
-    closing: [
-      "Using these coordinates the calculator finds the initial bearing along the Earth's surface from your location to the Kaaba. This is your Qibla direction.",
-    ],
-  },
-  {
-    heading: "What Is a Qibla Bearing?",
-    paragraphs: [
-      "A Qibla bearing tells you which direction to face. It is measured in degrees clockwise from true north.",
-      "Here are the main compass bearings:",
-    ],
-    table: {
-      head: ["Bearing", "Direction"],
-      rows: [
-        ["0° or 360°", "North"],
-        ["45°", "Northeast"],
-        ["90°", "East"],
-        ["135°", "Southeast"],
-        ["180°", "South"],
-        ["225°", "Southwest"],
-        ["270°", "West"],
-        ["315°", "Northwest"],
-      ],
-      after: [
-        "Your bearing depends on where you are. For example, the Qibla direction from London is different from the direction in Lahore or New York.",
-      ],
-    },
-  },
-  {
-    heading: "What Does the Qibla Finder Show?",
-    paragraphs: ["You can check several details after entering your location."],
-    subsections: [
-      {
-        heading: "Qibla Direction",
-        paragraphs: [
-          "The calculated direction towards the Kaaba displayed as a compass bearing in degrees.",
-        ],
-      },
-      {
-        heading: "Distance to the Kaaba",
-        paragraphs: [
-          "The geographical distance between your location and the Kaaba in Makkah.",
-        ],
-      },
-      {
-        heading: "Latitude and Longitude",
-        paragraphs: [
-          "Your geographical coordinates which the calculator uses to determine your position.",
-        ],
-      },
-      {
-        heading: "Magnetic Declination",
-        paragraphs: [
-          "The difference between true north and magnetic north. This information helps account for the difference between the geographical bearing and your phone's magnetic compass reading.",
-        ],
-      },
-      {
-        heading: "Phone Heading",
-        paragraphs: [
-          "When the live compass is active, this shows the direction your phone is pointing. You can compare it with the Qibla bearing to align your phone.",
-        ],
-      },
-    ],
-  },
-  {
-    heading: "How to Find Qibla Without Location Access",
-    paragraphs: [
-      "You can still use the calculator if you don't want your browser to detect your current location. Simply enter your coordinates yourself.",
-    ],
-    numbered: [
-      "Find the latitude and longitude of your location.",
-      "Open the Islam Religion Qibla Finder.",
-      "Enter your latitude.",
-      "Enter your longitude.",
-      "Select Show Qibla for these coordinates.",
-    ],
-    closing: [
-      "The calculator will use the coordinates you provide to work out the direction.",
-    ],
-  },
-  {
-    heading: "Where Can You Find Your Coordinates?",
-    paragraphs: [
-      "A map service that displays geographical coordinates can help you find them.",
-    ],
-    table: {
-      intro: "For example London's approximate coordinates are:",
-      head: ["Coordinate", "Value"],
-      rows: [
-        ["Latitude", "51.5074"],
-        ["Longitude", "-0.1278"],
-      ],
-      after: [
-        "These coordinates are only an example. Enter the details for your actual location to get the correct result.",
-      ],
-    },
-  },
-  {
-    heading: "What Is Magnetic Declination?",
-    paragraphs: [
-      "Your phone's compass and the geographical Qibla calculation use different north references.",
-    ],
-    bullets: [
-      "True north refers to the geographical North Pole.",
-      "Magnetic north is the direction indicated by a magnetic compass.",
-    ],
-    closing: [
-      "The difference between these two directions is called magnetic declination. It changes varying on your location.",
-      "This matters when using the live Qibla compass. The calculator works out your Qibla bearing using geographical coordinates while your phone uses magnetic sensors to determine its heading.",
-      "The tool accounts for magnetic declination when correcting the compass reading helping the pointer align with the calculated Qibla direction.",
-    ],
-  },
-  {
-    heading: "Why Is My Qibla Compass Showing the Wrong Direction?",
-    paragraphs: [
-      "Your Qibla bearing may be correct even when your phone's compass gives an unusual reading. Before using it, check these common issues.",
-    ],
-    subsections: [
-      {
-        heading: "1. Incorrect Location",
-        paragraphs: [
-          "If your phone detects the wrong position the calculated direction may also be incorrect.",
-          "Check your location settings or enter your coordinates manually.",
-        ],
-      },
-      {
-        heading: "2. Poor Compass Calibration",
-        paragraphs: [
-          "Your phone's compass may need calibration. Try moving it in a figure-of-eight motion and check the reading again.",
-        ],
-      },
-      {
-        heading: "3. Magnetic Interference",
-        paragraphs: [
-          "Keep your phone away from magnets, speakers and metal objects. They can interfere with its compass. If the reading seems inaccurate move away from them and check again.",
-        ],
-      },
-      {
-        heading: "4. Phone Position",
-        paragraphs: [
-          "Holding your phone at an unusual angle can affect the reading. Keep it flat and turn slowly while watching the pointer.",
-        ],
-      },
-      {
-        heading: "5. Unsupported Phone Sensors",
-        paragraphs: [
-          "Some devices and browsers don't support the sensors required for a live compass. Check your browser permissions and device compatibility if the pointer doesn't move.",
-          "For another check, compare your result with the Qibla direction at your local mosque. You can also use our [Mosque Finder](/islamic-tools/mosque-finder) to find a nearby mosque.",
-        ],
-      },
-    ],
-  },
-  {
-    heading: "Is My Location Safe When Using the Qibla Finder?",
-    paragraphs: [
-      "You may prefer not to share your location with an online tool. That's why the manual coordinate option is available.",
-      "Our Qibla Finder is designed to perform location calculations on your device without sending your location elsewhere. You can enter your coordinates yourself if you don't want to allow automatic detection.",
-      "Your browser also lets you control location and sensor permissions.",
-    ],
-  },
-  {
-    heading: "What Is the Qibla Direction in Islam?",
-    paragraphs: [
-      "The Qibla is the direction Muslims face when offering Salah. It points towards the Kaaba located inside Masjid al-Haram in Makkah.",
-      "Muslims around the world face towards the same sacred place during their five daily prayers. The compass direction changes according to your geographical position but the destination remains the Kaaba.",
-    ],
-  },
-  {
-    heading: "Why Do Muslims Face the Qibla During Salah?",
-    paragraphs: [
-      "Facing the Qibla is an important requirement of Salah for Muslims.",
-      "Allah gives this instruction in Surah Al-Baqarah (2:144). Allah commands Prophet Muhammad ﷺ and the believers to turn towards Masjid al-Haram when praying.",
-      "It establishes the Kaaba as the direction of prayer for Muslims. It also brings Muslims together in worship, wherever they may be.",
-      "After finding your Qibla direction, you can also check accurate daily [Prayer Times](/islamic-tools/prayer-times) to keep track of your five daily prayers.",
-    ],
-  },
-  {
-    heading: "Find Your Qibla Direction with Islam Religion",
-    paragraphs: [
-      "You don't need to guess which way to face during Salah. Use our free Qibla Finder to check the direction of the Kaaba from your location.",
-      "Allow automatic location detection or enter your coordinates manually. You can then view your bearing, check the distance to Makkah and use the live compass on a compatible phone.",
-      "Open Islam Religion's Qibla Finder and check your direction before Salah.",
-    ],
-  },
-  {
-    heading: "A Note About Accuracy",
-    paragraphs: [
-      "The result depends on the accuracy of your location details and compass readings. Check your coordinates before calculating the direction, and keep your phone away from magnets and metal objects when using the live compass. If you're unsure about the reading compare it with the Qibla direction at your local mosque.",
-      "If you have questions about using our tool, feel free to [contact us](/contact).",
-    ],
-  },
-];
+function qiblaBearing(lat: number, lon: number) {
+  const p1 = toRad(lat)
+  const p2 = toRad(KAABA.lat)
+  const dl = toRad(KAABA.lon - lon)
+  const y = Math.sin(dl) * Math.cos(p2)
+  const x = Math.cos(p1) * Math.sin(p2) - Math.sin(p1) * Math.cos(p2) * Math.cos(dl)
+  return norm(toDeg(Math.atan2(y, x)))
+}
 
-const faqs: FaqItem[] = [
-  {
-    question: "How can I find my Qibla direction online?",
-    answer:
-      "Open our Qibla Finder and allow your browser to detect your location. The calculator will show your Qibla bearing. You can also enter your coordinates manually.",
-  },
-  {
-    question: "Is the Qibla Finder free?",
-    answer:
-      "Yes. Islam Religion's online Qibla Finder is free to use. No account or registration is required.",
-  },
-  {
-    question: "Does the Qibla Finder work on mobile phones?",
-    answer:
-      "Yes. You can open it on a mobile phone, tablet or computer. The live compass requires a compatible device with the necessary sensors.",
-  },
-  {
-    question: "Does the Qibla Finder need GPS?",
-    answer:
-      "The calculator needs your geographical coordinates but not necessarily GPS. Your device may use GPS, Wi-Fi or other location services to identify your position. You can also enter the manual coordinates.",
-  },
-  {
-    question: "Can I find Qibla without sharing my location?",
-    answer:
-      "Yes. Enter your latitude and longitude manually if you don't want your browser to detect your position.",
-  },
-  {
-    question: "Why does my Qibla compass show a different direction?",
-    answer:
-      "Magnetic interference, incorrect location details, poor calibration and unsupported phone sensors can affect the reading. Check these before relying on the live compass.",
-  },
-  {
-    question: "What is the Qibla direction from the UK?",
-    answer:
-      "There is no single bearing for the whole UK. The direction varies between cities such as London, Manchester, Birmingham and Glasgow. Enter your location to calculate your own bearing.",
-  },
-  {
-    question: "What is the Qibla direction from Pakistan?",
-    answer:
-      "It depends on your city. Lahore, Karachi, Islamabad and other locations have different bearings. Use your current coordinates to get your result.",
-  },
-  {
-    question: "Can I use the Qibla Finder while travelling?",
-    answer:
-      "Yes. Open the tool at your new destination and update your location. It will calculate the Qibla direction for your new position.",
-  },
-  {
-    question: "Can I use the Qibla Finder without the internet?",
-    answer:
-      "An internet connection is needed to open the online tool. Some features may continue working after the page loads depending on your browser and device, but offline use is not guaranteed.",
-  },
-];
+function distanceKm(lat: number, lon: number) {
+  const R = 6371
+  const dLat = toRad(KAABA.lat - lat)
+  const dLon = toRad(KAABA.lon - lon)
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(toRad(lat)) * Math.cos(toRad(KAABA.lat)) * Math.sin(dLon / 2) ** 2
+  return 2 * R * Math.asin(Math.sqrt(a))
+}
 
-const webPageSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "@id": `${PAGE_URL}#webpage`,
-  url: PAGE_URL,
-  name: TITLE,
-  description: DESCRIPTION,
-  isPartOf: {
-    "@type": "WebSite",
-    "@id": `${SITE_URL}/#website`,
-    name: "Islam Religion",
-    url: `${SITE_URL}/`,
-  },
-  about: {
-    "@id": `${PAGE_URL}#app`,
-  },
-  mainEntity: {
-    "@id": `${PAGE_URL}#app`,
-  },
-  inLanguage: "en",
-};
+function cardinal(deg: number) {
+  const points = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"]
+  return points[Math.round(deg / 45) % 8]
+}
 
-const webApplicationSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "@id": `${PAGE_URL}#app`,
-  name: "Qibla Finder",
-  url: PAGE_URL,
-  applicationCategory: "UtilitiesApplication",
-  operatingSystem: "Any",
-  browserRequirements: "Requires JavaScript. Requires HTML5.",
-  isAccessibleForFree: true,
-  offers: {
-    "@type": "Offer",
-    price: "0",
-    priceCurrency: "GBP",
-  },
-  provider: {
-    "@type": "Organization",
-    "@id": `${SITE_URL}/#organization`,
-    name: "Islam Religion",
-    url: `${SITE_URL}/`,
-  },
-};
+type Coords = { lat: number; lon: number }
 
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "@id": `${PAGE_URL}#faq`,
-  url: PAGE_URL,
-  mainEntity: faqs.map((item) => ({
-    "@type": "Question",
-    name: item.question,
-    acceptedAnswer: {
-      "@type": "Answer",
-      text: item.answer,
-    },
-  })),
-};
+type IOSOrientationEvent = DeviceOrientationEvent & {
+  webkitCompassHeading?: number
+}
 
-const jsonLd = (data: object) => JSON.stringify(data).replace(/</g, "\\u003c");
+type OrientationPermissionApi = typeof DeviceOrientationEvent & {
+  requestPermission?: () => Promise<"granted" | "denied">
+}
 
-export default function QiblaFinderPage() {
+const cardShadow =
+  "shadow-[inset_0_0_14px_rgba(6,63,58,0.2),0_2px_4px_rgba(6,63,58,0.1),0_12px_26px_rgba(6,63,58,0.18)]"
+
+function Heading({ children }: { children: React.ReactNode }) {
   return (
-    <div>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: jsonLd(webPageSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: jsonLd(webApplicationSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: jsonLd(faqSchema) }}
-      />
+    <h3 className="mb-3 mt-7 border-b border-deep-teal/15 pb-2 font-heading text-sm font-semibold text-deep-teal first:mt-0">
+      {children}
+    </h3>
+  )
+}
 
-      <ToolHero
-        title="Free Qibla"
-        highlight="Finder"
-        description="Find out which direction to face during Salah. Use your location or enter your coordinates to check the Kaaba bearing, distance to Makkah, and live compass."
-      />
+const secondaryBtn = `
+  flex w-full items-center justify-center gap-2 rounded-xl border border-deep-teal/40 px-4 py-2.5
+  text-xs font-semibold text-deep-teal transition-colors duration-300
+  hover:border-emerald hover:bg-emerald hover:text-white
+  disabled:pointer-events-none disabled:opacity-50
+  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald/50
+`
 
-      <div className="bg-warm-white">
-        <section className="mx-auto max-w-5xl px-4 pb-10 sm:px-6 lg:px-8">
-          <QiblaFinder />
-        </section>
-        <ToolGuide
-          title="How to Use the"
-          highlight="Qibla Finder"
-          sections={guideSections}
-        />
-        <ToolArticle
-          title="Free Qibla Finder – Find the Direction of the Kaaba"
-          intro="Not sure which direction to face during Salah? Our free Qibla Finder helps you find the direction of the Kaaba in Makkah, wherever you are. Open Islam Religion's online Qibla Finder and allow location access. The tool uses your geographical coordinates to calculate the Qibla direction and display your bearing. You can also enter your latitude and longitude manually if you don't want to use automatic location detection. Along with the direction, you can check the distance to the Kaaba, view a live compass and see magnetic declination details. The tool works on mobile phones, tablets and computers without requiring an account."
-          sections={articleSections}
-        />
-      </div>
+export default function QiblaFinder() {
+  const [coords, setCoords] = useState<Coords | null>(null)
+  const [latInput, setLatInput] = useState("")
+  const [lonInput, setLonInput] = useState("")
+  const [error, setError] = useState("")
+  const [locating, setLocating] = useState(false)
+  const [compassOn, setCompassOn] = useState(false)
+  const [heading, setHeading] = useState<number | null>(null)
+  const [manualHeading, setManualHeading] = useState(0)
 
-      <RelatedTools
-        keys={[
-          "prayer-times",
-          "mosque-finder",
-          "hijri-converter",
-          "zakat-calculator",
-        ]}
-      />
+  const locateMe = () => {
+    setError("")
+    if (!("geolocation" in navigator)) {
+      setError("Your browser does not support location. Enter your coordinates instead.")
+      return
+    }
+    setLocating(true)
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const lat = pos.coords.latitude
+        const lon = pos.coords.longitude
+        setCoords({ lat, lon })
+        setLatInput(lat.toFixed(4))
+        setLonInput(lon.toFixed(4))
+        setLocating(false)
+      },
+      () => {
+        setError("We could not get your location. Allow access or enter your coordinates.")
+        setLocating(false)
+      },
+      { enableHighAccuracy: true, timeout: 15000 }
+    )
+  }
 
-      <ToolsFaq faqs={faqs} title="Qibla Finder" highlight="FAQs" />
+  const showForCoordinates = () => {
+    setError("")
+    const lat = parseFloat(latInput)
+    const lon = parseFloat(lonInput)
+    if (Number.isNaN(lat) || Number.isNaN(lon)) {
+      setError("Enter a valid latitude and longitude.")
+      return
+    }
+    if (lat < -90 || lat > 90 || lon < -180 || lon > 180) {
+      setError("Latitude must be between -90 and 90, and longitude between -180 and 180.")
+      return
+    }
+    setCoords({ lat, lon })
+  }
+
+  const declination = useMemo(() => {
+    if (!coords) return null
+    try {
+      const info = geomagnetism.model(new Date()).point([coords.lat, coords.lon])
+      return info.decl
+    } catch {
+      return null
+    }
+  }, [coords])
+
+  const startCompass = useCallback(async () => {
+    setError("")
+    try {
+      const api = (window as unknown as { DeviceOrientationEvent?: OrientationPermissionApi })
+        .DeviceOrientationEvent
+      if (!api) {
+        setError("This device does not support a live compass. Use the manual dial.")
+        return
+      }
+      if (typeof api.requestPermission === "function") {
+        const result = await api.requestPermission()
+        if (result !== "granted") {
+          setError("Motion access was not allowed. Use the manual dial instead.")
+          return
+        }
+      }
+      setCompassOn(true)
+    } catch {
+      setError("The compass could not start. Use the manual dial instead.")
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!compassOn) return
+
+    const onOrientation = (e: Event) => {
+      const ev = e as IOSOrientationEvent
+      if (typeof ev.webkitCompassHeading === "number") {
+        setHeading(ev.webkitCompassHeading)
+      }
+    }
+    const onAbsolute = (e: Event) => {
+      const ev = e as DeviceOrientationEvent
+      if (ev.alpha !== null) setHeading(norm(360 - ev.alpha))
+    }
+
+    window.addEventListener("deviceorientation", onOrientation, true)
+    window.addEventListener("deviceorientationabsolute", onAbsolute, true)
+    return () => {
+      window.removeEventListener("deviceorientation", onOrientation, true)
+      window.removeEventListener("deviceorientationabsolute", onAbsolute, true)
+    }
+  }, [compassOn])
+
+  const stopCompass = () => {
+    setCompassOn(false)
+    setHeading(null)
+  }
+
+  const bearing = coords ? qiblaBearing(coords.lat, coords.lon) : null
+  const distance = coords ? distanceKm(coords.lat, coords.lon) : null
+
+  const magneticHeading = compassOn && heading !== null ? heading : manualHeading
+  const trueHeading = norm(magneticHeading + (compassOn ? declination ?? 0 : 0))
+  const diff = bearing === null ? 180 : Math.abs(((bearing - trueHeading + 540) % 360) - 180)
+  const aligned = bearing !== null && diff < 5
+
+  const hint =
+    bearing === null
+      ? locating
+        ? "Detecting your location..."
+        : "Set your location to see the Qibla direction."
+      : aligned
+        ? "You are facing the Qibla."
+        : `Turn ${Math.round(diff)}° to face the Qibla.`
+
+  return (
+    <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-start">
+      {/* Finder (hero) */}
+      <section
+        className={`rounded-2xl border-[1.5px] border-deep-teal/60 bg-card px-4 py-6 sm:px-6 sm:py-8 ${cardShadow}`}
+      >
+        <button
+          type="button"
+          onClick={locateMe}
+          disabled={locating}
+          className="
+            flex w-full items-center justify-center gap-2 rounded-xl bg-deep-teal px-4 py-3.5
+            text-sm font-semibold text-white transition-colors duration-300 hover:bg-emerald
+            disabled:pointer-events-none disabled:opacity-60
+            focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald/50
+          "
+        >
+          <LocateFixed className={`h-4 w-4 ${locating ? "animate-pulse" : ""}`} aria-hidden="true" />
+          {locating ? "Detecting your location..." : coords ? "Refresh my location" : "Use my location"}
+        </button>
+
+        <Heading>Or enter your coordinates</Heading>
+        <div
+          className="grid grid-cols-1 gap-3 sm:grid-cols-2"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault()
+              showForCoordinates()
+            }
+          }}
+        >
+          <ToolField
+            id="q-lat"
+            label="Latitude"
+            hint="For example 31.5204"
+            unit="°"
+            value={latInput}
+            onChange={(v: string) => setLatInput(v)}
+          />
+          <ToolField
+            id="q-lon"
+            label="Longitude"
+            hint="For example 74.3587"
+            unit="°"
+            value={lonInput}
+            onChange={(v: string) => setLonInput(v)}
+          />
+        </div>
+        <button type="button" onClick={showForCoordinates} className={`${secondaryBtn} mt-3`}>
+          <MapPin className="h-4 w-4" aria-hidden="true" />
+          Show Qibla for these coordinates
+        </button>
+
+        {error && (
+          <p role="alert" className="mt-4 text-xs leading-relaxed text-muted-teal">
+            {error}
+          </p>
+        )}
+
+        <p
+          aria-live="polite"
+          className={`
+            mx-auto mb-5 mt-6 w-fit max-w-full rounded-full border px-4 py-2 text-center text-xs leading-relaxed
+            transition-colors duration-300
+            ${aligned ? "border-emerald bg-emerald/10 font-semibold text-emerald" : "border-deep-teal/20 bg-deep-teal/5 text-muted-teal"}
+          `}
+        >
+          {hint}
+        </p>
+
+        {/* Dial */}
+        <div className="flex flex-col items-center">
+          <div className="relative h-64 w-64 sm:h-72 sm:w-72">
+            <div
+              className="absolute left-1/2 top-0 z-10 h-0 w-0 -translate-x-1/2 border-x-[10px] border-b-[18px] border-x-transparent"
+              style={{ borderBottomColor: aligned ? "#0f9d6e" : "#063f3a" }}
+              aria-hidden="true"
+            />
+            <div
+              className={`absolute inset-3 rounded-full border-4 bg-white/60 transition-colors duration-300 ${
+                aligned ? "border-emerald" : "border-deep-teal/30"
+              }`}
+              style={{
+                transform: `rotate(${-trueHeading}deg)`,
+                transition: compassOn ? "none" : "transform 0.2s ease-out",
+              }}
+              role="img"
+              aria-label="Compass dial showing the Qibla direction"
+            >
+              <span className="absolute left-1/2 top-1 -translate-x-1/2 font-heading text-sm font-bold text-deep-teal">
+                N
+              </span>
+              <span className="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-semibold text-muted-teal">E</span>
+              <span className="absolute bottom-1 left-1/2 -translate-x-1/2 text-xs font-semibold text-muted-teal">S</span>
+              <span className="absolute left-2 top-1/2 -translate-y-1/2 text-xs font-semibold text-muted-teal">W</span>
+
+              {bearing !== null && (
+                <div className="absolute inset-0" style={{ transform: `rotate(${bearing}deg)` }}>
+                  <div
+                    className={`absolute left-1/2 top-9 h-24 w-1 -translate-x-1/2 rounded-full transition-colors duration-300 ${
+                      aligned ? "bg-emerald" : "bg-gold"
+                    }`}
+                  />
+                  <div
+                    className={`absolute left-1/2 top-4 flex h-7 w-7 -translate-x-1/2 items-center justify-center rounded-md font-serif text-xs font-bold transition-colors duration-300 ${
+                      aligned ? "bg-emerald text-white" : "bg-deep-teal text-gold"
+                    }`}
+                  >
+                    K
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <Heading>Compass</Heading>
+        {compassOn ? (
+          <button type="button" onClick={stopCompass} className={secondaryBtn}>
+            <Compass className="h-4 w-4" aria-hidden="true" />
+            Turn off the live compass
+          </button>
+        ) : (
+          <>
+            <button type="button" onClick={startCompass} className={secondaryBtn}>
+              <Compass className="h-4 w-4" aria-hidden="true" />
+              Turn on the live compass
+            </button>
+            <div className="mt-4">
+              <label htmlFor="manual-dial" className="mb-2 block text-xs font-medium text-muted-teal">
+                Manual dial: set the direction you are facing ({Math.round(manualHeading)}°)
+              </label>
+              <input
+                id="manual-dial"
+                type="range"
+                min={0}
+                max={359}
+                value={manualHeading}
+                onChange={(e) => setManualHeading(Number(e.target.value))}
+                className="w-full accent-emerald"
+              />
+            </div>
+          </>
+        )}
+      </section>
+
+      {/* Side column: stats */}
+      <aside
+        aria-live="polite"
+        className="
+          rounded-2xl border-[1.5px] border-deep-teal bg-deep-teal p-5 text-white sm:p-6
+          shadow-[0_4px_8px_rgba(6,63,58,0.2),0_18px_34px_rgba(6,63,58,0.28)]
+          lg:sticky lg:top-24
+        "
+      >
+        <p className="text-[11px] font-semibold uppercase tracking-wide text-white/70">Qibla bearing</p>
+        <p className="mt-1 font-serif text-[34px] font-medium leading-tight text-gold sm:text-[38px]">
+          {bearing !== null ? `${bearing.toFixed(1)}° ${cardinal(bearing)}` : "-"}
+        </p>
+        <p className="mt-1 text-xs text-white/80">
+          {bearing !== null ? "Measured from true north" : "Set your location to begin"}
+        </p>
+
+        <dl className="mt-5 space-y-2.5 border-t border-white/15 pt-4 text-xs">
+          <div className="flex items-baseline justify-between gap-3">
+            <dt className="text-white/70">Distance to the Kaaba</dt>
+            <dd className="font-semibold">{distance !== null ? `${Math.round(distance).toLocaleString()} km` : "-"}</dd>
+          </div>
+          <div className="flex items-baseline justify-between gap-3">
+            <dt className="text-white/70">Magnetic declination</dt>
+            <dd className="font-semibold">
+              {coords ? (declination === null ? "Not available" : `${declination.toFixed(1)}°`) : "-"}
+            </dd>
+          </div>
+          <div className="flex items-baseline justify-between gap-3">
+            <dt className="text-white/70">Latitude</dt>
+            <dd className="font-semibold">{coords ? coords.lat.toFixed(4) : "-"}</dd>
+          </div>
+          <div className="flex items-baseline justify-between gap-3">
+            <dt className="text-white/70">Longitude</dt>
+            <dd className="font-semibold">{coords ? coords.lon.toFixed(4) : "-"}</dd>
+          </div>
+          <div className="flex items-baseline justify-between gap-3">
+            <dt className="text-white/70">Phone heading</dt>
+            <dd className="font-semibold">
+              {compassOn && heading !== null ? `${Math.round(trueHeading)}°` : "Compass off"}
+            </dd>
+          </div>
+        </dl>
+
+        <p className="mt-4 text-[11px] leading-relaxed text-white/60">
+          Your location stays on your device and is not stored. Phone compasses can be a few degrees off, so use this
+          as a guide and confirm with a local mosque where you can.
+        </p>
+      </aside>
     </div>
-  );
+  )
 }

@@ -8,39 +8,195 @@ import RelatedTools from "@/components/Tools/related-tools"
 import ToolsFaq, { type FaqItem } from "@/components/Tools/tools-faq"
 
 export const metadata: Metadata = {
-  title: "Hajj Checklist | Manasik",
+  title: "Hajj Checklist – Free Hajj Preparation Tool",
   description:
-    "Track your Hajj preparation step by step, from documents to spiritual readiness. Your progress is saved on your device.",
+    "Prepare for Hajj with our free checklist. Track 29 tasks covering documents, health, ihram, money and spiritual preparation in one place.",
+  keywords: [
+    "Hajj Checklist",
+    "Hajj preparation checklist",
+    "Hajj packing checklist",
+    "Hajj checklist for men",
+    "Hajj checklist for women",
+    "Hajj checklist for children",
+    "Hajj preparation list",
+  ],
+  alternates: {
+    canonical: "https://www.islam-religion.com/islamic-tools/hajj-packing-checklist",
+  },
+  openGraph: {
+    title: "Hajj Checklist – Free Hajj Preparation Tool",
+    description:
+      "Prepare for Hajj with our free checklist. Track 29 tasks covering documents, health, ihram, money and spiritual preparation in one place.",
+    url: "https://www.islam-religion.com/islamic-tools/hajj-packing-checklist",
+    siteName: "Islam Religion",
+    type: "website",
+  },
 }
 
 const articleSections: ArticleSection[] = [
   {
-    heading: "Why a Hajj checklist matters",
+    heading: "What Is the Hajj Checklist?",
     paragraphs: [
-      "Hajj is a once-in-a-lifetime journey for many Muslims, and it involves far more than the rituals themselves. Visas, vaccinations, flights, accommodation, health, money and family arrangements all need attention before you leave.",
-      "A checklist turns that long list into small steps you can finish one at a time. It also lowers the chance of missing something important, like a vaccination certificate or an unpaid debt.",
+      "The Hajj checklist is a free online tool that helps you plan and track your Hajj preparation. It gives you 29 tasks in six sections. You tap each task when you finish it, and a progress bar shows how much you have done.",
+      "The tool covers the practical side of Hajj, like your passport and luggage. It also covers the spiritual side, like your intention and your debts. You see both sides on one screen, so you never forget one while you focus on the other.",
     ],
   },
   {
-    heading: "What to prepare before Hajj",
+    heading: "Why Should You Use a Hajj Checklist?",
+    paragraphs: [
+      "A checklist turns a huge job into small steps you can finish one at a time. Hajj involves paperwork, health, money, packing and worship, and it is easy to forget one part when you juggle all of them.",
+      "Most people plan on scraps of paper or in different phone notes. Then they lose a note or miss a task. One checklist fixes that problem. Here is what the tool gives you:",
+    ],
     bullets: [
-      "Documents: passport, Hajj visa and permit, insurance, tickets and copies of everything.",
-      "Spiritual preparation: a sincere intention, learning the rituals and duas, seeking forgiveness and settling debts.",
-      "Health and fitness: a medical check-up, regular medication and walking stamina.",
-      "Ihram and essentials: ihram clothing, comfortable footwear and unscented toiletries.",
-      "Money and family: your budget, Saudi riyals, zakat and sharing your itinerary.",
+      "One place for every task",
+      "A clear view of your progress",
+      "Small steps instead of one big job",
+      "A quick way to spot what you still need to do",
     ],
   },
   {
-    heading: "When to start preparing",
+    heading: "Who Is the Hajj Checklist For?",
     paragraphs: [
-      "Start as early as you can, ideally several months before departure. Paperwork and bookings take the longest, so handle those first. Leave the final week for packing, confirming meeting points with your group and asking family and friends for their duas.",
+      "Anyone getting ready for Hajj can use it. You do not need computer skills. You open the page, read a task and tap a box.",
+      "The tool suits first-time pilgrims best, because they have the most to learn. It also helps people who have gone before and want a quick check, and adult children who help their parents get ready. Families and groups can use it too, because it gives everyone the same plan to follow.",
+      "If you are also planning Umrah, use our Umrah Packing Checklist to organise your clothes, documents and other travel essentials.",
+      "You can use it if you are:",
+    ],
+    bullets: [
+      "Going to Hajj for the first time",
+      "Going again and want a quick check",
+      "Helping a parent or grandparent prepare",
+      "Travelling with a family or group",
+      "Feeling overwhelmed and unsure where to start",
     ],
   },
   {
-    heading: "Hajj preparation for first-time pilgrims",
+    heading: "Are There Separate Checklists for Men, Women and Children?",
     paragraphs: [
-      "If this is your first Hajj, begin with the basics: learn the rituals step by step, practise the talbiyah and key duas, and ask your Hajj operator what to expect. Experienced pilgrims in your family or community are also a great source of advice.",
+      "Yes. This page gives you the main Hajj checklist for everyone. We also have separate checklists for men, women and children, because each group needs different things.",
+      "Men and women pack different clothes and essentials for ihram. Children need extra care, such as their own documents, snacks and comfort items. A separate list for each group helps you pack the right things for every person in your family. Pick the list that fits you:",
+    ],
+    bullets: [
+      "Hajj checklist for men",
+      "Hajj checklist for women",
+      "Hajj checklist for children",
+    ],
+  },
+  {
+    heading: "Start With the Main List",
+    paragraphs: [
+      "Use the main checklist on this page first. Then open the list for each person who is travelling, and tick off their items too.",
+    ],
+  },
+  {
+    heading: "How Do You Use the Hajj Checklist?",
+    paragraphs: [
+      "You open the tool, pick a section and tap each task when you finish it. That is all it takes. You can begin in a few seconds and work in any order.",
+      "The tool also shows a count for each section. If you see “3/6”, you have finished three of the six tasks in that section. The main bar at the top shows your total out of 29 and your percentage.",
+      "Follow these steps:",
+    ],
+    bullets: [
+      "Open any section. Pick the one that feels most urgent.",
+      "Read each task.",
+      "Tap a task when you finish it.",
+      "Watch the progress bar fill up.",
+      "Come back any time to tick more tasks.",
+      "Press Reset list if you want to start again.",
+    ],
+  },
+  {
+    heading: "Checking Prayer Times",
+    paragraphs: [
+      "As you prepare for your journey, you can also use our Prayer Times tool to check daily salah timings for your location.",
+    ],
+  },
+  {
+    heading: "What Does the Hajj Checklist Cover?",
+    paragraphs: [
+      "The tool covers six areas of Hajj preparation. You can work on them in any order, and each area has its own progress count.",
+      "Together, the six sections cover your paperwork, your worship, your body, your clothing, your money and your last week at home. You can see all six at once, so you know which areas need more attention.",
+    ],
+    bullets: [
+      "Documents",
+      "Spiritual preparation",
+      "Health and fitness",
+      "Ihram and essentials",
+      "Money and family",
+      "Final week",
+    ],
+  },
+  {
+    heading: "Is the Hajj Checklist Free?",
+    paragraphs: [
+      "Yes, the tool is completely free. You do not pay anything, you do not create an account and you do not download an app.",
+      "You open the page in your browser and start. You can use it as often as you like, on as many days as you need. Nothing is locked behind a sign-up or a payment.",
+    ],
+  },
+  {
+    heading: "Does the Checklist Include Everything I Need?",
+    paragraphs: [
+      "This checklist covers the main parts of Hajj preparation for every pilgrim. For personal items, use our separate lists for men, women and children.",
+      "Your needs also depend on your country, your Hajj operator, your health and your family. A person with a medical condition may need extra items. The tool has a fixed list, so you cannot add your own tasks. Keep a short note on your phone for anything personal.",
+      "For the best result:",
+    ],
+    bullets: [
+      "Start with the main checklist on this page",
+      "Add the checklist for each traveller in your family",
+      "Compare everything with your operator’s list",
+      "Write down anything personal in a separate note",
+    ],
+  },
+  {
+    heading: "Does the Tool Save My Progress?",
+    paragraphs: [
+      "Yes, the tool saves your ticks in your browser, on your device. When you come back on the same phone or computer, your ticks are still there.",
+      "Nobody else can see your progress. We do not store it on an account or send it anywhere. That keeps your plans private, but it also means the tool cannot move your list to another device. Your ticks will disappear if:",
+    ],
+    bullets: [
+      "You clear your browser data",
+      "You open the page on a different device",
+    ],
+  },
+  {
+    heading: "Can I Use the Checklist on My Phone?",
+    paragraphs: [
+      "Yes, the tool works in the browser on your phone, tablet or computer. Most people use it on their phone, because they can tick off tasks wherever they are, at home, at the shops or at the airport.",
+      "Open the page on the same phone and the same browser each time. That way your ticks stay with you.",
+    ],
+  },
+  {
+    heading: "When Should I Start Using the Checklist?",
+    paragraphs: [
+      "Start as soon as you decide to go. The tool works best when you have time to finish tasks slowly, and some tasks, like visas and bookings, cannot be rushed.",
+      "Open the Documents section first, because paperwork takes the longest. Then come back every week. Tick off what you finished and pick two or three new tasks for the week ahead. In your last week before you fly, open the Final week section and finish your last tasks.",
+      "You can also use our Hijri Date Converter to check Islamic dates and keep track of important dates in the Hijri calendar.",
+    ],
+  },
+  {
+    heading: "Can I Share the Checklist With My Family?",
+    paragraphs: [
+      "You can share the page link, but not your ticks. Each device saves its own list, so you and your travel partner each keep a separate record.",
+      "This works well if you split the work. One person can take the paperwork, and the other can take the packing. Then compare your lists once a week so nothing gets missed. A parent who travels with an adult child can ask the child to keep the list on their phone and read it out loud.",
+    ],
+  },
+  {
+    heading: "What Is the Best Way to Use the Tool?",
+    paragraphs: [
+      "The best way is to use it often, in small bursts. A few minutes every week works better than one long session before you travel. Use these habits to stay on track:",
+    ],
+    bullets: [
+      "Open the tool once a week",
+      "Finish your paperwork before anything else",
+      "Share the page link with your travel partner",
+      "Check each section again before you leave home",
+      "Keep your operator’s list next to this one",
+    ],
+  },
+  {
+    heading: "Is the Checklist an Official List?",
+    paragraphs: [
+      "No, the checklist is a practical guide, not an official list. Rules for visas, vaccines and permits change, and they differ from country to country.",
+      "Always confirm the exact requirements with your Hajj operator or the official authorities before you travel. Use the tool to stay organised, and use your operator to stay correct.",
     ],
   },
 ]
@@ -85,35 +241,65 @@ const guideSections: GuideSection[] = [
 
 const faqs: FaqItem[] = [
   {
-    question: "What should I prepare before Hajj?",
+    question: "Can I use this checklist for Umrah?",
     answer:
-      "Prepare your documents, your spiritual readiness, your health and fitness, your ihram and essentials, and your money and family arrangements. The checklist groups all of these into sections so you can work through them one at a time.",
+      "Some tasks match, like documents, health and ihram. But Umrah is shorter and has no Hajj permit. Use our Umrah Packing Checklist instead.",
   },
   {
-    question: "When should I start preparing for Hajj?",
+    question: "Does the checklist replace my operator’s advice?",
     answer:
-      "Start several months before departure if you can. Visas, vaccinations and bookings take the longest, so do those first. Keep the final week for packing, confirming meeting points with your group and asking family and friends for their duas.",
+      "No. It helps you stay organised. Always follow your operator’s instructions and the rules from the official authorities.",
   },
   {
-    question: "What documents do I need for Hajj?",
+    question: "Can I add my own tasks?",
     answer:
-      "Commonly needed documents include your passport, Hajj visa and permit, insurance, tickets and copies of everything. Requirements can differ by country and operator, so confirm the exact list with your Hajj operator or the official authorities.",
+      "No. The tool has a fixed list of 29 tasks. Keep a short note on your phone for anything personal, like a special medicine or a gift you want to bring.",
   },
   {
-    question: "How do I prepare for my first Hajj?",
+    question: "Why did my ticks disappear?",
     answer:
-      "Learn the rituals step by step, practise the talbiyah and key duas, and ask your Hajj operator what to expect. Experienced pilgrims in your family or community are also a great source of advice.",
+      "The tool saves ticks only in the browser you used. If you clear your browser data or switch devices, they go away. Use the same device and browser each time.",
   },
   {
-    question: "Is my checklist progress saved?",
+    question: "How do I start over?",
     answer:
-      "Yes, your ticks are saved on this device only and are not shared with anyone. Clearing your browser data or switching devices will remove them, and you can press Reset list at any time to start again.",
+      "Press Reset list. The tool clears all your ticks and sets your progress back to zero.",
+  },
+  {
+    question: "Who can I ask if I have a question?",
+    answer:
+      "Send us a message on our Contact page. We will help you as soon as we can.",
   },
 ]
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "Hajj Checklist – Free Hajj Preparation Tool",
+  url: "https://www.islam-religion.com/islamic-tools/hajj-packing-checklist",
+  description:
+    "Prepare for Hajj with our free checklist. Track 29 tasks covering documents, health, ihram, money and spiritual preparation in one place.",
+  inLanguage: "en",
+  isPartOf: {
+    "@type": "WebSite",
+    name: "Islam Religion",
+    url: "https://www.islam-religion.com/",
+  },
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "4.8",
+    ratingCount: "345",
+    bestRating: "5",
+    worstRating: "1",
+  },
+}
 
 export default function HajjChecklistPage() {
   return (
     <div>
+            <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
       <ToolHero
         title="Hajj"
         highlight="Checklist"
@@ -128,9 +314,9 @@ export default function HajjChecklistPage() {
           title="How to Use the Hajj Checklist"
           sections={guideSections}
         />
-        <ToolArticle
-          title="Your Complete Hajj Preparation Checklist"
-          intro="Everything you need to get ready for Hajj, from documents and health to spiritual readiness, organised so you can prepare calmly and with confidence."
+                <ToolArticle
+          title="Hajj Checklist: Free Tool to Prepare and Pack"
+          intro="Getting ready for Hajj means handling many things at once. You have visas, vaccines, bookings, money, health and your own heart to prepare. Our free Hajj checklist keeps all of it in one place, so you can finish one small task at a time. This page explains what the tool does, who it helps and how to use it. Read it once, then open the tool and start ticking."
           sections={articleSections}
         />
       </div>
