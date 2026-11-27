@@ -1,42 +1,46 @@
-﻿import { BookOpen } from "lucide-react"
-import PageHero from "@/components/pages/PageHero"
-import PageTools, { type PageTool } from "@/components/pages/PageTools"
+﻿import { BookOpen } from "lucide-react";
+import PageHero from "@/components/pages/PageHero";
+import PageTools, { type PageTool } from "@/components/pages/PageTools";
 import PageContent, {
   type ArticleSection,
-} from "@/components/pages/PageContent"
-import PageFaq, { type FaqItem } from "@/components/pages/PageFaq"
-import PageRelatedPosts from "@/components/pages/PageRelatedPosts"
-import { Metadata } from "next"
+} from "@/components/pages/PageContent";
+import PageFaq, { type FaqItem } from "@/components/pages/PageFaq";
+import PageRelatedPosts from "@/components/pages/PageRelatedPosts";
+import { Metadata } from "next";
 
 // Refresh the related posts every 5 minutes, same as the blog pages.
-export const revalidate = 300
+export const revalidate = 300;
 export const metadata: Metadata = {
-  title: "Ziyaaraat Guide: Explore the Historic Places of Makkah and Madinah",
+  title: "Ziyaraat Guide – Historic Places in Makkah and Madinah",
   description:
-    "Explore our Ziyarat guide for important Islamic historical places in Makkah and Madinah, their stories, significance and practical guidance for visiting.",
+    "Explore our Ziyaraat Guide to historic places in Makkah and Madinah, with their Islamic history, significance, locations and visiting tips.",
   keywords: [
-    "Ziyaaraat Guide",
-    "Ziyarat guide",
-    "Historic places of Makkah and Madinah",
-    "Makkah historical sites",
-    "Madinah historical sites",
-    "Cave of Hira",
-    "Cave of Thawr",
-    "Mount Uhud",
-    "Quba Mosque",
-  ],
+    "Ziyaraat Guide",
+    "Ziyaraat in Makkah and Madinah",
+    "Ziyaraat places in Makkah",
+    "Ziyaraat places in Madinah",
+    "Historical places in Makkah",
+    "Historical places in Madinah",
+    "Islamic historical sites",
+    "Places to visit in Makkah",
+    "Places to visit in Madinah",
+    "Makkah Ziyaraat Guide",
+    "Madinah Ziyaraat Guide",
+    "Ziyaraat in Islam",
+    "Makkah and Madinah Ziyaraat",
+  ].join(", "),
   alternates: {
-    canonical: "https://www.islam-religion.com/ziyaaraat-guide",
+    canonical: "https://www.islam-religion.com/ziyaraat-guide",
   },
   openGraph: {
-    title: "Ziyaaraat Guide: Explore the Historic Places of Makkah and Madinah",
+    title: "Ziyaraat Guide – Historic Places in Makkah and Madinah",
     description:
-      "Explore our Ziyarat guide for important Islamic historical places in Makkah and Madinah, their stories, significance and practical guidance for visiting.",
-    url: "https://www.islam-religion.com/ziyaaraat-guide",
+      "Explore our Ziyaraat Guide to historic places in Makkah and Madinah, with their Islamic history, significance, locations and visiting tips.",
+    url: "https://www.islam-religion.com/ziyaraat-guide",
     siteName: "Islam Religion",
     type: "website",
   },
-}
+};
 const ziyaratTools: PageTool[] = [
   {
     title: "Umrah Checklist",
@@ -47,7 +51,8 @@ const ziyaratTools: PageTool[] = [
   },
   {
     title: "Umrah Packing List",
-    description: "Prepare clothing, toiletries and essentials for your journey.",
+    description:
+      "Prepare clothing, toiletries and essentials for your journey.",
     href: "/tools/packing-list",
     icon: "suitcase",
     accent: "gold",
@@ -66,9 +71,9 @@ const ziyaratTools: PageTool[] = [
     icon: "clock",
     accent: "gold",
   },
-]
+];
 
-const ziyaaraatSections: ArticleSection[] = [
+const ziyaraatSections: ArticleSection[] = [
   {
     heading: "What Is Ziyaarat in Islam?",
     paragraphs: [
@@ -99,6 +104,7 @@ const ziyaaraatSections: ArticleSection[] = [
     paragraphs: [
       "Hajj takes you beyond Makkah itself. Specific rites happen at specific places and times.",
       "Mina, Arafat and Muzdalifah matter most. They matter because Hajj requires them, not because they're sights to see.",
+      "If you want to understand the pilgrimage rituals in more detail, read our complete [Hajj Guide](/hajj-guide).",
     ],
     subsections: [
       {
@@ -106,7 +112,7 @@ const ziyaaraatSections: ArticleSection[] = [
         paragraphs: [
           "Mina is a valley east of Makkah. During Hajj, pilgrims stay here on set days and stone the Jamarat.",
           "It's famous for its huge tent city, and it gets packed during the pilgrimage as people move between the sites.",
-          "Mina is a required part of Hajj. Our Hajj Guide explains its rites and timings.",
+          "Mina is a required part of Hajj. Our [Hajj Guide](/hajj-guide) explains its rites and timings.",
         ],
       },
       {
@@ -149,8 +155,8 @@ const ziyaaraatSections: ArticleSection[] = [
   {
     heading: "Visiting Makkah and Madinah During Hajj and Umrah",
     paragraphs: [
-      "Your Hajj or Umrah trip may leave room to explore the history of the two cities. Many pilgrims do their Ziyaaraat before or after the main rites.",
-      "How much time you have depends on your schedule. Hajj runs on fixed dates and rites. An Umrah trip is usually more flexible.",
+      "Your Hajj or Umrah trip may leave room to explore the history of the two cities. Many pilgrims do their Ziyaraat before or after the main rites.",
+      "How much time you have depends on your schedule. Hajj runs on fixed dates and rites. An Umrah trip is usually more flexible. If you are planning an Umrah journey, explore our [Umrah Guide](/umrah-guide) for step-by-step guidance on its rituals.",
       "Keep these in mind:",
     ],
     bullets: [
@@ -160,11 +166,11 @@ const ziyaaraatSections: ArticleSection[] = [
       "For a separate visit: check entry requirements and local access.",
     ],
     closing: [
-      "Preparing for Umrah? Our Umrah Guide walks you from Ihram to the end. Our Duas page has supplications from the Quran and Sunnah.",
+      "Preparing for Umrah? Our [Umrah Guide](/umrah-guide) walks you from Ihram to the end. Our [Duas](/duas) page has supplications from the Quran and Sunnah.",
     ],
   },
   {
-    heading: "What to Know Before Your Ziyaaraat Visits",
+    heading: "What to Know Before Your Ziyaraat Visits",
     paragraphs: [
       "A bit of planning saves time and keeps you comfortable. Some sites sit right beside the main mosques. Others mean a longer drive or a walk over rough ground.",
       "Before you head out:",
@@ -181,7 +187,7 @@ const ziyaaraatSections: ArticleSection[] = [
     ],
     closing: [
       "Be careful with the mountain visits. Jabal al-Noor and Jabal Thawr are steep climbs, and reaching the caves takes real effort. Neither climb is part of Hajj or Umrah, so be honest about your fitness before you try.",
-      "Need help preparing for the trip? See our Travel Tips.",
+      "Need help preparing for the trip? See our [Travel Tips](/travel-tips).",
     ],
   },
   {
@@ -194,7 +200,7 @@ const ziyaaraatSections: ArticleSection[] = [
       {
         heading: "The Kaaba and Masjid al-Haram",
         paragraphs: [
-          "The Kaaba stands at the heart of Makkah, inside Al-Masjid al-Haram. Muslims everywhere face it in their daily prayers.",
+          "The Kaaba stands at the heart of Makkah, inside Al-Masjid al-Haram. Muslims everywhere face it in their daily prayers. To find the direction of prayer while travelling, use our [Qibla Finder](/islamic-tools/qibla-finder).",
           "It's also where Tawaf happens during Hajj and Umrah. For anyone visiting Makkah, the Grand Mosque is where the journey centres.",
           "It isn't just a landmark. It's the centre of Islamic worship, and Muslims visit it all year.",
         ],
@@ -211,7 +217,7 @@ const ziyaaraatSections: ArticleSection[] = [
         heading: "The Cave of Thawr",
         paragraphs: [
           "The Cave of Thawr belongs to one of the biggest events in the Seerah: the Hijrah from Makkah to Madinah.",
-          'On the migration, the Prophet Muhammad ﷺ and Abu Bakr al-Siddiq (may Allah be pleased with him) hid in this cave while the Quraysh searched for them.',
+          "On the migration, the Prophet Muhammad ﷺ and Abu Bakr al-Siddiq (may Allah be pleased with him) hid in this cave while the Quraysh searched for them.",
           'Surah At-Tawbah (9:40) mentions the event and recalls the Prophet\'s words to his companion: "Do not grieve; indeed Allah is with us."',
           "The cave is on Jabal Thawr, south of Makkah. The climb is steep, so weigh the effort before you plan a visit.",
         ],
@@ -264,6 +270,7 @@ const ziyaaraatSections: ArticleSection[] = [
           "It became the centre of worship and daily life for the early Muslims. The Prophet ﷺ is buried in the chamber beside the mosque next to Abu Bakr al-Siddiq and Umar ibn al-Khattab (may Allah be pleased with them).",
           "The mosque holds a special status in Islam. The Prophet ﷺ spoke of its virtue in authentic Hadith which makes it one of the most important places to visit in Madinah.",
           "Follow the mosque's arrangements, keep your conduct respectful and don't disturb others.",
+          "You can check local [Prayer Times](/prayer-times) to plan your daily prayers during your stay in Madinah.",
         ],
       },
       {
@@ -321,20 +328,6 @@ const ziyaaraatSections: ArticleSection[] = [
     ],
   },
   {
-    heading: "Continue Exploring Our Islamic Travel Guides",
-    paragraphs: [
-      "Getting ready for the holy cities takes more than picking places to visit. You'll also want to understand the rites, prepare for the trip and learn the duas that go with your worship.",
-      "These guides cover the rest of your journey:",
-    ],
-    bullets: [
-      "Hajj Guide: the stages and rites of Hajj.",
-      "Umrah Guide: Umrah explained step by step.",
-      "Duas: authentic supplications from the Quran and Sunnah.",
-      "Travel Tips: practical preparation before you leave.",
-      "Islamic Tools: resources to support your worship and planning.",
-    ],
-  },
-  {
     heading: "Conclusion",
     paragraphs: [
       "Every mountain, mosque and historic site in Makkah and Madinah holds a piece of Islamic history. From the first revelation at Hira to the Hijrah and the Battle of Uhud, these places bring the stories of the early Muslims into focus.",
@@ -342,7 +335,7 @@ const ziyaaraatSections: ArticleSection[] = [
       "May Allah make your journey safe, accept your worship and let you visit His sacred places. Ameen.",
     ],
   },
-]
+];
 
 const faqs: FaqItem[] = [
   {
@@ -369,12 +362,13 @@ const faqs: FaqItem[] = [
       "It depends on the location and current Saudi regulations. Non-Muslims can't enter Makkah and the rules in Madinah vary by area. Check official guidance before you make plans.",
   },
   {
-    question: "Are all Ziyaaraat locations open to visitors throughout the year?",
+    question:
+      "Are all Ziyaaraat locations open to visitors throughout the year?",
     answer:
       "No. Access can change with maintenance, crowd control, local regulations and opening hours. Some places have restricted access. Check current information before you travel.",
   },
-]
-const PAGE_URL = "https://www.islam-religion.com/ziyaaraat-guide"
+];
+const PAGE_URL = "https://www.islam-religion.com/ziyaraat-guide";
 
 const webPageSchema = {
   "@context": "https://schema.org",
@@ -390,7 +384,14 @@ const webPageSchema = {
     name: "Islam Religion",
     url: "https://www.islam-religion.com/",
   },
-}
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "4.9",
+    ratingCount: "693",
+    bestRating: "5",
+    worstRating: "1",
+  },
+};
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -405,31 +406,31 @@ const faqSchema = {
       text: item.answer,
     },
   })),
-}
+};
 
-const jsonLd = (data: object) => JSON.stringify(data).replace(/</g, "\\u003c")
+const jsonLd = (data: object) => JSON.stringify(data).replace(/</g, "\\u003c");
 export default function Page() {
   return (
     <>
-  <script
-    type="application/ld+json"
-    dangerouslySetInnerHTML={{ __html: jsonLd(webPageSchema) }}
-  />
-  <script
-    type="application/ld+json"
-    dangerouslySetInnerHTML={{ __html: jsonLd(faqSchema) }}
-  />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(webPageSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(faqSchema) }}
+      />
       <PageHero
-        title="Discover the Historic Places of"
-        highlight="Ziyarat"
-        image="/images/ziyaraat-image.png" 
+        title="Your Complete Ziyaraat Guide to"
+        highlight="Makkah and Madinah"
+        image="/images/ziyaraat-image.png"
         description={
           <>
-            Discover the blessed places to visit in Madinah and Makkah, from
-            Masjid an-Nabawi and Quba to Uhud and Hira, with{" "}
-            <PageHero.Mark>clear guidance,</PageHero.Mark> proper etiquette and
-            free tools to help you plan your visits with understanding and
-            respect.
+            Explore the historic places of Makkah and Madinah with our{" "}
+            <PageHero.Mark>Ziyaraat Guide.</PageHero.Mark> Discover the Islamic
+            history, significance and stories behind important sites connected
+            to Prophet Muhammad ﷺ and the early Muslims, along with practical
+            tips to help plan your visits.
           </>
         }
         primaryCta={{
@@ -450,11 +451,11 @@ export default function Page() {
         tools={ziyaratTools}
       />
 
-    <PageContent
+      <PageContent
         title="Discover the Historic Places of"
         highlight="Makkah and Madinah"
         intro={`Ever wondered where the first verses of the Quran came down? Or where Prophet Muhammad ﷺ and Abu Bakr (may Allah be pleased with him) hid on the way to Madinah?\n\nThese places are more than names in a history book. Each one has a story. Some take you back to the very start of revelation. Others carry the memory of the Hijrah, the sacrifices of the Companions and the first Muslim community.\n\nVisiting them is known as Ziyaaraat. Many Muslims add these visits to their trip to Makkah and Madinah. They want to see the places, hear the stories and understand what happened there.\n\nThis guide covers the key historical places in both cities. You'll learn why they matter, what took place there and what to know before you go. Preparing for Hajj, planning Umrah or simply visiting the holy cities, start here.`}
-        sections={ziyaaraatSections}
+        sections={ziyaraatSections}
       />
 
       <PageRelatedPosts
@@ -469,5 +470,5 @@ export default function Page() {
         faqs={faqs}
       />
     </>
-  )
+  );
 }

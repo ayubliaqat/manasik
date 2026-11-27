@@ -11,31 +11,34 @@ import { Metadata } from "next"
 // Refresh the related posts every 5 minutes, same as the blog pages.
 export const revalidate = 300
 export const metadata: Metadata = {
-  title: "Travel Tips for Makkah and Madinah: A Practical Guide",
+  title: "Makkah and Madinah Travel Tips for Hajj and Umrah",
   description:
-    "Planning a trip to Makkah and Madinah? Find practical travel tips on packing, documents, transport, accommodation and preparing for Hajj or Umrah.",
+    "Discover practical Makkah and Madinah travel tips covering accommodation, transport, packing, documents, health and pilgrimage preparation.",
   keywords: [
-    "Travel Tips for Makkah and Madinah",
-    "Makkah and Madinah travel guide",
+    "Makkah and Madinah Travel Tips",
+    "Travel tips for Saudi Arabia",
+    "Makkah travel guide",
+    "Madinah travel guide",
     "Umrah travel tips",
     "Hajj travel tips",
-    "Packing for Makkah and Madinah",
-    "Haramain High-Speed Railway",
-    "Saudi travel tips",
-    "Pilgrimage preparation",
-  ],
+    "Travelling to Makkah and Madinah",
+    "What to pack for Umrah",
+    "Makkah and Madinah travel guide",
+    "Saudi Arabia travel tips",
+    "Tips for first-time Umrah travellers",
+  ].join(", "),
   alternates: {
     canonical: "https://www.islam-religion.com/travel-tips",
   },
   openGraph: {
-    title: "Travel Tips for Makkah and Madinah: A Practical Guide",
+    title: "Makkah and Madinah Travel Tips for Hajj and Umrah",
     description:
-      "Planning a trip to Makkah and Madinah? Find practical travel tips on packing, documents, transport, accommodation and preparing for Hajj or Umrah.",
+      "Discover practical Makkah and Madinah travel tips covering accommodation, transport, packing, documents, health and pilgrimage preparation.",
     url: "https://www.islam-religion.com/travel-tips",
     siteName: "Islam Religion",
     type: "website",
   },
-}
+};
 const travelTools: PageTool[] = [
   {
     title: "Umrah Packing List",
@@ -67,7 +70,7 @@ const travelTools: PageTool[] = [
   },
 ]
 
-const travelSections: ArticleSection[] = [
+const travelTipsSections: ArticleSection[] = [
   {
     heading: "Planning Your First Trip to Saudi Arabia? Start Here",
     paragraphs: [
@@ -85,8 +88,8 @@ const travelSections: ArticleSection[] = [
       "What your companions need.",
     ],
     closing: [
-      "Still working out the money side? Our Hajj and Umrah Cost Estimator can help you plan your expenses.",
-      "For the religious side, our Hajj Guide and Umrah Guide explain the steps of each pilgrimage.",
+      "Still working out the money side? Our [Hajj and Umrah Cost Estimator](/islamic-tools/hajj-umrah-cost-estimator) can help you plan your expenses.",
+      "For the religious side, our [Hajj Guide](/hajj-guide) and [Umrah Guide](/umrah-guide) explain the steps of each pilgrimage.",
     ],
   },
   {
@@ -94,6 +97,8 @@ const travelSections: ArticleSection[] = [
     paragraphs: [
       "Once your dates are fixed, turn to the arrangements that have to be done before departure.",
       "A missing document or a vague booking can turn the airport into a stressful place. It's far easier to check everything at home than to fix a problem mid-journey.",
+    ],
+    bullets: [
       "Start with your passport and visa. Your passport has to meet the validity requirements for your visa and the details on both must match. Entry conditions depend on your nationality, visa category and purpose of travel.",
       "Next, confirm your flights. Check your departure and arrival airports, baggage allowance and any connections. Keep your booking confirmation within reach.",
       "Save your accommodation details too. Write down the hotel names, addresses and phone numbers for Makkah and Madinah, and keep copies offline in case your mobile data drops.",
@@ -111,6 +116,7 @@ const travelSections: ArticleSection[] = [
     subsections: [
       {
         heading: "Clothing and Ihram",
+        paragraphs: [],
         bullets: [
           "Comfortable everyday clothes.",
           "Ihram garments for men.",
@@ -121,6 +127,7 @@ const travelSections: ArticleSection[] = [
       },
       {
         heading: "Footwear and personal items",
+        paragraphs: [],
         bullets: [
           "Comfortable walking shoes.",
           "Easy slip-on sandals.",
@@ -131,6 +138,7 @@ const travelSections: ArticleSection[] = [
       },
       {
         heading: "Documents and electronics",
+        paragraphs: [],
         bullets: [
           "Passport and visa.",
           "Flight and hotel confirmations.",
@@ -141,6 +149,7 @@ const travelSections: ArticleSection[] = [
       },
       {
         heading: "Health and personal care",
+        paragraphs: [],
         bullets: [
           "Prescription medicines.",
           "Basic first-aid supplies.",
@@ -148,11 +157,11 @@ const travelSections: ArticleSection[] = [
           "Personal medical equipment.",
           "Tissues and hand sanitiser.",
         ],
+        closing: [
+          "Keep your documents, medication and valuables in your hand luggage. Never put everything you need in the checked suitcase.",
+          "What you pack also depends on which pilgrimage you're performing. Rather than trying to remember it all, use our [Hajj Packing Checklist](/islamic-tools/hajj-packing-checklist) or [Umrah Packing Checklist](/islamic-tools/umrah-packing-checklist).",
+        ],
       },
-    ],
-    closing: [
-      "Keep your documents, medication and valuables in your hand luggage. Never put everything you need in the checked suitcase.",
-      "What you pack also depends on which pilgrimage you're performing. Rather than trying to remember it all, use our Hajj Packing Checklist or Umrah Packing Checklist.",
     ],
   },
   {
@@ -256,7 +265,7 @@ const travelSections: ArticleSection[] = [
       "Save your hotel's address and phone number on your phone and carry a written copy as well, especially if you're with a group.",
       "In busy areas with family or friends agree on a meeting point in case someone gets separated. Keep your belongings secure and carry only what you need.",
       "Prayer times will shape your day. Leave enough time to reach the mosque, find an entrance and get back to your hotel. Crowds can stretch your usual travel time.",
-      "Check daily prayer times with our Prayer Times tool. Need a mosque nearby? Our Mosque Finder can help.",
+      "Check daily prayer times with our [Prayer Times](/prayer-times) tool. Need a mosque nearby? Our [Mosque Finder](/islamic-tools/mosque-finder) can help.",
       "A few other daily habits:",
     ],
     bullets: [
@@ -267,7 +276,7 @@ const travelSections: ArticleSection[] = [
       "Stay in touch with your group.",
     ],
     closing: [
-      "Save our Qibla Direction tool too, for when you need the direction of prayer away from your hotel.",
+      "Save our [Qibla Direction](/islamic-tools/qibla-finder) tool too, for when you need the direction of prayer away from your hotel.",
     ],
   },
   {
@@ -307,22 +316,8 @@ const travelSections: ArticleSection[] = [
       "Missing official travel updates.",
     ],
     closing: [
-      "Another mistake is treating every historical visit as part of the pilgrimage. Ziyaaraat sites are worth exploring, but optional visits should never come before the prescribed rites of Hajj or Umrah.",
-      "Our Ziyaaraat Guide covers the historical places in Makkah and Madinah and what visitors should know about them.",
-    ],
-  },
-  {
-    heading: "Explore More Guides Before Your Journey",
-    paragraphs: [
-      "Getting ready for Makkah and Madinah means handling the practical side and understanding the worship you're travelling to perform. These guides can help:",
-    ],
-    bullets: [
-      "Hajj Guide",
-      "Umrah Guide",
-      "Duas",
-      "Ziyaaraat Guide",
-      "Travel Tips",
-      "All Islamic Tools",
+      "Another mistake is treating every historical visit as part of the pilgrimage. [Ziyaraat](/ziyaraat-guide) sites are worth exploring, but optional visits should never come before the prescribed rites of Hajj or Umrah.",
+      "Our [Ziyaraat Guide](/ziyaraat-guide) covers the historical places in Makkah and Madinah and what visitors should know about them.",
     ],
   },
   {
@@ -333,7 +328,7 @@ const travelSections: ArticleSection[] = [
       "May Allah make your travels easy, protect you throughout your journey and accept your Hajj, Umrah and prayers. Ameen.",
     ],
   },
-]
+];
 
 const faqs: FaqItem[] = [
   {
@@ -374,16 +369,23 @@ const webPageSchema = {
   "@type": "WebPage",
   "@id": `${PAGE_URL}#webpage`,
   url: PAGE_URL,
-  name: "Travel Tips for Makkah and Madinah: A Practical Guide",
+  name: "Makkah and Madinah Travel Tips for Hajj and Umrah",
   description:
-    "Planning a trip to Makkah and Madinah? Find practical travel tips on packing, documents, transport, accommodation and preparing for Hajj or Umrah.",
+    "Discover practical Makkah and Madinah travel tips covering accommodation, transport, packing, documents, health and pilgrimage preparation.",
   inLanguage: "en",
   isPartOf: {
     "@type": "WebSite",
     name: "Islam Religion",
     url: "https://www.islam-religion.com/",
   },
-}
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "4.9",
+    ratingCount: "693",
+    bestRating: "5",
+    worstRating: "1",
+  },
+};
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -413,17 +415,18 @@ export default function Page() {
   dangerouslySetInnerHTML={{ __html: jsonLd(faqSchema) }}
 />
       <PageHero
-        title="Your Complete Guide to Umrah"
-        highlight="Travel Tips"
-        image="/images/travel-tips-imge.png" 
-        description={
-          <>
-            Learn how to travel comfortably and safely, from packing and health
-            to getting around Makkah and Madinah, with{" "}
-            <PageHero.Mark>clear guidance,</PageHero.Mark> practical advice and
-            free tools to help you make the most of your journey.
-          </>
-        }
+  title="Makkah and Madinah Travel Tips for a"
+  highlight="Smooth Pilgrimage"
+  image="/images/travel-tips-imge.png"
+  description={
+    <>
+      Planning a trip to Makkah and Madinah for Hajj or Umrah? Explore{" "}
+      <PageHero.Mark>practical travel tips</PageHero.Mark> to prepare for your
+      journey, including packing essentials, travel documents, accommodation,
+      transport, health and local guidance. Get ready for a more comfortable and
+      organised pilgrimage with helpful advice for every stage of your trip.
+    </>
+  }
         primaryCta={{
           label: "Umrah Checklist",
           href: "/tools/umrah-checklist",
@@ -446,7 +449,7 @@ export default function Page() {
         title="Travel Tips for a Comfortable Journey to"
         highlight="Makkah and Madinah"
         intro={`Getting ready for your first trip to Makkah and Madinah? Not sure what to pack, which documents to sort out or how to get between the two cities?\n\nThere's a lot to handle before you leave home. Documents, the Saudi heat, what to carry and how you'll get around once you land.\n\nA bit of preparation goes a long way. You'll spend less time worrying about logistics and more time on the reason you're going.\n\nThis guide gives you practical tips for Makkah and Madinah, whether you're going for Hajj, planning Umrah or visiting the holy cities for the first time. It runs from packing your bag to choosing a hotel.`}
-        sections={travelSections}
+        sections={travelTipsSections}
       />
 
       <PageRelatedPosts

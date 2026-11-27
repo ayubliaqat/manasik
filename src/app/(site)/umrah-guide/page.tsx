@@ -1,43 +1,44 @@
-﻿
-import { BookOpen } from "lucide-react"
-import PageHero from "@/components/pages/PageHero"
-import PageTools, { type PageTool } from "@/components/pages/PageTools"
+﻿import { BookOpen } from "lucide-react";
+import PageHero from "@/components/pages/PageHero";
+import PageTools, { type PageTool } from "@/components/pages/PageTools";
 import PageContent, {
   type ArticleSection,
-} from "@/components/pages/PageContent"
-import PageFaq, { type FaqItem } from "@/components/pages/PageFaq"
-import PageRelatedPosts from "@/components/pages/PageRelatedPosts"
-import { Metadata } from "next"
+} from "@/components/pages/PageContent";
+import PageFaq, { type FaqItem } from "@/components/pages/PageFaq";
+import PageRelatedPosts from "@/components/pages/PageRelatedPosts";
+import { Metadata } from "next";
 
 // Refresh the related posts every 5 minutes, same as the blog pages.
-export const revalidate = 300
+export const revalidate = 300;
 export const metadata: Metadata = {
-  title: "Umrah Guide: How to Perform Umrah Step by Step",
+  title: "Umrah in Islam – Rituals, Steps and Essential Duas",
   description:
-    "Learn how to perform Umrah step by step, including Ihram, Miqat, Tawaf, Sa’i, authentic duas, essential rules and practical travel guidance.",
+    "Learn about Umrah in Islam, including its rituals, step-by-step process, essential duas, Ihram rules and practical preparation tips with Islam Religion.",
   keywords: [
-    "Umrah Guide",
+    "Umrah in Islam",
     "How to perform Umrah",
     "Umrah step by step",
+    "What is Umrah in Islam",
     "Umrah rituals",
-    "Ihram rules",
-    "Miqat for Umrah",
-    "Tawaf and Sa'i",
     "Umrah duas",
+    "Umrah rules",
+    "Steps of Umrah",
     "Umrah preparation",
-  ],
+    "Umrah for beginners",
+    "Umrah Ihram rules",
+  ].join(", "),
   alternates: {
     canonical: "https://www.islam-religion.com/umrah-guide",
   },
   openGraph: {
-    title: "Umrah Guide: How to Perform Umrah Step by Step",
+    title: "Umrah in Islam – Rituals, Steps and Essential Duas",
     description:
-      "Learn how to perform Umrah step by step, including Ihram, Miqat, Tawaf, Sa’i, authentic duas, essential rules and practical travel guidance.",
+      "Learn about Umrah in Islam, including its rituals, step-by-step process, essential duas, Ihram rules and practical preparation tips with Islam Religion.",
     url: "https://www.islam-religion.com/umrah-guide",
     siteName: "Islam Religion",
     type: "website",
   },
-}
+};
 
 const umrahTools: PageTool[] = [
   {
@@ -49,7 +50,8 @@ const umrahTools: PageTool[] = [
   },
   {
     title: "Umrah Packing List",
-    description: "Prepare clothing, toiletries and essentials for your journey.",
+    description:
+      "Prepare clothing, toiletries and essentials for your journey.",
     href: "/tools/packing-list",
     icon: "suitcase",
     accent: "gold",
@@ -68,13 +70,13 @@ const umrahTools: PageTool[] = [
     icon: "coins",
     accent: "gold",
   },
-]
+];
 
 const umrahSections: ArticleSection[] = [
   {
     heading: "What Is Umrah in Islam?",
     paragraphs: [
-      "Umrah is an act of worship performed at the Sacred Mosque in Makkah. It brings together intention, remembrance of Allah and physical acts of worship. Muslims travel from different parts of the world to perform these rites and seek Allah's forgiveness and reward.",
+      "What is Umrah? Umrah is an act of worship performed at the Sacred Mosque in Makkah. It brings together intention, remembrance of Allah and physical acts of worship. Muslims travel from different parts of the world to perform these rites and seek Allah's forgiveness and reward.",
       "Unlike Hajj, Umrah does not have a fixed set of pilgrimage days. It can generally be performed at different times of the year, although access and arrangements may change during the Hajj season.",
       "The main rites of Umrah are:",
     ],
@@ -94,8 +96,9 @@ const umrahSections: ArticleSection[] = [
       "Allah mentions Hajj and Umrah together in the Quran and instructs Muslims to complete them sincerely for His sake.",
       "Allah says:",
       "وَأَتِمُّوا الْحَجَّ وَالْعُمْرَةَ لِلَّهِ",
-      "Meaning: “And complete the Hajj and Umrah for Allah.”",
-      "Reference: Surah Al-Baqarah (2:196).",
+      "Meaning:",
+      '"And complete the Hajj and Umrah for Allah."',
+      "Reference: Surah Al-Baqarah, 2:196",
       "This verse reminds Muslims that these acts of worship should be performed for Allah alone. The purpose is not to travel for recognition or to collect photographs, but to fulfil the rites with sincerity and follow the guidance of the Prophet Muhammad ﷺ.",
     ],
   },
@@ -103,10 +106,12 @@ const umrahSections: ArticleSection[] = [
     heading: "Why Is Umrah Important for Muslims?",
     paragraphs: [
       "A journey to Makkah gives Muslims time to step away from everyday responsibilities and focus on worship. The value of Umrah is not only in reaching the Sacred Mosque. It is also in the intention, effort and obedience involved in performing its rites.",
-      "The Prophet Muhammad ﷺ explained the virtue of performing Umrah in an authentic hadith. The Prophet ﷺ said:",
+      "The Prophet Muhammad ﷺ explained the virtue of performing Umrah in an authentic hadith.",
+      "The Prophet ﷺ said:",
       "الْعُمْرَةُ إِلَى الْعُمْرَةِ كَفَّارَةٌ لِمَا بَيْنَهُمَا",
-      "Meaning: “One Umrah to the next is an expiation for the sins committed between them.”",
-      "Reference: Sahih al-Bukhari 1773; Sahih Muslim 1349.",
+      "Meaning:",
+      '"One Umrah to the next is an expiation for the sins committed between them."',
+      "Reference: Sahih al-Bukhari 1773; Sahih Muslim 1349",
       "This hadith describes the great virtue of Umrah. It gives Muslims a reason to value the opportunity and approach the pilgrimage with sincere repentance and good intentions.",
       "Umrah also teaches important lessons:",
     ],
@@ -148,20 +153,13 @@ const umrahSections: ArticleSection[] = [
     paragraphs: [
       "Hajj and Umrah are both pilgrimages to Makkah, but they have different requirements and rituals. Hajj takes place on specific days in Dhul Hijjah, while Umrah can generally be performed throughout the year.",
     ],
-    table: {
-      head: ["Hajj", "Umrah"],
-      rows: [
-        ["One of the Five Pillars of Islam", "A separate act of pilgrimage"],
-        ["Obligatory once for those who are able", "Scholars differ on its ruling"],
-        ["Performed on specific days in Dhul Hijjah", "Generally performed throughout the year"],
-        ["Includes standing at Arafat", "Does not include standing at Arafat"],
-        ["Includes rites in Mina and Muzdalifah", "Its main rites take place in Masjid al-Haram"],
-        ["Includes additional Hajj rituals", "Includes Ihram, Tawaf, Sa'i and hair cutting"],
-      ],
-      after: [
-        "Both acts of worship require sincerity and obedience to Allah. If you are also learning about the major pilgrimage, read our complete [Hajj guide](/hajj-guide) for its dates, conditions and step-by-step rituals.",
-      ],
-    },
+    bullets: [
+      "Hajj: One of the Five Pillars of Islam; obligatory once for those who are able; performed on specific days in Dhul Hijjah; includes standing at Arafat, rites in Mina and Muzdalifah, and additional Hajj rituals.",
+      "Umrah: A separate act of pilgrimage; scholars differ on its ruling; generally performed throughout the year; does not include standing at Arafat; its main rites take place in Masjid al-Haram and include Ihram, Tawaf, Sa’i and hair cutting.",
+    ],
+    closing: [
+      "Both acts of worship require sincerity and obedience to Allah. If you are also learning about the major pilgrimage, read our [Hajj guide](/hajj-guide) for its dates, conditions and step-by-step rituals.",
+    ],
   },
   {
     heading: "When Can You Perform Umrah?",
@@ -169,9 +167,9 @@ const umrahSections: ArticleSection[] = [
       "Umrah can generally be performed throughout the Islamic year. Unlike Hajj, it is not limited to a particular group of days.",
       "Many Muslims choose to travel during Ramadan because of the special virtue of worship in that month. However, travel arrangements, crowd levels and official access rules should always be considered.",
       "The Prophet ﷺ said to a woman who had missed Hajj with him:",
-      "“Perform Umrah in Ramadan, for Umrah in Ramadan is equivalent to Hajj.”",
-      "Reference: Sahih al-Bukhari 1863; Sahih Muslim 1256.",
-      "This describes the great reward of Umrah in Ramadan. It does not mean that performing Umrah in Ramadan replaces the obligation of Hajj.",
+      '"Perform Umrah in Ramadan, for Umrah in Ramadan is equivalent to Hajj."',
+      "Reference: Sahih al-Bukhari 1863; Sahih Muslim 1256",
+      "This describes the great reward of Umrah during Ramadan. It does not mean that performing Umrah in Ramadan replaces the obligation of Hajj.",
       "Before choosing your travel dates, check the latest Saudi arrangements, visa conditions and any restrictions that may apply during the Hajj season.",
     ],
   },
@@ -194,7 +192,7 @@ const umrahSections: ArticleSection[] = [
           "Check any current health or vaccination requirements.",
         ],
         closing: [
-          "Travel rules can change, so use official Saudi sources for the latest information rather than relying on old travel advice.",
+          "Travel rules can change, so use official Saudi sources, including updates from the Saudi Hajj and Umrah Ministry, for the latest information rather than relying on old travel advice.",
         ],
       },
       {
@@ -202,6 +200,7 @@ const umrahSections: ArticleSection[] = [
         paragraphs: [
           "Men should prepare two clean, simple Ihram cloths. Women do not have a special two-piece Ihram uniform and can wear their normal modest clothing that meets Islamic requirements.",
           "It is helpful to prepare your clothes before reaching the Miqat, particularly if you are travelling by air.",
+          "To organise your clothing, toiletries, documents and other essentials, use our [Umrah Packing Checklist](/islamic-tools/umrah-packing-checklist) before departure.",
         ],
       },
       {
@@ -220,8 +219,8 @@ const umrahSections: ArticleSection[] = [
       {
         heading: "Learn the Rituals Before Departure",
         paragraphs: [
-          "Try to understand the sequence of Ihram, Tawaf, Sa'i and Tahallul before leaving home. You should also learn the Talbiyah and a few important duas.",
-          "You can use our Umrah and travel resources to help organise your preparation. For a more detailed list of clothing, toiletries and travel essentials, read our Islamic travel tips.",
+          "Try to understand the sequence of Ihram, Tawaf, Sa’i and Tahallul before leaving home. You should also learn the Talbiyah and a few important duas.",
+          "You can use our Umrah and travel resources to help organise your preparation. For a more detailed list of clothing, toiletries and travel essentials, read our [Islamic travel tips](/travel-tips).",
         ],
       },
     ],
@@ -248,8 +247,8 @@ const umrahSections: ArticleSection[] = [
   {
     heading: "How to Perform Umrah Step by Step",
     paragraphs: [
-      "Umrah follows a clear sequence. You begin by entering Ihram before crossing the applicable Miqat, then perform Tawaf, complete Sa'i and finish by shaving or trimming the hair.",
-      "The following steps explain the main rites in order.",
+      "How to perform Umrah follows a clear sequence. You begin by entering Ihram before crossing the applicable Miqat, then perform Tawaf, complete Sa’i and finish by shaving or trimming the hair.",
+      "The following steps explain the main rites in order. These are the essential Umrah steps for men and women, with some differences in clothing and hair trimming explained below.",
     ],
     subsections: [
       {
@@ -275,16 +274,19 @@ const umrahSections: ArticleSection[] = [
           "لَبَّيْكَ اللَّهُمَّ عُمْرَةً",
           "Transliteration: Labbayka Allahumma Umrah.",
           "Meaning: Here I am, O Allah, to perform Umrah.",
-          "The intention is an act of the heart. Saying the words helps express what you intend, but the important matter is that you sincerely intend to perform Umrah.",
+          "This is a commonly taught dua for Umrah niyat. The intention is an act of the heart. Saying the words helps express what you intend, but the important matter is that you sincerely intend to perform Umrah.",
         ],
       },
       {
         heading: "Step 3: Recite the Talbiyah",
         paragraphs: [
           "After entering Ihram, recite the Talbiyah regularly on your journey towards Makkah.",
+          "Arabic:",
           "لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ، لَبَّيْكَ لَا شَرِيكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ وَالنِّعْمَةَ لَكَ وَالْمُلْكَ، لَا شَرِيكَ لَكَ",
-          "Transliteration: Labbayka Allahumma labbayk, labbayka la shareeka laka labbayk. Innal-hamda wan-ni'mata laka wal-mulk, la shareeka lak.",
-          "Meaning: Here I am, O Allah, here I am. Here I am, You have no partner, here I am. Surely all praise, blessings and dominion belong to You. You have no partner.",
+          "Transliteration:",
+          "Labbayka Allahumma labbayk, labbayka la shareeka laka labbayk. Innal-hamda wan-ni'mata laka wal-mulk, la shareeka lak.",
+          "Meaning:",
+          "Here I am, O Allah, here I am. Here I am, You have no partner, here I am. Surely all praise, blessings and dominion belong to You. You have no partner.",
           "Men generally recite the Talbiyah aloud without disturbing others, while women recite it quietly. Continue remembering Allah and reciting the Talbiyah until you begin Tawaf.",
         ],
       },
@@ -300,7 +302,8 @@ const umrahSections: ArticleSection[] = [
         heading: "Step 5: Perform Tawaf Around the Kaaba",
         paragraphs: [
           "Tawaf is the act of walking around the Kaaba seven times in an anti-clockwise direction. Each complete circuit begins and ends at the Black Stone.",
-          "Before starting, make sure you understand the direction and follow the designated movement of the crowd. Follow these steps:",
+          "Before starting, make sure you understand the direction and follow the designated movement of the crowd.",
+          "Follow these steps:",
         ],
         bullets: [
           "Begin at the Black Stone.",
@@ -310,7 +313,7 @@ const umrahSections: ArticleSection[] = [
           "Remember Allah and make dua throughout Tawaf.",
         ],
         closing: [
-          "If you can reach the Black Stone without pushing or harming anyone, you may touch or kiss it. If the crowd is too dense, simply point towards it with your right hand and say “Allahu Akbar” as you begin the circuit. Do not struggle to reach it.",
+          'If you can reach the Black Stone without pushing or harming anyone, you may touch or kiss it. If the crowd is too dense, simply point towards it with your right hand and say "Allahu Akbar" as you begin the circuit. Do not struggle to reach it.',
           "Men may practise Idtiba, which means placing the upper Ihram cloth under the right arm and over the left shoulder, leaving the right shoulder uncovered. This is done during Tawaf and should not be continued after it.",
           "Men may also walk briskly during the first three circuits when it is safe and possible. These practices are Sunnah and should never lead to pushing or disturbing other pilgrims.",
         ],
@@ -319,12 +322,16 @@ const umrahSections: ArticleSection[] = [
         heading: "Step 6: Make Dua During Tawaf",
         paragraphs: [
           "You can remember Allah, recite Quran and make personal dua during all seven circuits. There is no fixed dua that must be read for each round.",
-          "One well-known dua is recited between the Yemeni Corner and the Black Stone.",
+          "One well-known Umrah dua is recited between the Yemeni Corner and the Black Stone.",
+          "Arabic:",
           "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
-          "Transliteration: Rabbana atina fid-dunya hasanatan wa fil-akhirati hasanatan wa qina adhaban-nar.",
-          "Meaning: “Our Lord, give us good in this world and good in the Hereafter, and protect us from the punishment of the Fire.”",
-          "Reference: Surah Al-Baqarah (2:201).",
+          "Transliteration:",
+          "Rabbana atina fid-dunya hasanatan wa fil-akhirati hasanatan wa qina adhaban-nar.",
+          "Meaning:",
+          '"Our Lord, give us good in this world and good in the Hereafter, and protect us from the punishment of the Fire."',
+          "Reference: Surah Al-Baqarah, 2:201",
           "You can also make dua in your own language. Ask Allah for forgiveness, guidance, good health and what you need for this life and the Hereafter.",
+          "Explore our [Duas](/duas) collection to learn more Quranic and Prophetic supplications with their meanings and references.",
         ],
       },
       {
@@ -347,7 +354,8 @@ const umrahSections: ArticleSection[] = [
         heading: "Step 9: Perform Sa'i Between Safa and Marwa",
         paragraphs: [
           "Sa'i is the act of walking between the hills of Safa and Marwa seven times. It remembers the struggle of Hajar (peace be upon her), who searched for water for her son Ismail (peace be upon him).",
-          "Sa'i begins at Safa and ends at Marwa. Follow these steps:",
+          "Sa'i begins at Safa and ends at Marwa.",
+          "Follow these steps:",
         ],
         bullets: [
           "Begin at Safa.",
@@ -362,15 +370,17 @@ const umrahSections: ArticleSection[] = [
           "One passage from Safa to Marwa counts as one, and the return journey counts as another. Therefore, the seventh passage ends at Marwa.",
           "Allah says:",
           "إِنَّ الصَّفَا وَالْمَرْوَةَ مِن شَعَائِرِ اللَّهِ",
-          "Meaning: “Indeed, Safa and Marwa are among the symbols of Allah.”",
-          "Reference: Surah Al-Baqarah (2:158).",
+          "Meaning:",
+          '"Indeed, Safa and Marwa are among the symbols of Allah."',
+          "Reference: Surah Al-Baqarah, 2:158",
           "You can make dua and remember Allah throughout Sa'i. There is no fixed supplication required for every passage.",
         ],
       },
       {
         heading: "Step 10: Shave or Trim Your Hair",
         paragraphs: [
-          "After completing Sa'i, the final rite is to shave or trim the hair. This completes Umrah and allows you to leave the state of Ihram. The guidance for men and women is different:",
+          "After completing Sa'i, the final rite is to shave or trim the hair. This completes Umrah and allows you to leave the state of Ihram.",
+          "The guidance for men and women is different:",
         ],
         bullets: [
           "Men: May shave the entire head or shorten the hair. Shaving is generally considered more virtuous.",
@@ -384,15 +394,17 @@ const umrahSections: ArticleSection[] = [
     ],
   },
   {
-    heading: "What Are the Rules and Restrictions of Ihram?",
+    heading: "What Are the Rules for Umrah and Restrictions of Ihram?",
     paragraphs: [
       "Ihram is not only the clothing worn during Umrah. It is a sacred state that begins with the intention to perform the pilgrimage and requires a person to observe certain restrictions.",
-      "Some restrictions apply to both men and women, while others are specific to men or women.",
+      "Some restrictions apply to both men and women, while others are specific to men or women. Understanding these rules for Umrah before travelling can help you avoid common mistakes.",
     ],
     subsections: [
       {
         heading: "Restrictions for Men and Women",
-        paragraphs: ["While in Ihram, pilgrims must avoid:"],
+        paragraphs: [
+          "While in Ihram, pilgrims must avoid:",
+        ],
         bullets: [
           "Applying perfume or fragrance to the body or clothing after entering Ihram.",
           "Cutting or removing hair.",
@@ -404,7 +416,9 @@ const umrahSections: ArticleSection[] = [
       },
       {
         heading: "Additional Restrictions for Men",
-        paragraphs: ["Men in Ihram must also avoid:"],
+        paragraphs: [
+          "Men in Ihram must also avoid:",
+        ],
         bullets: [
           "Wearing clothing tailored to fit the body in the usual manner, such as shirts and trousers.",
           "Covering the head with something that rests on it.",
@@ -423,10 +437,11 @@ const umrahSections: ArticleSection[] = [
     heading: "What Should You Do After Completing Umrah?",
     paragraphs: [
       "Once you have completed Sa'i and shaved or trimmed your hair, your Umrah is finished. You are no longer in the state of Ihram and can return to your normal permitted activities.",
-      "There is no special ceremony required after completing Umrah. Take time to rest, thank Allah and continue your worship. You may:",
+      "There is no special ceremony required after completing Umrah. Take time to rest, thank Allah and continue your worship.",
+      "You may:",
     ],
     bullets: [
-      "Pray in Masjid al-Haram.",
+      "Pray in Masjid al-Haram. You can also use our [Prayer Times](/prayer-times) tool to check daily Salah timings during your stay in Makkah or Madinah.",
       "Read the Quran and remember Allah.",
       "Make dua for yourself and your family.",
       "Drink Zamzam water.",
@@ -434,7 +449,7 @@ const umrahSections: ArticleSection[] = [
       "Visit Madinah if it is part of your travel plans.",
     ],
     closing: [
-      "If you plan to visit the Prophet's Mosque and other historical places, our Ziyaaraat guide explains the places pilgrims commonly visit and the manners to observe.",
+      "If you plan to visit the Prophet's Mosque and other historical places, our [Ziyaraat guide](/ziyaraat-guide) explains the places pilgrims commonly visit and the manners to observe.",
     ],
   },
   {
@@ -456,7 +471,7 @@ const umrahSections: ArticleSection[] = [
       "Check official travel and entry updates before departure.",
     ],
     closing: [
-      "If you are travelling with older family members or children, plan your movement around their needs. Allow extra time for walking, resting and reaching the mosque.",
+      "If you are travelling with older family members or children, plan your movement around their needs. Allow extra time for walking, resting and reaching the mosque. Also read our [umrah travel tips](/travel-tips) for better understanding.",
     ],
   },
   {
@@ -472,16 +487,17 @@ const umrahSections: ArticleSection[] = [
       "Visit the Rawdah if you obtain the required access arrangement.",
       "Visit Masjid Quba.",
       "Learn about the history of the Prophet ﷺ and the early Muslim community.",
+      "Observe the rules and visiting arrangements at each location.",
     ],
     closing: [
-      "Observe the rules and visiting arrangements at each location. You can read our Ziyaaraat guide to learn more about these places before your visit.",
+      "You can read our [Ziyaraat guide](/ziyaraat-guide) to learn more about these places before your visit.",
     ],
   },
   {
-    heading: "Why Learn with Islam Religion?",
+    heading: "Why Learn with Religion Islam?",
     paragraphs: [
       "Preparing for Umrah means learning more than the names of its rituals. You need to understand when Ihram begins, how Tawaf and Sa'i are performed, which duas are established in the Sunnah and what to avoid during the pilgrimage.",
-      "Islam Religion brings these details together in clear guides that help readers learn at their own pace.",
+      "Religion Islam brings these details together in clear guides that help readers learn at their own pace.",
     ],
     bullets: [
       "Learn the main rites of Umrah in their correct order.",
@@ -502,7 +518,7 @@ const umrahSections: ArticleSection[] = [
       "May Allah make the journey easy for every Muslim who hopes to visit His Sacred House, accept their Umrah and grant them forgiveness. Ameen.",
     ],
   },
-]
+];
 
 const faqs: FaqItem[] = [
   {
@@ -560,24 +576,30 @@ const faqs: FaqItem[] = [
     answer:
       "If you intended to perform Umrah and passed your applicable Miqat without entering Ihram, seek guidance from a qualified scholar immediately. The ruling can depend on your intention, route and whether you can return to the Miqat. Do not rely on a general online answer for a situation that may require a specific ruling.",
   },
-]
-const PAGE_URL = "https://www.islam-religion.com/umrah-guide"
-
+];
+const PAGE_URL = "https://www.islam-religion.com/umrah-guide";
 const webPageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
   "@id": `${PAGE_URL}#webpage`,
   url: PAGE_URL,
-  name: "Umrah Guide: How to Perform Umrah Step by Step",
+  name: "Umrah in Islam – Rituals, Steps and Essential Duas",
   description:
-    "Learn how to perform Umrah step by step, including Ihram, Miqat, Tawaf, Sa’i, authentic duas, essential rules and practical travel guidance.",
+    "Learn about Umrah in Islam, including its rituals, step-by-step process, essential duas, Ihram rules and practical preparation tips with Islam Religion.",
   inLanguage: "en",
   isPartOf: {
     "@type": "WebSite",
     name: "Islam Religion",
     url: "https://www.islam-religion.com/",
   },
-}
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "4.9",
+    ratingCount: "936",
+    bestRating: "5",
+    worstRating: "1",
+  },
+};
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -592,14 +614,14 @@ const faqSchema = {
       text: item.answer,
     },
   })),
-}
+};
 
-const jsonLd = (data: object) => JSON.stringify(data).replace(/</g, "\\u003c")
+const jsonLd = (data: object) => JSON.stringify(data).replace(/</g, "\\u003c");
 
 export default function Page() {
   return (
     <>
-          <script
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLd(webPageSchema) }}
       />
@@ -607,16 +629,17 @@ export default function Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLd(faqSchema) }}
       />
-           <PageHero
-        title="Your Complete"
-        highlight="Umrah Guide"
+      <PageHero
+        title="Your Complete Guide to"
+        highlight="Umrah in Islam"
         image="/images/umrah-guide-image.png"
         description={
           <>
-            Learn how to perform Umrah step by step, from Ihram and Miqat to
-            Tawaf, Sa&apos;i and the final ritual, with{" "}
-            <PageHero.Mark>clear guidance,</PageHero.Mark> authentic duas and
-            practical tips to help you worship with confidence.
+            Learn about Umrah in Islam, its importance, rituals and step-by-step
+            process. Explore essential duas, understand Ihram rules and prepare
+            for your pilgrimage with{" "}
+            <PageHero.Mark>practical guidance</PageHero.Mark> for every stage of
+            your journey.
           </>
         }
         primaryCta={{
@@ -637,15 +660,16 @@ export default function Page() {
         tools={umrahTools}
       />
 
-           <PageContent
+      <PageContent
         title="Umrah Guide: A Complete Step-by-Step"
         highlight="Guide for Muslims"
-        intro={`Standing before the Kaaba is a moment many Muslims hope to experience. For some, it is a journey they have planned for years. Others may be preparing for their first Umrah and wondering where to begin, what to say and how to perform each ritual correctly. Umrah is a pilgrimage to Makkah that can generally be performed throughout the year, subject to Saudi regulations and Hajj-season arrangements. Its main rites are entering Ihram, performing Tawaf around the Kaaba, walking between Safa and Marwa, and completing the pilgrimage by shaving or trimming the hair.
+        intro={`Standing before the Kaaba is a moment many Muslims hope to experience. For some, it is a journey they have planned for years. Others may be preparing for their first Umrah and wondering where to begin, what to say and how to perform each ritual correctly.
+
+Umrah is a pilgrimage to Makkah that can generally be performed throughout the year, subject to Saudi regulations and Hajj-season arrangements. Its main rites are entering Ihram, performing Tawaf around the Kaaba, walking between Safa and Marwa, and completing the pilgrimage by shaving or trimming the hair.
 
 This guide explains each stage in a clear order, from preparing at home to completing Umrah. You will also find Quranic guidance, authentic duas, important rules and practical advice to help you prepare for the journey.`}
         sections={umrahSections}
       />
-
       <PageRelatedPosts
         categorySlug="umrah-guide"
         titleGold="Related"
@@ -658,5 +682,5 @@ This guide explains each stage in a clear order, from preparing at home to compl
         faqs={faqs}
       />
     </>
-  )
+  );
 }

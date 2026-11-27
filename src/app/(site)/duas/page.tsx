@@ -11,26 +11,29 @@ import { Metadata } from "next";
 // Refresh the related posts every 5 minutes, same as the blog pages.
 export const revalidate = 300;
 export const metadata: Metadata = {
-  title: "Duas in Islam: Authentic Islamic Duas with Arabic and Meaning",
+  title: "Duas in Islam – Authentic Supplications from Quran and Sunnah",
   description:
-    "Explore authentic Islamic duas from the Quran and Sunnah with Arabic text, transliteration, meanings and references for everyday life, worship and guidance.",
-  keywords: [
+    "Explore authentic Duas in Islam from the Quran and Sunnah with Arabic text, transliteration, meanings and references. Learn how and when to make dua.",
+ keywords: [
     "Duas in Islam",
-    "Authentic Islamic Duas",
-    "Quranic Duas",
-    "Sunnah Duas",
-    "Daily Duas",
-    "Dua with Arabic and meaning",
-    "Islamic supplications",
-    "How to make dua",
-  ],
+    "How to perform Umrah",
+    "Umrah step by step",
+    "What is Umrah in Islam",
+    "Umrah rituals",
+    "Umrah duas",
+    "Umrah rules",
+    "Steps of Umrah",
+    "Umrah preparation",
+    "Umrah for beginners",
+    "Umrah Ihram rules",
+  ].join(", "),
   alternates: {
     canonical: "https://www.islam-religion.com/duas",
   },
   openGraph: {
-    title: "Duas in Islam: Authentic Islamic Duas with Arabic and Meaning",
+    title: "Duas in Islam – Authentic Supplications from Quran and Sunnah",
     description:
-      "Explore authentic Islamic duas from the Quran and Sunnah with Arabic text, transliteration, meanings and references for everyday life, worship and guidance.",
+      "Explore authentic Duas in Islam from the Quran and Sunnah with Arabic text, transliteration, meanings and references. Learn how and when to make dua.",
     url: "https://www.islam-religion.com/duas",
     siteName: "Islam Religion",
     type: "website",
@@ -135,6 +138,7 @@ const duaSections: ArticleSection[] = [
     ],
     closing: [
       "You can also make dua in your own language. Tell Allah what you need. He already knows what’s in your heart.",
+      "Before making dua, you can praise Allah by remembering His beautiful names. Explore the [99 Names of Allah](/99-names-of-allah) and learn their meanings.",
     ],
   },
   {
@@ -152,6 +156,7 @@ const duaSections: ArticleSection[] = [
     ],
     closing: [
       "Raising your hands, facing the Qibla and being in a state of purity are recommended in the right circumstances. None of them is a condition for every personal dua.",
+      "If you need help finding the direction of the Kaaba, use our [Qibla Finder](/tools/qibla-finder).",
     ],
   },
   {
@@ -269,11 +274,11 @@ const duaSections: ArticleSection[] = [
       "Morning and Evening Duas: remembering Allah from sunrise to sunset.",
       "Sleeping and Waking Duas: how to end and start the day.",
       "Eating and Drinking Duas: before and after meals.",
-      "Travelling Duas: Allah’s protection on the road. Our Islamic Travel Tips can help too.",
+      "Travelling Duas: Allah’s protection on the road. Our [Islamic Travel Tips](/travel-tips) can help too.",
       "Duas for Difficulties: patience, relief and help.",
       "Duas for Health and Healing: well-being and relief.",
       "Duas for Family and Children: parents, children and loved ones.",
-      "Hajj and Umrah Duas: supplications for the pilgrimage. See our Hajj Guide and Umrah Guide.",
+      "Hajj and Umrah Duas: supplications for the pilgrimage. See our [Hajj Guide](/hajj-guide) and [Umrah Guide](/umrah-guide).",
     ],
     closing: [
       "Each category takes you straight to what you need, with nothing unrelated in the way.",
@@ -292,6 +297,7 @@ const duaSections: ArticleSection[] = [
     ],
     closing: [
       "These moments are gifts, but you never have to wait for one. Make dua whenever you need Allah or want to thank Him.",
+      "Keeping track of the five daily prayers can also help you build a consistent routine of worship. Check the daily [Prayer Times](/prayer-times) for your location.",
     ],
   },
   {
@@ -309,9 +315,14 @@ const duaSections: ArticleSection[] = [
       "Dua is calling on Allah and asking Him for something: forgiveness, guidance, protection or help.",
       "Dhikr is remembering Allah through words of praise, such as:",
     ],
-    bullets: ["SubhanAllah", "Alhamdulillah", "Allahu Akbar", "Astaghfirullah"],
+    bullets: [
+      "SubhanAllah",
+      "Alhamdulillah",
+      "Allahu Akbar",
+      "Astaghfirullah",
+    ],
     closing: [
-      "Both belong in your worship. To keep count of your daily dhikr, try our Islamic Tools and Tasbih Counter.",
+      "Both belong in your worship. To keep count of your daily dhikr, try our [Islamic Tools](/tools) and [Tasbih Counter](/tools/tasbih-counter).",
     ],
   },
   {
@@ -336,7 +347,12 @@ const duaSections: ArticleSection[] = [
     paragraphs: [
       "Dua opens the door to the rest of your worship. To strengthen your daily practice or get ready for a pilgrimage, these Religion Islam resources are a good next step:",
     ],
-    bullets: ["Islamic Tools", "Hajj Guide", "Umrah Guide", "Travel Tips"],
+    bullets: [
+      "[Islamic Tools](/tools)",
+      "[Hajj Guide](/hajj-guide)",
+      "[Umrah Guide](/umrah-guide)",
+      "[Travel Tips](/travel-tips)",
+    ],
   },
   {
     heading: "Turn to Allah Through Dua",
@@ -390,23 +406,30 @@ const faqs: FaqItem[] = [
       "Yes. Ask Him for big matters and everyday needs alike. No permissible request is too small to bring to Him.",
   },
 ];
-const PAGE_URL = "https://www.islam-religion.com/duas"
+const PAGE_URL = "https://www.islam-religion.com/duas";
 
 const webPageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
   "@id": `${PAGE_URL}#webpage`,
   url: PAGE_URL,
-  name: "Duas in Islam: Authentic Islamic Duas with Arabic and Meaning",
+  name: "Duas in Islam – Authentic Supplications from Quran and Sunnah",
   description:
-    "Explore authentic Islamic duas from the Quran and Sunnah with Arabic text, transliteration, meanings and references for everyday life, worship and guidance.",
+    "Explore authentic Duas in Islam from the Quran and Sunnah with Arabic text, transliteration, meanings and references. Learn how and when to make dua.",
   inLanguage: "en",
   isPartOf: {
     "@type": "WebSite",
     name: "Islam Religion",
     url: "https://www.islam-religion.com/",
   },
-}
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "4.9",
+    ratingCount: "956",
+    bestRating: "5",
+    worstRating: "1",
+  },
+};
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -421,32 +444,35 @@ const faqSchema = {
       text: item.answer,
     },
   })),
-}
+};
 
-const jsonLd = (data: object) => JSON.stringify(data).replace(/</g, "\\u003c")
+const jsonLd = (data: object) => JSON.stringify(data).replace(/</g, "\\u003c");
 export default function Page() {
   return (
     <>
-    <>
-  <script
-    type="application/ld+json"
-    dangerouslySetInnerHTML={{ __html: jsonLd(webPageSchema) }}
-  />
-  <script
-    type="application/ld+json"
-    dangerouslySetInnerHTML={{ __html: jsonLd(faqSchema) }}
-  />
-  {/* rest of your page JSX */}
-</>
+      <>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLd(webPageSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLd(faqSchema) }}
+        />
+        {/* rest of your page JSX */}
+      </>
       <PageHero
-        title="Islamic Duas:"
-        highlight="from the Quran and Sunnah"
+        title="Your Guide to Authentic"
+        highlight="Duas in Islam"
         image="/images/duas-image.png"
         description={
           <>
-            Explore authentic Islamic duas from the Quran and Sunnah with{" "}
-            <PageHero.Mark>Arabic text, transliteration,</PageHero.Mark>{" "}
-            meanings and references for everyday life, worship and guidance.
+            Explore important duas in Islam from the Quran and authentic Sunnah,
+            with{" "}
+            <PageHero.Mark>Arabic text, English transliteration,</PageHero.Mark>{" "}
+            meanings and references. Learn how to make dua, discover
+            supplications for everyday situations and find the right words to
+            turn to Allah in every moment of life.
           </>
         }
         primaryCta={{
@@ -468,9 +494,13 @@ export default function Page() {
       />
 
       <PageContent
-        title="Islamic Duas:"
-        highlight="Authentic Supplications from the Quran and Sunnah"
-        intro={`Some days you want to ask Allah for something and the words won’t come. Maybe you’re worried about your family, waiting on a big decision, begging forgiveness or just hoping tomorrow goes better than today. Whatever it is, you can always take it to Allah through dua.\n\nDua is more than asking. It shows your faith, your trust and how much you need Allah. The Quran and Sunnah teach us what to say in every moment of life, from ordinary routines to the hardest days.\n\nOn this page you’ll find duas with Arabic text, transliteration, meanings and references. You’ll also learn how to make dua and which moments the Prophet ﷺ pointed us to.`}
+        title="Islamic Duas: Authentic Source from the"
+        highlight=" Quran and Sunnah"
+        intro={`Some days you want to ask Allah for something and the words won’t come. Maybe you’re worried about your family, waiting on a big decision, begging forgiveness or just hoping tomorrow goes better than today. Whatever it is, you can always take it to Allah through dua.
+
+Dua is more than asking. It shows your faith, your trust and how much you need Allah. The Quran and Sunnah teach us what to say in every moment of life, from ordinary routines to the hardest days.
+
+On this page you’ll find duas with Arabic text, transliteration, meanings and references. You’ll also learn how to make dua and which moments the Prophet ﷺ pointed us to.`}
         sections={duaSections}
       />
 

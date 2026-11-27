@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     "Hajj duas",
     "Hajj days and dates",
     "What happens during Hajj",
-  ],
+  ].join(", "),
   alternates: {
     canonical: "https://www.islam-religion.com/hajj-guide",
   },
@@ -124,7 +124,7 @@ const hajjSections: ArticleSection[] = [
     paragraphs: [
       "Hajj is the pilgrimage to the Kaaba in Makkah. You perform it on set days of Dhul Hijjah, the last month of the Islamic calendar. It’s the fifth pillar of Islam, and it’s obligatory once in a lifetime for every Muslim who meets its conditions.",
       "Over the course of Hajj, you perform a series of acts of worship in Makkah and at other sacred sites. You enter Ihram, perform Tawaf around the Kaaba, stand at Arafat and complete the remaining rituals.",
-      "If you want to understand how Umrah differs from Hajj, read our Umrah Guide for an explanation of its rituals and requirements.",
+      "If you want to understand how Umrah differs from Hajj, read our [Umrah Guide](/umrah-guide) for an explanation of its rituals and requirements.",
       "The pilgrimage also recalls the devotion and obedience of Prophet Ibrahim (AS) and his family. Several Hajj practices still trace back to their story.",
     ],
   },
@@ -272,7 +272,7 @@ const hajjSections: ArticleSection[] = [
       "Follow the latest instructions from the Saudi authorities.",
     ],
     closing: [
-      "Our [Islamic Tools](/islamic-tools) include practical resources for your planning. Before you depart, confirm the latest requirements with your Hajj provider too. To plan your travel budget, try our Hajj and Umrah cost estimator to estimate expenses such as flights, hotels, visas and transport.",
+      "Our [Islamic Tools](/islamic-tools) include practical resources for your planning. Before you depart, confirm the latest requirements with your Hajj provider too. To plan your travel budget, try our [Hajj and Umrah cost estimator](/islamic-tools/hajj-umrah-cost-estimator) to estimate expenses such as flights, hotels, visas and transport.",
     ],
   },
   {
@@ -470,7 +470,7 @@ const hajjSections: ArticleSection[] = [
       },
     ],
     closing: [
-      "You’ll find more supplications, their meanings and when to recite them in our Duas collection.",
+      "You’ll find more supplications, their meanings and when to recite them in our [Duas](/duas) collection.",
     ],
   },
   {
@@ -493,7 +493,7 @@ const hajjSections: ArticleSection[] = [
     ],
     closing: [
       "Here’s the secret most pilgrims learn too late: Hajj is won in the small things. The pilgrim who rests, drinks and stays patient reaches Arafat with strength left to pour into dua. The one who skips all that arrives drained, with a heart too tired to ask.",
-      "Visiting Makkah and Madinah as well? Our Travel Tips cover that part of the trip.",
+      "Visiting Makkah and Madinah as well? Our [Travel Tips](/travel-tips) cover that part of the trip.",
     ],
   },
   {
@@ -501,7 +501,7 @@ const hajjSections: ArticleSection[] = [
     paragraphs: [
       "Many pilgrims also visit Madinah, before or after Hajj. Would you like to visit Al-Masjid an-Nabawi? Muslims go to the Prophet’s Mosque to pray and send salutations upon Prophet Muhammad (ﷺ).",
       "Visiting Madinah isn’t a required part of Hajj. You can complete Hajj without going there.",
-      "If Madinah is on your itinerary, our Ziyaraat Guide covers the important Islamic places in Makkah and Madinah.",
+      "If Madinah is on your itinerary, our [Ziyaraat Guide](/ziyaraat-guide) covers the important Islamic places in Makkah and Madinah.",
     ],
   },
   {
@@ -511,7 +511,7 @@ const hajjSections: ArticleSection[] = [
       "Try to carry these into your daily routine:",
     ],
     bullets: [
-      "Keep your five daily prayers. You can use our Prayer Times tool to check daily prayer timings and maintain your Salah routine after returning home.",
+      "Keep your five daily prayers. You can use our [Prayer Times](/prayer-times) tool to check daily prayer timings and maintain your Salah routine after returning home.",
       "Remember Allah regularly.",
       "Treat your family and others with kindness.",
       "Stay away from arguments and harmful behaviour.",
@@ -520,7 +520,7 @@ const hajjSections: ArticleSection[] = [
     ],
     closing: [
       "An accepted Hajj is a great blessing. Ask Allah to accept your worship and help you stay sincere after you return.",
-      "You can keep learning through our Islamic blog, which covers more topics on Islamic beliefs and daily practice.",
+      "You can keep learning through our [Islamic blog](/blog), which covers more topics on Islamic beliefs and daily practice.",
     ],
   },
   {
